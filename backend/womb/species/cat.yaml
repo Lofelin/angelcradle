@@ -1,0 +1,180 @@
+name: cat
+display_name: Felidae
+scientific_name: Felis catus
+
+physical:
+  body: Quadrupedal locomotion with extreme flexibility allowing contortion through narrow spaces, retractable claws, body length approximately 46cm (excluding tail), tail length approximately 23cm
+  senses: Night vision 6-8 times that of humans (minimum light requirement only 1/6 of humans), retina rich in rod cells; hearing range 55Hz-79kHz (one of the broadest hearing ranges among mammals); approximately 12 whiskers per side rich in proprioceptors for sensing airflow and spatial width; lacks functional copy of sweet taste receptor gene Tas1r2, unable to perceive sweetness
+  lifespan: Indoor cats 12-18 years, outdoor cats 2-5 years
+  maturity: Sexual maturity at 5-12 months
+  body_temp: 38.1-39.2°C, resting heart rate 120-140bpm
+
+mental:
+  brain: Possesses object permanence cognitive ability (equivalent to a 2-year-old human child), short-term memory approximately 16 hours (dogs approximately 5 minutes)
+  cognition: Strong spatial memory, hunting strategy thinking, independent problem solving
+  emotion: Fear, pleasure, anxiety, attachment; emotions are restrained and not overtly displayed
+  language: Meowing is used almost exclusively for communication with humans (rarely used between adult cats); purring frequency 25-150Hz (this frequency range can promote bone healing); upright tail indicates friendliness, flattened ears indicate fear/aggression, slow blinking is a trust signal
+  consciousness: Possesses primary emotional awareness, inconsistent mirror test results, high environmental awareness
+
+morphology:
+  weight: Adult 3.6-4.5kg (significant breed variation, Maine Coons can reach 11kg)
+  features: Vertical slit pupils capable of extreme contraction for precise light control, diverse coat colors and patterns
+  dimorphism: Sexual dimorphism is not pronounced, males average 1-2kg heavier than females, unneutered males have wider cheeks
+  coat_genetics: Coat color involves multiple gene loci — W (white dominant), O (orange X-linked), A (agouti gene), T (tabby pattern)
+
+reproduction:
+  type: Sexual reproduction, induced ovulation (mating stimulation triggers ovulation)
+  superfecundation: Can mate with multiple males during a single estrus cycle, producing kittens with different fathers in the same litter
+  gestation: 63-65 days
+  offspring: 3-5 per litter (range 1-12)
+  care: Mother cat raises kittens independently, immediately licks newborns clean and consumes the placenta after birth, kittens open eyes at approximately 10 days, begin solid food at 3-4 weeks, fully weaned at 8-10 weeks
+
+reproductive_isolation:
+  closest_relative: European wildcat (Felis silvestris silvestris) and African wildcat (F. s. lybica), fully interfertile producing fertile offspring
+  felid_hybrids: Can produce hybrid offspring with jungle cat (Felis chaus) (Chausie), and with Asian leopard cat (Prionailurus bengalensis) (Bengal cat), but all require human intervention
+  large_cat_barrier: Completely isolated from large cats (genus Panthera — lions, tigers, leopards), diverged approximately 10.7 million years ago
+  mechanism: Geographic isolation + behavioral isolation between closely related species, chromosomal incompatibility between distantly related species
+
+development:
+  embryo: Fertilized egg implants at approximately day 12-14, induced ovulation means littermates can have different fathers
+  fetal: Organ formation at weeks 3-4, detectable by ultrasound from week 5
+  late_fetal: Rapid fetal growth during weeks 6-9, hair development, suckling reflex appears in the final week
+  neonatal: Birth weight approximately 85-120g, eyes and ears closed, relies on touch and smell to locate mother, unable to thermoregulate independently
+  milestones: Eyes open at approximately 10 days (iris initially blue, transitions to permanent color at 6-7 weeks), begins crawling at 2 weeks, starts solid food at 3-4 weeks
+  altriciality: Highly altricial — extremely vulnerable at birth, but developmental rate faster than humans and canines
+
+evolution:
+  phylogeny: Order Carnivora - Family Felidae - Genus Felis, belongs to subfamily Felinae within Felidae
+  wild_ancestor: African wildcat (Felis silvestris lybica), diverged approximately 10,000 years ago
+  felidae_origin: Felidae originated approximately 25 million years ago, 37 extant species
+  key_adaptations: Retractable claws (shared trait of Felidae except cheetahs), vertical slit pupils for precise light control, highly flexible spine, specialized canine teeth for killing prey
+  recent_evolution: Far fewer genetic changes during domestication compared to canines, still retains the vast majority of wild ancestor hunting instincts and solitary tendencies
+
+domestication:
+  timing: Approximately 10,000 years ago, concurrent with the Agricultural Revolution
+  origin: The Fertile Crescent; a 9,500-year-old human-cat burial discovered in Cyprus in 2004 provides the earliest evidence
+  process: Commensal domestication — granaries attracted rodents, wildcats congregated accordingly, forming a mutualistic symbiosis
+  selection_pressure: Domestication selection pressure far weaker than for canines; humans did not systematically selectively breed cats for functional purposes
+  behavioral_changes: Increased tolerance of humans, elevated vocalization frequency (closer to human infant cry frequency), slightly increased social tolerance
+  genetic_changes: Genome differs minimally from wildcats, primarily involving neural crest cell-related genes (affecting docility) and coat color genes
+
+genetics:
+  chromosomes: 2n=38 (19 pairs)
+  orange_gene: Orange gene O is located on the X chromosome; calico cats are almost always female (XX); extremely rare male calicos are XXY Klinefelter syndrome individuals (approximately 1/3000)
+  polydactyly: Polydactyly is caused by an autosomal dominant mutation of the Pd gene
+  fold_ear: Scottish Fold ear folding is caused by a TRPV4 gene mutation; homozygotes develop severe osteochondrodysplasia
+
+ecology:
+  niche: Obligate carnivore, must obtain taurine, arachidonic acid, and vitamin A from animal tissue (cannot convert from beta-carotene)
+  social: Solitary and territorial; male territory 3-28 hectares, female territory approximately 1-8 hectares; can form loose colonies but does not depend on groups
+  invasive_impact: As an invasive species, has caused the extinction of at least 63 vertebrate species globally (island ecosystems especially affected)
+  population: Global domestic cat population estimated at over 600 million
+
+physiology:
+  sleep: Average 12-16 hours per day (kittens and senior cats up to 20 hours), approximately 75% is light sleep
+  metabolism: Endothermic, extremely strong short-distance burst power, poor endurance, typical ambush predator energy allocation
+  performance: Can jump 5-6 times their own body height (approximately 1.5-1.8m), sprint speed up to 48km/h
+  diseases: Common hereditary diseases include hypertrophic cardiomyopathy (HCM), polycystic kidney disease (PKD), and diabetes
+
+behavior:
+  hunting: Hunting skills are not entirely innate — mother cats bring live prey to kittens at 5-7 weeks of age for teaching
+  play: Play behavior simulating hunting (pouncing, biting, swatting), highly sensitive to moving objects
+  conflict: Tends toward conflict avoidance, reduces direct confrontation through territorial marking (facial gland rubbing, urine spraying)
+  curiosity: Visually and tactilely driven exploration, cautious approach to novel objects, serving territorial patrol and prey detection
+
+distribution:
+  range: Found on all continents except Antarctica
+  origin: African wildcat (Felis silvestris lybica) from the Fertile Crescent, domesticated approximately 10,000 years ago with the Agricultural Revolution
+  earliest_evidence: 9,500-year-old human-cat burial discovered in Cyprus in 2004
+  spread: Spread worldwide via maritime trade
+
+pregnancy_risks:
+  fetal_resorption:
+    rate: 0.15  # 10-20% of conceptuses (often silent and undetected)
+    pregnancy_loss_rate: 0.084  # 8.4% of pregnant queens fail to maintain pregnancy (PubMed 27807902)
+    causes:
+      felv_reproductive_failure: 0.75  # 70-80% reproductive failure if infected
+      fip: "abortion and stillbirth reported, not primary cause"
+      panleukopenia_early: "abortion/resorption if early infection"
+
+  stillbirth:
+    rate: 0.085  # 8.5% (PubMed 27807902, n=28065 kittens)
+    breed_predisposition: "Persian, Manx, Himalayan"
+
+  neonatal_mortality:
+    pre_weaning_rate: 0.16  # 16.0% total pre-weaning mortality (PubMed 27807902)
+    neonatal_pediatric: 0.082  # 8.2% neonatal & pediatric mortality
+    fading_kitten_syndrome: 0.20  # ~15-27% of neonatal deaths, >90% fatal without intervention
+    causes:
+      hypothermia: 0.25
+      hypoglycemia: 0.15
+      dehydration: 0.10
+      failure_passive_transfer: 0.15
+      infection: 0.15
+      congenital_defects: 0.10
+      low_birth_weight: 0.10
+
+  congenital_defects:
+    overall_rate: 0.025  # 2-3%, higher in inbred lines
+    polydactyly: 0.02  # ~2% general, up to 50%+ in founder-effect colonies
+    cleft_palate: 0.004  # 0.3-0.5%, frequently lethal
+    heart_defects: 0.006  # 0.2-1%, VSD and ASD most common
+    cerebellar_hypoplasia: "caused by in-utero panleukopenia virus exposure"
+
+  breed_genetic_diseases:
+    pkd_persian:
+      carrier_rate: 0.40  # ~40% in Persian and related breeds before DNA testing
+    hcm_maine_coon:
+      mybpc3_a31p_carrier: 0.33  # ~33% carrier rate
+      echocardiographic_prevalence: 0.20  # 10-30% depending on age
+    hcm_ragdoll:
+      mybpc3_r820w_carrier: 0.30
+    scottish_fold:
+      fd_homozygous: "severe osteochondrodysplasia in 100% of Fd/Fd"
+    siamese_strabismus: 0.50  # historically 50-70%, reduced by modern breeding
+
+  coat_color_anomalies:
+    calico_male_rate: 0.000333  # 1 in 3000, XXY Klinefelter, ~80% sterile
+    white_cat_deafness:
+      both_blue_eyes: 0.75  # 65-85% (Strain LSU)
+      one_blue_eye: 0.40
+      no_blue_eyes: 0.19  # 17-22%
+
+  litter_size:
+    average: 4.0
+    std_dev: 1.9
+    range: "1-12"
+    siamese_oriental: "5-6"
+    persian: "3-4"
+
+  birth_weight:
+    normal_range_g: "85-115"
+    low_threshold_g: 75  # significantly elevated mortality risk below this
+    critical_g: 60  # rarely survive without intensive support
+
+  environmental_factors:
+    panleukopenia_teratogenicity: "FPV tropism for cerebellar Purkinje cells, gestation days 14-30"
+    taurine_deficiency: "reproductive failure and dilated cardiomyopathy"
+    protein_deficiency: "increased resorption, smaller litters, lower birth weights"
+    toxoplasmosis: "abortion, stillbirth, neonatal CNS disease"
+
+birth_attributes:
+  sex_system: XY
+  breeds:
+    - British Shorthair
+    - Persian
+    - Siamese
+    - Maine Coon
+    - Ragdoll
+    - Chinese Li Hua (Dragon Li)
+    - Orange Tabby
+    - Calico
+    - Russian Blue
+    - American Shorthair
+    - Scottish Fold
+    - Mixed Breed
+
+womb:
+  perception: Perceives the world through vision, touch, and territorial awareness; night vision dominant; independence and vigilance are instinctive
+  expression: Expresses through sensory experiences and instinctive judgment, maintains a sense of distance, emotions are restrained
+  cry: Write a first-person initial perception passage (100-200 words), primarily through vision and touch, with an innate vigilance and scrutiny of the environment. Do not use abstract human thinking; replace conceptual thought with sensory experience.

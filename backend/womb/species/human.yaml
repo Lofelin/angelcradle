@@ -1,0 +1,184 @@
+name: human
+display_name: Human
+scientific_name: Homo sapiens
+
+physical:
+  body: Bipedal upright locomotion, 206 bones (infants have ~270 which later fuse), dexterous hands with opposable thumbs
+  senses: Trichromatic vision (S/M/L cone cells, visible light 380-700nm); hearing 20Hz-20kHz; ~400 functional olfactory receptors (~800 total, half pseudogenized); fine tactile sensation
+  lifespan: Biological maximum ~120 years (record 122 years), global average life expectancy ~73 years
+  maturity: Female menarche average 12.4 years, male sexual maturity 12-17 years, social maturity 18-25 years
+  body_temp: Core body temperature 36.5-37.5°C
+  teeth: 32 teeth (including third molars), omnivorous dentition
+
+mental:
+  brain: Average 1350mL, 2% of body weight yet consumes 20% of basal metabolic energy, ~16 billion cortical neurons, ~86 billion total
+  cognition: Abstract thinking, recursive grammar, causal reasoning, temporal awareness, metacognition (ability to think about one's own thinking)
+  emotion: 6 basic emotions (Ekman model) — happiness, sadness, fear, anger, surprise, disgust; cross-culturally universal
+  language: The only species with recursive grammar, ~7000 extant languages, metaphorical thinking
+  consciousness: Highly self-aware, passes mirror test at ~18 months of age, capable of introspection and awareness of mortality
+
+morphology:
+  height: Global adult male average ~171cm, female ~159cm
+  weight: Male average ~70-80kg, female ~55-65kg
+  dimorphism: Moderate; males average ~15% heavier and ~7% taller than females
+  features: Rich facial expressions, hair follicle density comparable to chimpanzees but hair is extremely fine and short, prominent sclera (exposed eye whites facilitate gaze direction perception), chin is unique to Homo
+
+reproduction:
+  type: Viviparous mammal, internal fertilization
+  gestation: Average 280 days (40 weeks)
+  offspring: Typically singleton (twin rate ~1/80, triplet rate ~1/6400)
+  care: Extremely high parental investment, biparental care, dependency period ~15-20 years
+  weaning: Natural weaning age 2.5-7 years
+  menopause: Female menopause at ~45-55 years, one of the very few mammals exhibiting menopause
+
+reproductive_isolation:
+  closest_relative: Chimpanzee (Pan troglodytes), diverged ~6-7 million years ago
+  chromosome_barrier: Human 23 pairs vs chimpanzee 24 pairs (human chromosome 2 is a fusion of two ancestral chromosomes), meiotic pairing impossible
+  hybrid_viability: Cannot produce offspring with any extant species
+  mechanism: Prezygotic isolation (behavioral, anatomical) + postzygotic isolation (chromosomal incompatibility)
+
+development:
+  embryo: Zygote progresses through morula and blastocyst stages, implantation at ~day 6-7
+  trimester_1: Organogenesis (weeks 3-8), neural tube closure (week 4), heartbeat begins at week 6, teratogenic sensitivity period
+  trimester_2: Organ maturation and growth, fetal movement perceptible at ~weeks 18-20, auditory system functional at ~week 25
+  trimester_3: Accelerated brain development (cortical folding), pulmonary surfactant production (~week 35), subcutaneous fat deposition
+  neonatal: Birth weight ~3.0-3.5kg, head circumference ~34cm, highly immature nervous system (myelination continues until age 25), neonatal primitive reflexes (grasp, Moro, sucking, rooting)
+  altriciality: A hybrid of precocial and altricial traits — relatively developed senses but extremely immature motor ability, termed "physiological prematurity" (humans are born early due to pelvic narrowing from bipedalism)
+
+evolution:
+  phylogeny: Order Primates, Family Hominidae, Genus Homo; shared common ancestor with chimpanzees ~6-7 million years ago
+  key_adaptations: Bipedalism (~4 million years ago) → tool use (~2.6 million years ago) → fire control (~1 million years ago) → language (~100,000-300,000 years ago)
+  brain_expansion: Australopithecus brain volume ~400mL → Homo erectus ~900mL → Homo sapiens ~1350mL, 3x increase over 3 million years
+  recent_evolution: Lactose tolerance (~7500 years ago in Europe), high-altitude adaptation (Tibetan EPAS1 gene), malaria resistance (sickle cell gene)
+
+genetics:
+  chromosomes: 2n=46 (23 pairs, including 1 pair of sex chromosomes XX/XY)
+  genome: ~3.1 billion base pairs, encoding ~20,000-25,000 protein-coding genes
+  variation: DNA sequence difference between any two individuals is only ~0.1% (~3 million SNPs)
+  mutation_rate: ~70 new mutations per genome per generation (~1.0-1.5×10⁻⁸ per bp per generation)
+  mitochondrial: Strictly maternal inheritance
+
+ecology:
+  niche: Omnivorous apex consumer, average trophic level ~2.21
+  social: Highly social, natural group size ~150 (Dunbar's number)
+  habitat: Extremely adaptable, occupying nearly all terrestrial ecosystems from the equator to the Arctic Circle
+  diet: Broad-spectrum omnivore, the only species that systematically uses fire for food processing
+  energy: Basal metabolism ~1500-1800kcal/day, total expenditure ~2000-2500kcal/day
+
+physiology:
+  metabolism: Endothermic, basal metabolic rate ~80W at rest, up to ~1500W short-term output during intense exercise
+  thermoregulation: 2-5 million sweat glands (predominantly eccrine type), highest heat dissipation efficiency among mammals
+  immune: Innate + adaptive dual immune system, capable of producing ~10¹¹ different antibodies
+  blood: ABO + Rh and over 40 blood group systems, blood pH strictly maintained at 7.35-7.45
+  endurance: Long-distance endurance running as an evolutionary advantage
+
+behavior:
+  learning: Critical period learning (language critical period ~0-12 years), cumulative cultural transmission (ratchet effect) unique to genus Homo
+  play: Play behavior extending into adulthood (most mammals play only during juvenile period)
+  conflict: Possesses institutionalized conflict resolution (law, arbitration), while retaining capacity for violence
+  curiosity: Exhibits pure epistemic curiosity, without requiring immediate survival rewards
+  tools: Cumulative tool improvement, from stone tools to semiconductors, cross-generational technological accumulation
+
+distribution:
+  range: All continents worldwide (including permanent research stations in Antarctica), total population ~8 billion
+  origin: Eastern/Southern Africa, earliest fossil record ~300,000 years ago (Jebel Irhoud site, Morocco)
+  migration: Out of Africa ~70,000-100,000 years ago, reached Australia ~50,000 years ago, entered the Americas via the Bering land bridge ~15,000 years ago
+
+pregnancy_risks:
+  miscarriage:
+    overall_rate: 0.153  # 15.3% of recognized pregnancies (Lancet 2021, 23 million/year globally)
+    first_trimester: 0.80  # 80% of miscarriages occur in first trimester
+    by_maternal_age:
+      age_20_24: 0.10
+      age_25_29: 0.12
+      age_30_34: 0.15
+      age_35_39: 0.25
+      age_40_plus: 0.50
+    causes:
+      chromosomal_abnormality: 0.55  # 50-60% of miscarriages
+      uterine_structural: 0.12
+      hormonal: 0.05
+      unexplained: 0.28
+
+  stillbirth:
+    global_rate: 0.0143  # 14.3 per 1000 total births (UNICEF 2023)
+    high_income_rate: 0.0057  # 5.7 per 1000 (CDC US)
+    causes:
+      placental_dysfunction: 0.25
+      unexplained: 0.25
+      fetal_anomaly: 0.15
+      infection: 0.10
+      cord_accident: 0.10
+      maternal_conditions: 0.05
+      other: 0.10
+
+  multiple_births:
+    twin_rate: 0.012  # 12.0 per 1000 deliveries globally (Human Reproduction 2021)
+    monozygotic_rate: 0.004  # 4 per 1000, constant worldwide
+    dizygotic_rate: 0.008  # varies by region: Africa ~17, Asia ~9, Europe ~14 per 1000
+    triplet_rate: 0.000738  # 73.8 per 100,000
+
+  congenital_anomalies:
+    overall_rate: 0.03  # 3% of live births at birth, up to 6% by age 2 (WHO)
+    prevalence_per_100k: 1573  # GBD 2021
+    heart_defects: 0.008  # 8 per 1000 live births (CDC)
+    neural_tube_defects: 0.001  # 1 per 1000
+    cleft_lip_palate: 0.001  # 1 per 1000
+    clubfoot: 0.001
+    down_syndrome:
+      overall: 0.00143  # 1 in 700
+      age_20: 0.000667  # 1/1500
+      age_30: 0.00111  # 1/900
+      age_35: 0.00286  # 1/350
+      age_40: 0.01  # 1/100
+      age_45: 0.0333  # 1/30
+    chromosomal_abnormalities: 0.0067  # 1 in 150 live births
+
+  preterm_birth:
+    global_rate: 0.10  # >10%, 13.4 million/year (WHO 2020)
+    range_by_country: "0.04-0.16"
+    extremely_preterm: 0.005  # <28 weeks
+    very_preterm: 0.006  # 28-31 weeks
+    late_preterm: 0.085  # 34-36 weeks
+
+  genetic_diseases:
+    cystic_fibrosis_carrier: 0.04  # 1/25 European
+    sickle_cell_carrier: 0.10  # 1/10 West African ancestry
+    pku_carrier: 0.02  # 1/50 European
+    sma_carrier: 0.022  # 1/40-50
+    thalassemia_carrier: 0.015  # 1.5% worldwide
+
+  birth_weight:
+    normal_range_g: "2500-4000"
+    mean_g: 3300
+    low_birth_weight_rate: 0.082  # <2500g
+    macrosomia_rate: 0.09  # >4000g
+
+  sex_ratio:
+    male_probability: 0.515  # 105-107 males per 100 females
+
+  environmental_factors:
+    folate_deficiency_ntd_risk_multiplier: 3.0  # 60-70% reduction with supplementation
+    maternal_smoking_lbw_reduction_g: 200
+    maternal_obesity_ntd_risk_multiplier: 1.85
+    maternal_stress_preterm_odds_ratio: 1.4
+    maternal_alcohol_fasd_rate: 0.03  # 1-5% in drinking populations
+    uncontrolled_diabetes_chd_risk_multiplier: 4.0
+
+birth_attributes:
+  sex_system: XY  # XX=female, XY=male
+  races:
+    - East Asian
+    - South Asian
+    - Southeast Asian
+    - European
+    - African
+    - Middle Eastern
+    - Latin American
+    - Oceanian Indigenous
+    - Mixed
+
+womb:
+  perception: Perceives the world through language, emotion, and abstract thinking; possesses metacognition and temporal awareness
+  expression: Expresses inner feelings in first-person natural language; capable of metaphorical and recursive expression
+  cry: Write a first-person initial self-narrative (100-200 words) — this is a newly awakened consciousness experiencing its first hazy perception of itself. Not a personality description, not a character profile.

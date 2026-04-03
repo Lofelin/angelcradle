@@ -1,0 +1,181 @@
+name: dog
+display_name: Canine
+scientific_name: Canis lupus familiaris
+
+physical:
+  body: Quadrupedal locomotion, body size varies enormously by breed (greatest morphological variation within a single mammalian species), tail used for emotional expression
+  senses: Approximately 300 million olfactory receptors (humans have 6 million), sensitivity 10,000-100,000 times greater than humans, olfactory bulb-to-brain ratio 40 times that of humans; hearing range 67Hz-45kHz; dichromatic vision (blue-yellow), possesses tapetum lucidum, visual field approximately 250 degrees
+  lifespan: Average 10-13 years, small breeds 12-16 years, large breeds 8-10 years (record 31 years, Australian Cattle Dog Bluey)
+  maturity: Small breeds 6-9 months of age, large breeds 12-24 months of age
+  body_temp: 38.3-39.2°C, heart rate small breeds 100-140bpm, large breeds 60-100bpm
+
+mental:
+  brain: Cognitive level equivalent to a 2-2.5 year old human child (Stanley Coren research), can understand approximately 165-250 words, over 1000 with training (Border Collie Chaser)
+  cognition: Associative learning, social reasoning, capable of understanding human pointing gestures (which chimpanzees cannot), demonstrates rudimentary theory of mind
+  emotion: Joy, fear, anger, disgust, attachment; mutual human-dog eye contact can elevate oxytocin levels in both parties by 130-300% (Nagasawa 2015, Science)
+  language: Barking, whining, howling, body language, scent marking
+  consciousness: Failed mirror self-recognition test but passed olfactory self-recognition test (Horowitz 2017), demonstrates self-other distinction
+
+morphology:
+  weight: Chihuahua approximately 1-3kg to English Mastiff 90-110kg, a nearly 100-fold range
+  height: Shoulder height 15cm (Chihuahua) to 86cm (Great Dane)
+  dimorphism: Males typically 10-20% heavier and 5-10% taller at the shoulder than females
+  coat: Coat color controlled by approximately 8 major gene loci including MC1R, ASIP, CBD103, producing hundreds of color and pattern combinations
+
+reproduction:
+  type: Sexual reproduction, internal fertilization
+  cycle: 1-2 estrus cycles per year (non-seasonal, unlike the strict seasonality of wolves)
+  gestation: Approximately 63 days (58-68 days)
+  offspring: Average 5-6 per litter, range 1-15
+  care: Puppies born with eyes and ears closed, eyes open at 10-14 days of age, ear canals open at approximately 3 weeks, solid food introduced at 3-4 weeks, weaning at 6-8 weeks
+
+reproductive_isolation:
+  closest_relative: Gray wolf (Canis lupus), 99.9% genome homology, can produce fully fertile offspring (effectively the same species at subspecies level)
+  coyote_hybrid: Can hybridize with coyotes (Canis latrans) to produce fertile offspring (coywolf), occurs naturally in the wild
+  jackal_hybrid: Can hybridize with golden jackals (Canis aureus) but offspring fertility is reduced
+  cat_barrier: Complete reproductive isolation from felids; Canidae and Felidae diverged approximately 55 million years ago within Carnivora
+  mechanism: No intraspecific isolation (no reproductive barriers between breeds; Chihuahua and Great Dane are genetically interfertile), interspecific barriers are primarily postzygotic
+
+development:
+  embryo: Fertilized egg implants around days 17-21, organ primordia form during the first 3 weeks of embryonic development
+  fetal: Skeletal and muscular systems develop during weeks 4-6, heartbeat detectable by ultrasound from week 6
+  late_fetal: Rapid fetal growth during weeks 7-9, hair and claws develop, lungs mature in the final week
+  neonatal: Birth weight varies enormously by breed (100g-700g), eyes and ears closed, tactile and olfactory senses functional, completely dependent on dam for thermoregulation
+  milestones: Eyes open at 10-14 days, ear canals open at approximately 3 weeks, walking begins at 3-4 weeks, critical socialization window at 3-12 weeks of age
+  altriciality: Highly altricial — sensory and motor capabilities are extremely immature at birth
+
+evolution:
+  phylogeny: Order Carnivora - Family Canidae - Genus Canis, same species as gray wolf (subspecies-level divergence)
+  wolf_divergence: Shared common ancestor with modern gray wolves approximately 27,000-40,000 years ago (genomic evidence)
+  key_adaptations: Facial muscles evolved the LAOM (levator anguli oculi medialis), producing the "puppy eyes" expression absent in wolves; enhanced social cognitive abilities
+  recent_evolution: AMY2B amylase gene expansion adapted to agricultural starch-rich diet, oxytocin pathway modifications strengthened human-dog social bond
+
+domestication:
+  timing: Approximately 15,000-40,000 years ago (contested range), earliest definitive evidence approximately 15,000 years ago
+  origin: Strongest candidates are East Asia/Southeast Asia or Central Asia, possible dual origin with subsequent merger (Frantz 2016, Science)
+  process: Self-domestication from gray wolf populations, individuals tolerant of humans gained food access advantages
+  selection_pressure: Intensive artificial selection beginning in the Victorian era (19th century) drove breed divergence and genetic bottlenecks
+  behavioral_changes: Reduced aggression, increased submissiveness, increased barking frequency (wolves rarely bark), neoteny (lifelong retention of juvenile social behaviors)
+  genetic_changes: Over 700 known single-gene hereditary diseases associated with breed selection
+
+genetics:
+  chromosomes: 2n=78 (39 pairs)
+  genome: Approximately 2.4 billion base pairs, containing approximately 19,000 protein-coding genes
+  wolf_homology: 99.9% genome homology with gray wolf
+  mutation_rate: Approximately 4x10^-9/base/generation
+  breed_bottleneck: Modern purebred dogs mostly originate from Victorian-era (19th century) artificial selection, some breeds have effective population size Ne<50, over 700 known single-gene hereditary diseases
+  starch_adaptation: AMY2B amylase gene copy number 4-30 (wolves have only 2), reflecting adaptation to high-starch diet
+
+ecology:
+  niche: Companion animal/working dog (domestic), medium-sized predator (feral/stray)
+  social: Flexible social hierarchy rather than strict alpha model, stray dogs form loose social groups
+  population: Approximately 500 million to 1 billion globally, of which 75-85% are free-roaming/stray (WHO data)
+  diet: Omnivorous with carnivorous tendency, possesses starch digestion adaptation
+
+physiology:
+  metabolism: Resting metabolic rate follows Kleiber's law, proportional to body weight raised to the 0.75 power
+  thermoregulation: Primarily relies on panting for heat dissipation, sweat glands only present on paw pads
+  diseases: Common hereditary diseases include hip dysplasia, dilated cardiomyopathy, degenerative myelopathy, progressive retinal atrophy
+  performance: Greyhound top speed approximately 72km/h, sled dogs can sustain running over 160km/day
+
+behavior:
+  learning: Classical conditioning (Pavlov), operant conditioning, social observational learning, highly responsive to rewards
+  calming_signals: Nose licking, head turning/averting, yawning, play bow, and approximately 30 other calming signals
+  play: Lifelong retention of play behavior, chasing and retrieving are core patterns
+  sleep: REM sleep comprises approximately 10-12% of total sleep, accompanied by rapid eye movements and limb twitching
+  exploration: Olfaction-driven, can process thousands of scent signatures per walk
+
+distribution:
+  range: All continents except Antarctica, one of the most widely distributed terrestrial carnivorans on Earth
+  origin: Domesticated from gray wolves approximately 15,000-40,000 years ago (contested range), strongest candidates are East Asia/Southeast Asia or Central Asia
+  migration: Ancient DNA evidence indicates dogs accompanied humans into the Americas approximately 15,000 years ago
+
+pregnancy_risks:
+  embryonic_resorption:
+    rate: 0.135  # 10-17% of conceptuses resorbed before day 35 (Fontbonne 2011)
+    causes:
+      brucella_canis_fetal_loss: 0.65  # 50-80% fetal loss if infected
+      canine_herpesvirus: "near-total litter loss if primary infection in last 3 weeks"
+      other_infectious: 0.05
+
+  stillbirth:
+    rate: 0.053  # 4.3-5.9% (PubMed 30784806, n=19577; PubMed 22365700, n=10810 litters)
+    litter_affected_rate: 0.246  # 24.6% of litters have perinatal mortality
+    risk_from_dystocia: 2.35  # odds ratio vs normal delivery
+
+  neonatal_mortality:
+    first_week_rate: 0.037  # 3.7% early neonatal (PubMed 22365700)
+    pre_weaning_rate: 0.20  # 10-30% before weaning
+    causes:
+      hypothermia: 0.30
+      bacterial_septicemia: 0.20
+      congenital_defects: 0.125
+      trauma_birth: 0.10
+      maternal_neglect: 0.10
+      low_birth_weight: 0.15
+
+  congenital_defects:
+    overall_rate: 0.017  # 0.9-2.5% (Patterson JAVMA; PubMed studies)
+    cleft_palate: 0.0015  # 0.1-0.2%, brachycephalic ~0.5%
+    heart_defects: 0.0075  # 0.5-1.0%
+    cryptorchidism: 0.038  # 0.8-6.8% of males, breed-dependent
+
+  dystocia:
+    overall_rate: 0.05  # ~5% overall require veterinary intervention
+    brachycephalic_csection:
+      bulldog: 0.86  # 80-93% C-section rate (Evans & Adams 2010)
+      french_bulldog: 0.80
+    singleton_syndrome_rate: 0.035  # 2-5%
+
+  breed_genetic_diseases:
+    hip_dysplasia:
+      german_shepherd: 0.22  # 19-25% (OFA database)
+      golden_retriever: 0.21  # 20-22%
+      bulldog: 0.74  # highest recorded
+    boas:
+      bulldog: 0.65  # 55-75%
+      french_bulldog: 0.55  # 45-65%
+    von_willebrand_carrier:
+      doberman: 0.65  # 60-70% carriers Type I
+
+  litter_size:
+    toy_small: "2-4"
+    medium: "5-7"
+    large: "6-8"
+    giant: "7-10"
+
+  birth_weight_g:
+    toy: "75-200"
+    small: "100-250"
+    medium: "200-350"
+    large: "300-600"
+    giant: "400-800"
+
+  environmental_factors:
+    maternal_stress_effect: "smaller litter size, higher neonatal mortality"
+    protein_deficiency: "increased resorption, reduced birth weight"
+    folic_acid_deficiency: "cleft palate, neural tube defects"
+    teratogen_window: "days 17-22 organogenesis peak"
+    griseofulvin: "cleft palate and CNS defects"
+    glucocorticoids_high_dose: "cleft palate risk"
+
+birth_attributes:
+  sex_system: XY
+  breeds:
+    - Golden Retriever
+    - Labrador Retriever
+    - German Shepherd
+    - Border Collie
+    - Shiba Inu
+    - Siberian Husky
+    - Poodle
+    - French Bulldog
+    - Beagle
+    - Akita
+    - Doberman Pinscher
+    - Mixed Breed
+
+womb:
+  perception: Perceives the world through scent, sound, and pack bonds; olfaction is the dominant sense; loyalty and attachment are instinctive
+  expression: Expresses through sensory impressions and emotional impulses, without abstract concepts; emotions are overt and direct
+  cry: Write a first-person initial perception passage (100-200 words), centered on scent and sound, filled with curiosity about surrounding smells and attachment to warmth. Do not use abstract human reasoning; replace conceptual thinking with sensory experience.

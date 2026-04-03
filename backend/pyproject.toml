@@ -1,0 +1,15 @@
+[project]
+name = "angelcradle"
+version = "0.1.0"
+description = "Angel Cradle — 孕育 AI 个体的摇篮"
+requires-python = ">=3.9"
+dependencies = [
+    "anthropic>=0.52.0",
+    "openai>=1.0.0",
+    "pyyaml>=6.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+]
+
+[tool.ruff]
+line-length = 100
