@@ -407,31 +407,33 @@ function App() {
             </span>
           ))}
         </div>
-        {(() => {
-          const doneCount = Object.values(stageProgress).filter(s => s === 'done').length
-          const failedCount = Object.values(stageProgress).filter(s => s === 'failed').length
-          const currentStageName = state.currentStage ? translateKey(state.currentStage, lang) : ''
-          const allDone = doneCount === 7
-          const hasFailed = failedCount > 0
-          const hasStarted = doneCount > 0 || running
-          const statusClass = hasFailed ? 'failed' : allDone ? 'done' : running ? 'running' : 'idle'
-          const statusText = !hasStarted ? t.step_ready : hasFailed ? t.step_failed : allDone ? t.step_done : running ? t.step_running : t.step_idle
-          return (
-            <div className="step-indicator">
-              <span className="step-num">Step {doneCount}/7</span>
-              <span className="step-name">{currentStageName || '—'}</span>
-              <span className="step-divider" />
-              <div className="step-status">
-                <span className={`step-status-dot ${statusClass}`} />
-                <span className="step-status-text">{statusText}</span>
+        <div className="notch-right">
+          {(() => {
+            const doneCount = Object.values(stageProgress).filter(s => s === 'done').length
+            const failedCount = Object.values(stageProgress).filter(s => s === 'failed').length
+            const currentStageName = state.currentStage ? translateKey(state.currentStage, lang) : ''
+            const allDone = doneCount === 7
+            const hasFailed = failedCount > 0
+            const hasStarted = doneCount > 0 || running
+            const statusClass = hasFailed ? 'failed' : allDone ? 'done' : running ? 'running' : 'idle'
+            const statusText = !hasStarted ? t.step_ready : hasFailed ? t.step_failed : allDone ? t.step_done : running ? t.step_running : t.step_idle
+            return (
+              <div className="step-indicator">
+                <span className="step-num">Step {doneCount}/7</span>
+                <span className="step-name">{currentStageName || '—'}</span>
+                <span className="step-divider" />
+                <div className="step-status">
+                  <span className={`step-status-dot ${statusClass}`} />
+                  <span className="step-status-text">{statusText}</span>
+                </div>
               </div>
-              <span className="step-divider" />
-            </div>
-          )
-        })()}
-        <button className="lang-btn notch-lang" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
-          {lang === 'en' ? '中' : 'EN'}
-        </button>
+            )
+          })()}
+          <span className="step-divider" />
+          <button className="lang-btn" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
+            {lang === 'en' ? '中' : 'EN'}
+          </button>
+        </div>
       </div>
       {tab === 'womb' && renderWomb()}
       {tab === 'cradle' && renderPlaceholder(t.tabs.cradle)}
