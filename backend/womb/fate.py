@@ -93,42 +93,110 @@ def roll_stillbirth(species: str, env_risk_modifier: float = 1.0) -> bool:
     return roll(min(rate * env_risk_modifier, 0.5))
 
 
-def roll_congenital_defects(species: str, env_risk_modifier: float = 1.0) -> list[str]:
-    """Roll for congenital defects. Environment risk modifier applied to all probabilities."""
-    risks = _load_risks(species)
-    defects = []
+# 综合征共现矩阵：当缺陷 A 命中时，缺陷 B 以**绝对概率**触发（不再用乘数）
+# 数据来源：PMC5370349 (唐氏→CHD ~50%), StatPearls/PMC3475879 (NTD→脑积水 15-75%),
+#           PMC10548612 (NTD→足内翻), Circulation (唐氏→脑积水)
+SYNDROME_CO_OCCURRENCE = {
+    "down_syndrome": {
+        "congenital_heart_defect": 0.50,   # ~50% 唐氏患儿合并 CHD (Meta: 49.9%)
+        "hydrocephalus": 0.05,             # 唐氏合并脑积水 ~5%
+        "clubfoot": 0.03,                  # 唐氏合并足内翻 ~3%
+    },
+    "neural_tube_defect": {
+        "hydrocephalus": 0.20,             # 脊柱裂出生时脑积水 ~15-25%，取 20%
+        "clubfoot": 0.10,                  # NTD 合并足内翻 ~10%
+    },
+    "congenital_heart_defect": {
+        "cleft_lip_palate": 0.02,          # CHD 合并唇腭裂 ~2%
+    },
+}
 
-    def adjusted_roll(base_rate: float) -> bool:
-        return roll(min(base_rate * env_risk_modifier, 0.5))
+# 扩展后的人类缺陷基础概率（校准后）
+# CDC/WHO 率是人群平均值（已含环境分布）。此处的 base_rate 已预除 E[full_modifier]，
+# 使得在随机环境下 base_rate × E[env_mod × teratogen × nutrient_risk] ≈ CDC 率。
+# 原始 CDC 率见注释。
+HUMAN_DEFECTS = {
+    "congenital_heart_defect": 0.003632,   # CDC 8/1000, calibrated by E[mod]=2.20
+    "neural_tube_defect": 0.000435,        # CDC 1/1000, calibrated by E[mod]=2.30 (folate pathway)
+    "cleft_lip_palate": 0.000454,          # CDC 1/1000
+    "down_syndrome": 0.000649,             # CDC 1/700
+    "clubfoot": 0.000454,                  # Lancet 1.18/1000
+    "gastroschisis": 0.000227,             # CDC 3-5/10000
+    "diaphragmatic_hernia": 0.000136,      # EUROCAT 2.3-2.6/10000
+    "limb_reduction": 0.000272,            # CDC 5-7/10000
+    "microcephaly": 0.000270,              # CDC 3-15/10000, calibrated by E[mod]=2.22 (iodine pathway)
+    "hydrocephalus": 0.000318,             # 全球 4.6-8.5/10000
+}
+
+
+def roll_congenital_defects(
+    species: str,
+    env_risk_modifier: float = 1.0,
+    nutrient_risk_effects: dict | None = None,
+    teratogen_risk: float = 1.0,
+) -> list[dict]:
+    """
+    掷骰判定先天缺陷。返回 list[dict] 格式（含 severity 和 syndrome_origin）。
+
+    扩展：
+    - 10 种人类缺陷（从 4 种扩展）
+    - 综合征共现（缺陷 A 命中后提高缺陷 B 概率）
+    - 严重度连续谱（betavariate 分布，偏向轻度）
+    - 营养素风险效应（如叶酸缺乏 → NTD ×3.0）
+    - 致畸窗口风险叠加
+    """
+    risks = _load_risks(species)
+    defects: list[dict] = []
+    hit_names: set[str] = set()
+    nutrient_risk = nutrient_risk_effects or {}
+
+    def _effective_rate(name: str, base_rate: float) -> float:
+        rate = base_rate * env_risk_modifier * teratogen_risk
+        # 营养素风险叠加
+        if name in nutrient_risk:
+            rate *= nutrient_risk[name]
+        return min(rate, 0.5)
+
+    def _add_defect(name: str, base_rate: float, syndrome_origin: str | None = None):
+        if name in hit_names:
+            return
+        if roll(_effective_rate(name, base_rate)):
+            severity = round(random.betavariate(2, 5), 2)
+            defects.append({"defect": name, "severity": severity, "syndrome_origin": syndrome_origin})
+            hit_names.add(name)
 
     if species == "human":
-        anomalies = risks.get("congenital_anomalies", {})
-        if adjusted_roll(anomalies.get("heart_defects", 0.008)):
-            defects.append("congenital_heart_defect")
-        if adjusted_roll(anomalies.get("neural_tube_defects", 0.001)):
-            defects.append("neural_tube_defect")
-        if adjusted_roll(anomalies.get("cleft_lip_palate", 0.001)):
-            defects.append("cleft_lip_palate")
-        if adjusted_roll(anomalies.get("down_syndrome", {}).get("overall", 0.00143)):
-            defects.append("down_syndrome")
+        # 第一轮：独立掷骰
+        for name, base_rate in HUMAN_DEFECTS.items():
+            _add_defect(name, base_rate)
+
+        # 第二轮：综合征共现（绝对概率，不经过 base_rate 乘数）
+        for trigger, co_map in SYNDROME_CO_OCCURRENCE.items():
+            if trigger in hit_names:
+                for target, absolute_prob in co_map.items():
+                    if target not in hit_names:
+                        if roll(min(absolute_prob, 0.95)):
+                            severity = round(random.betavariate(2, 5), 2)
+                            defects.append({"defect": target, "severity": severity, "syndrome_origin": trigger})
+                            hit_names.add(target)
 
     elif species == "dog":
         cd = risks.get("congenital_defects", {})
-        if adjusted_roll(cd.get("heart_defects", 0.0075)):
-            defects.append("congenital_heart_defect")
-        if adjusted_roll(cd.get("cleft_palate", 0.0015)):
-            defects.append("cleft_palate")
-        if adjusted_roll(cd.get("cryptorchidism", 0.038)):
-            defects.append("cryptorchidism")
+        for name, key, fallback in [
+            ("congenital_heart_defect", "heart_defects", 0.0075),
+            ("cleft_palate", "cleft_palate", 0.0015),
+            ("cryptorchidism", "cryptorchidism", 0.038),
+        ]:
+            _add_defect(name, cd.get(key, fallback))
 
     elif species == "cat":
         cd = risks.get("congenital_defects", {})
-        if adjusted_roll(cd.get("polydactyly", 0.02)):
-            defects.append("polydactyly")
-        if adjusted_roll(cd.get("cleft_palate", 0.004)):
-            defects.append("cleft_palate")
-        if adjusted_roll(cd.get("heart_defects", 0.006)):
-            defects.append("congenital_heart_defect")
+        for name, key, fallback in [
+            ("polydactyly", "polydactyly", 0.02),
+            ("cleft_palate", "cleft_palate", 0.004),
+            ("congenital_heart_defect", "heart_defects", 0.006),
+        ]:
+            _add_defect(name, cd.get(key, fallback))
 
     return defects
 
@@ -176,6 +244,12 @@ DEFECT_CONTRADICTION_KEYWORDS = {
     "down_syndrome": ["normal chromosome", "typical karyotype"],
     "polydactyly": ["normal digit count", "five digits"],
     "cryptorchidism": ["both testes descended", "normal testicular"],
+    "clubfoot": ["normal foot", "normal gait", "no foot deformity"],
+    "gastroschisis": ["intact abdominal wall", "no abdominal defect"],
+    "diaphragmatic_hernia": ["normal diaphragm", "intact diaphragm"],
+    "limb_reduction": ["normal limbs", "all limbs intact", "fully formed extremities"],
+    "microcephaly": ["normal head circumference", "typical brain size"],
+    "hydrocephalus": ["normal ventricles", "no ventricular enlargement"],
 }
 
 

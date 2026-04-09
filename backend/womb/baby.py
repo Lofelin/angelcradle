@@ -28,11 +28,17 @@ class Baby:
     born_at: str
     genes: dict                             # {"expression": [...]}
     first_cry: str
-    gestation_log: list[dict]               # five-stage development records
+    gestation_log: list[dict]               # seven-stage development records
     environment: dict                       # maternal environment during gestation
-    complications: list[str] = field(default_factory=list)  # congenital defects
-    preterm: dict = field(default_factory=dict)             # preterm info if applicable
-    alive: bool = True                      # False if stillborn
+    complications: list[dict] = field(default_factory=list)   # 升级: list[dict] 含 severity/syndrome_origin
+    preterm: dict = field(default_factory=dict)
+    alive: bool = True
+    parent_genomes: dict = field(default_factory=dict)        # 父母基因快照
+
+    @property
+    def complication_names(self) -> list[str]:
+        """向后兼容：返回缺陷名称列表。"""
+        return [c["defect"] if isinstance(c, dict) else c for c in self.complications]
 
     def to_dict(self, include_log: bool = True) -> dict:
         result = {
@@ -45,8 +51,10 @@ class Baby:
             "genes": self.genes,
             "first_cry": self.first_cry,
             "complications": self.complications,
+            "complication_names": self.complication_names,
             "preterm": self.preterm,
             "environment": self.environment,
+            "parent_genomes": self.parent_genomes,
         }
         if include_log:
             result["gestation_log"] = self.gestation_log
@@ -88,8 +96,10 @@ def _load_birth_attributes(species: str) -> dict:
     return blueprint.get("birth_attributes", {})
 
 
-def determine_sex(species: str) -> str:
+def determine_sex(species: str, override: str = None) -> str:
     """Determine sex based on species blueprint sex determination system."""
+    if override in ("male", "female"):
+        return override
     attrs = _load_birth_attributes(species)
     sex_system = attrs.get("sex_system", "XY")
     if sex_system == "XY":
@@ -97,14 +107,14 @@ def determine_sex(species: str) -> str:
     return random.choice(["male", "female"])
 
 
-def determine_phenotype(species: str) -> dict:
+def determine_phenotype(species: str, override: str = None) -> dict:
     """Determine innate phenotype from species blueprint."""
     attrs = _load_birth_attributes(species)
     phenotype = {}
     races = attrs.get("races")
     if races:
-        phenotype["race"] = random.choice(races)
+        phenotype["race"] = override if override and override in races else random.choice(races)
     breeds = attrs.get("breeds")
     if breeds:
-        phenotype["breed"] = random.choice(breeds)
+        phenotype["breed"] = override if override and override in breeds else random.choice(breeds)
     return phenotype
