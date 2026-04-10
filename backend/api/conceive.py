@@ -20,6 +20,7 @@ from womb.nutrients import get_overall_nutrient_risk_effects
 from womb.teratogen import get_overall_teratogen_risk
 from womb.heredity import ParentGenome, random_genome, crossover, genotype_to_phenotype
 from womb.epigenetics import generate_methylation_profile, apply_epigenetic_modification
+from womb.birthplace import resolve_birthplace, get_race_weights
 from . import registry
 
 router = APIRouter()
@@ -32,12 +33,12 @@ def _validate_species(species: str):
 
 
 @router.post("/conceive")
-def do_conceive(species: str, model: Optional[str] = None):
+def do_conceive(species: str, model: Optional[str] = None, birthplace: Optional[str] = None):
     """Conceive — synchronous. Returns ConceptionResult."""
     _validate_species(species)
 
     try:
-        result = conceive(species=species, model=model)
+        result = conceive(species=species, model=model, birthplace=birthplace)
         # Save each baby
         for baby in result.babies:
             registry.save(baby.to_dict(include_log=True))
@@ -66,6 +67,8 @@ def do_conceive_stream(
     # 遗传参数（JSON 字符串）
     father_genome: Optional[str] = None,
     mother_genome: Optional[str] = None,
+    # 出生地（ISO code 或国家名）
+    birthplace: Optional[str] = None,
 ):
     """Conceive — SSE stream with real-time stage progress and fate rolls."""
     _validate_species(species)
@@ -73,7 +76,17 @@ def do_conceive_stream(
     provider = os.environ.get("LLM_PROVIDER", "deepseek")
 
     def event_generator():
-        # 0. Parse parent genomes
+        # 0. Birthplace
+        bp = resolve_birthplace(species, birthplace)
+        bp_summary = {"name": bp["name"], "code": bp["code"], "coordinates": bp["coordinates"]} if bp else None
+        race_wts = get_race_weights(bp)
+        yield _sse({
+            "event": "birthplace",
+            "result": bp_summary,
+            "method": "specified" if birthplace and bp else "random" if bp else "skipped",
+        })
+
+        # 1. Parse parent genomes
         father = None
         mother = None
         if father_genome:
@@ -92,7 +105,7 @@ def do_conceive_stream(
             mother = random_genome(species)
         parent_genomes_snapshot = {"father": father.to_dict(), "mother": mother.to_dict()}
 
-        # 1. Environment (with nutrient overrides)
+        # 2. Environment (with nutrient overrides + birthplace bias)
         nutrient_overrides = {}
         for name, val in [("folate", folate), ("iodine", iodine), ("iron", iron), ("dha", dha), ("calcium", calcium)]:
             if val is not None:
@@ -104,6 +117,7 @@ def do_conceive_stream(
             toxin_exposure=toxin_exposure,
             maternal_age_factor=maternal_age_factor,
             nutrients=nutrient_overrides or None,
+            birthplace=bp,
         )
         yield _sse({"event": "environment", "result": env})
         yield _sse({"event": "parent_genomes", "result": parent_genomes_snapshot})
@@ -113,13 +127,13 @@ def do_conceive_stream(
         nutrient_risk = get_overall_nutrient_risk_effects(env.get("nutrients", {}))
         teratogen_risk_overall = get_overall_teratogen_risk(env.get("toxin_types", []))
 
-        # 2. Miscarriage roll
-        miscarriage_fate = roll_miscarriage(species, env_risk_modifier=miscarriage_mod)
-        yield _sse({"event": "fate_roll", "type": "miscarriage", "result": miscarriage_fate})
-
-        if miscarriage_fate["miscarriage"]:
-            yield _sse({"event": "miscarriage", "message": f"Miscarriage at early stage (rate: {miscarriage_fate.get('adjusted_rate', 0):.1%})"})
-            return
+        # 3. Miscarriage roll（仅非 human 物种保留前置判定；human 改为逐阶段）
+        if species != "human":
+            miscarriage_fate = roll_miscarriage(species, env_risk_modifier=miscarriage_mod)
+            yield _sse({"event": "fate_roll", "type": "miscarriage", "result": miscarriage_fate})
+            if miscarriage_fate["miscarriage"]:
+                yield _sse({"event": "miscarriage", "message": f"Miscarriage at early stage (rate: {miscarriage_fate.get('adjusted_rate', 0):.1%})"})
+                return
 
         # 3. Offspring count
         actual_count = offspring_count if offspring_count and 1 <= offspring_count <= 12 else roll_multiples(species)
@@ -135,7 +149,7 @@ def do_conceive_stream(
             child_phenotype_from_genes = genotype_to_phenotype(child_genotype, species)
 
             baby_sex = determine_sex(species, override=sex)
-            baby_phenotype = determine_phenotype(species, override=phenotype)
+            baby_phenotype = determine_phenotype(species, override=phenotype, race_weights=race_wts)
             baby_phenotype.update({f"genetic_{k}": v for k, v in child_phenotype_from_genes.items()})
 
             # 表观遗传修饰
@@ -172,9 +186,15 @@ def do_conceive_stream(
                 offspring_count=actual_count, birth_order=idx,
                 provider=provider, model=model,
                 genotype=child_genotype,
+                defects_full=defects,
             ):
                 if event.get("status") == "failed":
                     yield _sse({"event": "development_failed", "index": idx, **event})
+                    development_failed = True
+                    break
+
+                if event.get("status") == "miscarriage":
+                    yield _sse({"event": "miscarriage", "index": idx, **event})
                     development_failed = True
                     break
 
@@ -194,6 +214,7 @@ def do_conceive_stream(
                         preterm=preterm,
                         alive=not is_stillborn,
                         parent_genomes=parent_genomes_snapshot,
+                        birthplace=bp_summary or {},
                     )
                     registry.save(baby.to_dict(include_log=True))
                     babies.append(baby)

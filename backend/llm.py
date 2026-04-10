@@ -84,6 +84,31 @@ def call_llm(prompt: str, client, model: str, provider: str, max_tokens: int = 4
     return text
 
 
+def call_llm_chat(
+    system: str, messages: list[dict], client, model: str, provider: str, max_tokens: int = 4096,
+) -> str:
+    """调用 LLM（chat 格式：system prompt + 多轮消息），返回原始文本响应。"""
+    if provider == "anthropic":
+        response = client.messages.create(
+            model=model, max_tokens=max_tokens, system=system,
+            messages=messages,
+        )
+        text = response.content[0].text if response.content else ""
+    else:
+        # OpenAI-compatible: system 作为第一条消息
+        all_messages = [{"role": "system", "content": system}] + messages
+        response = client.chat.completions.create(
+            model=model, max_tokens=max_tokens,
+            messages=all_messages,
+        )
+        text = response.choices[0].message.content or ""
+
+    if not text.strip():
+        raise RuntimeError(f"LLM returned empty response (provider={provider}, model={model})")
+
+    return text
+
+
 def parse_json(raw: str) -> dict:
     """Parse JSON from LLM output. Attempts repair for common LLM JSON errors."""
     cleaned = raw.strip()
