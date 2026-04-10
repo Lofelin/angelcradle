@@ -2,9 +2,9 @@
 母体环境：随机生成条件 + 量化修正系数。
 
 环境不只是标签——每个条件产生量化修正，在代码层强制执行于资源预算和风险概率。
-现已集成营养素细分和致畸毒素类型。
+集成营养素细分、致畸毒素类型、出生地环境偏移。
 
-[INPUT]: 可选的环境参数覆盖
+[INPUT]: 可选的环境参数覆盖, 可选 birthplace dict (from birthplace.py)
 [OUTPUT]: 导出 generate_environment, compute_modifiers, get_effective_budget, format_environment 等
 [POS]: womb/ 的环境基础设施，被 stages.py、fate.py 和 __init__.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -127,12 +127,33 @@ def _weighted_choice(options: list[tuple[str, float]]) -> str:
     return random.choices(labels, weights=weights, k=1)[0]
 
 
+def _bias_weights(
+    levels: list[tuple[str, float]],
+    favorable_bias: float,
+) -> list[tuple[str, float]]:
+    """
+    根据 bias 值偏移权重分布。
+
+    favorable_bias=0.5 时权重不变（中性）。
+    >0.5 时向分布前端（favorable）倾斜。
+    <0.5 时向分布后端（unfavorable）倾斜。
+    """
+    n = len(levels)
+    new_weights = []
+    for i, (label, w) in enumerate(levels):
+        position = i / (n - 1) if n > 1 else 0.5
+        shift = (1.0 - position) * favorable_bias + position * (1.0 - favorable_bias)
+        new_weights.append((label, w * max(shift, 0.05)))
+    return new_weights
+
+
 def generate_environment(
     nutrition: str | None = None,
     stress: str | None = None,
     toxin_exposure: str | None = None,
     maternal_age_factor: str | None = None,
     nutrients: dict | None = None,
+    birthplace: dict | None = None,
 ) -> dict:
     """
     生成母体环境。可选参数覆盖随机掷骰。
@@ -153,13 +174,37 @@ def generate_environment(
     if nutrition in valid_nutrition:
         nutrition_label = nutrition
 
+    # 出生地环境偏移
+    bp_mods = birthplace.get("environment_modifiers", {}) if birthplace else {}
+
+    # 营养：birthplace bias 只在用户未显式指定时生效
+    if nutrition not in valid_nutrition and bp_mods.get("nutrition_baseline"):
+        biased = _bias_weights(NUTRITION_LEVELS, bp_mods["nutrition_baseline"])
+        nutrition_label = _weighted_choice(biased)
+
     # 毒素
-    toxin_level = toxin_exposure if toxin_exposure in valid_toxin else _weighted_choice(TOXIN_EXPOSURES)
+    if toxin_exposure in valid_toxin:
+        toxin_level = toxin_exposure
+    elif bp_mods.get("toxin_baseline"):
+        # toxin_baseline 高 = 毒素暴露高 → 反转 bias（favorable = 低毒素）
+        biased = _bias_weights(TOXIN_EXPOSURES, 1.0 - bp_mods["toxin_baseline"])
+        toxin_level = _weighted_choice(biased)
+    else:
+        toxin_level = _weighted_choice(TOXIN_EXPOSURES)
     toxin_types = assign_toxin_types(toxin_level)
+
+    # 压力
+    if stress in valid_stress:
+        stress_level = stress
+    elif bp_mods.get("stress_baseline"):
+        biased = _bias_weights(STRESS_LEVELS, 1.0 - bp_mods["stress_baseline"])
+        stress_level = _weighted_choice(biased)
+    else:
+        stress_level = _weighted_choice(STRESS_LEVELS)
 
     env = {
         "nutrition": nutrition_label,
-        "stress": stress if stress in valid_stress else _weighted_choice(STRESS_LEVELS),
+        "stress": stress_level,
         "toxin_exposure": toxin_level,
         "maternal_age_factor": maternal_age_factor if maternal_age_factor in valid_age else _random_age_factor(),
         "nutrients": nutrient_values,
@@ -167,6 +212,9 @@ def generate_environment(
         "placenta": init_placenta(),
         "immunity": generate_immunity(),
     }
+    # 附带 birthplace 修正系数供下游使用（如 roll_stage_miscarriage 的 healthcare 因子）
+    if bp_mods:
+        env["birthplace_modifiers"] = bp_mods
     env["modifiers"] = compute_modifiers(env)
     return env
 

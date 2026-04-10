@@ -1,0 +1,561 @@
+# 地区数据：国家级粒度，用于 birthplace 系统
+# races 引用: East Asian, South Asian, Southeast Asian, European,
+#             African, Middle Eastern, Latin American, Oceanian Indigenous, Mixed
+# population_weight 单位：百万人口（近似值），用于 weighted sampling
+
+regional_defaults:
+  east_asia:
+    race_distribution:
+      East Asian: 0.90
+      Southeast Asian: 0.03
+      Mixed: 0.05
+      European: 0.01
+      South Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.70
+      toxin_baseline: 0.35
+      healthcare_baseline: 0.70
+      stress_baseline: 0.45
+
+  south_asia:
+    race_distribution:
+      South Asian: 0.92
+      Southeast Asian: 0.03
+      Mixed: 0.03
+      East Asian: 0.01
+      Middle Eastern: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.45
+      toxin_baseline: 0.50
+      healthcare_baseline: 0.40
+      stress_baseline: 0.55
+
+  southeast_asia:
+    race_distribution:
+      Southeast Asian: 0.85
+      East Asian: 0.05
+      South Asian: 0.03
+      Mixed: 0.05
+      European: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.55
+      toxin_baseline: 0.40
+      healthcare_baseline: 0.50
+      stress_baseline: 0.45
+
+  europe:
+    race_distribution:
+      European: 0.82
+      Middle Eastern: 0.05
+      African: 0.04
+      Mixed: 0.05
+      South Asian: 0.02
+      East Asian: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.80
+      toxin_baseline: 0.25
+      healthcare_baseline: 0.85
+      stress_baseline: 0.35
+
+  sub_saharan_africa:
+    race_distribution:
+      African: 0.95
+      Mixed: 0.03
+      Middle Eastern: 0.01
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.35
+      toxin_baseline: 0.45
+      healthcare_baseline: 0.25
+      stress_baseline: 0.60
+
+  middle_east:
+    race_distribution:
+      Middle Eastern: 0.85
+      South Asian: 0.05
+      African: 0.03
+      European: 0.03
+      Mixed: 0.03
+      Southeast Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.60
+      toxin_baseline: 0.35
+      healthcare_baseline: 0.55
+      stress_baseline: 0.50
+
+  latin_america:
+    race_distribution:
+      Latin American: 0.60
+      Mixed: 0.20
+      European: 0.10
+      African: 0.08
+      Oceanian Indigenous: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.55
+      toxin_baseline: 0.40
+      healthcare_baseline: 0.50
+      stress_baseline: 0.50
+
+  oceania:
+    race_distribution:
+      European: 0.55
+      Oceanian Indigenous: 0.20
+      East Asian: 0.10
+      Southeast Asian: 0.05
+      Mixed: 0.08
+      South Asian: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.75
+      toxin_baseline: 0.20
+      healthcare_baseline: 0.80
+      stress_baseline: 0.30
+
+  north_america:
+    race_distribution:
+      European: 0.55
+      Latin American: 0.15
+      African: 0.12
+      Mixed: 0.08
+      East Asian: 0.05
+      South Asian: 0.03
+      Middle Eastern: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.75
+      toxin_baseline: 0.25
+      healthcare_baseline: 0.80
+      stress_baseline: 0.40
+
+countries:
+  - name: China
+    code: CN
+    region: east_asia
+    coordinates: {lat: 35.86, lng: 104.20}
+    population_weight: 1425.0
+    race_distribution:
+      East Asian: 0.91
+      Southeast Asian: 0.02
+      Mixed: 0.04
+      South Asian: 0.02
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.72
+      toxin_baseline: 0.40
+      healthcare_baseline: 0.72
+      stress_baseline: 0.50
+
+  - name: India
+    code: IN
+    region: south_asia
+    coordinates: {lat: 20.59, lng: 78.96}
+    population_weight: 1460.0
+    race_distribution:
+      South Asian: 0.93
+      Southeast Asian: 0.02
+      Mixed: 0.03
+      East Asian: 0.01
+      Middle Eastern: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.45
+      toxin_baseline: 0.55
+      healthcare_baseline: 0.38
+      stress_baseline: 0.55
+
+  - name: United States
+    code: US
+    region: north_america
+    coordinates: {lat: 37.09, lng: -95.71}
+    population_weight: 340.0
+    race_distribution:
+      European: 0.57
+      Latin American: 0.19
+      African: 0.13
+      East Asian: 0.06
+      Mixed: 0.03
+      South Asian: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.78
+      toxin_baseline: 0.22
+      healthcare_baseline: 0.75
+      stress_baseline: 0.45
+
+  - name: Indonesia
+    code: ID
+    region: southeast_asia
+    coordinates: {lat: -0.79, lng: 113.92}
+    population_weight: 278.0
+    race_distribution:
+      Southeast Asian: 0.88
+      East Asian: 0.04
+      South Asian: 0.02
+      Mixed: 0.04
+      Middle Eastern: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.52
+      toxin_baseline: 0.42
+      healthcare_baseline: 0.48
+      stress_baseline: 0.45
+
+  - name: Pakistan
+    code: PK
+    region: south_asia
+    coordinates: {lat: 30.38, lng: 69.35}
+    population_weight: 240.0
+    race_distribution:
+      South Asian: 0.90
+      Middle Eastern: 0.04
+      Mixed: 0.04
+      East Asian: 0.01
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.40
+      toxin_baseline: 0.50
+      healthcare_baseline: 0.32
+      stress_baseline: 0.60
+
+  - name: Brazil
+    code: BR
+    region: latin_america
+    coordinates: {lat: -14.24, lng: -51.93}
+    population_weight: 216.0
+    race_distribution:
+      Mixed: 0.45
+      European: 0.43
+      African: 0.10
+      East Asian: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.58
+      toxin_baseline: 0.38
+      healthcare_baseline: 0.55
+      stress_baseline: 0.48
+
+  - name: Nigeria
+    code: NG
+    region: sub_saharan_africa
+    coordinates: {lat: 9.08, lng: 8.68}
+    population_weight: 230.0
+    race_distribution:
+      African: 0.96
+      Mixed: 0.02
+      Middle Eastern: 0.01
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.35
+      toxin_baseline: 0.50
+      healthcare_baseline: 0.22
+      stress_baseline: 0.62
+
+  - name: Bangladesh
+    code: BD
+    region: south_asia
+    coordinates: {lat: 23.68, lng: 90.36}
+    population_weight: 173.0
+    race_distribution:
+      South Asian: 0.95
+      Southeast Asian: 0.02
+      Mixed: 0.02
+      East Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.40
+      toxin_baseline: 0.55
+      healthcare_baseline: 0.35
+      stress_baseline: 0.58
+
+  - name: Russia
+    code: RU
+    region: europe
+    coordinates: {lat: 61.52, lng: 105.32}
+    population_weight: 144.0
+    race_distribution:
+      European: 0.78
+      East Asian: 0.08
+      Mixed: 0.06
+      Middle Eastern: 0.05
+      South Asian: 0.03
+    environment_modifiers:
+      nutrition_baseline: 0.68
+      toxin_baseline: 0.38
+      healthcare_baseline: 0.62
+      stress_baseline: 0.50
+
+  - name: Japan
+    code: JP
+    region: east_asia
+    coordinates: {lat: 36.20, lng: 138.25}
+    population_weight: 124.0
+    race_distribution:
+      East Asian: 0.95
+      Mixed: 0.02
+      Southeast Asian: 0.01
+      European: 0.01
+      South Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.85
+      toxin_baseline: 0.20
+      healthcare_baseline: 0.92
+      stress_baseline: 0.55
+
+  - name: Mexico
+    code: MX
+    region: latin_america
+    coordinates: {lat: 23.63, lng: -102.55}
+    population_weight: 129.0
+    race_distribution:
+      Latin American: 0.62
+      Mixed: 0.22
+      European: 0.10
+      Oceanian Indigenous: 0.04
+      African: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.55
+      toxin_baseline: 0.38
+      healthcare_baseline: 0.52
+      stress_baseline: 0.50
+
+  - name: Ethiopia
+    code: ET
+    region: sub_saharan_africa
+    coordinates: {lat: 9.15, lng: 40.49}
+    population_weight: 130.0
+    race_distribution:
+      African: 0.97
+      Mixed: 0.02
+      Middle Eastern: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.28
+      toxin_baseline: 0.40
+      healthcare_baseline: 0.18
+      stress_baseline: 0.65
+
+  - name: Germany
+    code: DE
+    region: europe
+    coordinates: {lat: 51.17, lng: 10.45}
+    population_weight: 84.0
+    race_distribution:
+      European: 0.78
+      Middle Eastern: 0.06
+      Mixed: 0.06
+      African: 0.04
+      South Asian: 0.03
+      East Asian: 0.03
+    environment_modifiers:
+      nutrition_baseline: 0.85
+      toxin_baseline: 0.18
+      healthcare_baseline: 0.92
+      stress_baseline: 0.35
+
+  - name: Egypt
+    code: EG
+    region: middle_east
+    coordinates: {lat: 26.82, lng: 30.80}
+    population_weight: 112.0
+    race_distribution:
+      Middle Eastern: 0.88
+      African: 0.05
+      Mixed: 0.04
+      European: 0.02
+      South Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.50
+      toxin_baseline: 0.42
+      healthcare_baseline: 0.45
+      stress_baseline: 0.55
+
+  - name: United Kingdom
+    code: GB
+    region: europe
+    coordinates: {lat: 55.38, lng: -3.44}
+    population_weight: 68.0
+    race_distribution:
+      European: 0.75
+      South Asian: 0.08
+      African: 0.05
+      Mixed: 0.05
+      East Asian: 0.03
+      Middle Eastern: 0.03
+      Latin American: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.82
+      toxin_baseline: 0.20
+      healthcare_baseline: 0.88
+      stress_baseline: 0.38
+
+  - name: South Korea
+    code: KR
+    region: east_asia
+    coordinates: {lat: 35.91, lng: 127.77}
+    population_weight: 52.0
+    race_distribution:
+      East Asian: 0.94
+      Southeast Asian: 0.02
+      Mixed: 0.02
+      European: 0.01
+      South Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.82
+      toxin_baseline: 0.22
+      healthcare_baseline: 0.90
+      stress_baseline: 0.60
+
+  - name: South Africa
+    code: ZA
+    region: sub_saharan_africa
+    coordinates: {lat: -30.56, lng: 22.94}
+    population_weight: 64.0
+    race_distribution:
+      African: 0.78
+      Mixed: 0.09
+      European: 0.07
+      South Asian: 0.03
+      East Asian: 0.01
+      Latin American: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.48
+      toxin_baseline: 0.40
+      healthcare_baseline: 0.45
+      stress_baseline: 0.55
+
+  - name: France
+    code: FR
+    region: europe
+    coordinates: {lat: 46.23, lng: 2.21}
+    population_weight: 68.0
+    race_distribution:
+      European: 0.72
+      African: 0.10
+      Middle Eastern: 0.06
+      Mixed: 0.06
+      South Asian: 0.03
+      East Asian: 0.02
+      Latin American: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.83
+      toxin_baseline: 0.20
+      healthcare_baseline: 0.90
+      stress_baseline: 0.35
+
+  - name: Thailand
+    code: TH
+    region: southeast_asia
+    coordinates: {lat: 15.87, lng: 100.99}
+    population_weight: 72.0
+    race_distribution:
+      Southeast Asian: 0.85
+      East Asian: 0.08
+      Mixed: 0.04
+      South Asian: 0.02
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.62
+      toxin_baseline: 0.35
+      healthcare_baseline: 0.60
+      stress_baseline: 0.42
+
+  - name: Saudi Arabia
+    code: SA
+    region: middle_east
+    coordinates: {lat: 23.89, lng: 45.08}
+    population_weight: 37.0
+    race_distribution:
+      Middle Eastern: 0.65
+      South Asian: 0.22
+      African: 0.04
+      Southeast Asian: 0.04
+      Mixed: 0.03
+      European: 0.02
+    environment_modifiers:
+      nutrition_baseline: 0.70
+      toxin_baseline: 0.30
+      healthcare_baseline: 0.72
+      stress_baseline: 0.42
+
+  - name: Australia
+    code: AU
+    region: oceania
+    coordinates: {lat: -25.27, lng: 133.78}
+    population_weight: 26.0
+    race_distribution:
+      European: 0.55
+      East Asian: 0.12
+      South Asian: 0.08
+      Southeast Asian: 0.06
+      Oceanian Indigenous: 0.05
+      Mixed: 0.08
+      Middle Eastern: 0.03
+      African: 0.03
+    environment_modifiers:
+      nutrition_baseline: 0.82
+      toxin_baseline: 0.18
+      healthcare_baseline: 0.90
+      stress_baseline: 0.30
+
+  - name: Canada
+    code: CA
+    region: north_america
+    coordinates: {lat: 56.13, lng: -106.35}
+    population_weight: 39.0
+    race_distribution:
+      European: 0.58
+      East Asian: 0.10
+      South Asian: 0.08
+      Mixed: 0.08
+      African: 0.05
+      Latin American: 0.04
+      Southeast Asian: 0.03
+      Middle Eastern: 0.03
+      Oceanian Indigenous: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.82
+      toxin_baseline: 0.18
+      healthcare_baseline: 0.90
+      stress_baseline: 0.32
+
+  - name: Vietnam
+    code: VN
+    region: southeast_asia
+    coordinates: {lat: 14.06, lng: 108.28}
+    population_weight: 100.0
+    race_distribution:
+      Southeast Asian: 0.82
+      East Asian: 0.10
+      Mixed: 0.05
+      South Asian: 0.02
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.55
+      toxin_baseline: 0.42
+      healthcare_baseline: 0.52
+      stress_baseline: 0.45
+
+  - name: Turkey
+    code: TR
+    region: middle_east
+    coordinates: {lat: 38.96, lng: 35.24}
+    population_weight: 86.0
+    race_distribution:
+      Middle Eastern: 0.75
+      European: 0.10
+      Mixed: 0.08
+      South Asian: 0.04
+      African: 0.02
+      East Asian: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.65
+      toxin_baseline: 0.32
+      healthcare_baseline: 0.62
+      stress_baseline: 0.48
+
+  - name: DR Congo
+    code: CD
+    region: sub_saharan_africa
+    coordinates: {lat: -4.04, lng: 21.76}
+    population_weight: 105.0
+    race_distribution:
+      African: 0.97
+      Mixed: 0.02
+      European: 0.01
+    environment_modifiers:
+      nutrition_baseline: 0.25
+      toxin_baseline: 0.48
+      healthcare_baseline: 0.15
+      stress_baseline: 0.68

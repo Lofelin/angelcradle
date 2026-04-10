@@ -24,7 +24,7 @@ from .prompts import (
     STAGE_5_BIRTH, MATERNAL_RESPONSE_PROMPT, SEX_DISPLAY,
 )
 from .environment import format_environment, environment_impact_text, get_effective_budget
-from .fate import validate_resource_semantics, validate_defect_consistency
+from .fate import validate_resource_semantics, validate_defect_consistency, roll_stage_miscarriage
 from .dynamic_env import roll_env_change, apply_maternal_feedback
 from .nutrients import get_stage_nutrient_effects, format_nutrients_for_prompt
 from .teratogen import get_teratogen_risk, format_teratogen_for_prompt
@@ -429,6 +429,7 @@ def express(
     offspring_count: int = 1, birth_order: int = 0,
     provider: str = "deepseek", model: str | None = None,
     genotype: dict = None,
+    defects_full: list[dict] = None,
 ) -> dict:
     """
     7 阶段发育表达，集成：
@@ -449,6 +450,7 @@ def express(
     maternal_states: list[dict] = []
     gestation_day = 0
     env = dict(environment) if environment else {}
+    _defects_full = defects_full or []
 
     for i in range(7):
         stage_name = STAGE_NAMES[i]
@@ -481,6 +483,28 @@ def express(
 
         # --- 生命体征 ---
         vitals = compute_vitals(stage_name, env, hormones=hormones, complications=defects)
+
+        # --- 逐阶段流产检查（Stage 1-6，birth 由 stillbirth 处理）---
+        if i < 6:
+            miscarriage_result = roll_stage_miscarriage(
+                species, stage_name, env, _defects_full,
+                placenta_state, hormones, immune_risks,
+                nutrient_effects, teratogen_risk,
+            )
+            if miscarriage_result["miscarriage"]:
+                gestation_day += duration
+                gestation_log.append({
+                    "stage": stage_name, "gestation_day": gestation_day,
+                    "duration_days": duration, "response": None,
+                    "miscarriage": miscarriage_result,
+                })
+                return {
+                    "miscarriage": True,
+                    "miscarriage_stage": stage_name,
+                    "miscarriage_cause": miscarriage_result.get("cause", "unknown"),
+                    "gestation_log": gestation_log,
+                    "total_gestation_days": gestation_day,
+                }
 
         # 构建 prompt
         prompts = build_stage_prompts(
@@ -601,6 +625,7 @@ def express_stream(
     offspring_count: int = 1, birth_order: int = 0,
     provider: str = "deepseek", model: str | None = None,
     genotype: dict = None,
+    defects_full: list[dict] = None,
 ):
     """7 阶段发育 SSE 生成器，集成动态环境/营养素/致畸窗口/母体反馈数值化。"""
     client = _create_client(provider)
@@ -612,6 +637,7 @@ def express_stream(
     maternal_states: list[dict] = []
     gestation_day = 0
     env = dict(environment) if environment else {}
+    _defects_full = defects_full or []
 
     for i in range(7):
         stage_name = STAGE_NAMES[i]
@@ -646,6 +672,24 @@ def express_stream(
         # --- 生命体征 ---
         vitals = compute_vitals(stage_name, env, hormones=hormones, complications=defects)
         vitals_display = format_vitals_for_display(vitals, stage_name)
+
+        # --- 逐阶段流产检查（Stage 1-6）---
+        if i < 6:
+            miscarriage_result = roll_stage_miscarriage(
+                species, stage_name, env, _defects_full,
+                placenta_state, hormones, immune_risks,
+                nutrient_effects, teratogen_risk,
+            )
+            if miscarriage_result["miscarriage"]:
+                yield {
+                    "stage": stage_name, "status": "miscarriage",
+                    "stage_num": i + 1,
+                    "cause": miscarriage_result.get("cause", "unknown"),
+                    "base_rate": miscarriage_result.get("base_rate"),
+                    "adjusted_rate": miscarriage_result.get("adjusted_rate"),
+                    "gestation_day": gestation_day,
+                }
+                return
 
         # 逐个推送阶段计算数据（LLM 调用前，让前端有内容展示）
         yield {

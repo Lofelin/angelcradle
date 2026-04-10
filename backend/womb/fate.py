@@ -4,6 +4,12 @@ Fate engine: probability rolls using real-world data from species blueprints.
 Every roll uses actual rates from WHO, Lancet, CDC, PubMed studies.
 Environment modifiers affect probabilities at code level.
 No retries. What happens, happens.
+
+[INPUT]: species blueprints (YAML), environment dict, defects, placenta/hormones/immune state
+[OUTPUT]: 导出 roll_miscarriage, roll_stage_miscarriage, roll_multiples, roll_stillbirth,
+          roll_congenital_defects, roll_preterm, validate_resource_semantics, validate_defect_consistency
+[POS]: womb/ 的命运引擎，被 __init__.py 和 stages.py 消费
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
 from __future__ import annotations
@@ -220,6 +226,118 @@ def roll_preterm(species: str) -> dict:
             return {"preterm": True, "severity": "late_preterm", "weeks": random.randint(34, 36)}
 
     return {"preterm": False, "weeks": random.randint(37, 42)}
+
+
+# ============================================================
+# 逐阶段流产引擎（human 专用）
+# ============================================================
+
+# 条件积: 1 - prod(1 - p_i) ≈ 0.150，环境/缺陷修正进一步调制 → 接近 WHO 15.3%
+HUMAN_STAGE_MISCARRIAGE_RATES = {
+    "zygote":              0.058,   # 染色体异常、着床失败
+    "early_organogenesis": 0.035,   # 遗传 + 营养（叶酸）
+    "late_organogenesis":  0.023,   # 胎盘 + 致畸
+    "early_neural":        0.018,   # 环境压力 + 免疫
+    "late_neural":         0.012,   # 胎盘 + 激素
+    "fetal_movement":      0.009,   # 累积风险
+    # "birth" 不参与——由 roll_stillbirth() 单独处理
+}
+
+STAGE_RISK_FACTORS = {
+    "zygote":              "chromosomal_and_implantation",
+    "early_organogenesis": "genetic_and_nutritional",
+    "late_organogenesis":  "placental_and_teratogenic",
+    "early_neural":        "environmental_and_immune",
+    "late_neural":         "placental_and_hormonal",
+    "fetal_movement":      "cumulative",
+}
+
+
+def roll_stage_miscarriage(
+    species: str,
+    stage_name: str,
+    env: dict,
+    defects: list[dict],
+    placenta: dict,
+    hormones: dict,
+    immune_risks: dict,
+    nutrient_effects: dict,
+    teratogen_risk: float,
+) -> dict:
+    """
+    逐阶段流产判定。仅 human 支持；其他物种返回 {miscarriage: False}。
+
+    每阶段的风险由该阶段特有的主导因子调制，加上全局 healthcare 保护因子。
+    """
+    if species != "human" or stage_name not in HUMAN_STAGE_MISCARRIAGE_RATES:
+        return {"miscarriage": False, "stage": stage_name}
+
+    base_rate = HUMAN_STAGE_MISCARRIAGE_RATES[stage_name]
+    risk_modifier = 1.0
+
+    # 阶段特定修正
+    if stage_name == "zygote":
+        # 遗传缺陷越多/越重，流产风险越高
+        defect_severity_sum = sum(d.get("severity", 0.5) for d in defects)
+        risk_modifier *= (1.0 + defect_severity_sum * 0.5)
+
+    elif stage_name == "early_organogenesis":
+        # 遗传 + 叶酸缺乏
+        defect_count = len(defects)
+        risk_modifier *= (1.0 + defect_count * 0.15)
+        folate_penalty = nutrient_effects.get("risk_effects", {}).get("neural_tube_defect", 1.0)
+        risk_modifier *= min(folate_penalty, 2.0)
+
+    elif stage_name == "late_organogenesis":
+        # 胎盘效率 + 致畸暴露
+        placenta_eff = placenta.get("efficiency", 1.0)
+        risk_modifier *= (1.0 + (1.0 - placenta_eff) * 1.5)
+        risk_modifier *= min(teratogen_risk, 2.5)
+
+    elif stage_name == "early_neural":
+        # 环境压力 + 免疫风险
+        stress = env.get("stress", "moderate")
+        stress_mod = {"minimal": 0.7, "mild": 0.85, "moderate": 1.0, "high": 1.3, "severe": 1.8}
+        risk_modifier *= stress_mod.get(stress, 1.0)
+        immune_mod = immune_risks.get("miscarriage_modifier", 1.0)
+        risk_modifier *= immune_mod
+
+    elif stage_name == "late_neural":
+        # 胎盘 + 激素失衡
+        placenta_eff = placenta.get("efficiency", 1.0)
+        risk_modifier *= (1.0 + (1.0 - placenta_eff) * 1.0)
+        cortisol = hormones.get("cortisol", {}).get("level", 0.5)
+        if cortisol > 0.7:
+            risk_modifier *= (1.0 + (cortisol - 0.7) * 2.0)
+
+    elif stage_name == "fetal_movement":
+        # 累积风险：综合前面所有因子的弱化版
+        placenta_eff = placenta.get("efficiency", 1.0)
+        risk_modifier *= (1.0 + (1.0 - placenta_eff) * 0.8)
+        cortisol = hormones.get("cortisol", {}).get("level", 0.5)
+        if cortisol > 0.7:
+            risk_modifier *= (1.0 + (cortisol - 0.7) * 1.0)
+
+    # 全局 healthcare 保护因子
+    healthcare = env.get("birthplace_modifiers", {}).get("healthcare_baseline", 0.5)
+    risk_modifier *= max(0.3, 1.5 - healthcare)  # 0.92 → 0.58x; 0.15 → 1.35x
+
+    adjusted_rate = min(base_rate * risk_modifier, 0.50)
+
+    if roll(adjusted_rate):
+        return {
+            "miscarriage": True,
+            "stage": stage_name,
+            "cause": STAGE_RISK_FACTORS[stage_name],
+            "base_rate": base_rate,
+            "adjusted_rate": round(adjusted_rate, 4),
+        }
+    return {
+        "miscarriage": False,
+        "stage": stage_name,
+        "base_rate": base_rate,
+        "adjusted_rate": round(adjusted_rate, 4),
+    }
 
 
 # ============================================================

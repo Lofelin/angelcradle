@@ -14,6 +14,10 @@ prompts.py: 7 阶段 prompt 模板 + 母体反馈 prompt
 genetics.py: 向后兼容薄层，re-export stages.py 和 llm.py 的接口
 llm.py: 向后兼容层，re-export 根级 llm.py 的 LLM 客户端接口
 
+### 地理维度
+
+birthplace.py: 出生地系统——地区数据加载/人口加权掷骰/环境修正提取（仅 human）
+
 ### 生物子系统
 
 nutrients.py: 5 种营养素（folate/iodine/iron/dha/calcium）+ 阶段敏感性 + 风险聚合
@@ -28,6 +32,7 @@ vitals.py: 胎儿生命体征（心率/体重/身长/羊水/胎动/血压/血氧
 
 ### 数据
 
+data/: 地区数据（regions.yaml — 出生地系统依赖）
 species/: 物种蓝图 YAML（human.yaml, dog.yaml, cat.yaml）
 
 ## 对外暴露
