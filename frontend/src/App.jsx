@@ -12,6 +12,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
+import { ArrowLeftRight } from 'lucide-react'
 import Cradle from './Cradle'
 
 const API = 'http://localhost:8000'
@@ -1211,11 +1212,12 @@ function App() {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Button
-            variant="secondary"
             size="sm"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={() => { const next = lang === 'en' ? 'zh' : 'en'; localStorage.setItem('lang', next); setLang(next) }}
           >
-            {lang === 'en' ? '中文' : 'EN'}
+            EN/中
+            <ArrowLeftRight className="size-3.5" />
           </Button>
           <a href="https://github.com/Lofelin/angelcradle" target="_blank" rel="noopener noreferrer">
             <Button size="sm" className="bg-[#24292f] text-white hover:bg-[#24292f]/90">
