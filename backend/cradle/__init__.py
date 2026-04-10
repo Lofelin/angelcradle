@@ -11,7 +11,7 @@ Cradle: 摇篮——从出生到进入世界的成长模拟。
 """
 
 from .identity import compile_identity, extract_innate_data, generate_constraints
-from .state import BabyState, Identity, save_state, load_state, list_cradle_babies
+from .state import BabyState, Identity, save_state, load_state, list_cradle_babies, append_event, load_events, append_interaction, load_interactions
 from .nanny import (
     simulate_phase, simulate_phase_stream, resolve_critical_event,
     complete_phase, grow_stream,
@@ -68,9 +68,26 @@ def admit_stream(baby_id: str):
         "instinct_count": len(innate["instincts"]),
     }
 
-    # 3. LLM 编译约束（慢步骤）
+    # 3. LLM 编译约束（慢步骤 + 计时心跳）
     yield {"event": "compiling", "message": "Compiling behavioral constraints..."}
-    constraints = generate_constraints(innate, species)
+
+    from concurrent.futures import ThreadPoolExecutor
+    import time as _time
+    _compile_executor = ThreadPoolExecutor(max_workers=1)
+    _compile_future = _compile_executor.submit(generate_constraints, innate, species)
+    _compile_elapsed = 0
+    constraints = None
+    try:
+        while not _compile_future.done():
+            _time.sleep(1)
+            _compile_elapsed += 1
+            yield {"event": "compiling", "elapsed": _compile_elapsed}
+        constraints = _compile_future.result()
+    except Exception:
+        constraints = []
+    finally:
+        _compile_executor.shutdown(wait=False)
+
     yield {
         "event": "constraints_ready",
         "constraints": constraints,

@@ -106,6 +106,7 @@ class ParentProfile:
     teaching_frequency: float = 0.5     # 0-1，多久主动教导
     emotional_tone: str = "warm"        # warm / neutral / anxious
     total_interventions: int = 0
+    interaction_count: int = 0                                  # 亲子对话次数
     intervention_log: list[dict] = field(default_factory=list)
 
     def to_dict(self) -> dict:
@@ -115,6 +116,7 @@ class ParentProfile:
             "teaching_frequency": self.teaching_frequency,
             "emotional_tone": self.emotional_tone,
             "total_interventions": self.total_interventions,
+            "interaction_count": self.interaction_count,
             "intervention_log": self.intervention_log[-20:],  # 只保留最近 20 条
         }
 
@@ -126,6 +128,7 @@ class ParentProfile:
             teaching_frequency=d.get("teaching_frequency", 0.5),
             emotional_tone=d.get("emotional_tone", "warm"),
             total_interventions=d.get("total_interventions", 0),
+            interaction_count=d.get("interaction_count", 0),
             intervention_log=d.get("intervention_log", []),
         )
 
@@ -299,6 +302,60 @@ def load_state(baby_id: str) -> Optional[BabyState]:
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
     return BabyState.from_dict(data)
+
+
+def append_interaction(baby_id: str, record: dict) -> None:
+    """追加一条亲子对话记录到 interactions.jsonl。"""
+    import time as _time
+    d = _baby_dir(baby_id)
+    d.mkdir(parents=True, exist_ok=True)
+    path = d / "interactions.jsonl"
+    line = json.dumps({"ts": _time.time(), **record}, ensure_ascii=False)
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
+
+def load_interactions(baby_id: str, limit: int = 5) -> list[dict]:
+    """加载最近 N 条亲子对话记录。"""
+    path = _baby_dir(baby_id) / "interactions.jsonl"
+    if not path.is_file():
+        return []
+    records = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return records[-limit:]
+
+
+def append_event(baby_id: str, event: dict) -> None:
+    """追加一条 SSE 事件到 events.jsonl（JSONL 格式）。"""
+    import time as _time
+    d = _baby_dir(baby_id)
+    d.mkdir(parents=True, exist_ok=True)
+    path = d / "events.jsonl"
+    line = json.dumps({"ts": _time.time(), **event}, ensure_ascii=False)
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
+
+def load_events(baby_id: str) -> list[dict]:
+    """加载婴儿的所有历史 SSE 事件。"""
+    path = _baby_dir(baby_id) / "events.jsonl"
+    if not path.is_file():
+        return []
+    events = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            try:
+                events.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return events
 
 
 def list_cradle_babies() -> list[dict]:

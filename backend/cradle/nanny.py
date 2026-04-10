@@ -689,7 +689,7 @@ def grow_stream(state: BabyState):
             }
             return  # 结束流，等待 intervene + 重新调用
 
-        # 无关键事件 → 自动完成阶段
+        # 无关键事件 → 自动完成阶段（LLM 总结 + 计时心跳）
         yield {
             "event": "phase_completing",
             "phase_index": state.current_phase,
@@ -697,7 +697,32 @@ def grow_stream(state: BabyState):
             "message": "Generating phase developmental summary...",
         }
 
-        summary = complete_phase(state)
+        import time as _time
+        _summary_executor = ThreadPoolExecutor(max_workers=1)
+        _summary_future = _summary_executor.submit(complete_phase, state)
+        _summary_elapsed = 0
+        summary = None
+        try:
+            while not _summary_future.done():
+                _time.sleep(1)
+                _summary_elapsed += 1
+                yield {
+                    "event": "phase_completing",
+                    "phase_index": state.current_phase,
+                    "phase_display": phase.display_name,
+                    "elapsed": _summary_elapsed,
+                }
+                if _summary_elapsed > LLM_TIMEOUT:
+                    _summary_future.cancel()
+                    break
+            if _summary_future.done():
+                summary = _summary_future.result()
+        except Exception as e:
+            logger.error("Phase summary LLM error: %s", e)
+        finally:
+            _summary_executor.shutdown(wait=False)
+        if summary is None:
+            summary = {"summary": "Phase summary unavailable."}
 
         next_p = PHASES[state.current_phase] if state.current_phase < len(PHASES) else None
         yield {

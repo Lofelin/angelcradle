@@ -50,6 +50,155 @@ def _call_and_parse(prompt: str) -> dict | list | None:
 
 
 # ============================================================
+# 亲子对话：父母消息 → 婴儿反应（受 expression_mode 严格约束）
+# ============================================================
+
+# LLM 失败时的最小反应
+_FALLBACK_REACTIONS = {
+    "cry_only": "*Stirs slightly, a soft whimper escapes*",
+    "coo_and_gaze": "*Turns head toward the sound, blinks slowly*",
+    "babble_and_reach": "*Looks up, hands pause mid-motion, 'ba?'*",
+    "gesture_and_point": "*Looks at you, tilts head*",
+    "first_words": "*Pauses, looks at you*",
+}
+
+
+def generate_interaction_response(
+    state: BabyState,
+    parent_message: str,
+    recent_interactions: list[dict],
+) -> dict:
+    """
+    生成婴儿对父母消息的反应。
+
+    严格受 expression_mode 约束——cry_only 不能用词，coo_and_gaze 不能形成音节。
+    LLM 失败时降级为预设最小反应。
+    """
+    phase = PHASES[state.current_phase] if state.current_phase < len(PHASES) else PHASES[-1]
+    expr = EXPRESSION_MODES.get(state.expression_mode, EXPRESSION_MODES["cry_only"])
+    sp = state.identity.sensory_profile
+
+    # 最近 3 条记忆
+    recent_memories = state.memories[-3:] if state.memories else []
+    memories_text = "\n".join(
+        f"- [{m.emotional_valence}] {m.reaction}" for m in recent_memories
+    ) or "No memories yet."
+
+    # 最近对话历史
+    conv_text = ""
+    if recent_interactions:
+        lines = []
+        for r in recent_interactions[-5:]:
+            lines.append(f"Parent: \"{r.get('parent_message', '')}\"")
+            lines.append(f"Baby: {r.get('baby_response', '')}")
+        conv_text = "\n".join(lines)
+
+    # 约束列表
+    constraints_text = "\n".join(f"- {c}" for c in state.identity.constraints) or "None"
+
+    # 缺陷
+    defects_text = ", ".join(state.identity.defects) if state.identity.defects else "None"
+
+    # 统计重复主题（帮助 LLM 判断厌烦）
+    topic_count = 0
+    if recent_interactions:
+        last_msg = parent_message.lower()
+        for r in recent_interactions:
+            prev = r.get("parent_message", "").lower()
+            # 简单的重复检测：共享超过一半的词
+            words_cur = set(last_msg.split())
+            words_prev = set(prev.split())
+            if words_cur and words_prev and len(words_cur & words_prev) / max(len(words_cur), 1) > 0.5:
+                topic_count += 1
+
+    repetition_note = ""
+    if topic_count >= 3:
+        repetition_note = f"\n⚠ The parent has repeated a similar topic {topic_count} times recently. The baby may be losing interest, getting bored, or becoming irritated depending on temperament."
+    elif topic_count >= 1:
+        repetition_note = f"\n(Parent has mentioned similar things {topic_count} time(s) before — the baby may be developing familiarity.)"
+
+    prompt = f"""You are simulating a {state.species} infant's reaction to their parent talking to them.
+
+## The Infant
+- Name: {state.name or '(unnamed)'}
+- Age: {state.age_days} days ({phase.age_range})
+- Phase: {phase.display_name} — {phase.description}
+
+## Expression Mode (STRICTLY ENFORCED)
+- Description: {expr['description']}
+- Output format: {expr['format']}
+- Example: {expr['example']}
+
+## Innate Identity (CANNOT be violated)
+- Dominant sense: {sp.dominant or 'none determined'}
+- Weak sense: {sp.weak or 'none'}
+- Arousal baseline: {state.identity.arousal_baseline}
+- Temperament: {state.identity.temperament[:200] if state.identity.temperament else 'unknown'}
+
+## Behavioral Constraints (MUST follow)
+{constraints_text}
+
+## Defects: {defects_text}
+
+## Current State
+- Capabilities: {', '.join(state.capabilities) or 'None yet'}
+- Fears: {', '.join(state.fears) or 'None'}
+- Preferences: {', '.join(state.preferences) or 'None'}
+- Comfort sources: {', '.join(state.comfort_sources) or 'None'}
+
+## Recent Memories
+{memories_text}
+
+## Recent Conversation
+{conv_text or '(first interaction)'}
+{repetition_note}
+
+## Parent Says
+"{parent_message}"
+
+## Task
+Generate the infant's reaction AND any developmental effects. Rules:
+1. MUST use the expression format above. Do NOT exceed developmental ability.
+2. A cry_only baby CANNOT use words or syllables. A coo_and_gaze baby CANNOT form consonant syllables.
+3. Reflect the baby's temperament, sensory profile, and current emotional state.
+4. The baby is NOT a passive learner. It has its own arousal threshold, attention span, and preferences.
+   - Repeated stimulation of the same topic may cause boredom, irritation, or avoidance (especially high-arousal babies).
+   - Novel stimuli aligned with dominant senses are more engaging.
+   - Comforting interactions during distress can build trust.
+5. Keep baby_response concise (1-3 actions/sentences).
+
+For state_changes, ONLY include fields that genuinely changed from this interaction. Use null for no change.
+- new_preference: if the baby showed genuine sustained interest (not just momentary attention)
+- new_comfort_source: if the baby was distressed and this interaction provided relief
+- fear_reduced: if the baby was exposed to a known fear with parent support and showed reduced anxiety
+- new_fear: if the interaction caused genuine distress or overstimulation
+
+Output JSON:
+{{
+  "baby_response": "the reaction in correct expression format",
+  "emotional_tone": "positive/negative/neutral/mixed",
+  "state_changes": {{
+    "new_preference": "string or null",
+    "new_comfort_source": "string or null",
+    "fear_reduced": "string or null",
+    "new_fear": "string or null"
+  }}
+}}"""
+
+    result = _call_and_parse(prompt)
+    if result and isinstance(result, dict) and "baby_response" in result:
+        return {
+            "baby_response": result["baby_response"],
+            "emotional_tone": result.get("emotional_tone", "neutral"),
+            "state_changes": result.get("state_changes", {}),
+        }
+
+    # 降级
+    fallback = _FALLBACK_REACTIONS.get(state.expression_mode, "*Pauses, looks at you*")
+    return {"baby_response": fallback, "emotional_tone": "neutral", "state_changes": {}}
+
+
+# ============================================================
 # 感知过滤：事件 × 感官画像 → 感知权重
 # ============================================================
 
@@ -391,9 +540,24 @@ def generate_phase_summary(state: BabyState) -> dict:
     生成一个阶段的发育总结。
 
     总结这个阶段的关键事件、能力变化、心理状态变化。
+    包含亲子对话历史，影响依恋类型和能力发展评估。
     """
+    from .state import load_interactions
     phase = PHASES[state.current_phase]
     phase_memories = [m for m in state.memories if m.phase == state.current_phase]
+
+    # 加载本阶段的亲子对话
+    all_interactions = load_interactions(state.baby_id, limit=50)
+    phase_interactions = [r for r in all_interactions if r.get("phase") == state.current_phase]
+    interaction_count = state.parent_profile.interaction_count
+
+    interactions_text = ""
+    if phase_interactions:
+        lines = []
+        for r in phase_interactions[-10:]:  # 最近 10 条
+            lines.append(f'Parent: "{r.get("parent_message", "")}"')
+            lines.append(f'Baby ({r.get("expression_mode", "")}): {r.get("baby_response", "")} [{r.get("emotional_tone", "")}]')
+        interactions_text = "\n".join(lines)
 
     prompt = f"""You are writing a developmental summary for a {state.species} infant completing a growth phase.
 
@@ -410,6 +574,10 @@ def generate_phase_summary(state: BabyState) -> dict:
 ## Events This Phase
 {_format_phase_events(phase_memories)}
 
+## Parent-Child Interactions This Phase
+Total interactions: {len(phase_interactions)} (lifetime: {interaction_count})
+{interactions_text or 'No direct interactions this phase.'}
+
 ## Current State
 - Capabilities unlocked: {', '.join(state.capabilities)}
 - Fears: {', '.join(state.fears) if state.fears else 'None'}
@@ -423,16 +591,17 @@ Write a developmental summary (150-250 words) in English. Include:
 2. What new capabilities emerged and how they manifested
 3. The infant's emotional arc through this phase
 4. What patterns are forming (fears, preferences, coping strategies)
-5. What to watch for in the next phase
+5. How parent interactions influenced development (if any) — teaching, bonding, stimulation
+6. What to watch for in the next phase
 
-Also update developmental metrics.
+Also update developmental metrics. Parent engagement level should factor into attachment assessment.
 
 Output as JSON:
 {{
   "summary": "developmental summary text",
   "capabilities_gained": ["new capabilities from this phase"],
   "personality_notes": ["observations about emerging personality"],
-  "attachment_update": "secure/anxious/avoidant/forming — based on parent interactions",
+  "attachment_update": "secure/anxious/avoidant/forming — based on parent interactions and responsiveness",
   "next_phase_watch": "what to watch for in the next phase"
 }}
 """

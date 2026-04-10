@@ -32,7 +32,10 @@ from cradle import (
     admit, admit_stream, load_state, list_cradle_babies,
     check_world_readiness, simulate_phase, simulate_phase_stream,
     resolve_critical_event, complete_phase, grow_stream, PHASES,
+    append_event, load_events, append_interaction, load_interactions,
+    save_state,
 )
+from cradle.mind import generate_interaction_response
 
 router = APIRouter(prefix="/cradle")
 
@@ -49,6 +52,32 @@ class InterveneRequest(BaseModel):
     event_name: str
     parent_action: str
     parent_input: str = ""  # 自由输入（如名字）
+
+
+class InteractRequest(BaseModel):
+    message: str
+
+
+class SocialStartRequest(BaseModel):
+    baby_ids: list[str]
+    context: str = ""
+
+
+class SocialTurnRequest(BaseModel):
+    session_id: str
+
+
+class SocialMessageRequest(BaseModel):
+    session_id: str
+    message: str
+
+
+class SocialEndRequest(BaseModel):
+    session_id: str
+
+
+# 并发锁：baby_id -> True 表示 grow_stream 正在运行
+_grow_locks: dict[str, bool] = {}
 
 
 # ============================================================
@@ -89,11 +118,16 @@ def admit_baby_stream(baby_id: str):
         try:
             for step in admit_stream(baby_id):
                 data = {k: v for k, v in step.items() if not k.startswith("_")}
+                append_event(baby_id, data)
                 yield _sse(data)
         except ValueError as e:
-            yield _sse({"event": "error", "message": str(e)})
+            err = {"event": "error", "message": str(e)}
+            append_event(baby_id, err)
+            yield _sse(err)
         except Exception as e:
-            yield _sse({"event": "error", "message": f"Admission failed: {e}"})
+            err = {"event": "error", "message": f"Admission failed: {e}"}
+            append_event(baby_id, err)
+            yield _sse(err)
 
     return StreamingResponse(
         _paced(_with_heartbeat(event_generator())),
@@ -189,9 +223,12 @@ def advance_phase_stream(baby_id: str):
         try:
             for step in simulate_phase_stream(state):
                 data = {k: v for k, v in step.items() if not k.startswith("_")}
+                append_event(baby_id, data)
                 yield _sse(data)
         except Exception as e:
-            yield _sse({"event": "error", "message": str(e)})
+            err = {"event": "error", "message": str(e)}
+            append_event(baby_id, err)
+            yield _sse(err)
 
     return StreamingResponse(
         _paced(_with_heartbeat(event_generator())),
@@ -284,11 +321,17 @@ def grow(baby_id: str):
         raise HTTPException(400, "Already completed all phases")
 
     def event_generator():
+        _grow_locks[baby_id] = True
         try:
             for step in grow_stream(state):
+                append_event(baby_id, step)
                 yield _sse(step)
         except Exception as e:
-            yield _sse({"event": "error", "message": str(e)})
+            err = {"event": "error", "message": str(e)}
+            append_event(baby_id, err)
+            yield _sse(err)
+        finally:
+            _grow_locks.pop(baby_id, None)
 
     return StreamingResponse(
         _paced(_with_heartbeat(event_generator())),
@@ -297,11 +340,165 @@ def grow(baby_id: str):
     )
 
 
+@router.post("/{baby_id}/interact")
+def interact(baby_id: str, req: InteractRequest):
+    """亲子对话：父母发消息，婴儿根据 expression_mode 反应。"""
+    if _grow_locks.get(baby_id):
+        raise HTTPException(409, "Growth simulation is running. Please wait or pause first.")
+
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+
+    recent = load_interactions(baby_id, limit=5)
+    result = generate_interaction_response(state, req.message, recent)
+
+    # 应用状态变更（LLM 判断的发育效应）
+    changes = result.get("state_changes", {})
+    applied_changes = {}
+    if changes.get("new_preference"):
+        pref = changes["new_preference"]
+        if pref not in state.preferences:
+            state.preferences.append(pref)
+            applied_changes["new_preference"] = pref
+    if changes.get("new_comfort_source"):
+        src = changes["new_comfort_source"]
+        if src not in state.comfort_sources:
+            state.comfort_sources.append(src)
+            applied_changes["new_comfort_source"] = src
+    if changes.get("fear_reduced"):
+        fear = changes["fear_reduced"]
+        if fear in state.fears:
+            state.fears.remove(fear)
+            applied_changes["fear_reduced"] = fear
+    if changes.get("new_fear"):
+        fear = changes["new_fear"]
+        if fear not in state.fears:
+            state.fears.append(fear)
+            applied_changes["new_fear"] = fear
+
+    # 构建记录
+    import time as _time
+    record = {
+        "parent_message": req.message,
+        "baby_response": result["baby_response"],
+        "expression_mode": state.expression_mode,
+        "emotional_tone": result.get("emotional_tone", "neutral"),
+        "phase": state.current_phase,
+        "age_days": state.age_days,
+        "state_changes": applied_changes or None,
+    }
+
+    # 双写：interactions.jsonl + events.jsonl
+    append_interaction(baby_id, record)
+    append_event(baby_id, {"event": "interaction", **record})
+
+    # 更新 interaction_count
+    state.parent_profile.interaction_count += 1
+    save_state(state)
+
+    return {
+        "baby_response": result["baby_response"],
+        "expression_mode": state.expression_mode,
+        "emotional_tone": result.get("emotional_tone", "neutral"),
+        "state_changes": applied_changes or None,
+        "timestamp": _time.time(),
+    }
+
+
+@router.get("/{baby_id}/events")
+def get_events(baby_id: str):
+    """获取婴儿的所有历史 SSE 事件。"""
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+    return {"events": load_events(baby_id)}
+
+
 @router.get("/{baby_id}/readiness")
 def get_readiness(baby_id: str):
     """检查世界就绪度。"""
     try:
         return check_world_readiness(baby_id)
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+
+
+# ============================================================
+# 多婴儿社交端点
+# ============================================================
+
+from cradle.social import (
+    start_session, advance_turn, add_parent_message,
+    get_session_history, end_session, is_in_session,
+)
+
+
+@router.post("/social/start")
+def social_start(req: SocialStartRequest):
+    """创建社交会话。"""
+    if len(req.baby_ids) < 2:
+        raise HTTPException(400, "At least 2 babies required")
+    if len(req.baby_ids) != len(set(req.baby_ids)):
+        raise HTTPException(400, "Duplicate baby IDs")
+
+    states = []
+    for bid in req.baby_ids:
+        if _grow_locks.get(bid):
+            raise HTTPException(409, f"Growth running for: {bid}")
+        if is_in_session(bid):
+            raise HTTPException(409, f"Baby {bid} already in a social session")
+        state = load_state(bid)
+        if state is None:
+            raise HTTPException(404, f"Baby '{bid}' not found in cradle")
+        if state.current_phase < 8:
+            raise HTTPException(400, f"Baby '{bid}' not eligible (phase {state.current_phase}, need >= 8)")
+        states.append(state)
+
+    session = start_session(states, req.context)
+    return {
+        "session_id": session.session_id,
+        "participants": [
+            {"baby_id": s.baby_id, "name": s.name or s.baby_id,
+             "expression_mode": s.expression_mode, "phase": s.current_phase}
+            for s in states
+        ],
+        "context": session.context,
+    }
+
+
+@router.post("/social/turn")
+def social_turn(req: SocialTurnRequest):
+    """推进一轮社交对话。"""
+    try:
+        return advance_turn(req.session_id)
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+
+
+@router.post("/social/message")
+def social_message(req: SocialMessageRequest):
+    """家长在社交会话中发言。"""
+    try:
+        return add_parent_message(req.session_id, req.message)
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+
+
+@router.get("/social/{session_id}/history")
+def social_history(session_id: str):
+    """获取社交会话历史。"""
+    try:
+        return get_session_history(session_id)
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+
+
+@router.post("/social/end")
+def social_end(req: SocialEndRequest):
+    """结束社交会话，结算 state_changes。"""
+    try:
+        return end_session(req.session_id)
     except ValueError as e:
         raise HTTPException(404, str(e))
 
