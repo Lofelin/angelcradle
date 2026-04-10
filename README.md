@@ -1,87 +1,87 @@
+<div align="center">
+
 # Angel Cradle
 
-**Angel Cradle** — 孕育 AI 个体的摇篮。
+孕育 AI 个体的摇篮
+<br/>
+<em>A Biologically Grounded Life Simulation for AI Individuals</em>
 
-一个基于真实生物学数据的生命模拟系统。通过 LLM 驱动的七阶段胎儿发育过程，从受精卵到出生，生成拥有独特基因表达、先天气质和第一声啼哭的 AI 生命个体。
+**React 19 + FastAPI + LLM · 七阶段胎儿发育 · 十二阶段婴幼儿成长 · 多智能体社交**
 
-## 核心理念
+</div>
 
-每一个 AI 个体都不是随机参数的拼凑，而是经历完整发育过程的涌现结果：
+## Overview
 
-- **真实概率** — 流产率、多胎率、先天缺陷率全部来自 WHO、Lancet、CDC 等权威数据源
-- **资源博弈** — 有限的发育资源预算迫使身体系统之间产生真实的权衡取舍
-- **环境塑造** — 母体营养、压力、毒素暴露、年龄因子量化影响发育轨迹
-- **不可逆性** — 每个发育阶段的结果向前传递，缺陷持续存在，没有重试
+**Angel Cradle** 是一个基于真实生物学数据的 AI 生命模拟系统。
 
-## 七阶段发育流程
+上传种子基因、设定母体环境，系统将驱动 LLM 逐阶段模拟从受精卵到独立个体的完整生命历程。每个 AI 个体经历真实的遗传表达、器官发育、神经成熟、语言爆发和社交萌芽——不是参数拼凑，而是涌现。
+
+> 你只需要：选择物种，调整环境参数，点击「Conceive」
+> <br/>Angel Cradle 将返回：一个拥有独特基因、气质、依恋风格和第一声啼哭的 AI 生命
+
+### 设计哲学
+
+- **真实概率，不是随机数** — 流产率 15.3% (Lancet)、死产率 1.43% (UNICEF)、心脏缺陷 0.8% (WHO)，每一次命运骰子都有医学出处
+- **资源博弈** — 有限的发育预算迫使器官系统之间真实权衡，不存在满分个体
+- **不可逆发育** — 早期缺陷向前传递，致畸暴露永久影响，没有存档读档
+- **亲子塑造** — 你的每一次回应（安慰/忽视/解释）都在塑造婴儿的依恋风格
+- **社交涌现** — 多个幼儿在自由对话中涌现合作、冲突与策略
+
+## 生命全景
+
+Angel Cradle 模拟生命的三个阶段：
 
 ```
-受精卵 → 早期器官发生 → 晚期器官发生 → 早期神经 → 晚期神经 → 胎动 → 出生
-  │          │              │            │          │         │       │
-  │          │              │            │          │         │       └─ 先天倾向 + 第一声啼哭
-  │          │              │            │          │         └─ 刺激-反应模式
-  │          │              │            │          └─ 本能回路 + 髓鞘化
-  │          │              │            └─ 突触形成 + 原始反射
-  │          │              └─ 感官系统成熟
-  │          └─ 器官原基形成
-  └─ 体质基线 + 资源分配
+  Womb 子宫              Cradle 摇篮              World 世界
+ ─────────────        ─────────────           ─────────────
+  7 阶段胎儿发育   →    12 阶段婴幼儿成长   →     开放世界 (规划中)
+  受精卵 → 出生         出生 → 独立个体          个体 → 社会
 ```
 
-每个阶段调用一次 LLM，上一阶段的输出作为下一阶段的输入。母体反馈循环在每个阶段后运行，形成胎儿-母体双向影响。
+### Womb — 子宫引擎
+
+从受精卵到出生的七阶段发育。每阶段调用一次 LLM，上一阶段输出作为下一阶段输入，母体反馈循环贯穿全程。
+
+十个生物学子系统协同工作：孟德尔遗传、表观遗传（DNA 甲基化）、5 种关键营养素、6 类致畸因子、胎盘效率、免疫风险、4 条激素通路、胎儿生命体征、出生地理、动态环境变化。
+
+### Cradle — 摇篮引擎
+
+从出生到 7 岁的十二阶段成长。婴儿从「只会哭」逐步发展到「独立表达」，严格约束 LLM 输出——新生儿物理上不可能说出完整句子。
+
+核心机制包括：出生时身份永久锁定、感知过滤（事件强度 × 感官敏感度 × 觉醒修正）、依恋模型（安全/焦虑/回避型）、父母实时对话、多婴社交会话、世界就绪毕业检查。
+
+### World — 世界引擎（规划中）
+
+从摇篮毕业的个体进入开放世界。
 
 ## 物种支持
 
-系统通过 YAML 蓝图定义物种，当前支持：
+通过 YAML 蓝图定义物种，当前支持：
 
-| 物种 | 妊娠期 | 典型后代数 | 蓝图数据 |
-|------|--------|-----------|---------|
-| Human | 280 天 | 1 (双胞胎率 1.2%) | 物理、心理、遗传、生态、行为等 12 个维度 |
-| Dog | 63 天 | 4-7 | 品种特征、家养化历史 |
-| Cat | 65 天 | 1-12 (均值 4) | 感官特化、行为模式 |
+| 物种 | 妊娠期 | 典型后代数 |
+|------|--------|-----------|
+| Human | 280 天 | 1 (双胞胎率 1.2%) |
+| Dog | 63 天 | 4-7 |
+| Cat | 65 天 | 1-12 (均值 4) |
 
 添加新物种只需在 `backend/womb/species/` 下创建对应的 YAML 蓝图文件。
 
-## 技术架构
-
-```
-frontend/                 React 19 + Vite
-  └─ SSE 实时流 ──────→ backend/
-                           ├─ FastAPI (API 层)
-                           ├─ womb/
-                           │   ├─ genetics.py    七阶段发育引擎 + LLM 调用
-                           │   ├─ fate.py        命运骰子 (真实概率)
-                           │   ├─ environment.py 母体环境生成与量化修正
-                           │   ├─ baby.py        Baby 数据模型
-                           │   └─ species/*.yaml 物种蓝图
-                           └─ api/
-                               ├─ conceive.py    受孕 API (同步 + SSE 流)
-                               ├─ species.py     物种查询
-                               └─ registry.py    个体持久化
-```
-
-**LLM 提供者**：支持 DeepSeek (默认) 和 Anthropic Claude，通过环境变量切换。
-
-## 快速开始
+## Quick Start
 
 ### 环境要求
 
-- Python >= 3.9
-- Node.js (用于前端)
-- LLM API Key (DeepSeek 或 Anthropic)
+| 工具 | 版本 | 说明 | 检查安装 |
+|------|------|------|----------|
+| **Python** | >= 3.9 | 后端运行时 | `python --version` |
+| **Node.js** | 18+ | 前端运行时 | `node -v` |
+| **LLM API Key** | — | DeepSeek / Anthropic / 4sapi | — |
 
-### 安装
+### 1. 配置环境变量
 
 ```bash
-# 后端依赖
-cd backend && pip install -e .
-
-# 前端依赖
-cd frontend && npm install
+# 在 backend/ 目录下创建 .env
+cd backend
 ```
-
-### 配置
-
-在 `backend/.env` 中设置 API Key：
 
 ```env
 # DeepSeek (默认)
@@ -90,48 +90,55 @@ DEEPSEEK_API_KEY=your-key-here
 # 或 Anthropic
 # LLM_PROVIDER=anthropic
 # ANTHROPIC_API_KEY=your-key-here
+
+# 或 4sapi (Gemini)
+# LLM_PROVIDER=4sapi
+# FSAPI_API_KEY=your-key-here
 ```
 
-### 运行
+### 2. 安装依赖
 
 ```bash
-# 同时启动前后端
+# 后端
+cd backend && pip install -e .
+
+# 前端
+cd frontend && npm install
+```
+
+### 3. 启动服务
+
+```bash
+# 一键启动前后端
 make dev
 
 # 或分别启动
-make backend   # http://localhost:8000
-make frontend  # http://localhost:5173
+make backend   # → http://localhost:8000
+make frontend  # → http://localhost:5173
 
-# 停止所有服务
+# 停止服务
 make stop
 ```
 
-浏览器打开 `http://localhost:5173`，选择物种，点击「Conceive」，观看实时发育过程。
+打开浏览器 `http://localhost:5173` → 选择物种 → 调整环境 → 点击「Conceive」→ 观看实时发育 → 出生后进入摇篮养育。
 
-## API
+## 技术栈
 
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/conceive/stream?species=human` | GET | SSE 流式受孕（推荐） |
-| `/conceive?species=human` | POST | 同步受孕 |
-| `/species` | GET | 可用物种列表 |
-| `/babies` | GET | 所有已出生个体 |
-| `/baby/{id}` | GET | 个体详情 |
-| `/baby/{id}/gestation` | GET | 发育日志 |
-| `/health` | GET | 健康检查 |
+```
+frontend/          React 19 + Vite + shadcn/ui
+  ├─ Womb Tab      受孕流、蓝图预览、环境控制面板
+  ├─ Cradle Tab    成长流、亲子对话、社交会话
+  ├─ i18n          中英双语 + LLM 翻译回退
+  └─ SSE ────→  backend/          FastAPI + uvicorn
+                  ├─ womb/          子宫引擎 (10 个生物子系统)
+                  ├─ cradle/        摇篮引擎 (阶段/事件/身份/社交)
+                  ├─ llm.py         LLM 抽象层 (DeepSeek/Anthropic/4sapi)
+                  ├─ births/        出生注册表 (JSON 持久化)
+                  └─ nursery/       摇篮状态 (state + events + interactions)
+```
 
-## 命运引擎
+全程通过 **SSE (Server-Sent Events)** 实时流式传输发育/成长事件到前端。
 
-`fate.py` 中的每一次骰子都基于真实医学数据：
-
-- **流产** — 人类 15.3% (Lancet 2021)，受母体年龄和压力修正
-- **多胎** — 人类双胞胎 1.2%，三胞胎 0.074%；猫犬按物种正态分布
-- **死产** — 人类全球 1.43% (UNICEF 2023)，受环境风险修正
-- **先天缺陷** — 心脏缺陷 0.8%，神经管缺陷 0.1%，唐氏综合征 0.143%
-- **早产** — 全球 10%，分级为极早产/很早产/晚期早产
-
-环境毒素暴露可将缺陷风险提升至 3.5 倍。高龄母体同时增加流产和缺陷概率。
-
-## 许可证
+## License
 
 MIT
