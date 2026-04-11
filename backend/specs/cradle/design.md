@@ -7,7 +7,7 @@ backend/cradle/
 ├── __init__.py      ← admit(), check_world_readiness()
 ├── phases.py        ← 12 阶段定义 + 表达模式 + 世界就绪条件
 ├── state.py         ← BabyState/Identity/Memory/Milestone 数据模型 + 持久化
-├── events.py        ← 事件定义（7日常 + 15环境 + 10关键）+ 掷骰
+├── events.py        ← 事件定义（13日常 + 19环境 + 16关键）+ 掷骰 + 动态权重调制
 ├── identity.py      ← 身份编译器（gestation_log → Identity）
 ├── mind.py          ← 认知反应系统（感知过滤 + LLM 调用）
 └── nanny.py         ← 保姆引擎（阶段模拟 + 能力解锁 + 里程碑）
@@ -52,7 +52,12 @@ attachment_style: str           # secure / anxious / avoidant / forming
 fears, preferences, comfort_sources: list[str]
 memories: list[Memory]
 milestones: list[Milestone]
-parent_profile: ParentProfile
+caregivers: dict[str, CaregiverProfile]  # 多照护者，替代旧 parent_profile
+attachment_per_caregiver: dict[str, str]
+stress: StressState
+nutrition_sleep: NutritionSleepState
+emotional: EmotionalState
+physical: PhysicalState
 phase_summaries: list[dict]
 ```
 
@@ -83,9 +88,9 @@ phase_summaries: list[dict]
 
 | 类型 | 数量 | 处理方式 | LLM 调用 |
 |------|------|---------|---------|
-| 日常 | 7 种 | 规则引擎（强度 × 灵敏度 × 唤醒修正） | 0 |
-| 环境 | 15 种 | 批量 LLM（一个阶段所有环境事件打包） | 1/阶段 |
-| 关键 | 10 种 | 单独 LLM + 父母介入 | 1/事件 |
+| 日常 | 13 种 | 规则引擎（强度 × 灵敏度 × 唤醒修正 × 动态权重调制） | 0 |
+| 环境 | 19 种 | 批量 LLM（一个阶段所有环境事件打包） | 1/阶段 |
+| 关键 | 16 种 | 单独 LLM + 照护者介入 | 1/事件 |
 
 ### 感知过滤公式
 ```
@@ -104,18 +109,22 @@ phase_summaries: list[dict]
 ```
 simulate_phase(state)
     ├── 更新日龄和表达模式
-    ├── roll_events() → 掷骰生成事件
+    ├── roll_events() → 掷骰生成事件（含动态权重调制）
     ├── _process_daily_events() → 规则引擎
     ├── process_environment_events() → 一次 LLM
     ├── 关键事件标记为待处理 → 返回给调用方
+    ├── _update_phase_state() → 阶段状态更新（喂养/睡眠/情绪/体格）
+    ├── _update_stress() → 压力累积
+    ├── _check_stress_regression() → 能力回退检测
+    ├── _check_regression_recovery() → 回退恢复 + 韧性加成
     ├── _check_capability_unlocks() → 解锁能力
-    └── _check_milestones() → 检测里程碑
+    └── _check_milestones() → 检测里程碑（含 trigger_state lambda）
 
-resolve_critical_event(state, event, action)
+resolve_critical_event(state, event, action, caregiver_id)
     ├── process_critical_event() → 一次 LLM
     ├── 更新恐惧/偏好/安慰源
     ├── _update_attachment() → 依恋更新
-    └── _update_parent_profile() → 父母画像更新
+    └── _update_caregiver_profile() → 照护者画像更新
 
 complete_phase(state)
     ├── generate_phase_summary() → 一次 LLM
@@ -158,3 +167,7 @@ forming   ← 初始状态，尚未形成
 ```
 
 平衡性行为（encourage, boundary, negotiate, gradual）倾向于产生安全依恋。
+
+## 9. 六大维度增强（v2）
+
+详见代码实现。增强维度：压力回退/恢复（StressState）、喂养睡眠（NutritionSleepState）、情绪调节（EmotionalState）、体格发育（PhysicalState）、多照护者画像（CaregiverProfile 替代 ParentProfile）、动态事件权重（_phase_weight_modifier）。事件总数从 32 增至 48（13 日常 + 19 环境 + 16 关键）。
