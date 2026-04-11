@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import traceback
 from typing import Optional
 from datetime import datetime, timezone
 
@@ -75,7 +76,7 @@ def do_conceive_stream(
 
     provider = os.environ.get("LLM_PROVIDER", "deepseek")
 
-    def event_generator():
+    def _inner_generator():
         # 0. Birthplace
         bp = resolve_birthplace(species, birthplace)
         bp_summary = {"name": bp["name"], "code": bp["code"], "coordinates": bp["coordinates"]} if bp else None
@@ -237,6 +238,19 @@ def do_conceive_stream(
             "total_born": len(babies),
             "total_alive": sum(1 for b in babies if b.alive),
         })
+
+    def event_generator():
+        """外层兜底：任何未捕获异常都转为 error 事件，避免 SSE 被静默关闭。"""
+        try:
+            yield from _inner_generator()
+        except Exception as e:
+            tb = traceback.format_exc()
+            print(f"[conceive/stream] unhandled error: {e}\n{tb}", flush=True)
+            yield _sse({
+                "event": "error",
+                "message": str(e),
+                "type": type(e).__name__,
+            })
 
     return StreamingResponse(
         _paced(event_generator()),

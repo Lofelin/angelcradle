@@ -63,16 +63,24 @@ def create_client(provider: str):
     return OpenAI(api_key=api_key, base_url=config.get("base_url"))
 
 
-def call_llm(prompt: str, client, model: str, provider: str, max_tokens: int = 4096) -> str:
-    """调用 LLM，返回原始文本响应。"""
+# 单次 LLM 请求超时（秒）。上游卡住时避免 SSE 心跳无限延长。
+LLM_REQUEST_TIMEOUT = float(os.environ.get("LLM_REQUEST_TIMEOUT", "90"))
+
+
+def call_llm(
+    prompt: str, client, model: str, provider: str,
+    max_tokens: int = 4096, timeout: float | None = None,
+) -> str:
+    """调用 LLM，返回原始文本响应。带超时兜底避免上游卡死。"""
+    t = timeout if timeout is not None else LLM_REQUEST_TIMEOUT
     if provider == "anthropic":
-        response = client.messages.create(
+        response = client.with_options(timeout=t).messages.create(
             model=model, max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
         text = response.content[0].text if response.content else ""
     else:
-        response = client.chat.completions.create(
+        response = client.with_options(timeout=t).chat.completions.create(
             model=model, max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -85,11 +93,13 @@ def call_llm(prompt: str, client, model: str, provider: str, max_tokens: int = 4
 
 
 def call_llm_chat(
-    system: str, messages: list[dict], client, model: str, provider: str, max_tokens: int = 4096,
+    system: str, messages: list[dict], client, model: str, provider: str,
+    max_tokens: int = 4096, timeout: float | None = None,
 ) -> str:
     """调用 LLM（chat 格式：system prompt + 多轮消息），返回原始文本响应。"""
+    t = timeout if timeout is not None else LLM_REQUEST_TIMEOUT
     if provider == "anthropic":
-        response = client.messages.create(
+        response = client.with_options(timeout=t).messages.create(
             model=model, max_tokens=max_tokens, system=system,
             messages=messages,
         )
@@ -97,7 +107,7 @@ def call_llm_chat(
     else:
         # OpenAI-compatible: system 作为第一条消息
         all_messages = [{"role": "system", "content": system}] + messages
-        response = client.chat.completions.create(
+        response = client.with_options(timeout=t).chat.completions.create(
             model=model, max_tokens=max_tokens,
             messages=all_messages,
         )

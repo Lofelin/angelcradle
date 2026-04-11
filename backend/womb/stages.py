@@ -774,27 +774,48 @@ def express_stream(
             for ms in maternal_states[-2:]:
                 prompt += json.dumps(ms, ensure_ascii=False, indent=2) + "\n"
 
-        # LLM 调用放到线程，主线程每秒 yield 进度心跳
-        from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
+        # LLM 调用放到线程，主线程每秒 yield 进度心跳；失败时指数退避重试，
+        # 仅在全部重试都失败后才终止 gestation。
+        from concurrent.futures import ThreadPoolExecutor
         import time as _time
-        _executor = ThreadPoolExecutor(max_workers=1)
-        _future = _executor.submit(_call_llm, prompt, client, model, provider)
-        _elapsed = 0
-        try:
-            while not _future.done():
-                _time.sleep(1)
-                _elapsed += 1
+
+        raw = None
+        _last_error: Exception | None = None
+        _max_attempts = 3
+        for _attempt in range(1, _max_attempts + 1):
+            _executor = ThreadPoolExecutor(max_workers=1)
+            _future = _executor.submit(_call_llm, prompt, client, model, provider)
+            _elapsed = 0
+            try:
+                while not _future.done():
+                    _time.sleep(1)
+                    _elapsed += 1
+                    yield {
+                        "stage": stage_name, "status": "thinking",
+                        "stage_num": i + 1, "elapsed": _elapsed,
+                        "attempt": _attempt,
+                    }
+                raw = _future.result()
+                _last_error = None
+                break
+            except Exception as e:
+                _last_error = e
                 yield {
-                    "stage": stage_name, "status": "thinking",
-                    "stage_num": i + 1, "elapsed": _elapsed,
+                    "stage": stage_name, "status": "retrying",
+                    "stage_num": i + 1, "attempt": _attempt,
+                    "max_attempts": _max_attempts, "error": str(e),
                 }
-            raw = _future.result()
-        except Exception as e:
-            _executor.shutdown(wait=False)
-            yield {"stage": stage_name, "status": "failed", "error": str(e)}
+            finally:
+                _executor.shutdown(wait=False)
+            if _attempt < _max_attempts:
+                _time.sleep(2 ** (_attempt - 1))  # 1s, 2s 指数退避
+
+        if _last_error is not None or raw is None:
+            yield {
+                "stage": stage_name, "status": "failed",
+                "error": f"LLM failed after {_max_attempts} attempts: {_last_error}",
+            }
             return
-        finally:
-            _executor.shutdown(wait=False)
 
         stage_results.append(raw)
 
