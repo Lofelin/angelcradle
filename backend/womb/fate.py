@@ -306,7 +306,7 @@ def roll_stage_miscarriage(
         # 胎盘 + 激素失衡
         placenta_eff = placenta.get("efficiency", 1.0)
         risk_modifier *= (1.0 + (1.0 - placenta_eff) * 1.0)
-        cortisol = hormones.get("cortisol", {}).get("level", 0.5)
+        cortisol = hormones.get("cortisol", 0.5) if hormones else 0.5
         if cortisol > 0.7:
             risk_modifier *= (1.0 + (cortisol - 0.7) * 2.0)
 
@@ -314,7 +314,7 @@ def roll_stage_miscarriage(
         # 累积风险：综合前面所有因子的弱化版
         placenta_eff = placenta.get("efficiency", 1.0)
         risk_modifier *= (1.0 + (1.0 - placenta_eff) * 0.8)
-        cortisol = hormones.get("cortisol", {}).get("level", 0.5)
+        cortisol = hormones.get("cortisol", 0.5) if hormones else 0.5
         if cortisol > 0.7:
             risk_modifier *= (1.0 + (cortisol - 0.7) * 1.0)
 
