@@ -178,7 +178,7 @@
 .log-stage-done { color: var(--primary); }
 .log-maternal { color: var(--color-maternal); }
 .log-born { color: var(--primary); font-weight: 600; }
-.log-complete { color: #ccc; border-top: 1px solid #333; margin-top: 4px; padding-top: 8px; }
+.log-complete { color: #ccc; }
 .log-error { color: #e85656; }
 .log-warn { color: #E8681F; }
 .log-raw { color: #555; }
@@ -224,6 +224,18 @@
   background: var(--color-maternal);
   animation: blink 1.2s ease-in-out infinite;
 }
+
+/* 生命线脉搏：灰→绿→灰 */
+@keyframes lifeline-pulse {
+  0%, 100% { background: #34d39930; box-shadow: none; }
+  50% { background: #34d399; box-shadow: 0 0 6px #34d39980; }
+}
+.dot-lifeline {
+  animation: lifeline-pulse 2s ease-in-out infinite;
+}
+
+.no-scrollbar { overflow-y: auto; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
 /* ── 摇篮样式 ── */
 .cradle-reaction {

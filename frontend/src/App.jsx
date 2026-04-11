@@ -13,6 +13,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
 import { ArrowLeftRight } from 'lucide-react'
+import ConsolePanel from '@/components/ConsolePanel'
 import Cradle from './Cradle'
 
 const API = 'http://localhost:8000'
@@ -601,7 +602,7 @@ function App() {
     <div className="flex flex-col gap-6 px-1">
       {/* 系统就绪 */}
       <div>
-        <div className="text-[11px] text-muted-foreground tracking-wider mb-2 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />{lang === 'zh' ? '系统状态' : 'System Status'}</div>
+        <div className="text-[11px] text-muted-foreground tracking-wider mb-2 flex items-center gap-1.5"><span className="relative flex h-1.5 w-1.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" /></span>{lang === 'zh' ? '系统状态' : 'System Status'}</div>
         <h2 className="font-heading text-3xl font-bold tracking-tight leading-tight">{lang === 'zh' ? '准备就绪' : 'System Ready'}</h2>
         <p className="text-sm text-muted-foreground mt-1.5">{lang === 'zh' ? '系统已准备好模拟生命孕育' : 'System is ready to simulate life conception'}</p>
       </div>
@@ -1084,52 +1085,49 @@ function App() {
   }
 
   // ── 控制台组件 ──
-  const renderConsole = () => (
-    <div className="flex flex-col h-full bg-[#1C1C1C] rounded-xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.3),0_0_0_0.5px_rgba(255,255,255,0.08)_inset]">
-      <div className="h-[32px] bg-[#2D2D2D] border-b border-[#1a1a1a] flex items-center px-3.5 shrink-0">
-        <div className="text-xs text-[#999] mx-auto whitespace-nowrap">
-          {(() => {
-            const doneCount = Object.values(stageProgress).filter(s => s === 'done').length + (Object.values(stageProgress).some(s => s === 'active') ? 1 : 0)
-            const failedCount = Object.values(stageProgress).filter(s => s === 'failed').length
-            const currentStageName = state.currentStage ? tk(state.currentStage) : ''
-            const allDone = doneCount === 7
-            const hasFailed = failedCount > 0
-            const hasStarted = doneCount > 0 || running
-            const isMaternalNow = state.currentStage && maternalProgress[state.currentStage] === 'active'
-            return (
-              <div className="flex items-center gap-2.5 text-[11px]">
-                <span className="text-[#666]">Step {doneCount}/7</span>
-                <span className="w-px h-3 bg-[#444]" />
-                <span className={cn("font-medium", isMaternalNow ? "text-[color:var(--color-maternal)]" : running ? "text-emerald-400" : "text-primary")}>{currentStageName || t.console}</span>
-                <span className="w-px h-3 bg-[#444]" />
-                <div className="flex items-center gap-[5px]">
-                  <span className={cn(
-                    "w-1.5 h-1.5 rounded-full",
-                    hasFailed ? "bg-[#FF5F57]" :
-                    allDone ? "bg-[#28C840]" :
-                    isMaternalNow ? "step-dot-maternal" :
-                    running ? "step-dot-running" :
-                    "bg-[#555]"
-                  )} />
-                  <span className="text-[#666] text-[11px]">
-                    {!hasStarted ? t.step_ready : hasFailed ? t.step_failed : allDone ? t.step_done : running ? t.step_running : t.step_idle}
-                  </span>
-                </div>
-                {allDone && state.elapsed && <>
-                  <span className="w-px h-3 bg-[#444]" />
-                  <span className="text-[#555]">{state.elapsed}s</span>
-                </>}
-              </div>
-            )
-          })()}
-        </div>
-      </div>
-      <div className="console" ref={consoleRef}>
+  const renderConsole = () => {
+    const doneCount = Object.values(stageProgress).filter(s => s === 'done').length + (Object.values(stageProgress).some(s => s === 'active') ? 1 : 0)
+    const failedCount = Object.values(stageProgress).filter(s => s === 'failed').length
+    const currentStageName = state.currentStage ? tk(state.currentStage) : ''
+    const allDone = doneCount === 7
+    const hasFailed = failedCount > 0
+    const hasStarted = doneCount > 0 || running
+    const isMaternalNow = state.currentStage && maternalProgress[state.currentStage] === 'active'
+    return (
+      <ConsolePanel
+        ref={consoleRef}
+        className="h-full"
+        header={
+          <div className="flex items-center gap-2.5 text-[11px]">
+            <span className="text-[#666]">Step {doneCount}/7</span>
+            <span className="w-px h-3 bg-[#444]" />
+            <span className={cn("font-medium", isMaternalNow ? "text-[color:var(--color-maternal)]" : running ? "text-emerald-400" : "text-primary")}>{currentStageName || t.console}</span>
+            <span className="w-px h-3 bg-[#444]" />
+            <div className="flex items-center gap-[5px]">
+              <span className={cn(
+                "w-1.5 h-1.5 rounded-full",
+                hasFailed ? "bg-[#FF5F57]" :
+                allDone ? "bg-[#28C840]" :
+                isMaternalNow ? "step-dot-maternal" :
+                running ? "step-dot-running" :
+                "bg-[#555]"
+              )} />
+              <span className="text-[#666] text-[11px]">
+                {!hasStarted ? t.step_ready : hasFailed ? t.step_failed : allDone ? t.step_done : running ? t.step_running : t.step_idle}
+              </span>
+            </div>
+            {allDone && state.elapsed && <>
+              <span className="w-px h-3 bg-[#444]" />
+              <span className="text-[#555]">{state.elapsed}s</span>
+            </>}
+          </div>
+        }
+      >
         {logs.length === 0 && <div className="log-system"><span className="blink-dot" />{t.ready}</div>}
         {logs.map(renderLog)}
-      </div>
-    </div>
-  )
+      </ConsolePanel>
+    )
+  }
 
   // ── 孕育前单页布局 ──
   const renderPreConceive = () => (
@@ -1210,18 +1208,19 @@ function App() {
             </span>
           ))}
         </div>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-1.5">
           <Button
+            variant="outline"
             size="sm"
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="h-7 px-2.5 text-xs gap-1.5"
             onClick={() => { const next = lang === 'en' ? 'zh' : 'en'; localStorage.setItem('lang', next); setLang(next) }}
           >
             EN/中
-            <ArrowLeftRight className="size-3.5" />
+            <ArrowLeftRight className="size-3" />
           </Button>
           <a href="https://github.com/Lofelin/angelcradle" target="_blank" rel="noopener noreferrer">
-            <Button size="sm" className="bg-[#24292f] text-white hover:bg-[#24292f]/90">
-              <svg viewBox="0 0 16 16" fill="currentColor" className="size-4"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
+            <Button variant="outline" size="sm" className="h-7 px-2.5 text-xs gap-1.5">
+              <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
               GitHub
             </Button>
           </a>
