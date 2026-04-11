@@ -1,12 +1,13 @@
 """
 摇篮 API 端点。
 
-[INPUT]: 依赖 cradle/ 模块
-[OUTPUT]: FastAPI 路由
-[POS]: API 层，暴露摇篮功能给前端
+[INPUT]: 依赖 cradle/ 模块、scheduler.py（调度器单例）
+[OUTPUT]: FastAPI 路由（含 touch-actions、heartbeat/stream 统一生命流 SSE、interact 标记心跳响应）
+[POS]: API 层，暴露摇篮功能给前端；heartbeat/stream 订阅调度器事件通道
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
+import asyncio
 import json
 import time
 
@@ -52,10 +53,13 @@ class InterveneRequest(BaseModel):
     event_name: str
     parent_action: str
     parent_input: str = ""  # 自由输入（如名字）
+    caregiver_id: str = "primary_parent"  # 介入的照护者
 
 
 class InteractRequest(BaseModel):
     message: str
+    action_type: str = "message"   # "message" | "touch"
+    touch_key: Optional[str] = None   # 肢体动作标识（action_type=touch 时必填）
 
 
 class SocialStartRequest(BaseModel):
@@ -85,10 +89,13 @@ _grow_locks: dict[str, bool] = {}
 # ============================================================
 
 @router.post("/admit")
-def admit_baby(req: AdmitRequest):
-    """将婴儿放入摇篮（同步）。"""
+async def admit_baby(req: AdmitRequest):
+    """将婴儿放入摇篮（同步 admit + 注册调度器）。"""
     try:
         state = admit(req.baby_id)
+        # 注册到调度器，启动自主生命
+        from scheduler import scheduler
+        await scheduler.register(req.baby_id)
         return {
             "status": "admitted",
             "baby_id": state.baby_id,
@@ -115,11 +122,14 @@ def admit_baby_stream(baby_id: str):
     - {"event": "admitted", ...}       — 入摇篮完成
     """
     def event_generator():
+        admitted = False
         try:
             for step in admit_stream(baby_id):
                 data = {k: v for k, v in step.items() if not k.startswith("_")}
                 append_event(baby_id, data)
                 yield _sse(data)
+                if step.get("event") == "admitted":
+                    admitted = True
         except ValueError as e:
             err = {"event": "error", "message": str(e)}
             append_event(baby_id, err)
@@ -128,6 +138,15 @@ def admit_baby_stream(baby_id: str):
             err = {"event": "error", "message": f"Admission failed: {e}"}
             append_event(baby_id, err)
             yield _sse(err)
+        finally:
+            # 入摇篮成功后注册到调度器（后台任务）
+            if admitted:
+                try:
+                    from scheduler import scheduler
+                    loop = asyncio.get_event_loop()
+                    loop.create_task(scheduler.register(baby_id))
+                except RuntimeError:
+                    pass  # 无事件循环时忽略，heartbeat/stream 连接时会自动注册
 
     return StreamingResponse(
         _paced(_with_heartbeat(event_generator())),
@@ -170,7 +189,12 @@ def get_status(baby_id: str):
         "comfort_sources": state.comfort_sources,
         "milestones": [m.to_dict() for m in state.milestones],
         "memories_count": len(state.memories),
-        "parent_profile": state.parent_profile.to_dict(),
+        "caregivers": {cid: c.to_dict() for cid, c in state.caregivers.items()},
+        "attachment_per_caregiver": state.attachment_per_caregiver,
+        "stress": state.stress.to_dict(),
+        "nutrition_sleep": state.nutrition_sleep.to_dict(),
+        "emotional": state.emotional.to_dict(),
+        "physical": state.physical.to_dict(),
     }
 
 
@@ -245,15 +269,64 @@ def intervene(baby_id: str, req: InterveneRequest):
         raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
 
     try:
+        # 更新活跃时间戳（父母介入 = 活跃）
+        import time as _time
+        state.last_active_ts = _time.time()
+
         result = resolve_critical_event(
             state,
             event_name=req.event_name,
             parent_action=req.parent_action,
             parent_input=req.parent_input,
+            caregiver_id=req.caregiver_id,
         )
         return result
     except Exception as e:
         raise HTTPException(500, f"Intervention failed: {e}")
+
+
+# ============================================================
+# 照护者管理
+# ============================================================
+
+
+class AddCaregiverRequest(BaseModel):
+    caregiver_id: str
+    role: str = "parent"           # parent / grandparent / nanny / teacher
+    display_name: str = "Caregiver"
+    emotional_tone: str = "warm"   # warm / neutral / anxious / strict
+
+
+@router.get("/{baby_id}/caregivers")
+def list_caregivers(baby_id: str):
+    """列出照护者。"""
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+    return {
+        "caregivers": {cid: c.to_dict() for cid, c in state.caregivers.items()},
+        "attachment_per_caregiver": state.attachment_per_caregiver,
+    }
+
+
+@router.post("/{baby_id}/caregivers")
+def add_caregiver(baby_id: str, req: AddCaregiverRequest):
+    """添加照护者。"""
+    from cradle.state import CaregiverProfile
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+    if req.caregiver_id in state.caregivers:
+        raise HTTPException(409, f"Caregiver '{req.caregiver_id}' already exists")
+    state.caregivers[req.caregiver_id] = CaregiverProfile(
+        caregiver_id=req.caregiver_id,
+        role=req.role,
+        display_name=req.display_name,
+        emotional_tone=req.emotional_tone,
+    )
+    state.attachment_per_caregiver[req.caregiver_id] = "forming"
+    save_state(state)
+    return {"message": f"Caregiver '{req.caregiver_id}' added", "caregiver": state.caregivers[req.caregiver_id].to_dict()}
 
 
 @router.post("/{baby_id}/complete")
@@ -320,6 +393,10 @@ def grow(baby_id: str):
     if state.current_phase >= len(PHASES):
         raise HTTPException(400, "Already completed all phases")
 
+    # 并发保护：同一宝宝不能同时运行两个 grow_stream
+    if _grow_locks.get(baby_id):
+        raise HTTPException(409, "Growth simulation already running for this baby.")
+
     def event_generator():
         _grow_locks[baby_id] = True
         try:
@@ -350,8 +427,21 @@ def interact(baby_id: str, req: InteractRequest):
     if state is None:
         raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
 
+    # 肢体互动：查找动作描述，构造 LLM 输入
+    touch_desc = None
+    if req.action_type == "touch" and req.touch_key:
+        from cradle.touch import TOUCH_ACTIONS
+        action = next((a for a in TOUCH_ACTIONS if a.key == req.touch_key), None)
+        if action is None:
+            raise HTTPException(400, f"Unknown touch action: {req.touch_key}")
+        if not (action.phase_range[0] <= state.current_phase <= action.phase_range[1]):
+            raise HTTPException(400, f"Touch action '{req.touch_key}' not available at phase {state.current_phase}")
+        touch_desc = action.description
+
     recent = load_interactions(baby_id, limit=5)
-    result = generate_interaction_response(state, req.message, recent)
+    result = generate_interaction_response(state, req.message, recent,
+                                           action_type=req.action_type,
+                                           touch_description=touch_desc)
 
     # 应用状态变更（LLM 判断的发育效应）
     changes = result.get("state_changes", {})
@@ -381,6 +471,8 @@ def interact(baby_id: str, req: InteractRequest):
     import time as _time
     record = {
         "parent_message": req.message,
+        "action_type": req.action_type,
+        "touch_key": req.touch_key,
         "baby_response": result["baby_response"],
         "expression_mode": state.expression_mode,
         "emotional_tone": result.get("emotional_tone", "neutral"),
@@ -393,8 +485,22 @@ def interact(baby_id: str, req: InteractRequest):
     append_interaction(baby_id, record)
     append_event(baby_id, {"event": "interaction", **record})
 
-    # 更新 interaction_count
-    state.parent_profile.interaction_count += 1
+    # 更新主照护者 interaction_count
+    primary_cg = state.caregivers.get("primary_parent")
+    if primary_cg:
+        primary_cg.interaction_count += 1
+    elif state.caregivers:
+        # 没有 primary_parent 时回退到第一个照护者
+        next(iter(state.caregivers.values())).interaction_count += 1
+
+    # 更新活跃时间戳（亲子互动 = 活跃）
+    state.last_active_ts = _time.time()
+
+    # 标记主动行为已被响应（SSE 流会处理后续心跳评估）
+    from heartbeat import mark_responded
+    mark_responded(state.initiative, state.caregivers)
+    state.initiative.last_interact_ts = _time.time()
+
     save_state(state)
 
     return {
@@ -404,6 +510,76 @@ def interact(baby_id: str, req: InteractRequest):
         "state_changes": applied_changes or None,
         "timestamp": _time.time(),
     }
+
+
+@router.get("/{baby_id}/heartbeat/stream")
+async def heartbeat_stream(baby_id: str):
+    """
+    统一生命流 SSE。
+    合并调度器自主生命事件 + 心跳主动行为。
+
+    事件流：
+    - {"event": "autonomous_catchup", ...}    — 离线追赶摘要
+    - {"event": "autonomous_event", ...}      — 自主生命事件（有"事"）
+    - {"event": "autonomous_routine", ...}    — 日常事件
+    - {"event": "heartbeat_initiative", ...}  — 宝宝主动行为
+    - {"event": "heartbeat_ignored", ...}     — 被忽略后的反应
+    - ": heartbeat"（SSE 注释）               — 保活信号
+    """
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+
+    async def event_generator():
+        from scheduler import scheduler
+
+        # 追赶模式：补跑离线期间事件
+        catchup_events = await scheduler.catchup(baby_id)
+        if catchup_events:
+            summary = {
+                "event": "autonomous_catchup",
+                "total_events": len(catchup_events),
+                "sim_days": (
+                    catchup_events[-1].get("sim_day", 0)
+                    - catchup_events[0].get("sim_day", 0) + 1
+                ) if catchup_events else 0,
+                "events": catchup_events[-10:],  # 只推最近 10 条
+            }
+            yield _sse(summary)
+
+        # 确保注册到调度器
+        if baby_id not in scheduler._agents:
+            await scheduler.register(baby_id)
+
+        # 订阅事件通道
+        queue = scheduler.subscribe(baby_id)
+        try:
+            while True:
+                try:
+                    event = await asyncio.wait_for(
+                        queue.get(), timeout=SSE_HEARTBEAT_INTERVAL,
+                    )
+                    yield _sse(event)
+                except asyncio.TimeoutError:
+                    yield _sse_heartbeat()
+        finally:
+            scheduler.unsubscribe(baby_id, queue)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers=_SSE_HEADERS,
+    )
+
+
+@router.get("/{baby_id}/touch-actions")
+def get_touch_actions(baby_id: str):
+    """获取当前阶段可用的肢体互动动作。"""
+    state = load_state(baby_id)
+    if state is None:
+        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+    from cradle.touch import get_available_actions
+    return {"actions": get_available_actions(state.current_phase)}
 
 
 @router.get("/{baby_id}/events")

@@ -6,7 +6,7 @@
 每个阶段的表达形式不同（哭→咿呀→单词→句子）。
 
 [INPUT]: 依赖 cradle/state.py, cradle/phases.py, llm.py 的 LLM 基础设施
-[OUTPUT]: process_daily_with_nanny(), process_environment_events(), process_critical_event(), generate_phase_summary()
+[OUTPUT]: generate_interaction_response(action_type/touch_description), generate_heartbeat_evaluation(), generate_ignored_reaction(), process_daily_with_nanny(), process_environment_events(), process_critical_event(), generate_phase_summary()
 [POS]: cradle/ 的 LLM 调用层，被 nanny.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
@@ -22,6 +22,112 @@ from .phases import PHASES, EXPRESSION_MODES
 from .events import Event
 
 logger = logging.getLogger(__name__)
+
+
+# ============================================================
+# 表达模式后验证：校验 LLM 输出是否符合当前 expression_mode
+# ============================================================
+
+# 常见真实词汇模式（中英文），用于检测非拟声词
+# 排除拟声词(ah, oo, mm, ba, da, ma 等)和动作描述中的*...*
+import re as _re
+
+# 婴儿咿呀声/拟声词白名单（不算"真实词汇"）
+_BABBLE_WORDS = {
+    "ah", "aah", "ahhh", "oo", "ooh", "oooh", "mm", "mmm", "hmm",
+    "ba", "da", "ma", "pa", "ga", "na", "wa", "la", "ta",
+    "baba", "dada", "mama", "papa", "gaga", "nana", "wawa",
+    "ba-ba", "da-da", "ma-ma", "pa-pa", "ga-ga",
+    "ba-da", "da-ba", "ba-da-ba", "da-da-da", "ba-ba-ba",
+    "哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤",
+    "咿呀", "哇哇", "呜呜", "嘤嘤", "啊啊", "呀呀",
+}
+
+
+def _extract_speech_from_response(response: str) -> str:
+    """从 baby_response 中提取非动作描述的文本（即去掉 *...* 标记内的内容）。"""
+    # 移除 *动作描述* 部分
+    no_actions = _re.sub(r'\*[^*]*\*', '', response)
+    return no_actions.strip()
+
+
+def _has_real_words(text: str) -> bool:
+    """检测文本中是否包含真实词汇（非拟声词/非标点）。"""
+    if not text:
+        return False
+    # 提取所有中文字符
+    chinese_chars = _re.findall(r'[\u4e00-\u9fff]', text)
+    # 提取所有英文单词
+    english_words = _re.findall(r'[a-zA-Z]+', text)
+
+    # 检查英文单词是否有非拟声词
+    for word in english_words:
+        if word.lower() not in _BABBLE_WORDS:
+            return True
+    # 任何中文字符（非拟声词白名单）都算真实词汇
+    babble_cn = {"哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤"}
+    for ch in chinese_chars:
+        if ch not in babble_cn:
+            return True
+    return False
+
+
+def _count_word_units(text: str) -> int:
+    """计算"词单元"数量（英文单词数 + 中文连续片段数）。"""
+    if not text:
+        return 0
+    english_words = [w for w in _re.findall(r'[a-zA-Z]+', text)
+                     if w.lower() not in _BABBLE_WORDS]
+    chinese_segments = _re.findall(r'[\u4e00-\u9fff]+', text)
+    # 中文每段按字数计（去掉拟声字）
+    babble_cn = {"哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤"}
+    cn_chars = sum(1 for seg in chinese_segments for ch in seg if ch not in babble_cn)
+    return len(english_words) + cn_chars
+
+
+def _validate_expression_output(response: str, expression_mode: str) -> str | None:
+    """
+    校验 baby_response 是否符合 expression_mode 约束。
+
+    返回 None 表示通过，返回 str 表示违规原因。
+    违规时调用方应降级为预设反应。
+    """
+    speech = _extract_speech_from_response(response)
+    has_words = _has_real_words(speech)
+    word_count = _count_word_units(speech)
+
+    if expression_mode == "cry_only":
+        # 绝对不能有任何真实词汇
+        if has_words:
+            return f"cry_only mode violation: found real words in '{speech[:50]}'"
+
+    elif expression_mode == "coo_and_gaze":
+        # 只能有元音拟声，不能有真实词汇
+        if has_words:
+            return f"coo_and_gaze mode violation: found real words in '{speech[:50]}'"
+
+    elif expression_mode == "babble_and_reach":
+        # 只能有音节组合拟声，不能有真实词汇
+        if has_words:
+            return f"babble_and_reach mode violation: found real words in '{speech[:50]}'"
+
+    elif expression_mode == "gesture_and_point":
+        # 可以有意向性发声，但不能有真实词汇
+        if has_words:
+            return f"gesture_and_point mode violation: found real words in '{speech[:50]}'"
+
+    elif expression_mode == "first_words":
+        # 只能有单词，不超过 3 个词单元
+        if word_count > 3:
+            return f"first_words mode violation: {word_count} word units (max 3)"
+
+    elif expression_mode == "two_word":
+        # 2-3 词组合，不超过 6 个词单元
+        if word_count > 6:
+            return f"two_word mode violation: {word_count} word units (max 6)"
+
+    # sentence 及以上模式不做严格限制
+    return None
 
 
 def _get_llm():
@@ -67,6 +173,8 @@ def generate_interaction_response(
     state: BabyState,
     parent_message: str,
     recent_interactions: list[dict],
+    action_type: str = "message",
+    touch_description: str | None = None,
 ) -> dict:
     """
     生成婴儿对父母消息的反应。
@@ -117,14 +225,43 @@ def generate_interaction_response(
     elif topic_count >= 1:
         repetition_note = f"\n(Parent has mentioned similar things {topic_count} time(s) before — the baby may be developing familiarity.)"
 
-    prompt = f"""You are simulating a {state.species} infant's reaction to their parent talking to them.
+    # 检测父母消息语言
+    has_cjk = any('\u4e00' <= c <= '\u9fff' for c in parent_message)
+    lang_instruction = "Respond in Chinese (中文)." if has_cjk else "Respond in the same language as the parent's message."
 
-## The Infant
+    # 构造父母动作描述
+    if action_type == "touch" and touch_description:
+        parent_action_text = "[PHYSICAL TOUCH] " + touch_description
+        if parent_message:
+            parent_action_text += f' (parent also says: "{parent_message}")'
+    else:
+        parent_action_text = f'[SPEECH] "{parent_message}"'
+
+    prompt = f"""You are simulating a REAL {state.species} child's reaction to their parent.
+
+## CRITICAL: ANTI-AI RULES (VIOLATION = FAILURE)
+- You ARE a {state.age_days}-day-old child. NOT an AI pretending to be one.
+- HARD LIMIT: baby_response must be under 80 Chinese characters (or 40 English words). Count before outputting.
+- FORBIDDEN output patterns — if your response matches ANY of these, you have FAILED:
+  - Literary metaphors: "像玩具车的轮子卡进了沙子" ← 7岁不会这样说
+  - Directly narrating senses: "我的耳朵告诉我了" ← 没有孩子会这样描述自己
+  - Self-analytical: "这个对话又卡住了" ← 孩子不元认知
+  - Adult-level emotional vocabulary: "这个比回答'谁'有意思" ← 太理性
+- CORRECT examples for a 7-year-old in Chinese:
+  - "你是谁啊" → "哈？你是我妈妈啊！你忘啦？" (短，直接，孩子逻辑)
+  - "你生气了？" → "我没有！...好吧有一点点。" (简单否认，然后承认)
+  - "你喜欢什么" → "恐龙！还有冰淇淋！你呢？" (自我中心，反问)
+- Sensory traits and constraints influence behavior IMPLICITLY. A hearing-dominant child covers ears at loud sounds — they do NOT say "我的耳朵很敏感".
+- Grammar errors, topic jumps, and childish logic are REQUIRED, not bugs.
+- {lang_instruction}
+
+## The Child
 - Name: {state.name or '(unnamed)'}
 - Age: {state.age_days} days ({phase.age_range})
 - Phase: {phase.display_name} — {phase.description}
 
 ## Expression Mode (STRICTLY ENFORCED)
+- Mode: {state.expression_mode}
 - Description: {expr['description']}
 - Output format: {expr['format']}
 - Example: {expr['example']}
@@ -145,6 +282,12 @@ def generate_interaction_response(
 - Fears: {', '.join(state.fears) or 'None'}
 - Preferences: {', '.join(state.preferences) or 'None'}
 - Comfort sources: {', '.join(state.comfort_sources) or 'None'}
+- Stress level: {state.stress.stress_level:.1f}
+{f"- REGRESSED capabilities (temporarily lost): {', '.join(r['capability'] for r in state.stress.regressed_capabilities)}" if state.stress.regressed_capabilities else ""}
+- Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary) or 'None'}
+- Empathy level: {state.emotional.empathy_level}
+{f"- Imaginary friend: {state.emotional.imaginary_friend} (may mention in conversation)" if state.emotional.imaginary_friend else ""}
+{f"- Transitional object: {state.nutrition_sleep.transitional_object} (may seek when stressed)" if state.nutrition_sleep.transitional_object else ""}
 
 ## Recent Memories
 {memories_text}
@@ -153,22 +296,20 @@ def generate_interaction_response(
 {conv_text or '(first interaction)'}
 {repetition_note}
 
-## Parent Says
-"{parent_message}"
+## Parent Action
+{parent_action_text}
 
 ## Task
-Generate the infant's reaction AND any developmental effects. Rules:
-1. MUST use the expression format above. Do NOT exceed developmental ability.
-2. A cry_only baby CANNOT use words or syllables. A coo_and_gaze baby CANNOT form consonant syllables.
-3. Reflect the baby's temperament, sensory profile, and current emotional state.
-4. The baby is NOT a passive learner. It has its own arousal threshold, attention span, and preferences.
-   - Repeated stimulation of the same topic may cause boredom, irritation, or avoidance (especially high-arousal babies).
-   - Novel stimuli aligned with dominant senses are more engaging.
-   - Comforting interactions during distress can build trust.
-5. Keep baby_response concise (1-3 actions/sentences).
+Generate the child's reaction. Rules:
+1. HARD CHARACTER LIMIT: Under 80 Chinese characters / 40 English words. No exceptions.
+2. Expression mode is law. A cry_only baby CANNOT use words. An "independent" 7yo writes 2-3 SHORT sentences, not paragraphs.
+3. Innate traits show through BEHAVIOR, never through self-narration. WRONG: "我的耳朵不喜欢这个". RIGHT: *捂住耳朵* "太吵了！"
+4. The child has its own agenda. Repeated topics → boredom. Novel things → curiosity. Distress + comfort → trust.
+5. Write like a REAL child: messy, self-centered, abrupt. If a literature professor could have written it, you FAILED.
+6. For PHYSICAL TOUCH actions: react with body language, sounds, and physical sensations FIRST. The child FEELS the touch — describe squirming, giggling, reaching, relaxing, or resisting. Touch is primal; verbal response is secondary (if any at the current expression_mode).
 
-For state_changes, ONLY include fields that genuinely changed from this interaction. Use null for no change.
-- new_preference: if the baby showed genuine sustained interest (not just momentary attention)
+For state_changes, ONLY include fields that genuinely changed. Use null for no change.
+- new_preference: if the child showed genuine sustained interest (not just momentary attention)
 - new_comfort_source: if the baby was distressed and this interaction provided relief
 - fear_reduced: if the baby was exposed to a known fear with parent support and showed reduced anxiety
 - new_fear: if the interaction caused genuine distress or overstimulation
@@ -187,13 +328,19 @@ Output JSON:
 
     result = _call_and_parse(prompt)
     if result and isinstance(result, dict) and "baby_response" in result:
+        # 表达模式后验证：检查 LLM 输出是否符合当前 expression_mode
+        violation = _validate_expression_output(result["baby_response"], state.expression_mode)
+        if violation:
+            logger.warning("Expression mode violation: %s — falling back to preset", violation)
+            fallback = _FALLBACK_REACTIONS.get(state.expression_mode, "*Pauses, looks at you*")
+            return {"baby_response": fallback, "emotional_tone": "neutral", "state_changes": {}}
         return {
             "baby_response": result["baby_response"],
             "emotional_tone": result.get("emotional_tone", "neutral"),
             "state_changes": result.get("state_changes", {}),
         }
 
-    # 降级
+    # LLM 调用失败降级
     fallback = _FALLBACK_REACTIONS.get(state.expression_mode, "*Pauses, looks at you*")
     return {"baby_response": fallback, "emotional_tone": "neutral", "state_changes": {}}
 
@@ -300,6 +447,25 @@ def narrate_phase_events(
 - Fears: {', '.join(state.fears) if state.fears else 'None yet'}
 - Preferences: {', '.join(state.preferences) if state.preferences else 'None yet'}
 - Comfort sources: {', '.join(state.comfort_sources) if state.comfort_sources else 'None yet'}
+
+## Physical State
+- Height: {state.physical.height_cm}cm, Weight: {state.physical.weight_kg}kg, Teeth: {state.physical.teeth_count}
+- Feeding mode: {state.nutrition_sleep.feeding_mode}
+- Sleep quality: {state.nutrition_sleep.sleep_quality}, Night wakings: {state.nutrition_sleep.night_waking_frequency}
+{"- Sleep regression ACTIVE" if state.nutrition_sleep.sleep_regression_active else ""}
+{f"- Transitional object: {state.nutrition_sleep.transitional_object}" if state.nutrition_sleep.transitional_object else ""}
+
+## Stress & Regression
+- Stress level: {state.stress.stress_level:.1f}
+- Regressed capabilities: {', '.join(r['capability'] for r in state.stress.regressed_capabilities) or 'None'}
+- Resilience strengths: {', '.join(state.stress.resilience_bonus) or 'None'}
+
+## Emotional Development
+- Tantrum frequency: {state.emotional.tantrum_frequency}
+- Empathy level: {state.emotional.empathy_level}
+- Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary) or 'None yet'}
+- Play type: {state.emotional.play_type}
+{f"- Imaginary friend: {state.emotional.imaginary_friend}" if state.emotional.imaginary_friend else ""}
 
 ## Recent Memories
 {memory_text or 'No memories yet — this is early life.'}
@@ -455,6 +621,13 @@ def process_critical_event(
 - Fears: {', '.join(state.fears) if state.fears else 'None'}
 - Preferences: {', '.join(state.preferences) if state.preferences else 'None'}
 - Attachment forming: {state.attachment_style}
+- Stress level: {state.stress.stress_level:.1f}
+- Regressed capabilities: {', '.join(r['capability'] for r in state.stress.regressed_capabilities) or 'None'}
+- Physical: {state.physical.height_cm}cm, {state.physical.weight_kg}kg, {state.physical.teeth_count} teeth
+- Feeding: {state.nutrition_sleep.feeding_mode}
+- Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary) or 'None'}
+- Empathy level: {state.emotional.empathy_level}
+{f"- Imaginary friend: {state.emotional.imaginary_friend}" if state.emotional.imaginary_friend else ""}
 
 ## Recent Memories
 {_format_recent_memories(recent_memories)}
@@ -549,7 +722,8 @@ def generate_phase_summary(state: BabyState) -> dict:
     # 加载本阶段的亲子对话
     all_interactions = load_interactions(state.baby_id, limit=50)
     phase_interactions = [r for r in all_interactions if r.get("phase") == state.current_phase]
-    interaction_count = state.parent_profile.interaction_count
+    # 所有照护者的交互总计
+    interaction_count = sum(c.interaction_count for c in state.caregivers.values()) if state.caregivers else 0
 
     interactions_text = ""
     if phase_interactions:
@@ -584,24 +758,46 @@ Total interactions: {len(phase_interactions)} (lifetime: {interaction_count})
 - Preferences: {', '.join(state.preferences) if state.preferences else 'None'}
 - Attachment: {state.attachment_style}
 
+## Physical & Physiological
+- Height: {state.physical.height_cm}cm, Weight: {state.physical.weight_kg}kg, Teeth: {state.physical.teeth_count}
+- Feeding: {state.nutrition_sleep.feeding_mode}
+- Sleep quality: {state.nutrition_sleep.sleep_quality}, Night wakings: {state.nutrition_sleep.night_waking_frequency}
+{"- Sleep regression ACTIVE" if state.nutrition_sleep.sleep_regression_active else ""}
+{f"- Transitional object: {state.nutrition_sleep.transitional_object}" if state.nutrition_sleep.transitional_object else ""}
+
+## Stress & Regression
+- Stress level: {state.stress.stress_level:.1f}
+- Regressed capabilities: {', '.join(r['capability'] for r in state.stress.regressed_capabilities) or 'None'}
+- Resilience bonus: {', '.join(state.stress.resilience_bonus) or 'None'}
+
+## Emotional Development
+- Tantrum frequency: {state.emotional.tantrum_frequency}
+- Empathy level: {state.emotional.empathy_level}
+- Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary) or 'None yet'}
+- Play type: {state.emotional.play_type}
+{f"- Imaginary friend: {state.emotional.imaginary_friend}" if state.emotional.imaginary_friend else ""}
+
 ## Task
 
 Write a developmental summary (150-250 words) in English. Include:
 1. What changed in this phase — specific, traceable to events
 2. What new capabilities emerged and how they manifested
-3. The infant's emotional arc through this phase
-4. What patterns are forming (fears, preferences, coping strategies)
-5. How parent interactions influenced development (if any) — teaching, bonding, stimulation
-6. What to watch for in the next phase
+3. The infant's emotional arc through this phase (stress, regression, recovery)
+4. Physical growth milestones (feeding transitions, teething, growth)
+5. What patterns are forming (fears, preferences, coping strategies)
+6. How caregiver interactions influenced development — teaching, bonding, stimulation
+7. What to watch for in the next phase
 
-Also update developmental metrics. Parent engagement level should factor into attachment assessment.
+Also update developmental metrics. Caregiver engagement level should factor into attachment assessment.
 
 Output as JSON:
 {{
   "summary": "developmental summary text",
   "capabilities_gained": ["new capabilities from this phase"],
   "personality_notes": ["observations about emerging personality"],
-  "attachment_update": "secure/anxious/avoidant/forming — based on parent interactions and responsiveness",
+  "attachment_update": "secure/anxious/avoidant/forming — based on caregiver interactions and responsiveness",
+  "stress_note": "stress and regression observations this phase",
+  "physical_note": "physical growth observations this phase",
   "next_phase_watch": "what to watch for in the next phase"
 }}
 """
@@ -622,3 +818,173 @@ def _format_phase_events(memories: list[Memory]) -> str:
         parts.append(f"- Day {m.age_days} | {m.event}: {m.reaction[:100]}... "
                      f"({m.emotional_valence}, intensity {m.intensity}){parent}")
     return "\n".join(parts)
+
+
+# ============================================================
+# 心跳主动行为：LLM 作为生命体的潜意识
+# ============================================================
+
+
+# 心跳降级预设（LLM 失败时使用）
+_HEARTBEAT_FALLBACKS = {
+    "cry_only": {"expression": "*Stirs, a soft whimper*", "behavior_type": "verbal",
+                 "type": "urgent", "trigger": "discomfort", "parent_hint": "The baby seems uneasy"},
+    "coo_and_gaze": {"expression": "*Looks around, soft 'ahh'*", "behavior_type": "verbal",
+                     "type": "exploratory", "trigger": "curious", "parent_hint": "The baby wants attention"},
+    "babble_and_reach": {"expression": "*'Ba-ba!' reaching out*", "behavior_type": "physical",
+                         "type": "exploratory", "trigger": "play", "parent_hint": "The baby wants something"},
+    "gesture_and_point": {"expression": "*Points at you, urgent 'ah!'*", "behavior_type": "physical",
+                          "type": "exploratory", "trigger": "curious", "parent_hint": "The baby wants your attention"},
+    "first_words": {"expression": "*'Mama!' looks at you*", "behavior_type": "verbal",
+                    "type": "exploratory", "trigger": "share", "parent_hint": "The baby is calling you"},
+    "expanding_vocabulary": {"expression": "*'Come here!'*", "behavior_type": "verbal",
+                             "type": "exploratory", "trigger": "play", "parent_hint": "The baby wants you"},
+    "narrative": {"expression": "*'Mommy! Guess what!'*", "behavior_type": "verbal",
+                  "type": "exploratory", "trigger": "share", "parent_hint": "The baby wants to share"},
+    "conversational": {"expression": "*'Hey, can I ask you something?'*", "behavior_type": "verbal",
+                       "type": "exploratory", "trigger": "curious", "parent_hint": "The child has a question"},
+    "reflective": {"expression": "*'Mom, I was thinking...'*", "behavior_type": "verbal",
+                   "type": "exploratory", "trigger": "share", "parent_hint": "The child wants to share a thought"},
+    "independent": {"expression": "*'Mom, I need to talk to you.'*", "behavior_type": "verbal",
+                    "type": "exploratory", "trigger": "share", "parent_hint": "The child wants to discuss something"},
+}
+
+# 忽略反应降级预设
+_IGNORED_FALLBACKS = {
+    ("cry_only", "forming"): {"reaction": "*Whimpers grow louder, fists clench*", "emotional_tone": "negative"},
+    ("cry_only", "secure"): {"reaction": "*Fussy cry, then self-soothes with thumb*", "emotional_tone": "negative"},
+    ("cry_only", "anxious"): {"reaction": "*Wailing intensifies, body arches*", "emotional_tone": "negative"},
+    ("cry_only", "avoidant"): {"reaction": "*Crying fades, turns head away*", "emotional_tone": "negative"},
+    ("coo_and_gaze", "forming"): {"reaction": "*Stares at door, 'ahh...' fading*", "emotional_tone": "negative"},
+    ("coo_and_gaze", "secure"): {"reaction": "*Looks away, finds own hand to suck*", "emotional_tone": "neutral"},
+    ("coo_and_gaze", "anxious"): {"reaction": "*Whimpers louder, arms flailing*", "emotional_tone": "negative"},
+    ("coo_and_gaze", "avoidant"): {"reaction": "*Goes quiet, stares at ceiling*", "emotional_tone": "neutral"},
+}
+
+
+def generate_heartbeat_evaluation(
+    state: BabyState,
+    provider,
+    monologue: str,
+    behavior_space,
+    expression_mode: str,
+    expression_constraints: dict,
+    ini_state,
+) -> dict | None:
+    """
+    LLM 作为生命体潜意识，判断此刻是否要主动发起行为。
+    返回 initiative dict 或 None。
+    """
+    species = provider.get_species(state)
+    age_days = provider.get_age_days(state)
+
+    prompt = f"""You are the subconscious of a {species} child aged {age_days} days.
+
+Based on the child's current internal state, decide: does this child
+want to reach out to (or actively avoid) their parent RIGHT NOW?
+
+## Rules
+1. Most of the time, the answer is NO. Children are not constantly seeking
+   attention. Silence is the default. Return initiative: false for ~70% of calls.
+2. Only say YES if there is a genuine, developmentally appropriate reason:
+   real discomfort, genuine curiosity, wanting to share something specific,
+   genuine boredom after a long idle period, or a need for distance/privacy.
+3. BEHAVIOR TYPES:
+   - "verbal": speaking, calling, crying, babbling, or DELIBERATE silence
+   - "physical": body actions — reaching, pointing, pulling, pushing, hiding
+   - "avoidance": actively creating distance — dodging questions, refusing
+     interaction, hiding secrets, seeking solitude
+4. Avoidance IS initiative. A child who locks their door is making a choice.
+5. Expression MUST conform to expression_mode constraints:
+   Mode: {expression_mode}
+   Description: {expression_constraints.get('description', '')}
+   Format: {expression_constraints.get('format', '')}
+6. ANTI-AI RULES: No literary language, no self-analysis, no metaphors.
+   Real children, messy and immediate.
+7. If YES, expression must be SHORT: under 60 Chinese chars / 30 English words.
+8. Respond in Chinese if the child's context suggests Chinese-speaking family.
+
+{behavior_space.to_prompt_section()}
+
+## The Child's Inner State
+{monologue}
+
+## Output
+Return JSON only:
+{{
+  "initiative": true/false,
+  "type": "urgent" | "exploratory" | null,
+  "behavior_type": "verbal" | "physical" | "avoidance" | null,
+  "trigger": "hunger|fear|pain|sleepy|curious|bored|share|play|secret|boundary|autonomy" | null,
+  "expression": "the child's expression" | null,
+  "parent_hint": "brief hint for the parent" | null
+}}
+
+If initiative is false, set all other fields to null."""
+
+    result = _call_and_parse(prompt)
+    if result and isinstance(result, dict):
+        if result.get("initiative"):
+            return result
+        return None  # 静默
+
+    # LLM 失败 → 降级
+    logger.warning("Heartbeat LLM failed, using fallback for mode=%s", expression_mode)
+    fallback = _HEARTBEAT_FALLBACKS.get(expression_mode, _HEARTBEAT_FALLBACKS["cry_only"])
+    return {"initiative": True, **fallback}
+
+
+def generate_ignored_reaction(
+    state: BabyState,
+    provider,
+    ini_state,
+    initiative_type: str,
+    behavior_type: str,
+) -> dict:
+    """
+    LLM 生成宝宝被忽略后的情绪反应。
+    """
+    expression_mode = provider.get_expression_mode(state)
+    attachment = provider.get_attachment_style(state)
+    expression_constraints = provider.get_expression_constraints(state)
+    species = provider.get_species(state)
+    age_days = provider.get_age_days(state)
+
+    prompt = f"""You are simulating a {species} child aged {age_days} days.
+
+The child just tried to get their parent's attention ({initiative_type}, {behavior_type})
+but was IGNORED. Generate the child's emotional reaction.
+
+## Reaction patterns (by attachment style: {attachment})
+- secure: brief disappointment → self-soothe → find something else
+- anxious: louder crying → clingy → persistent attention-seeking
+- avoidant: quiet withdrawal → self-play → stops trying
+- forming: confusion → retry → may cry
+
+## Expression constraints
+Mode: {expression_mode}
+Format: {expression_constraints.get('format', '')}
+
+## Context
+- Consecutive ignores: {ini_state.consecutive_ignores}
+- Stress level: {provider.get_stress_state(state).stress_level:.1f}
+
+## Rules
+1. Under 50 Chinese chars / 25 English words.
+2. ANTI-AI: no literary language. Real child reactions.
+3. Respond in Chinese if context suggests Chinese-speaking family.
+
+Output JSON:
+{{
+  "reaction": "the child's reaction",
+  "emotional_tone": "positive/negative/neutral"
+}}"""
+
+    result = _call_and_parse(prompt)
+    if result and isinstance(result, dict) and "reaction" in result:
+        return result
+
+    # 降级
+    key = (expression_mode, attachment)
+    fallback = _IGNORED_FALLBACKS.get(key, {"reaction": "*Looks away quietly*", "emotional_tone": "negative"})
+    return fallback

@@ -63,24 +63,24 @@ EXPRESSION_MODES = {
         "example": "*Pulls your hand toward the door: 'Go play!' After being refused, sits down: 'Want... go...'*",
     },
     "sentence": {
-        "description": "Full sentences. Can express cause-effect, time, emotions. Starts asking 'why'.",
-        "format": "Simple sentences with grammatical structure. Lots of questions. Direct emotional expression.",
-        "example": "'Why does the sun go home when it gets dark? Where is the sun's home? Can I go there?'",
+        "description": "Full sentences. 2-3 year old cognition. ONLY concrete/observable things. Cannot grasp abstract concepts. Asks 'why' obsessively but cannot understand complex answers.",
+        "format": "Short simple sentences (5-10 words). Frequent grammatical errors. Mixes up tenses. Jumps between topics without transition. Lots of 'why' questions. Vocabulary: ~300-500 daily-life words only.",
+        "example": "'Why sun go sleep? Where sun house? I wanna go there too! ... Mommy look, a bug!'",
     },
     "narrative": {
-        "description": "Narrative ability. Can recount events, make up stories, role-play.",
-        "format": "Multi-sentence paragraphs with narrative structure. Begins using metaphors (may misuse them). Can distinguish reality from imagination.",
-        "example": "'Today that big dog looked at me, and I wasn't scared! Then it walked away. I think maybe it was scared of me too.'",
+        "description": "Can tell stories. 3-4 year old cognition. Understands sequence (then...then...) but logic has gaps. Invents details freely. Self-centered perspective.",
+        "format": "2-4 short sentences strung together with 'and then'. May misuse words. Exaggerates. Mixes real and imagined. Still many grammatical errors. Vocabulary: ~800-1000 words.",
+        "example": "'That big dog looked at me and I was NOT scared! And then it runned away. I think it was scared of ME! And then I was the bravest.'",
     },
     "reasoning": {
-        "description": "Reasoning expression. Can understand rules, make analogies, express abstract concepts.",
-        "format": "Complex sentences with logical connectors (because, so, if). Begins expressing hypotheticals.",
-        "example": "'If I were a bird, I'd fly really really high up to look around, because things look smaller from above, right?'",
+        "description": "Beginning logic. 4-6 year old cognition. Uses 'because/so/if' but reasoning is often wrong or circular. Concrete thinking only—cannot handle true abstraction. Overgeneralizes from single examples.",
+        "format": "Sentences with simple logical connectors. Logic is childish and often faulty. Still self-centered. Hypotheticals are naive and concrete. Vocabulary: ~1500-2000 words. Occasional big words used incorrectly.",
+        "example": "'If I was a bird I would fly SO high! Because things get tiny when you go up, right? So maybe ants think WE'RE tiny. Wait, do ants have eyes?'",
     },
     "independent": {
-        "description": "Independent expression. Has own opinions, preferences, arguments. Can disagree.",
-        "format": "Full paragraphs with points and arguments. Can express disagreement. Has self-awareness.",
-        "example": "'I don't want to wear this shirt. Not because it's ugly, but because it makes me itchy. You don't have to like the one I picked, but my skin, I know.'",
+        "description": "Has opinions and can argue. 6-7 year old cognition. Can disagree with reasons but reasons are simple and concrete. Still thinks in black-and-white. Short attention span. Gets distracted mid-argument.",
+        "format": "A few sentences expressing a position with simple reasons. NOT adult paragraphs. Still makes grammatical mistakes. Uses concrete personal experience as evidence, not abstract principles. Gets sidetracked. Vocabulary: ~2500-3000 words, still mispronounces/misuses some.",
+        "example": "'I don't wanna wear that shirt. It's scratchy and it makes my neck all red. I KNOW it looks nice but my neck doesn't care about nice. Can I wear the dinosaur one? It's soft and also dinosaurs are cool.'",
     },
 }
 

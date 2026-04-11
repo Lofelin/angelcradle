@@ -5,7 +5,7 @@
 保姆不是 NPC，是系统内核。
 
 [INPUT]: 依赖 cradle/state.py, cradle/events.py, cradle/mind.py, cradle/phases.py
-[OUTPUT]: simulate_phase(), SimulationResult
+[OUTPUT]: simulate_phase(), SimulationResult, _update_stress(), _check_stress_regression(), _check_regression_recovery(), _update_phase_state()
 [POS]: cradle/ 的核心引擎，被 API 层调用
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
@@ -132,9 +132,10 @@ def _delayed_capability_phase(state: BabyState, cap: str, normal_phase: int) -> 
 # ============================================================
 
 def _check_capability_unlocks(state: BabyState, phase_index: int) -> list[str]:
-    """检查当前阶段应解锁的能力，尊重先天缺陷约束。"""
+    """检查当前阶段应解锁的能力，尊重先天缺陷和压力回退约束。"""
     phase = PHASES[phase_index]
     blocked = _blocked_capabilities(state)
+    regressed = {r["capability"] for r in state.stress.regressed_capabilities}
     new_caps = []
     for cap in phase.capabilities:
         if cap in state.capabilities:
@@ -147,6 +148,10 @@ def _check_capability_unlocks(state: BabyState, phase_index: int) -> list[str]:
         required_phase = _delayed_capability_phase(state, cap, phase_index)
         if phase_index < required_phase:
             logger.info("Capability '%s' delayed to phase %d by congenital defect", cap, required_phase)
+            continue
+        # 当前已回退的能力不重复解锁（等恢复）
+        if cap in regressed:
+            logger.info("Capability '%s' currently regressed, skipping unlock", cap)
             continue
         new_caps.append(cap)
         state.capabilities.append(cap)
@@ -228,11 +233,42 @@ MILESTONE_DEFINITIONS = {
         "description": "First independent opinion held firmly",
         "min_phase": 11,
     },
+    # ---- 增强：喂养/体格/情绪/社交里程碑 ----
+    "first_solid_food": {
+        "trigger_state": lambda s: s.nutrition_sleep.feeding_mode == "introducing_solids",
+        "description": "First taste of solid food",
+        "min_phase": 3,
+    },
+    "first_tooth": {
+        "trigger_state": lambda s: s.physical.teeth_count > 0,
+        "description": "First tooth emerged",
+        "min_phase": 3,
+    },
+    "toilet_trained": {
+        "trigger_state": lambda s: s.physical.toilet_trained,
+        "description": "Successfully toilet trained",
+        "min_phase": 7,
+    },
+    "first_tantrum": {
+        "trigger_state": lambda s: s.emotional.tantrum_frequency > 0,
+        "description": "First full emotional meltdown",
+        "min_phase": 6,
+    },
+    "imaginary_friend": {
+        "trigger_state": lambda s: bool(s.emotional.imaginary_friend),
+        "description": "Created an imaginary friend",
+        "min_phase": 8,
+    },
+    "kindergarten_start": {
+        "trigger_state": lambda s: "teacher" in s.caregivers,
+        "description": "First day at kindergarten",
+        "min_phase": 8,
+    },
 }
 
 
 def _check_milestones(state: BabyState, new_capabilities: list[str]) -> list[Milestone]:
-    """检查新能力是否触发里程碑。"""
+    """检查能力解锁或状态变化是否触发里程碑。"""
     achieved_names = {m.name for m in state.milestones}
     new_milestones = []
 
@@ -241,19 +277,280 @@ def _check_milestones(state: BabyState, new_capabilities: list[str]) -> list[Mil
             continue
         if state.current_phase < defn["min_phase"]:
             continue
-        # 检查触发能力是否已解锁
-        if all(cap in state.capabilities for cap in defn["trigger_capabilities"]):
+
+        triggered = False
+        trigger_event = ""
+
+        # 方式一：能力触发
+        if "trigger_capabilities" in defn:
+            if all(cap in state.capabilities for cap in defn["trigger_capabilities"]):
+                triggered = True
+                trigger_event = "capability_unlock"
+
+        # 方式二：状态触发（lambda 检查）
+        if "trigger_state" in defn:
+            try:
+                if defn["trigger_state"](state):
+                    triggered = True
+                    trigger_event = "state_change"
+            except Exception:
+                pass
+
+        if triggered:
             milestone = Milestone(
                 name=name,
                 phase=state.current_phase,
                 age_days=state.age_days,
-                trigger_event="capability_unlock",
+                trigger_event=trigger_event,
                 description=defn["description"],
             )
             new_milestones.append(milestone)
             state.milestones.append(milestone)
 
     return new_milestones
+
+
+# ============================================================
+# 压力回退引擎（纯规则，无 LLM）
+# ============================================================
+
+# 不可回退的核心能力
+UNREGRESSIVE_CAPABILITIES = {
+    "startle_reflex", "sucking_reflex", "crying",
+    "sleep_wake_cycle", "object_permanence",
+}
+
+
+def _update_stress(state: BabyState, emotional_valence: str,
+                   intensity: float, parent_present: bool) -> None:
+    """事件后更新压力值。"""
+    stress = state.stress
+    attachment_mod = {
+        "secure": 0.7, "forming": 1.0, "anxious": 1.3, "avoidant": 1.1,
+    }
+    att_mod = attachment_mod.get(state.attachment_style, 1.0)
+
+    if emotional_valence == "negative":
+        delta = intensity * 0.15 * att_mod
+        stress.stress_level = min(1.0, stress.stress_level + delta)
+    elif emotional_valence == "positive":
+        recovery = intensity * 0.1
+        if parent_present:
+            recovery *= 1.5
+        stress.stress_level = max(0.0, stress.stress_level - recovery)
+
+
+def _check_stress_regression(state: BabyState) -> list[str]:
+    """检查是否触发能力回退。返回回退的能力名。"""
+    threshold = 0.6
+    if state.attachment_style == "secure":
+        threshold = 0.7
+    elif state.attachment_style == "anxious":
+        threshold = 0.5
+
+    if state.stress.stress_level < threshold:
+        return []
+
+    already_regressed = {r["capability"] for r in state.stress.regressed_capabilities}
+    candidates = [
+        cap for cap in reversed(state.capabilities)
+        if cap not in UNREGRESSIVE_CAPABILITIES and cap not in already_regressed
+    ]
+    if not candidates:
+        return []
+
+    count = min(random.randint(1, 2), len(candidates))
+    regressed = random.sample(candidates[:5], count)
+
+    for cap in regressed:
+        state.stress.regressed_capabilities.append({
+            "capability": cap,
+            "regressed_at": state.age_days,
+            "original_phase": state.current_phase,
+        })
+    return regressed
+
+
+def _check_regression_recovery(state: BabyState) -> list[dict]:
+    """检查回退能力是否恢复。返回 [{"capability": str, "strengthened": bool}]。"""
+    recovered = []
+    remaining = []
+
+    for reg in state.stress.regressed_capabilities:
+        days_regressed = state.age_days - reg["regressed_at"]
+
+        base_recovery = state.stress.stress_level < 0.3
+        time_limit = 30 if state.attachment_style == "secure" else 60
+        time_recovery = days_regressed > time_limit
+
+        if base_recovery or time_recovery:
+            strengthened = random.random() < 0.3
+            if strengthened and reg["capability"] not in state.stress.resilience_bonus:
+                state.stress.resilience_bonus.append(reg["capability"])
+            recovered.append({
+                "capability": reg["capability"],
+                "strengthened": strengthened,
+            })
+        else:
+            remaining.append(reg)
+
+    state.stress.regressed_capabilities = remaining
+    return recovered
+
+
+def _natural_stress_decay(state: BabyState) -> None:
+    """
+    阶段末压力自然衰减。
+
+    按阶段实际天数计算：日衰减率 0.5% → 阶段衰减 = 0.995^days。
+    30 天阶段衰减约 14%，365 天阶段衰减约 84%——长阶段压力有足够时间消散。
+    """
+    phase = PHASES[state.current_phase]
+    phase_days = phase.age_days[1] - phase.age_days[0]
+    daily_retention = 0.995  # 每天保��� 99.5% 的压力
+    decay_factor = daily_retention ** phase_days
+    state.stress.stress_level = max(0.0, state.stress.stress_level * decay_factor)
+
+
+# ============================================================
+# 阶段状态自动更新（纯规则引擎，无 LLM）
+# ============================================================
+
+# 喂养模式映射（按 age_days，对齐 WHO 喂养指南）
+# 0-180天(0-6月): 纯母乳, 180-365天(6-12月): 引入固体,
+# 365-730天(12-24月): 自主进食学习, 730+天(2岁+): 家庭餐
+FEEDING_MODE_BY_AGE = [
+    (0, 180, "breast_milk"),
+    (180, 365, "introducing_solids"),
+    (365, 730, "self_feeding_learning"),
+    (730, 99999, "family_meals"),
+]
+
+# 夜醒次数基线
+NIGHT_WAKING_BY_PHASE = {
+    0: 5, 1: 4, 2: 3, 3: 3, 4: 2, 5: 2, 6: 1, 7: 1,
+    8: 0, 9: 0, 10: 0, 11: 0,
+}
+
+# 睡眠回归高发阶段
+SLEEP_REGRESSION_PHASES = {2, 3, 6, 7}
+
+# Tantrum 频率曲线
+TANTRUM_FREQUENCY = {
+    6: 0.4, 7: 0.7, 8: 0.4, 9: 0.15, 10: 0.1, 11: 0.05,
+}
+
+# 共情发展
+EMPATHY_BY_PHASE = {
+    (0, 4): "none", (5, 7): "primitive", (8, 11): "true",
+}
+
+# 游戏类型
+PLAY_TYPE_BY_PHASE = {
+    (0, 4): "functional", (5, 6): "constructive",
+    (7, 9): "symbolic", (10, 11): "rule_based",
+}
+
+# 标准身高体重曲线（每阶段末值）
+GROWTH_CURVE = [
+    (0, 54, 4.0), (1, 62, 5.8), (2, 68, 7.5), (3, 72, 8.5),
+    (4, 76, 9.5), (5, 82, 10.5), (6, 87, 12.0), (7, 95, 14.0),
+    (8, 102, 16.0), (9, 108, 18.0), (10, 115, 20.0), (11, 121, 22.0),
+]
+
+# 出牙时间线
+TEETH_BY_PHASE = {
+    3: 2, 4: 4, 5: 8, 6: 12, 7: 16, 8: 20, 9: 20, 10: 20, 11: 20,
+}
+
+# 情绪词汇渐进解锁
+EMOTIONAL_VOCAB_BY_PHASE = {
+    5: ["no", "scared"],
+    6: ["no", "scared", "want", "mine"],
+    7: ["angry", "sad", "happy", "why"],
+    8: ["angry_because", "sorry", "friend", "fair"],
+    9: ["frustrated", "proud", "embarrassed", "if_then"],
+    10: ["worried", "excited", "disappointed", "jealous"],
+    11: ["grateful", "lonely", "confused", "determined"],
+}
+
+
+def _update_phase_state(state: BabyState, phase_index: int) -> list[dict]:
+    """
+    阶段开始时自动更新喂养/睡眠/情绪/体格状态。
+    返回变更事件列表（用于 SSE 推送）。纯规则引擎，0 LLM。
+    """
+    changes = []
+    ns = state.nutrition_sleep
+    em = state.emotional
+    ph = state.physical
+
+    # 1. 喂养模式（按 age_days 判断，不依赖 phase_index）
+    for age_lo, age_hi, mode in FEEDING_MODE_BY_AGE:
+        if age_lo <= state.age_days < age_hi and ns.feeding_mode != mode:
+            old = ns.feeding_mode
+            ns.feeding_mode = mode
+            changes.append({"type": "feeding_transition", "from": old, "to": mode})
+
+    # 2. 夜醒次数
+    base_waking = NIGHT_WAKING_BY_PHASE.get(phase_index, 0)
+    if ns.sleep_regression_active:
+        base_waking += 2
+    ns.night_waking_frequency = base_waking
+
+    # 3. 睡眠回归
+    if phase_index in SLEEP_REGRESSION_PHASES:
+        if random.random() < 0.8:
+            ns.sleep_regression_active = True
+            ns.sleep_quality = max(0.2, ns.sleep_quality - 0.3)
+            changes.append({"type": "sleep_regression_onset"})
+    else:
+        if ns.sleep_regression_active:
+            ns.sleep_regression_active = False
+            ns.sleep_quality = min(0.9, ns.sleep_quality + 0.2)
+            changes.append({"type": "sleep_regression_resolved"})
+
+    # 4. Tantrum 频率
+    em.tantrum_frequency = TANTRUM_FREQUENCY.get(phase_index, 0.0)
+
+    # 5. 共情等级
+    for (lo, hi), level in EMPATHY_BY_PHASE.items():
+        if lo <= phase_index <= hi:
+            em.empathy_level = level
+
+    # 6. 游戏类型
+    for (lo, hi), ptype in PLAY_TYPE_BY_PHASE.items():
+        if lo <= phase_index <= hi:
+            em.play_type = ptype
+
+    # 7. 体格更新
+    for p, h, w in GROWTH_CURVE:
+        if p == phase_index:
+            # 身高、体重独立方差（真实婴儿 ~10-15% 个体差异）
+            h_var = random.gauss(0, 0.10)
+            w_var = random.gauss(0, 0.10)
+            ph.height_cm = round(h * (1 + h_var), 1)
+            ph.weight_kg = round(w * (1 + w_var), 1)
+            changes.append({
+                "type": "physical_growth",
+                "height_cm": ph.height_cm,
+                "weight_kg": ph.weight_kg,
+            })
+
+    # 8. 出牙
+    expected_teeth = TEETH_BY_PHASE.get(phase_index, ph.teeth_count)
+    if expected_teeth > ph.teeth_count:
+        new_teeth = expected_teeth - ph.teeth_count
+        ph.teeth_count = expected_teeth
+        changes.append({"type": "new_teeth", "count": new_teeth, "total": ph.teeth_count})
+
+    # 9. 情绪词汇
+    new_vocab = EMOTIONAL_VOCAB_BY_PHASE.get(phase_index, [])
+    for word in new_vocab:
+        if word not in em.emotional_vocabulary:
+            em.emotional_vocabulary.append(word)
+
+    return changes
 
 
 # ============================================================
@@ -346,8 +643,16 @@ def simulate_phase_stream(state: BabyState):
         "expression_mode": phase.expression_mode,
     }
 
-    # 1. 事件生成（身份调制权重）
-    events = roll_events(phase_index, identity=state.identity)
+    # 0. 阶段状态自动更新（喂养/睡眠/情绪/体格，纯规则）
+    phase_state_changes = _update_phase_state(state, phase_index)
+    if phase_state_changes:
+        yield {
+            "event": "phase_state_update",
+            "changes": phase_state_changes,
+        }
+
+    # 1. 事件生成（身份调制权重 + 阶段状态调制）
+    events = roll_events(phase_index, identity=state.identity, state=state)
     all_events = events["daily"] + events["environment"]
 
     yield {
@@ -432,6 +737,14 @@ def simulate_phase_stream(state: BabyState):
                 if pref not in state.preferences:
                     state.preferences.append(pref)
 
+            # 压力更新（每个场景后）
+            _update_stress(
+                state,
+                scene.get("emotional_valence", "neutral"),
+                scene.get("intensity", 0.5),
+                scene.get("parent_involved", False),
+            )
+
             yield {
                 "event": "scene",
                 "scene": scene.get("scene", 0),
@@ -446,6 +759,24 @@ def simulate_phase_stream(state: BabyState):
                 "intensity": scene.get("intensity", 0.5),
                 "trace": scene.get("trace", ""),
                 "growth_signal": scene.get("growth_signal", ""),
+                "stress_level": round(state.stress.stress_level, 2),
+            }
+
+        # 叙事完成后：检查回退和恢复
+        regressed = _check_stress_regression(state)
+        if regressed:
+            yield {
+                "event": "stress_regression",
+                "regressed": regressed,
+                "stress_level": round(state.stress.stress_level, 2),
+            }
+        recovered = _check_regression_recovery(state)
+        if recovered:
+            yield {
+                "event": "regression_recovery",
+                "recovered": [r["capability"] for r in recovered],
+                "strengthened": [r["capability"] for r in recovered if r["strengthened"]],
+                "stress_level": round(state.stress.stress_level, 2),
             }
     else:
         executor.shutdown(wait=False)  # 无事件时直接关闭
@@ -514,13 +845,15 @@ def resolve_critical_event(
     event_name: str,
     parent_action: str,
     parent_input: str = "",
+    caregiver_id: str = "primary_parent",
 ) -> dict:
     """
-    父母介入处理关键事件。
+    照护者介入处理关键事件。
 
     event_name: 事件名
-    parent_action: 父母选择的行为
+    parent_action: 照护者选择的行为
     parent_input: 自由输入（如命名时的名字）
+    caregiver_id: 介入的照护者 ID
     """
     event = get_event(event_name)
     if not event:
@@ -555,43 +888,83 @@ def resolve_critical_event(
         if comfort not in state.comfort_sources:
             state.comfort_sources.append(comfort)
     if reaction.get("attachment_signal"):
-        # 简单的依恋更新逻辑
-        _update_attachment(state, parent_action, reaction.get("attachment_signal", ""))
+        _update_attachment(state, parent_action, reaction.get("attachment_signal", ""),
+                           caregiver_id=caregiver_id)
 
-    # 更新父母画像
-    _update_parent_profile(state, parent_action)
+    # 更新照护者画像
+    _update_caregiver_profile(state, parent_action, caregiver_id=caregiver_id)
+
+    # 压力更新（关键事件后）
+    valence = reaction.get("emotional_valence", "neutral")
+    intensity = reaction.get("intensity", 0.5)
+    _update_stress(state, valence, intensity, parent_present=True)
+
+    # 入园：自动添加 teacher 照护者
+    if event_name == "kindergarten_entry" and "teacher" not in state.caregivers:
+        from .state import CaregiverProfile
+        state.caregivers["teacher"] = CaregiverProfile(
+            caregiver_id="teacher",
+            role="teacher",
+            display_name="Teacher",
+            responsiveness=0.6,
+            intervention_style="balanced",
+            emotional_tone="warm",
+        )
+        state.attachment_per_caregiver["teacher"] = "forming"
 
     save_state(state)
 
     return {k: v for k, v in reaction.items() if k != "memory"}
 
 
-def _update_attachment(state: BabyState, parent_action: str, signal: str) -> None:
-    """根据父母行为更新依恋类型趋势。"""
-    # 简单模型：响应性高 → 安全，忽视 → 回避，不一致 → 焦虑
+def _update_attachment(state: BabyState, parent_action: str, signal: str,
+                       caregiver_id: str = "primary_parent") -> None:
+    """根据照护者行为更新依恋类型趋势（按照护者独立追踪）。"""
     responsive_actions = {"comfort", "hold_and_rock", "hold_tight", "sing",
-                          "celebrate", "validate", "explain_return", "calm_check"}
-    avoidant_actions = {"let_cry", "ignore", "sneak_away"}
+                          "celebrate", "validate", "explain_return", "calm_check",
+                          "rush_hospital", "observe_carefully", "patient_encourage",
+                          "stay_briefly", "quick_goodbye", "stay_safe", "hold_gently",
+                          "curious", "play_along", "gradual_transition"}
+    avoidant_actions = {"let_cry", "ignore", "sneak_away", "worried"}
     balanced_actions = {"encourage", "gentle_smile", "boundary", "stay_nearby",
-                        "gradual", "negotiate", "observe", "discuss_why"}
+                        "gradual", "negotiate", "observe", "discuss_why",
+                        "remove_food", "wait_readiness", "delay", "try_wake"}
 
+    # 按照护者更新依恋
+    current = state.attachment_per_caregiver.get(caregiver_id, "forming")
     if parent_action in responsive_actions:
-        if state.attachment_style in ("forming", "secure"):
-            state.attachment_style = "secure"
+        if current in ("forming", "secure"):
+            current = "secure"
     elif parent_action in avoidant_actions:
-        if state.attachment_style == "forming":
-            state.attachment_style = "avoidant"
-    # balanced actions tend toward secure
+        if current == "forming":
+            current = "avoidant"
     elif parent_action in balanced_actions:
-        if state.attachment_style == "forming":
-            state.attachment_style = "secure"
+        if current == "forming":
+            current = "secure"
+    state.attachment_per_caregiver[caregiver_id] = current
+
+    # 同步主照护者依恋到 state.attachment_style（显式查找 primary_parent）
+    if "primary_parent" in state.attachment_per_caregiver:
+        state.attachment_style = state.attachment_per_caregiver["primary_parent"]
+    elif state.caregivers:
+        # 没有 primary_parent 时回退到第一个照护者
+        first_cid = next(iter(state.caregivers))
+        state.attachment_style = state.attachment_per_caregiver.get(first_cid, "forming")
 
 
-def _update_parent_profile(state: BabyState, action: str) -> None:
-    """更新父母画像。"""
-    pp = state.parent_profile
-    pp.total_interventions += 1
-    pp.intervention_log.append({
+def _update_caregiver_profile(state: BabyState, action: str,
+                              caregiver_id: str = "primary_parent") -> None:
+    """更新照护者画像。"""
+    # 确保照护者存在
+    if caregiver_id not in state.caregivers:
+        from .state import CaregiverProfile
+        state.caregivers[caregiver_id] = CaregiverProfile(
+            caregiver_id=caregiver_id,
+        )
+
+    cg = state.caregivers[caregiver_id]
+    cg.total_interventions += 1
+    cg.intervention_log.append({
         "phase": state.current_phase,
         "age_days": state.age_days,
         "action": action,
@@ -599,27 +972,32 @@ def _update_parent_profile(state: BabyState, action: str) -> None:
 
     # 响应性
     responsive = {"comfort", "hold_and_rock", "hold_tight", "sing", "celebrate",
-                  "validate", "rush_over", "explain_return"}
+                  "validate", "rush_over", "explain_return", "rush_hospital",
+                  "patient_encourage", "stay_briefly", "stay_safe", "hold_gently",
+                  "curious", "play_along", "gradual_transition"}
     if action in responsive:
-        pp.responsiveness = min(1.0, pp.responsiveness + 0.05)
-    elif action in {"let_cry", "ignore", "sneak_away"}:
-        pp.responsiveness = max(0.0, pp.responsiveness - 0.05)
+        cg.responsiveness = min(1.0, cg.responsiveness + 0.05)
+    elif action in {"let_cry", "ignore", "sneak_away", "worried"}:
+        cg.responsiveness = max(0.0, cg.responsiveness - 0.05)
 
     # 介入风格
-    protective = {"rush_over", "comfort", "hold_tight", "insist"}
-    hands_off = {"let_cry", "ignore", "observe"}
+    protective = {"rush_over", "comfort", "hold_tight", "insist", "rush_hospital"}
+    hands_off = {"let_cry", "ignore", "observe", "wait_readiness", "delay"}
     if action in protective:
-        pp.intervention_style = "protective"
+        cg.intervention_style = "protective"
     elif action in hands_off:
-        pp.intervention_style = "hands_off"
+        cg.intervention_style = "hands_off"
     else:
-        pp.intervention_style = "balanced"
+        cg.intervention_style = "balanced"
 
 
 def complete_phase(state: BabyState) -> dict:
     """
     完成当前阶段，生成总结，推进到下一阶段。
     """
+    # 阶段末压力自然衰减
+    _natural_stress_decay(state)
+
     # 生成阶段总结
     summary = generate_phase_summary(state)
 
@@ -677,6 +1055,24 @@ def grow_stream(state: BabyState):
 
             # 透传所有事件（剔除内部字段）
             yield {k: v for k, v in step.items() if not k.startswith("_")}
+
+        # 心跳注入：阶段模拟完成后，评估宝宝是否要主动找父母
+        if not has_critical:
+            try:
+                from heartbeat import evaluate_heartbeat
+                from .heartbeat_provider import CradleMonologueProvider
+                from .mind import generate_heartbeat_evaluation, generate_ignored_reaction
+                _provider = CradleMonologueProvider()
+                _hb = evaluate_heartbeat(
+                    state, _provider, state.initiative,
+                    generate_heartbeat_evaluation, generate_ignored_reaction,
+                )
+                if _hb.get("initiative"):
+                    yield {"event": "heartbeat_initiative", **_hb["initiative"]}
+                if _hb.get("ignored_reaction"):
+                    yield {"event": "heartbeat_ignored", **_hb["ignored_reaction"]}
+            except Exception as _hb_err:
+                logger.warning("Heartbeat in grow_stream failed: %s", _hb_err)
 
         # 有关键事件 → 暂停，等父母介入
         if has_critical:

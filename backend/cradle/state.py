@@ -5,7 +5,7 @@
 状态持久化到 backend/nursery/{baby_id}/ 目录。
 
 [INPUT]: 依赖 cradle/phases.py 的阶段定义
-[OUTPUT]: BabyState, ParentProfile 数据类，load/save 函数
+[OUTPUT]: BabyState(含 InitiativeState + 自驱动生命字段), CaregiverProfile, StressState, NutritionSleepState, EmotionalState, PhysicalState 数据类，load/save 函数
 [POS]: cradle/ 的状态管理层，被所有其他 cradle 模块消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
@@ -13,7 +13,11 @@
 from __future__ import annotations
 
 import json
+import os
+import re
+import tempfile
 from dataclasses import dataclass, field
+from heartbeat import InitiativeState
 from pathlib import Path
 from typing import Optional
 
@@ -99,30 +103,39 @@ class Identity:
 
 
 @dataclass
-class ParentProfile:
-    """父母画像，从介入行为中追踪。影响依恋类型。"""
+class CaregiverProfile:
+    """照护者画像，从介入行为中追踪。每个照护者独立影响依恋类型。"""
+    caregiver_id: str = "primary_parent"
+    role: str = "parent"                # parent / grandparent / nanny / teacher
+    display_name: str = "Parent"
     responsiveness: float = 0.5         # 0-1，呼唤时是否回应
     intervention_style: str = "balanced"  # protective / balanced / hands_off
     teaching_frequency: float = 0.5     # 0-1，多久主动教导
-    emotional_tone: str = "warm"        # warm / neutral / anxious
+    emotional_tone: str = "warm"        # warm / neutral / anxious / strict
     total_interventions: int = 0
-    interaction_count: int = 0                                  # 亲子对话次数
+    interaction_count: int = 0          # 对话次数
     intervention_log: list[dict] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
+            "caregiver_id": self.caregiver_id,
+            "role": self.role,
+            "display_name": self.display_name,
             "responsiveness": self.responsiveness,
             "intervention_style": self.intervention_style,
             "teaching_frequency": self.teaching_frequency,
             "emotional_tone": self.emotional_tone,
             "total_interventions": self.total_interventions,
             "interaction_count": self.interaction_count,
-            "intervention_log": self.intervention_log[-20:],  # 只保留最近 20 条
+            "intervention_log": self.intervention_log[-20:],
         }
 
     @classmethod
-    def from_dict(cls, d: dict) -> ParentProfile:
+    def from_dict(cls, d: dict) -> CaregiverProfile:
         return cls(
+            caregiver_id=d.get("caregiver_id", "primary_parent"),
+            role=d.get("role", "parent"),
+            display_name=d.get("display_name", "Parent"),
             responsiveness=d.get("responsiveness", 0.5),
             intervention_style=d.get("intervention_style", "balanced"),
             teaching_frequency=d.get("teaching_frequency", 0.5),
@@ -130,6 +143,132 @@ class ParentProfile:
             total_interventions=d.get("total_interventions", 0),
             interaction_count=d.get("interaction_count", 0),
             intervention_log=d.get("intervention_log", []),
+        )
+
+
+@dataclass
+class StressState:
+    """压力与回退状态。"""
+    stress_level: float = 0.0           # 0.0-1.0，当前压力值
+    regressed_capabilities: list[dict] = field(default_factory=list)
+    # 每项: {"capability": str, "regressed_at": int, "original_phase": int}
+    resilience_bonus: list[str] = field(default_factory=list)
+    # 从回退中恢复后获得韧性加成的能力
+
+    def to_dict(self) -> dict:
+        return {
+            "stress_level": self.stress_level,
+            "regressed_capabilities": self.regressed_capabilities,
+            "resilience_bonus": self.resilience_bonus,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> StressState:
+        return cls(
+            stress_level=d.get("stress_level", 0.0),
+            regressed_capabilities=d.get("regressed_capabilities", []),
+            resilience_bonus=d.get("resilience_bonus", []),
+        )
+
+
+@dataclass
+class NutritionSleepState:
+    """喂养与睡眠状态。"""
+    feeding_mode: str = "breast_milk"
+    # breast_milk / introducing_solids / self_feeding_learning / family_meals
+    food_allergies: list[str] = field(default_factory=list)
+    picky_foods: list[str] = field(default_factory=list)
+    sleep_quality: float = 0.7          # 0-1，当前睡眠质量
+    sleep_regression_active: bool = False
+    night_waking_frequency: int = 3     # 每夜平均醒来次数
+    room_separated: bool = False
+    transitional_object: str = ""       # 过渡客体名称
+
+    def to_dict(self) -> dict:
+        return {
+            "feeding_mode": self.feeding_mode,
+            "food_allergies": self.food_allergies,
+            "picky_foods": self.picky_foods,
+            "sleep_quality": self.sleep_quality,
+            "sleep_regression_active": self.sleep_regression_active,
+            "night_waking_frequency": self.night_waking_frequency,
+            "room_separated": self.room_separated,
+            "transitional_object": self.transitional_object,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> NutritionSleepState:
+        return cls(
+            feeding_mode=d.get("feeding_mode", "breast_milk"),
+            food_allergies=d.get("food_allergies", []),
+            picky_foods=d.get("picky_foods", []),
+            sleep_quality=d.get("sleep_quality", 0.7),
+            sleep_regression_active=d.get("sleep_regression_active", False),
+            night_waking_frequency=d.get("night_waking_frequency", 3),
+            room_separated=d.get("room_separated", False),
+            transitional_object=d.get("transitional_object", ""),
+        )
+
+
+@dataclass
+class EmotionalState:
+    """情绪调节状态。"""
+    tantrum_frequency: float = 0.0      # 当前阶段发脾气概率
+    emotional_vocabulary: list[str] = field(default_factory=list)
+    # 已掌握的情绪词汇: ["cry", "no", "angry", "sad", "angry_because"]
+    empathy_level: str = "none"         # none / contagion / primitive / true
+    self_regulation_score: float = 0.0  # 0-1，自我调节能力
+    imaginary_friend: str = ""          # 想象伙伴名称（空=无）
+    play_type: str = "functional"       # functional / constructive / symbolic / rule_based
+
+    def to_dict(self) -> dict:
+        return {
+            "tantrum_frequency": self.tantrum_frequency,
+            "emotional_vocabulary": self.emotional_vocabulary,
+            "empathy_level": self.empathy_level,
+            "self_regulation_score": self.self_regulation_score,
+            "imaginary_friend": self.imaginary_friend,
+            "play_type": self.play_type,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> EmotionalState:
+        return cls(
+            tantrum_frequency=d.get("tantrum_frequency", 0.0),
+            emotional_vocabulary=d.get("emotional_vocabulary", []),
+            empathy_level=d.get("empathy_level", "none"),
+            self_regulation_score=d.get("self_regulation_score", 0.0),
+            imaginary_friend=d.get("imaginary_friend", ""),
+            play_type=d.get("play_type", "functional"),
+        )
+
+
+@dataclass
+class PhysicalState:
+    """体格状态。"""
+    height_cm: float = 50.0            # 出生身高
+    weight_kg: float = 3.3             # 出生体重
+    teeth_count: int = 0               # 已萌出牙齿数
+    toilet_trained: bool = False
+    fine_motor_level: int = 0          # 0-5，精细运动等级
+
+    def to_dict(self) -> dict:
+        return {
+            "height_cm": round(self.height_cm, 1),
+            "weight_kg": round(self.weight_kg, 1),
+            "teeth_count": self.teeth_count,
+            "toilet_trained": self.toilet_trained,
+            "fine_motor_level": self.fine_motor_level,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> PhysicalState:
+        return cls(
+            height_cm=d.get("height_cm", 50.0),
+            weight_kg=d.get("weight_kg", 3.3),
+            teeth_count=d.get("teeth_count", 0),
+            toilet_trained=d.get("toilet_trained", False),
+            fine_motor_level=d.get("fine_motor_level", 0),
         )
 
 
@@ -218,8 +357,21 @@ class BabyState:
     memories: list[Memory] = field(default_factory=list)
     milestones: list[Milestone] = field(default_factory=list)
 
-    # 父母
-    parent_profile: ParentProfile = field(default_factory=ParentProfile)
+    # 照护者（多人，替代旧 parent_profile）
+    caregivers: dict[str, CaregiverProfile] = field(default_factory=dict)
+    attachment_per_caregiver: dict[str, str] = field(default_factory=dict)
+
+    # 压力与回退
+    stress: StressState = field(default_factory=StressState)
+
+    # 喂养与睡眠
+    nutrition_sleep: NutritionSleepState = field(default_factory=NutritionSleepState)
+
+    # 情绪调节
+    emotional: EmotionalState = field(default_factory=EmotionalState)
+
+    # 体格
+    physical: PhysicalState = field(default_factory=PhysicalState)
 
     # 阶段日志
     phase_summaries: list[dict] = field(default_factory=list)
@@ -229,6 +381,25 @@ class BabyState:
 
     # 世界就绪度
     world_readiness: dict = field(default_factory=dict)
+
+    # 主动行为状态
+    initiative: InitiativeState = field(default_factory=InitiativeState)
+
+    # 自驱动生命
+    life_tags: set[str] = field(default_factory=set)     # 生活上下文标签
+    last_active_ts: float = 0.0                          # 上次活跃的 Unix 时间戳
+    sim_time: float = 0.0                                # 当前模拟时间（自出生以来的模拟小时数）
+    time_scale: str = "normal"                           # slow / normal / fast
+
+    def update_age_from_sim_time(self) -> None:
+        """根据 sim_time 更新 age_days，不超过当前阶段上限。"""
+        from .phases import PHASES
+        sim_days = int(self.sim_time / 24.0)
+        if self.current_phase < len(PHASES):
+            max_days = PHASES[self.current_phase].age_days[1]
+            self.age_days = min(sim_days, max_days)
+        else:
+            self.age_days = sim_days
 
     def to_dict(self) -> dict:
         return {
@@ -246,14 +417,44 @@ class BabyState:
             "comfort_sources": self.comfort_sources,
             "memories": [m.to_dict() for m in self.memories],
             "milestones": [m.to_dict() for m in self.milestones],
-            "parent_profile": self.parent_profile.to_dict(),
+            "caregivers": {cid: c.to_dict() for cid, c in self.caregivers.items()},
+            "attachment_per_caregiver": self.attachment_per_caregiver,
+            "stress": self.stress.to_dict(),
+            "nutrition_sleep": self.nutrition_sleep.to_dict(),
+            "emotional": self.emotional.to_dict(),
+            "physical": self.physical.to_dict(),
             "phase_summaries": self.phase_summaries,
             "simulated_phases": self.simulated_phases,
             "world_readiness": self.world_readiness,
+            "initiative": self.initiative.to_dict(),
+            "life_tags": list(self.life_tags),
+            "last_active_ts": self.last_active_ts,
+            "sim_time": self.sim_time,
+            "time_scale": self.time_scale,
         }
 
     @classmethod
     def from_dict(cls, d: dict) -> BabyState:
+        # 照护者：兼容旧 parent_profile 格式
+        caregivers: dict[str, CaregiverProfile] = {}
+        if "caregivers" in d and d["caregivers"]:
+            for cid, cd in d["caregivers"].items():
+                caregivers[cid] = CaregiverProfile.from_dict(cd)
+        elif "parent_profile" in d:
+            pp = d["parent_profile"]
+            caregivers["primary_parent"] = CaregiverProfile(
+                caregiver_id="primary_parent",
+                role="parent",
+                display_name="Parent",
+                responsiveness=pp.get("responsiveness", 0.5),
+                intervention_style=pp.get("intervention_style", "balanced"),
+                teaching_frequency=pp.get("teaching_frequency", 0.5),
+                emotional_tone=pp.get("emotional_tone", "warm"),
+                total_interventions=pp.get("total_interventions", 0),
+                interaction_count=pp.get("interaction_count", 0),
+                intervention_log=pp.get("intervention_log", []),
+            )
+
         return cls(
             baby_id=d.get("baby_id", ""),
             species=d.get("species", "human"),
@@ -269,10 +470,20 @@ class BabyState:
             comfort_sources=d.get("comfort_sources", []),
             memories=[Memory.from_dict(m) for m in d.get("memories", [])],
             milestones=[Milestone.from_dict(m) for m in d.get("milestones", [])],
-            parent_profile=ParentProfile.from_dict(d.get("parent_profile", {})),
+            caregivers=caregivers,
+            attachment_per_caregiver=d.get("attachment_per_caregiver", {}),
+            stress=StressState.from_dict(d.get("stress", {})),
+            nutrition_sleep=NutritionSleepState.from_dict(d.get("nutrition_sleep", {})),
+            emotional=EmotionalState.from_dict(d.get("emotional", {})),
+            physical=PhysicalState.from_dict(d.get("physical", {})),
             phase_summaries=d.get("phase_summaries", []),
             simulated_phases=d.get("simulated_phases", []),
             world_readiness=d.get("world_readiness", {}),
+            initiative=InitiativeState.from_dict(d.get("initiative", {})),
+            life_tags=set(d.get("life_tags", [])),
+            last_active_ts=d.get("last_active_ts", 0.0),
+            sim_time=d.get("sim_time", 0.0),
+            time_scale=d.get("time_scale", "normal"),
         )
 
 
@@ -280,19 +491,39 @@ class BabyState:
 # 持久化
 # ============================================================
 
+_SAFE_ID_RE = re.compile(r'^[a-zA-Z0-9_-]+$')
+
+
+def _validate_baby_id(baby_id: str) -> str:
+    """校验 baby_id，阻止路径遍历。只允许字母、数字、下划线、连字符。"""
+    if not baby_id or not _SAFE_ID_RE.match(baby_id):
+        raise ValueError(f"Invalid baby_id: {baby_id!r} (only [a-zA-Z0-9_-] allowed)")
+    return baby_id
+
+
 def _baby_dir(baby_id: str) -> Path:
+    _validate_baby_id(baby_id)
     return NURSERY_DIR / baby_id
 
 
 def save_state(state: BabyState) -> None:
-    """保存婴儿成长状态。"""
+    """保存婴儿成长状态。原子写入：先写临时文件再 rename，防并发损坏。"""
     d = _baby_dir(state.baby_id)
     d.mkdir(parents=True, exist_ok=True)
     path = d / "state.json"
-    path.write_text(
-        json.dumps(state.to_dict(), ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    data = json.dumps(state.to_dict(), ensure_ascii=False, indent=2)
+    fd, tmp_path = tempfile.mkstemp(dir=str(d), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(data)
+        os.replace(tmp_path, str(path))  # 原子替换
+    except BaseException:
+        # 写入失败时清理临时文件
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
 
 
 def load_state(baby_id: str) -> Optional[BabyState]:
@@ -367,6 +598,8 @@ def list_cradle_babies() -> list[dict]:
         state_path = d / "state.json"
         if state_path.is_file():
             data = json.loads(state_path.read_text(encoding="utf-8"))
+            ph = data.get("physical", {})
+            stress = data.get("stress", {})
             babies.append({
                 "baby_id": data["baby_id"],
                 "name": data.get("name", ""),
@@ -376,5 +609,9 @@ def list_cradle_babies() -> list[dict]:
                 "expression_mode": data["expression_mode"],
                 "milestones_count": len(data.get("milestones", [])),
                 "memories_count": len(data.get("memories", [])),
+                "height_cm": ph.get("height_cm", 50.0),
+                "weight_kg": ph.get("weight_kg", 3.3),
+                "stress_level": stress.get("stress_level", 0.0),
+                "caregivers_count": len(data.get("caregivers", {})),
             })
     return babies

@@ -394,7 +394,10 @@ def end_session(session_id: str) -> dict:
 
         # 更新交互计数
         my_turns = sum(1 for m in session.history if m.baby_id == baby_id)
-        state.parent_profile.interaction_count += my_turns
+        # 更新主照护者交互计数
+        if state.caregivers:
+            primary = next(iter(state.caregivers.values()))
+            primary.interaction_count += my_turns
 
         # 保存状态
         save_state(state)
