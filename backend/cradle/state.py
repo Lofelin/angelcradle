@@ -2,26 +2,83 @@
 婴儿成长状态模型。
 
 这是摇篮中婴儿的活档案——从出生到进入世界，所有成长轨迹都记录在这里。
-状态持久化到 backend/nursery/{baby_id}/ 目录。
+状态持久化到 backend/babies/{baby_id}/ 目录。
 
 [INPUT]: 依赖 cradle/phases.py 的阶段定义
-[OUTPUT]: BabyState(含 InitiativeState + 自驱动生命字段), CaregiverProfile, StressState, NutritionSleepState, EmotionalState, PhysicalState 数据类，load/save 函数
+[OUTPUT]: BabyState(含 InitiativeState + 自驱动生命字段 + triggered_events/world_snapshot), CaregiverProfile, StressState, NutritionSleepState, EmotionalState, PhysicalState 数据类（Memory 含 forget_score 字段，memory/consolidation 动态更新），load/save/append_event(返回seq)/load_events_after/get_notify/get_baby_lock/rebuild_triggered_events 函数
 [POS]: cradle/ 的状态管理层，被所有其他 cradle 模块消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import re
 import tempfile
+import threading
 from dataclasses import dataclass, field
 from heartbeat import InitiativeState
 from pathlib import Path
 from typing import Optional
 
-NURSERY_DIR = Path(__file__).parent.parent / "nursery"
+ARCHIVE_DIR = Path(__file__).parent.parent / "archive"
+
+
+# ============================================================
+# 事件日志基础设施：seq 计数器 + 写入锁 + 通知 + 状态锁
+# ============================================================
+
+_seq_counters: dict[str, int] = {}           # baby_id -> 当前最大 seq
+_seq_locks: dict[str, threading.Lock] = {}   # baby_id -> 事件写入锁
+_notify_events: dict[str, asyncio.Event] = {}  # baby_id -> SSE 通知信号
+_baby_locks: dict[str, asyncio.Lock] = {}    # baby_id -> 状态读写锁（scheduler/interact 互斥）
+_infra_lock = threading.Lock()               # 保护上面四个 dict 的惰性创建
+
+
+def _get_seq_lock(baby_id: str) -> threading.Lock:
+    """获取 baby 的事件写入锁（惰性创建）。"""
+    with _infra_lock:
+        if baby_id not in _seq_locks:
+            _seq_locks[baby_id] = threading.Lock()
+        return _seq_locks[baby_id]
+
+
+def _count_lines(path: Path) -> int:
+    """计算文件行数（用于冷启动时推断 seq）。"""
+    if not path.is_file():
+        return 0
+    count = 0
+    with open(path, "r", encoding="utf-8") as f:
+        for _ in f:
+            count += 1
+    return count
+
+
+def _next_seq(baby_id: str) -> int:
+    """分配下一个 seq（必须在 _get_seq_lock 内调用）。"""
+    if baby_id not in _seq_counters:
+        path = _baby_dir(baby_id) / "events.jsonl"
+        _seq_counters[baby_id] = _count_lines(path)
+    _seq_counters[baby_id] += 1
+    return _seq_counters[baby_id]
+
+
+def get_notify(baby_id: str) -> asyncio.Event:
+    """获取 baby 的 SSE 通知信号（惰性创建）。"""
+    with _infra_lock:
+        if baby_id not in _notify_events:
+            _notify_events[baby_id] = asyncio.Event()
+        return _notify_events[baby_id]
+
+
+def get_baby_lock(baby_id: str) -> asyncio.Lock:
+    """获取 baby 的状态锁（scheduler 和 interact 互斥）。"""
+    with _infra_lock:
+        if baby_id not in _baby_locks:
+            _baby_locks[baby_id] = asyncio.Lock()
+        return _baby_locks[baby_id]
 
 
 @dataclass
@@ -183,6 +240,11 @@ class NutritionSleepState:
     night_waking_frequency: int = 3     # 每夜平均醒来次数
     room_separated: bool = False
     transitional_object: str = ""       # 过渡客体名称
+    # 生理时钟（sim_time 小时）
+    last_fed_time: float = 0.0          # 上次喂奶 sim_time
+    last_diaper_time: float = 0.0       # 上次换尿布 sim_time
+    last_sleep_time: float = 0.0        # 上次入睡 sim_time
+    comfort_temp: str = "comfortable"   # comfortable / too_hot / too_cold
 
     def to_dict(self) -> dict:
         return {
@@ -194,6 +256,10 @@ class NutritionSleepState:
             "night_waking_frequency": self.night_waking_frequency,
             "room_separated": self.room_separated,
             "transitional_object": self.transitional_object,
+            "last_fed_time": self.last_fed_time,
+            "last_diaper_time": self.last_diaper_time,
+            "last_sleep_time": self.last_sleep_time,
+            "comfort_temp": self.comfort_temp,
         }
 
     @classmethod
@@ -207,6 +273,10 @@ class NutritionSleepState:
             night_waking_frequency=d.get("night_waking_frequency", 3),
             room_separated=d.get("room_separated", False),
             transitional_object=d.get("transitional_object", ""),
+            last_fed_time=d.get("last_fed_time", 0.0),
+            last_diaper_time=d.get("last_diaper_time", 0.0),
+            last_sleep_time=d.get("last_sleep_time", 0.0),
+            comfort_temp=d.get("comfort_temp", "comfortable"),
         )
 
 
@@ -286,6 +356,7 @@ class Memory:
     parent_involved: bool = False       # 父母是否介入
     parent_action: str = ""             # 父母做了什么
     growth_signal: str = ""             # 成长信号（如有）
+    forget_score: float = 1.0           # 遗忘分（memory/consolidation 动态更新，老 baby 默认 1.0）
 
     def to_dict(self) -> dict:
         return {
@@ -300,11 +371,25 @@ class Memory:
             "parent_involved": self.parent_involved,
             "parent_action": self.parent_action,
             "growth_signal": self.growth_signal,
+            "forget_score": self.forget_score,
         }
 
     @classmethod
     def from_dict(cls, d: dict) -> Memory:
-        return cls(**d)
+        return cls(
+            phase=d.get("phase", 0),
+            age_days=d.get("age_days", 0),
+            event=d.get("event", ""),
+            stimulus=d.get("stimulus", ""),
+            reaction=d.get("reaction", ""),
+            trace=d.get("trace", ""),
+            emotional_valence=d.get("emotional_valence", "neutral"),
+            intensity=d.get("intensity", 0.5),
+            parent_involved=d.get("parent_involved", False),
+            parent_action=d.get("parent_action", ""),
+            growth_signal=d.get("growth_signal", ""),
+            forget_score=float(d.get("forget_score", 1.0)),  # 向后兼容：老 baby 无此字段
+        )
 
 
 @dataclass
@@ -327,7 +412,13 @@ class Milestone:
 
     @classmethod
     def from_dict(cls, d: dict) -> Milestone:
-        return cls(**d)
+        return cls(
+            name=d.get("name", ""),
+            phase=d.get("phase", 0),
+            age_days=d.get("age_days", 0),
+            trigger_event=d.get("trigger_event", ""),
+            description=d.get("description", ""),
+        )
 
 
 @dataclass
@@ -337,6 +428,10 @@ class BabyState:
     baby_id: str = ""
     species: str = "human"
     name: str = ""                      # 由父母命名，初始为空
+
+    # 出生地（从 Baby 数据复制，用于文化相关行为如命名）
+    birthplace: dict = field(default_factory=dict)  # {name, code, region, ...}
+    phenotype: dict = field(default_factory=dict)    # {race, ...}
 
     # 先天身份（出生即锁定）
     identity: Identity = field(default_factory=Identity)
@@ -389,7 +484,23 @@ class BabyState:
     life_tags: set[str] = field(default_factory=set)     # 生活上下文标签
     last_active_ts: float = 0.0                          # 上次活跃的 Unix 时间戳
     sim_time: float = 0.0                                # 当前模拟时间（自出生以来的模拟小时数）
-    time_scale: str = "normal"                           # slow / normal / fast
+    time_scale: str = "turbo"                            # slow / normal / fast / turbo
+
+    # 自驱动阶段推进
+    pending_criticals: list[dict] = field(default_factory=list)  # 待父母处理的关键事件队列（不阻塞生命推进）
+    phase_advancing: bool = False            # 阶段推进中（防并发）
+
+    # 对话声音画像（阶段转换时更新，先天基准 + 后天经历 → 说话风格）
+    voice_profile: str = ""
+
+    # 生成标记
+    turbo_generated: bool = False        # True = turbo 模式快速生成，叙事贫乏
+
+    # 世界上下文系统
+    triggered_events: set[str] = field(default_factory=set)  # 全局已触发事件名（first_X/critical 去重）
+    # world_snapshot: 运行时由 world.py 管理，持久化到 state.json
+    # 类型注解用 Any 避免循环导入，实际类型为 world.WorldSnapshot | None
+    world_snapshot: any = None
 
     def update_age_from_sim_time(self) -> None:
         """根据 sim_time 更新 age_days，不超过当前阶段上限。"""
@@ -431,10 +542,19 @@ class BabyState:
             "last_active_ts": self.last_active_ts,
             "sim_time": self.sim_time,
             "time_scale": self.time_scale,
+            "pending_criticals": self.pending_criticals,
+            "phase_advancing": self.phase_advancing,
+            "voice_profile": self.voice_profile,
+            "triggered_events": sorted(self.triggered_events),
+            "birthplace": self.birthplace,
+            "phenotype": self.phenotype,
+            "world_snapshot": self.world_snapshot.to_dict() if self.world_snapshot and hasattr(self.world_snapshot, 'to_dict') else self.world_snapshot,
         }
 
     @classmethod
     def from_dict(cls, d: dict) -> BabyState:
+        # 旧数据兼容：triggered_events 为空时从 memories/milestones 重建
+        # （在构造完成后由 load_state 调用 rebuild_triggered_events）
         # 照护者：兼容旧 parent_profile 格式
         caregivers: dict[str, CaregiverProfile] = {}
         if "caregivers" in d and d["caregivers"]:
@@ -482,9 +602,52 @@ class BabyState:
             initiative=InitiativeState.from_dict(d.get("initiative", {})),
             life_tags=set(d.get("life_tags", [])),
             last_active_ts=d.get("last_active_ts", 0.0),
+            birthplace=d.get("birthplace", {}),
+            phenotype=d.get("phenotype", {}),
             sim_time=d.get("sim_time", 0.0),
             time_scale=d.get("time_scale", "normal"),
+            pending_criticals=(
+                d["pending_criticals"] if d.get("pending_criticals") is not None
+                else ([d["pending_critical"]] if d.get("pending_critical") else [])
+            ),
+            voice_profile=d.get("voice_profile", ""),
+            phase_advancing=d.get("phase_advancing", False),
+            triggered_events=set(d.get("triggered_events", [])),
+            world_snapshot=_restore_world_snapshot(d.get("world_snapshot")),
         )
+
+
+def _restore_world_snapshot(raw: dict | None):
+    """从 JSON dict 恢复 WorldSnapshot，延迟导入避免循环依赖。"""
+    if raw is None:
+        return None
+    try:
+        from world import snapshot_from_dict
+        return snapshot_from_dict(raw)
+    except Exception:
+        return None
+
+
+def rebuild_triggered_events(state: BabyState) -> None:
+    """
+    从 memories + milestones + life_moments 重建 triggered_events（旧数据兼容）。
+    D1-3 双源遍历：V2 数据 + 旧数据都要扫，避免去重漏网。
+    """
+    if state.triggered_events:
+        return  # 已有数据，不重建
+    for m in state.memories:
+        state.triggered_events.add(m.event)
+    for ms in state.milestones:
+        state.triggered_events.add(ms.name)
+    # 双源：life_moments.jsonl（V2 真相源）
+    try:
+        from memory import load_life_moments
+        if state.baby_id:
+            for lm in load_life_moments(state.baby_id):
+                if lm.trigger:
+                    state.triggered_events.add(lm.trigger)
+    except Exception:
+        pass  # 新模块未就绪或读失败，不阻断加载
 
 
 # ============================================================
@@ -503,7 +666,7 @@ def _validate_baby_id(baby_id: str) -> str:
 
 def _baby_dir(baby_id: str) -> Path:
     _validate_baby_id(baby_id)
-    return NURSERY_DIR / baby_id
+    return ARCHIVE_DIR / baby_id
 
 
 def save_state(state: BabyState) -> None:
@@ -532,7 +695,10 @@ def load_state(baby_id: str) -> Optional[BabyState]:
     if not path.is_file():
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
-    return BabyState.from_dict(data)
+    state = BabyState.from_dict(data)
+    # 旧数据兼容：triggered_events 为空时从 memories/milestones 重建
+    rebuild_triggered_events(state)
+    return state
 
 
 def append_interaction(baby_id: str, record: dict) -> None:
@@ -562,39 +728,84 @@ def load_interactions(baby_id: str, limit: int = 5) -> list[dict]:
     return records[-limit:]
 
 
-def append_event(baby_id: str, event: dict) -> None:
-    """追加一条 SSE 事件到 events.jsonl（JSONL 格式）。"""
+def append_event(baby_id: str, event: dict) -> int:
+    """
+    追加一条事件到 events.jsonl，分配单调递增 seq，触发 SSE 通知。
+
+    返回分配的 seq 号。
+    """
     import time as _time
     d = _baby_dir(baby_id)
     d.mkdir(parents=True, exist_ok=True)
     path = d / "events.jsonl"
-    line = json.dumps({"ts": _time.time(), **event}, ensure_ascii=False)
-    with open(path, "a", encoding="utf-8") as f:
-        f.write(line + "\n")
+    lock = _get_seq_lock(baby_id)
+    with lock:
+        seq = _next_seq(baby_id)
+        line = json.dumps({"seq": seq, "ts": _time.time(), **event}, ensure_ascii=False)
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    # 通知 SSE 读取器（非阻塞，Event 可能尚未创建）
+    try:
+        notify = get_notify(baby_id)
+        notify.set()
+    except Exception:
+        pass  # 无事件循环时忽略
+    return seq
 
 
 def load_events(baby_id: str) -> list[dict]:
-    """加载婴儿的所有历史 SSE 事件。"""
+    """加载婴儿的所有历史 SSE 事件（含 seq，兼容旧数据）。"""
     path = _baby_dir(baby_id) / "events.jsonl"
     if not path.is_file():
         return []
     events = []
+    line_num = 0
     for line in path.read_text(encoding="utf-8").splitlines():
         line = line.strip()
-        if line:
-            try:
-                events.append(json.loads(line))
-            except json.JSONDecodeError:
-                continue
+        if not line:
+            continue
+        line_num += 1
+        try:
+            evt = json.loads(line)
+            # 兼容旧数据：无 seq 字段时按行号补充
+            if "seq" not in evt:
+                evt["seq"] = line_num
+            events.append(evt)
+        except json.JSONDecodeError:
+            continue
+    return events
+
+
+def load_events_after(baby_id: str, after_seq: int) -> list[dict]:
+    """加载 seq > after_seq 的事件。用于 SSE 回放和增量推送。"""
+    path = _baby_dir(baby_id) / "events.jsonl"
+    if not path.is_file():
+        return []
+    events = []
+    line_num = 0
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        line_num += 1
+        try:
+            evt = json.loads(line)
+            seq = evt.get("seq", line_num)
+            if seq > after_seq:
+                if "seq" not in evt:
+                    evt["seq"] = seq
+                events.append(evt)
+        except json.JSONDecodeError:
+            continue
     return events
 
 
 def list_cradle_babies() -> list[dict]:
     """列出摇篮中所有婴儿的摘要。"""
-    if not NURSERY_DIR.is_dir():
+    if not ARCHIVE_DIR.is_dir():
         return []
     babies = []
-    for d in sorted(NURSERY_DIR.iterdir()):
+    for d in sorted(ARCHIVE_DIR.iterdir()):
         state_path = d / "state.json"
         if state_path.is_file():
             data = json.loads(state_path.read_text(encoding="utf-8"))
@@ -613,5 +824,8 @@ def list_cradle_babies() -> list[dict]:
                 "weight_kg": ph.get("weight_kg", 3.3),
                 "stress_level": stress.get("stress_level", 0.0),
                 "caregivers_count": len(data.get("caregivers", {})),
+                "sim_time": data.get("sim_time", 0.0),
+                "last_active_ts": data.get("last_active_ts", 0.0),
+                "time_scale": data.get("time_scale", "normal"),
             })
     return babies

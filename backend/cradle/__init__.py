@@ -14,7 +14,17 @@ from .identity import compile_identity, extract_innate_data, generate_constraint
 from .state import (
     BabyState, Identity, CaregiverProfile,
     save_state, load_state, list_cradle_babies,
-    append_event, load_events, append_interaction, load_interactions,
+    append_event, load_events, load_events_after,
+    get_notify, get_baby_lock,
+)
+from .conversation import (
+    make_conv_id, get_or_create_conversation, rename_conversation,
+    get_conversation, list_conversations, list_messages,
+    post_parent_message, post_baby_message,
+)
+from .conversation_store import (
+    load_conversation_meta, load_conv_messages, load_conv_messages_after,
+    get_conv_notify, get_conv_lock,
 )
 from .nanny import (
     simulate_phase, simulate_phase_stream, resolve_critical_event,
@@ -58,6 +68,12 @@ def admit_stream(baby_id: str):
     if existing is not None:
         raise ValueError(f"Baby '{baby_id}' is already in the cradle")
 
+    # 清理上次失败 admission 残留的 events.jsonl（state.json 不存在 = 未成功入摇篮）
+    from .state import ARCHIVE_DIR
+    stale_events = ARCHIVE_DIR / baby_id / "events.jsonl"
+    if stale_events.is_file():
+        stale_events.unlink()
+
     species = baby_data.get("species", "human")
     yield {"event": "loading", "baby_id": baby_id, "species": species}
 
@@ -99,6 +115,8 @@ def admit_stream(baby_id: str):
     }
 
     # 4. 组装身份 + 创建状态
+    yield {"event": "assembling", "message": "Assembling identity and rolling environment..."}
+
     identity = Identity(
         sensory_profile=innate["sensory"],
         arousal_baseline=innate["arousal"],
@@ -110,16 +128,36 @@ def admit_stream(baby_id: str):
         constraints=constraints,
     )
 
+    # 5. 掷出环境标签——决定这个宝宝的生活世界
+    from world import roll_environment
+    env_tags = roll_environment()
+
     state = BabyState(
         baby_id=baby_id,
         species=species,
+        birthplace=baby_data.get("birthplace", {}),
+        phenotype={**baby_data.get("phenotype", {}), "sex": baby_data.get("sex", "")},
         identity=identity,
         current_phase=0,
         age_days=0,
         capabilities=[],
         expression_mode="cry_only",
+        life_tags=env_tags,
     )
+    # 生成初始声音画像（Phase 0 起点，仅先天基准）
+    from .nanny import _update_voice_profile
+    _update_voice_profile(state)
     save_state(state)
+
+    # 后台线程生成出生肖像——真正不阻塞 admit 流程
+    import threading
+    def _bg_portrait():
+        try:
+            from portrait import generate_portrait
+            generate_portrait(state, age_years=0)
+        except Exception:
+            pass
+    threading.Thread(target=_bg_portrait, daemon=True).start()
 
     yield {
         "event": "admitted",
@@ -127,6 +165,7 @@ def admit_stream(baby_id: str):
         "species": state.species,
         "identity": identity.to_dict(),
         "phase": PHASES[0].display_name,
+        "environment": sorted(env_tags),
         "_state": state,  # 内部用，SSE 端点会剔除
     }
 
@@ -158,7 +197,7 @@ def check_world_readiness(baby_id: str) -> dict:
 
 
 def _check_readiness_criterion(state: BabyState, criterion: str) -> bool:
-    """检查单个就绪条件。"""
+    """检查单个就绪条件（排除当前回退的能力）。"""
     capability_map = {
         "language": ["full_sentences"],
         "self_concept": ["self_recognition"],
@@ -170,4 +209,5 @@ def _check_readiness_criterion(state: BabyState, criterion: str) -> bool:
         "independence": ["independent_opinion"],
     }
     required = capability_map.get(criterion, [])
-    return all(cap in state.capabilities for cap in required)
+    regressed = {r["capability"] for r in state.stress.regressed_capabilities}
+    return all(cap in state.capabilities and cap not in regressed for cap in required)

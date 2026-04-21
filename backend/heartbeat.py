@@ -43,6 +43,9 @@ class InitiativeState:
     total_initiatives: int = 0
     total_responded: int = 0
     total_ignored: int = 0
+    # 指向当前 pending initiative 对应的 LifeMoment.seq，供响应/忽略时 companion_seq 链接
+    # -1 表示无 pending 或老数据（append-only 状态转移，C8）
+    pending_initiative_seq: int = -1
 
     def to_dict(self) -> dict:
         return {
@@ -56,6 +59,7 @@ class InitiativeState:
             "total_initiatives": self.total_initiatives,
             "total_responded": self.total_responded,
             "total_ignored": self.total_ignored,
+            "pending_initiative_seq": self.pending_initiative_seq,
         }
 
     @classmethod
@@ -71,6 +75,7 @@ class InitiativeState:
             total_initiatives=d.get("total_initiatives", 0),
             total_responded=d.get("total_responded", 0),
             total_ignored=d.get("total_ignored", 0),
+            pending_initiative_seq=int(d.get("pending_initiative_seq", -1)),
         )
 
 
@@ -193,9 +198,32 @@ def _check_and_process_ignore(
     ini.total_ignored += 1
     ignored_type = ini.pending_initiative_type
     ignored_behavior = ini.pending_behavior_type
+    orig_seq = ini.pending_initiative_seq
     ini.pending_initiative_id = ""
     ini.pending_initiative_type = ""
     ini.pending_behavior_type = ""
+    ini.pending_initiative_seq = -1
+
+    # append 新 LifeMoment（不回改原 pending 条目，append-only 状态转移，C8）
+    try:
+        from memory import record_moment
+        baby_id = getattr(state, "baby_id", "")
+        if baby_id:
+            record_moment(
+                state, baby_id,
+                actor="world", target="self",
+                trigger=f"initiative_ignored:{ignored_behavior}",
+                action="（家长未回应，超时被忽略）",
+                response="",
+                outcome="ignored",
+                valence="negative",
+                intensity=0.5,
+                cause_tags=[],
+                effect_tags=["memory:negative"],
+                companion_seq=orig_seq,
+            )
+    except Exception as e:
+        logger.warning("record_moment for ignore failed: %s", e)
 
     # 照护者 responsiveness 扣分
     caregivers = provider.get_caregivers(state)
@@ -276,22 +304,80 @@ def evaluate_heartbeat(
         initiative["timestamp"] = now
         result["initiative"] = initiative
 
+        # 写入主动行为 LifeMoment（actor=self, outcome=pending）
+        # 后续被响应/被忽略时通过 companion_seq 链接新 moment（append-only，C8）
+        try:
+            from memory import record_moment
+            baby_id = getattr(state, "baby_id", "")
+            if baby_id:
+                _expr = initiative.get("expression", "")
+                if isinstance(_expr, dict):
+                    _expr = _expr.get("vocalization") or _expr.get("signal") or ""
+                _moment = record_moment(
+                    state, baby_id,
+                    actor="self", target="",
+                    trigger=f"initiative:{ini.pending_behavior_type}",
+                    action=str(_expr) or initiative.get("parent_hint", "") or "发起主动行为",
+                    response="",
+                    outcome="pending",
+                    valence="neutral",
+                    intensity=0.6,
+                    cause_tags=[],
+                    effect_tags=[],
+                )
+                if _moment is not None:
+                    ini.pending_initiative_seq = _moment.seq
+        except Exception as e:
+            logger.warning("record_moment for initiative failed: %s", e)
+
         provider.save_state(state)
 
     return result
 
 
-def mark_responded(ini: InitiativeState, caregivers: dict) -> None:
+def mark_responded(ini: InitiativeState, caregivers: dict, state: Any = None,
+                   responder_key: str = "primary_parent",
+                   response_text: str = "") -> None:
     """
     标记 pending 主动行为已被响应。在 interact 端点中调用。
+
+    新增参数（向后兼容 None 默认）：
+      state: 用于追加 LifeMoment（actor=caregiver, outcome=responded, companion_seq）
+      responder_key: 响应者 caregiver 的稳定 key（默认 primary_parent）
+      response_text: 响应内容（若无则置空，仅记录事件）
     """
     if not ini.pending_initiative_id:
         return
+    orig_seq = ini.pending_initiative_seq
     ini.pending_initiative_id = ""
     ini.pending_initiative_type = ""
     ini.pending_behavior_type = ""
+    ini.pending_initiative_seq = -1
     ini.consecutive_ignores = 0
     ini.total_responded += 1
     ini.last_interact_ts = time.time()
     for cg in caregivers.values():
         cg.responsiveness = min(1.0, cg.responsiveness + 0.03)
+
+    # append 新 LifeMoment 链接到原 pending（不回改历史，append-only C8）
+    if state is not None and orig_seq > 0:
+        try:
+            from memory import record_moment
+            baby_id = getattr(state, "baby_id", "")
+            if baby_id:
+                record_moment(
+                    state, baby_id,
+                    actor=f"caregiver:{responder_key}",
+                    target="self",
+                    trigger="initiative_responded",
+                    action=response_text or "（家长响应了）",
+                    response="",
+                    outcome="responded",
+                    valence="positive",
+                    intensity=0.6,
+                    cause_tags=[],
+                    effect_tags=["memory:positive", "attachment:toward_secure"],
+                    companion_seq=orig_seq,
+                )
+        except Exception as e:
+            logger.warning("record_moment for respond failed: %s", e)

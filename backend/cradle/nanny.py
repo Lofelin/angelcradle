@@ -4,7 +4,7 @@
 每个阶段运行一次，产出日常事件摘要、环境事件反应、关键事件（等待父母）。
 保姆不是 NPC，是系统内核。
 
-[INPUT]: 依赖 cradle/state.py, cradle/events.py, cradle/mind.py, cradle/phases.py
+[INPUT]: 依赖 cradle/state.py, cradle/events.py, cradle/mind.py, cradle/phases.py, cradle/causality.py
 [OUTPUT]: simulate_phase(), SimulationResult, _update_stress(), _check_stress_regression(), _check_regression_recovery(), _update_phase_state()
 [POS]: cradle/ 的核心引擎，被 API 层调用
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -26,6 +26,19 @@ from .state import BabyState, Memory, Milestone, save_state
 from .phases import PHASES, EXPRESSION_MODES
 from .events import roll_events, Event, get_event
 from .mind import narrate_phase_events, process_critical_event, generate_phase_summary, _perceptual_filter
+from .causality import generate_effect_tags
+
+
+def _snapshot_state(state: BabyState) -> dict:
+    """状态快照，用于因果标签的 before/after 对比。"""
+    return {
+        "stress_level": state.stress.stress_level,
+        "attachment_style": state.attachment_style,
+        "capabilities": list(state.capabilities),
+        "regressed_capabilities": list(state.stress.regressed_capabilities),
+        "fears": list(state.fears),
+        "preferences": list(state.preferences),
+    }
 
 
 @dataclass
@@ -368,6 +381,9 @@ def _check_stress_regression(state: BabyState) -> list[str]:
             "regressed_at": state.age_days,
             "original_phase": state.current_phase,
         })
+        # 机械执行：从能力列表中移除（LLM prompt + 就绪检查都会感知）
+        if cap in state.capabilities:
+            state.capabilities.remove(cap)
     return regressed
 
 
@@ -387,6 +403,9 @@ def _check_regression_recovery(state: BabyState) -> list[dict]:
             strengthened = random.random() < 0.3
             if strengthened and reg["capability"] not in state.stress.resilience_bonus:
                 state.stress.resilience_bonus.append(reg["capability"])
+            # 机械执行：恢复能力到列表
+            if reg["capability"] not in state.capabilities:
+                state.capabilities.append(reg["capability"])
             recovered.append({
                 "capability": reg["capability"],
                 "strengthened": strengthened,
@@ -485,6 +504,14 @@ def _update_phase_state(state: BabyState, phase_index: int) -> list[dict]:
     em = state.emotional
     ph = state.physical
 
+    # 0. 阶段自动标签（world.py 定义，此处应用）
+    from world import PHASE_AUTO_TAGS
+    auto_tags = PHASE_AUTO_TAGS.get(phase_index, set())
+    for tag in auto_tags:
+        if tag not in state.life_tags:
+            state.life_tags.add(tag)
+            changes.append({"type": "life_tag_added", "tag": tag})
+
     # 1. 喂养模式（按 age_days 判断，不依赖 phase_index）
     for age_lo, age_hi, mode in FEEDING_MODE_BY_AGE:
         if age_lo <= state.age_days < age_hi and ns.feeding_mode != mode:
@@ -550,6 +577,31 @@ def _update_phase_state(state: BabyState, phase_index: int) -> list[dict]:
         if word not in em.emotional_vocabulary:
             em.emotional_vocabulary.append(word)
 
+    # 10. 精细运动等级（随阶段渐进）
+    expected_motor = min(phase_index // 2, 5)  # 0→0, 2→1, 4→2, 6→3, 8→4, 10→5
+    if expected_motor > ph.fine_motor_level:
+        ph.fine_motor_level = expected_motor
+        changes.append({"type": "fine_motor_advance", "level": ph.fine_motor_level})
+
+    # 11. 自我调节能力（随共情和阶段渐进）
+    expected_reg = min(phase_index / 11.0, 1.0)  # 线性 0→1
+    if expected_reg > em.self_regulation_score:
+        em.self_regulation_score = round(expected_reg, 2)
+
+    # 12. 过渡客体（phase 2-4 有概率产生，如安抚巾、玩偶）
+    if 2 <= phase_index <= 4 and not ns.transitional_object:
+        if random.random() < 0.4:
+            objects = ["小毯子", "布偶熊", "安抚奶嘴", "小枕头", "毛绒兔"]
+            ns.transitional_object = random.choice(objects)
+            changes.append({"type": "transitional_object", "object": ns.transitional_object})
+
+    # 13. 想象伙伴（phase 8-9 有概率产生）
+    if 8 <= phase_index <= 9 and not em.imaginary_friend:
+        if random.random() < 0.3:
+            friends = ["Boo", "Mimi", "Captain Star", "小影子", "云朵先生"]
+            em.imaginary_friend = random.choice(friends)
+            changes.append({"type": "imaginary_friend", "name": em.imaginary_friend})
+
     return changes
 
 
@@ -570,7 +622,7 @@ def _should_trigger_naming(state: BabyState) -> bool:
 # ============================================================
 
 def simulate_phase(state: BabyState) -> PhaseResult:
-    """同步版，内部消费生成器。"""
+    """[DEPRECATED] 同步版，内部消费生成器。主路径已由 scheduler DES 接管。"""
     result = None
     for step in simulate_phase_stream(state):
         if step.get("event") == "phase_simulated":
@@ -581,7 +633,8 @@ def simulate_phase(state: BabyState) -> PhaseResult:
 
 
 def simulate_phase_stream(state: BabyState):
-    """
+    """[DEPRECATED] 主路径已由 scheduler DES 接管，此函数仅保留供调试。
+
     流式模拟一个成长阶段。
 
     事件流：
@@ -725,9 +778,26 @@ def simulate_phase_stream(state: BabyState):
             scenes = []
 
         for scene in scenes:
-            # 更新状态
+            # 因果标签：保存状态快照（before）
+            state_before = _snapshot_state(state)
+
+            # 更新状态 —— 记忆通过 memory.record_moment 统一写入（jsonl 真相源 + 降级回写）
             if "memory" in scene:
-                state.memories.append(scene["memory"])
+                from memory import record_moment as _record_moment
+                _primary_event = scene.get("event_names", ["unknown"])[0] if scene.get("event_names") else "unknown"
+                _record_moment(
+                    state, state.baby_id,
+                    actor="world", target="self",
+                    trigger=_primary_event,
+                    action=scene.get("trigger", "") or scene.get("nanny_observation", ""),
+                    response=scene.get("baby_reaction", ""),
+                    outcome="neutral",
+                    valence=scene.get("emotional_valence", "neutral"),
+                    intensity=float(scene.get("intensity", 0.5)),
+                    cause_tags=scene.get("cause_tags", []) or [],
+                    effect_tags=[],   # effect_tags 稍后由 state diff 生成（已在原代码后段）
+                    _legacy_memory_override=scene["memory"],  # 保留 LLM trace 原文
+                )
             if scene.get("new_fear"):
                 fear = scene["new_fear"]
                 if fear not in state.fears:
@@ -736,6 +806,10 @@ def simulate_phase_stream(state: BabyState):
                 pref = scene["new_preference"]
                 if pref not in state.preferences:
                     state.preferences.append(pref)
+            # 叙事收割：life_tag_hint → state.life_tags
+            tag_hint = scene.get("life_tag_hint")
+            if tag_hint and isinstance(tag_hint, str) and len(state.life_tags) < 50:
+                state.life_tags.add(tag_hint)
 
             # 压力更新（每个场景后）
             _update_stress(
@@ -743,6 +817,17 @@ def simulate_phase_stream(state: BabyState):
                 scene.get("emotional_valence", "neutral"),
                 scene.get("intensity", 0.5),
                 scene.get("parent_involved", False),
+            )
+
+            # 因果标签：生成 effect_tags（状态快照 after）
+            state_after = _snapshot_state(state)
+            event_data = {
+                "sensory_channels": [],
+                "intensity": scene.get("intensity", 0.5),
+                "category": "daily",
+            }
+            effect_tags = generate_effect_tags(
+                event_data, scene, state_before, state_after,
             )
 
             yield {
@@ -759,6 +844,8 @@ def simulate_phase_stream(state: BabyState):
                 "intensity": scene.get("intensity", 0.5),
                 "trace": scene.get("trace", ""),
                 "growth_signal": scene.get("growth_signal", ""),
+                "cause_tags": scene.get("cause_tags", []),
+                "effect_tags": effect_tags,
                 "stress_level": round(state.stress.stress_level, 2),
             }
 
@@ -815,7 +902,6 @@ def simulate_phase_stream(state: BabyState):
             "event": "capabilities_unlocked",
             "capabilities": new_caps,
         }
-
     # 7. 里程碑
     milestones = _check_milestones(state, new_caps)
     result.new_milestones = [m.to_dict() for m in milestones]
@@ -859,22 +945,34 @@ def resolve_critical_event(
     if not event:
         return {"error": f"Unknown event: {event_name}"}
 
-    # 特殊处理：命名
+    # 特殊处理：命名（设置名字，但不跳过照护者/依恋更新流程）
     if event_name == "naming_ceremony" and parent_input:
         state.name = parent_input
-        save_state(state)
-        return {
-            "event": "naming_ceremony",
-            "reaction": f"From this moment on, this child has a name: {parent_input}.",
-            "developmental_impact": "The seed of self-awareness. A name means 'I am a recognized individual'.",
-        }
 
-    # 处理其他关键事件
+    # 因果标签：保存状态快照（before）
+    state_before = _snapshot_state(state)
+
+    # 处理关键事件（命名也走 LLM 生成反应 + 照护者更新）
     reaction = process_critical_event(state, event, parent_action)
 
-    # 更新状态
+    # 更新状态 —— 关键事件记忆通过 memory.record_moment 统一写入
     if "memory" in reaction:
-        state.memories.append(reaction["memory"])
+        from memory import record_moment as _record_moment
+        _caregiver_involved = bool(parent_action)
+        _actor = "caregiver:parent" if _caregiver_involved else "world"
+        _record_moment(
+            state, state.baby_id,
+            actor=_actor, target="self",
+            trigger=event.name,
+            action=event.description,
+            response=reaction.get("reaction", ""),
+            outcome="responded" if _caregiver_involved else "neutral",
+            valence=reaction.get("emotional_valence", "neutral"),
+            intensity=float(reaction.get("intensity", 0.5)),
+            cause_tags=reaction.get("cause_tags", []) or [],
+            effect_tags=[],
+            _legacy_memory_override=reaction["memory"],
+        )
     if reaction.get("new_fear"):
         fear = reaction["new_fear"]
         if fear not in state.fears:
@@ -899,6 +997,23 @@ def resolve_critical_event(
     intensity = reaction.get("intensity", 0.5)
     _update_stress(state, valence, intensity, parent_present=True)
 
+    # 决策标签效果（world.py 定义，此处应用）
+    from world import DECISION_TAG_EFFECTS
+    tag_effect = DECISION_TAG_EFFECTS.get((event_name, parent_action))
+    if tag_effect:
+        for tag in tag_effect.get("add", set()):
+            state.life_tags.add(tag)
+        for tag in tag_effect.get("remove", set()):
+            state.life_tags.discard(tag)
+
+    # 如厕训练成功：设置 toilet_trained
+    if event_name == "toilet_training" and parent_action in ("patient_encourage", "strict_schedule"):
+        state.physical.toilet_trained = True
+
+    # 分房：设置 room_separated
+    if event_name == "room_separation" and parent_action == "separate":
+        state.nutrition_sleep.room_separated = True
+
     # 入园：自动添加 teacher 照护者
     if event_name == "kindergarten_entry" and "teacher" not in state.caregivers:
         from .state import CaregiverProfile
@@ -911,6 +1026,16 @@ def resolve_critical_event(
             emotional_tone="warm",
         )
         state.attachment_per_caregiver["teacher"] = "forming"
+
+    # 因果标签：生成 effect_tags（状态快照 after）
+    state_after = _snapshot_state(state)
+    event_data = {
+        "sensory_channels": event.sensory_channels,
+        "intensity": event.intensity,
+        "category": event.category,
+    }
+    effect_tags = generate_effect_tags(event_data, reaction, state_before, state_after)
+    reaction["effect_tags"] = effect_tags
 
     save_state(state)
 
@@ -930,17 +1055,26 @@ def _update_attachment(state: BabyState, parent_action: str, signal: str,
                         "gradual", "negotiate", "observe", "discuss_why",
                         "remove_food", "wait_readiness", "delay", "try_wake"}
 
-    # 按照护者更新依恋
+    # 按照护者更新依恋（双向状态转移）
     current = state.attachment_per_caregiver.get(caregiver_id, "forming")
     if parent_action in responsive_actions:
-        if current in ("forming", "secure"):
+        # 持续回应：forming/anxious → secure，secure 保持
+        if current in ("forming", "anxious"):
             current = "secure"
     elif parent_action in avoidant_actions:
+        # 忽视/回避：forming → avoidant, secure → anxious, anxious → avoidant
         if current == "forming":
             current = "avoidant"
+        elif current == "secure":
+            current = "anxious"
+        elif current == "anxious":
+            current = "avoidant"
     elif parent_action in balanced_actions:
+        # 平衡回应：forming → secure，anxious → forming（缓慢恢复）
         if current == "forming":
             current = "secure"
+        elif current == "anxious":
+            current = "forming"
     state.attachment_per_caregiver[caregiver_id] = current
 
     # 同步主照护者依恋到 state.attachment_style（显式查找 primary_parent）
@@ -1001,12 +1135,18 @@ def complete_phase(state: BabyState) -> dict:
     # 生成阶段总结
     summary = generate_phase_summary(state)
 
-    # 应用总结中的更新
+    # 应用总结中的更新（同步 attachment_per_caregiver 保持一致）
     if isinstance(summary, dict):
         if summary.get("attachment_update"):
             att = summary["attachment_update"]
             if att in ("secure", "anxious", "avoidant"):
                 state.attachment_style = att
+                # 同步主照护者的 per-caregiver 记录
+                if "primary_parent" in state.attachment_per_caregiver:
+                    state.attachment_per_caregiver["primary_parent"] = att
+                elif state.attachment_per_caregiver:
+                    first_cid = next(iter(state.attachment_per_caregiver))
+                    state.attachment_per_caregiver[first_cid] = att
 
     # 记录阶段总结
     state.phase_summaries.append({
@@ -1026,14 +1166,72 @@ def complete_phase(state: BabyState) -> dict:
     if completed_phase in state.simulated_phases:
         state.simulated_phases.remove(completed_phase)
 
+    # 阶段转换时更新声音画像（先天基准 + 后天经历 → 稳定的说话风格）
+    _update_voice_profile(state)
+
     save_state(state)
 
     return summary
 
 
-def grow_stream(state: BabyState):
+def _update_voice_profile(state: BabyState) -> None:
     """
-    自动成长流：连续推进所有阶段，关键事件时暂停。
+    从先天身份 + 后天积累的经历/状态重新计算声音画像。
+
+    只在阶段转换时调用，保证同一阶段内人格稳定。
+    """
+    parts = []
+    identity = state.identity
+    sp = identity.sensory_profile
+
+    # ── 先天基准（不变的底色）──
+    if sp.dominant:
+        parts.append(f"Innate dominant sense: {sp.dominant}")
+    if identity.arousal_baseline == "high":
+        parts.append("Innate high arousal: baseline tendency toward fast, loud, intense")
+    elif identity.arousal_baseline == "low":
+        parts.append("Innate low arousal: baseline tendency toward slow, quiet, deliberate")
+    if identity.temperament:
+        parts.append(f"Temperament seed: {identity.temperament[:120]}")
+
+    # ── 后天塑造（阶段累积）──
+    phase = PHASES[state.current_phase] if state.current_phase < len(PHASES) else None
+    if phase:
+        parts.append(f"Expression mode: {phase.expression_mode}")
+
+    if state.attachment_style and state.attachment_style != "forming":
+        parts.append(f"Attachment (formed through experience): {state.attachment_style}")
+
+    if state.preferences:
+        parts.append(f"Known preferences: {', '.join(state.preferences[-5:])}")
+    if state.fears:
+        parts.append(f"Known fears: {', '.join(state.fears[-5:])}")
+    if state.comfort_sources:
+        parts.append(f"Comfort sources: {', '.join(state.comfort_sources[-3:])}")
+
+    # 从记忆中提炼反复出现的发育线索
+    traces = {}
+    for m in state.memories[-20:]:
+        t = getattr(m, "trace", "")
+        if t:
+            traces[t] = traces.get(t, 0) + 1
+    recurring = [t for t, count in traces.items() if count >= 2]
+    if recurring:
+        parts.append(f"Recurring developmental traits: {', '.join(recurring[:3])}")
+
+    if state.emotional and state.emotional.emotional_vocabulary:
+        parts.append(f"Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary[:5])}")
+
+    state.voice_profile = "\n".join(f"- {p}" for p in parts)
+
+
+def grow_stream(state: BabyState):
+    """[DEPRECATED] 主路径已由 scheduler DES 接管。
+
+    手动成长流（备用路径）：连续推进所有阶段，关键事件时暂停。
+
+    注意：主路径已由 scheduler 自驱动阶段推进接管。
+    此函数保留用于手动触发/调试。
 
     事件流 = 多个阶段的 simulate_phase_stream + complete_phase 交织：
     - 每个阶段的全部事件（phase_start → ... → phase_simulated）
@@ -1041,6 +1239,23 @@ def grow_stream(state: BabyState):
     - 如果有关键事件 → yield paused，结束流。等父母 intervene 后重新调用。
     - 最后一个阶段完成后 yield growth_complete
     """
+    # 如果有未处理的关键事件或阶段推进中，拒绝手动运行
+    active_criticals = [c for c in state.pending_criticals if c.get("awaiting_parent")]
+    if active_criticals:
+        yield {
+            "event": "paused",
+            "phase_index": state.current_phase,
+            "reason": "pending_criticals",
+            "pending_criticals": state.pending_criticals,
+            "message": "Growth paused — critical events require parent intervention.",
+        }
+        return
+    if state.phase_advancing:
+        yield {
+            "event": "error",
+            "message": "Autonomous phase transition in progress.",
+        }
+        return
     while state.current_phase < len(PHASES):
         phase = PHASES[state.current_phase]
         has_critical = False
@@ -1094,6 +1309,7 @@ def grow_stream(state: BabyState):
         }
 
         import time as _time
+        _completing_phase_index = state.current_phase  # 捕获当前值，防线程修改后数据不自洽
         _summary_executor = ThreadPoolExecutor(max_workers=1)
         _summary_future = _summary_executor.submit(complete_phase, state)
         _summary_elapsed = 0
@@ -1104,7 +1320,7 @@ def grow_stream(state: BabyState):
                 _summary_elapsed += 1
                 yield {
                     "event": "phase_completing",
-                    "phase_index": state.current_phase,
+                    "phase_index": _completing_phase_index,
                     "phase_display": phase.display_name,
                     "elapsed": _summary_elapsed,
                 }

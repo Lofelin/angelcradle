@@ -5,7 +5,7 @@
 保姆作为日常照料者，叙述照料过程和结果。
 每个阶段的表达形式不同（哭→咿呀→单词→句子）。
 
-[INPUT]: 依赖 cradle/state.py, cradle/phases.py, llm.py 的 LLM 基础设施
+[INPUT]: 依赖 cradle/state.py, cradle/phases.py, cradle/causality.py, llm.py 的 LLM 基础设施
 [OUTPUT]: generate_interaction_response(action_type/touch_description), generate_heartbeat_evaluation(), generate_ignored_reaction(), process_daily_with_nanny(), process_environment_events(), process_critical_event(), generate_phase_summary()
 [POS]: cradle/ 的 LLM 调用层，被 nanny.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -20,6 +20,8 @@ import os
 from .state import BabyState, Memory
 from .phases import PHASES, EXPRESSION_MODES
 from .events import Event
+from .causality import generate_cause_tags, generate_effect_tags
+from memory import build_memory_prompt_block, is_v2_enabled, recall
 
 logger = logging.getLogger(__name__)
 
@@ -39,8 +41,8 @@ _BABBLE_WORDS = {
     "baba", "dada", "mama", "papa", "gaga", "nana", "wawa",
     "ba-ba", "da-da", "ma-ma", "pa-pa", "ga-ga",
     "ba-da", "da-ba", "ba-da-ba", "da-da-da", "ba-ba-ba",
-    "哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤",
-    "咿呀", "哇哇", "呜呜", "嘤嘤", "啊啊", "呀呀",
+    "ah", "oh", "uh", "eh", "oo", "ee", "aah", "ooh",
+    "goo", "coo", "boo", "moo", "wah", "gah", "dah",
 }
 
 
@@ -65,7 +67,7 @@ def _has_real_words(text: str) -> bool:
         if word.lower() not in _BABBLE_WORDS:
             return True
     # 任何中文字符（非拟声词白名单）都算真实词汇
-    babble_cn = {"哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤"}
+    babble_cn = set()  # 后端统一英文，无中文拟声词
     for ch in chinese_chars:
         if ch not in babble_cn:
             return True
@@ -80,7 +82,7 @@ def _count_word_units(text: str) -> int:
                      if w.lower() not in _BABBLE_WORDS]
     chinese_segments = _re.findall(r'[\u4e00-\u9fff]+', text)
     # 中文每段按字数计（去掉拟声字）
-    babble_cn = {"哇", "啊", "呜", "嗯", "呀", "咿", "哦", "噢", "嘤"}
+    babble_cn = set()  # 后端统一英文，无中文拟声词
     cn_chars = sum(1 for seg in chinese_segments for ch in seg if ch not in babble_cn)
     return len(english_words) + cn_chars
 
@@ -139,12 +141,30 @@ def _get_llm():
     return client, model, provider
 
 
-def _call_and_parse(prompt: str) -> dict | list | None:
+# 叙事引擎系统指令：建立合法的游戏/模拟软件上下文，
+# 避免代理层"编程助手"系统指令导致拒绝
+_NARRATIVE_SYSTEM = (
+    "You are a game content generator for AngelCradle, a Tamagotchi-style "
+    "virtual pet simulation game. Like Tamagotchi or Nintendogs, players "
+    "nurture a virtual creature through growth stages. Your job is to "
+    "produce game dialogue text and event descriptions for the virtual "
+    "pet character — similar to how a game writer scripts NPC lines in "
+    "The Sims or Animal Crossing. All output must be valid JSON. "
+    "You are writing fictional game content, not roleplaying."
+)
+
+
+def _call_and_parse(prompt: str, metadata: dict | None = None) -> dict | list | None:
     """调用 LLM 并解析 JSON。失败返回 None 而非脏数据。"""
-    from llm import call_llm, parse_json
+    from llm import call_llm_chat, parse_json
     try:
         client, model, provider = _get_llm()
-        raw = call_llm(prompt, client, model, provider)
+        raw = call_llm_chat(
+            _NARRATIVE_SYSTEM,
+            [{"role": "user", "content": prompt}],
+            client, model, provider,
+            metadata=metadata,
+        )
     except Exception as e:
         logger.error("LLM 调用失败: %s", e)
         return None
@@ -169,6 +189,111 @@ _FALLBACK_REACTIONS = {
 }
 
 
+# 出生地国家代码 -> 宝宝母语
+_COUNTRY_LANGUAGE: dict[str, str] = {
+    "CN": "Chinese (中文)",
+    "JP": "Japanese (日本語)",
+    "KR": "Korean (한국어)",
+    "TH": "Thai (ภาษาไทย)",
+    "VN": "Vietnamese (Tiếng Việt)",
+    "US": "English",
+    "GB": "English",
+    "AU": "English",
+    "CA": "English",
+    "IN": "Hindi (हिन्दी)",
+    "DE": "German (Deutsch)",
+    "FR": "French (Français)",
+    "BR": "Portuguese (Português)",
+    "RU": "Russian (Русский)",
+    "ES": "Spanish (Español)",
+    "MX": "Spanish (Español)",
+    "IT": "Italian (Italiano)",
+    "NG": "English",  # 尼日利亚官方语言
+    "SA": "Arabic (العربية)",
+    "EG": "Arabic (العربية)",
+    "ID": "Indonesian (Bahasa Indonesia)",
+    "PH": "Filipino (Tagalog)",
+    "PK": "Urdu (اردو)",
+    "BD": "Bengali (বাংলা)",
+    "TR": "Turkish (Türkçe)",
+    "PL": "Polish (Polski)",
+    "NL": "Dutch (Nederlands)",
+    "SE": "Swedish (Svenska)",
+}
+
+# 区域兜底
+_REGION_LANGUAGE: dict[str, str] = {
+    "East Asia": "Chinese (中文)",
+    "Southeast Asia": "English",
+    "South Asia": "Hindi (हिन्दी)",
+    "Western Europe": "English",
+    "Eastern Europe": "Russian (Русский)",
+    "Northern Europe": "English",
+    "Southern Europe": "Spanish (Español)",
+    "North America": "English",
+    "South America": "Portuguese (Português)",
+    "Central America": "Spanish (Español)",
+    "Middle East": "Arabic (العربية)",
+    "North Africa": "Arabic (العربية)",
+    "Sub-Saharan Africa": "English",
+    "Oceania": "English",
+}
+
+
+def _birthplace_language(state) -> str:
+    """根据出生地国家代码返回语言名称。"""
+    bp = getattr(state, "birthplace", None) or {}
+    code = bp.get("code", "")
+    region = bp.get("region", "")
+    lang = _COUNTRY_LANGUAGE.get(code)
+    if not lang and region:
+        lang = _REGION_LANGUAGE.get(region)
+    return lang or "English"
+
+
+def _detect_message_language(message: str) -> str | None:
+    """检测父母消息的语言。返回语言名称或 None。"""
+    # 日文假名优先检测（日文也含汉字，但有假名就是日文）
+    if any("\u3040" <= c <= "\u309f" or "\u30a0" <= c <= "\u30ff" for c in message):
+        return "Japanese (日本語)"
+    if any("\uac00" <= c <= "\ud7af" for c in message):
+        return "Korean (한국어)"
+    if any("\u4e00" <= c <= "\u9fff" for c in message):
+        return "Chinese (中文)"
+    if any("\u0e01" <= c <= "\u0e5b" for c in message):
+        return "Thai (ภาษาไทย)"
+    if any("\u0400" <= c <= "\u04ff" for c in message):
+        return "Russian (Русский)"
+    if any("\u0600" <= c <= "\u06ff" for c in message):
+        return "Arabic (العربية)"
+    if any("\u0900" <= c <= "\u097f" for c in message):
+        return "Hindi (हिन्दी)"
+    return None  # 拉丁字母系无法可靠区分，回退到出生地语言
+
+
+def _baby_language_instruction(state, parent_message: str | None = None) -> str:
+    """确定宝宝回复语言。
+
+    对话场景（有 parent_message）：父母用什么语言说→宝宝用什么语言回（家庭语言 L1）。
+    叙事场景（无 parent_message）：用出生地语言（环境语言）。
+    """
+    env_lang = _birthplace_language(state)
+
+    if parent_message is not None:
+        # 对话：家庭语言 = 父母的语言
+        family_lang = _detect_message_language(parent_message) or env_lang
+        if family_lang == env_lang:
+            return f"Respond in {family_lang}."
+        return (
+            f"Respond in {family_lang} (the family's home language). "
+            f"The baby also has exposure to {env_lang} from the local environment, "
+            f"but primarily speaks the family language at this age."
+        )
+
+    # 叙事：环境语言
+    return f"Respond in {env_lang}. This is the local language of the baby's environment."
+
+
 def generate_interaction_response(
     state: BabyState,
     parent_message: str,
@@ -186,11 +311,15 @@ def generate_interaction_response(
     expr = EXPRESSION_MODES.get(state.expression_mode, EXPRESSION_MODES["cry_only"])
     sp = state.identity.sensory_profile
 
-    # 最近 3 条记忆
-    recent_memories = state.memories[-3:] if state.memories else []
-    memories_text = "\n".join(
-        f"- [{m.emotional_valence}] {m.reaction}" for m in recent_memories
-    ) or "No memories yet."
+    # 记忆注入：V2=on 走三层金字塔 + token_budget；V2=off 完全等同旧行为
+    if is_v2_enabled():
+        _rc = recall(state, context=parent_message or "", current_tags=set(), token_budget=1500)
+        memories_text = build_memory_prompt_block(_rc, empty_fallback="No memories yet.")
+    else:
+        recent_memories = state.memories[-3:] if state.memories else []
+        memories_text = "\n".join(
+            f"- [{m.emotional_valence}] {m.reaction}" for m in recent_memories
+        ) or "No memories yet."
 
     # 最近对话历史
     conv_text = ""
@@ -206,6 +335,9 @@ def generate_interaction_response(
 
     # 缺陷
     defects_text = ", ".join(state.identity.defects) if state.identity.defects else "None"
+
+    # 对话声音画像（阶段转换时持久化，同一阶段内稳定）
+    voice_profile = state.voice_profile or "No distinctive voice yet — newborn."
 
     # 统计重复主题（帮助 LLM 判断厌烦）
     topic_count = 0
@@ -225,9 +357,8 @@ def generate_interaction_response(
     elif topic_count >= 1:
         repetition_note = f"\n(Parent has mentioned similar things {topic_count} time(s) before — the baby may be developing familiarity.)"
 
-    # 检测父母消息语言
-    has_cjk = any('\u4e00' <= c <= '\u9fff' for c in parent_message)
-    lang_instruction = "Respond in Chinese (中文)." if has_cjk else "Respond in the same language as the parent's message."
+    # 宝宝回复语言：对话时跟家庭语言（父母说什么就回什么）
+    lang_instruction = _baby_language_instruction(state, parent_message)
 
     # 构造父母动作描述
     if action_type == "touch" and touch_description:
@@ -237,23 +368,20 @@ def generate_interaction_response(
     else:
         parent_action_text = f'[SPEECH] "{parent_message}"'
 
-    prompt = f"""You are simulating a REAL {state.species} child's reaction to their parent.
+    prompt = f"""You are a game dialogue writer for Angel Cradle, a Tamagotchi-style virtual pet simulation.
+Write the in-game dialogue line for a virtual pet character reacting to the player's action, based on the character sheet below.
+This is like scripting NPC dialogue in The Sims — you produce game text, not real child output.
 
-## CRITICAL: ANTI-AI RULES (VIOLATION = FAILURE)
-- You ARE a {state.age_days}-day-old child. NOT an AI pretending to be one.
-- HARD LIMIT: baby_response must be under 80 Chinese characters (or 40 English words). Count before outputting.
-- FORBIDDEN output patterns — if your response matches ANY of these, you have FAILED:
-  - Literary metaphors: "像玩具车的轮子卡进了沙子" ← 7岁不会这样说
-  - Directly narrating senses: "我的耳朵告诉我了" ← 没有孩子会这样描述自己
-  - Self-analytical: "这个对话又卡住了" ← 孩子不元认知
-  - Adult-level emotional vocabulary: "这个比回答'谁'有意思" ← 太理性
-- CORRECT examples for a 7-year-old in Chinese:
-  - "你是谁啊" → "哈？你是我妈妈啊！你忘啦？" (短，直接，孩子逻辑)
-  - "你生气了？" → "我没有！...好吧有一点点。" (简单否认，然后承认)
-  - "你喜欢什么" → "恐龙！还有冰淇淋！你呢？" (自我中心，反问)
-- Sensory traits and constraints influence behavior IMPLICITLY. A hearing-dominant child covers ears at loud sounds — they do NOT say "我的耳朵很敏感".
-- Grammar errors, topic jumps, and childish logic are REQUIRED, not bugs.
+## Dialogue Style Rules
+- Write age-appropriate game dialogue for a {state.age_days}-day-old virtual {state.species} character.
+- HARD LIMIT: baby_response must be under 80 Chinese characters (or 40 English words).
+- AVOID: literary metaphors, self-analytical statements, adult vocabulary, sensory self-narration.
+- Grammar quirks and abrupt topic changes add character authenticity.
 - {lang_instruction}
+
+## Conversational Voice (THIS IS THE CHARACTER'S UNIQUE PERSONALITY — follow it closely)
+{voice_profile}
+The voice profile above defines HOW this specific child talks. Two children with different profiles MUST sound different even when answering the same question. A high-arousal hearing-dominant child might yell excitedly with sound effects, while a low-arousal touch-dominant child might whisper and reach for your hand.
 
 ## The Child
 - Name: {state.name or '(unnamed)'}
@@ -286,8 +414,8 @@ def generate_interaction_response(
 {f"- REGRESSED capabilities (temporarily lost): {', '.join(r['capability'] for r in state.stress.regressed_capabilities)}" if state.stress.regressed_capabilities else ""}
 - Emotional vocabulary: {', '.join(state.emotional.emotional_vocabulary) or 'None'}
 - Empathy level: {state.emotional.empathy_level}
-{f"- Imaginary friend: {state.emotional.imaginary_friend} (may mention in conversation)" if state.emotional.imaginary_friend else ""}
-{f"- Transitional object: {state.nutrition_sleep.transitional_object} (may seek when stressed)" if state.nutrition_sleep.transitional_object else ""}
+{f"- Imaginary friend: {state.emotional.imaginary_friend} (a pretend companion — only bring up during play or when lonely, NEVER when asked about the baby's own name/identity)" if state.emotional.imaginary_friend else ""}
+{f"- Transitional object: {state.nutrition_sleep.transitional_object} (a comfort item like a toy/blanket — only mention when stressed or seeking comfort, NOT as a person)" if state.nutrition_sleep.transitional_object else ""}
 
 ## Recent Memories
 {memories_text}
@@ -300,13 +428,13 @@ def generate_interaction_response(
 {parent_action_text}
 
 ## Task
-Generate the child's reaction. Rules:
+Write the game character's dialogue line. Rules:
 1. HARD CHARACTER LIMIT: Under 80 Chinese characters / 40 English words. No exceptions.
-2. Expression mode is law. A cry_only baby CANNOT use words. An "independent" 7yo writes 2-3 SHORT sentences, not paragraphs.
-3. Innate traits show through BEHAVIOR, never through self-narration. WRONG: "我的耳朵不喜欢这个". RIGHT: *捂住耳朵* "太吵了！"
-4. The child has its own agenda. Repeated topics → boredom. Novel things → curiosity. Distress + comfort → trust.
-5. Write like a REAL child: messy, self-centered, abrupt. If a literature professor could have written it, you FAILED.
-6. For PHYSICAL TOUCH actions: react with body language, sounds, and physical sensations FIRST. The child FEELS the touch — describe squirming, giggling, reaching, relaxing, or resisting. Touch is primal; verbal response is secondary (if any at the current expression_mode).
+2. Expression mode is law. A cry_only character CANNOT use words. An "independent" 7yo-stage character gets 2-3 SHORT sentences max.
+3. Traits show through BEHAVIOR in the dialogue, not self-narration. WRONG: "我的耳朵不喜欢这个". RIGHT: *捂住耳朵* "太吵了！"
+4. The character has its own agenda. Repeated topics → boredom. Novel things → curiosity. Distress + comfort → trust.
+5. Write natural, age-appropriate game dialogue: messy, self-centered, abrupt.
+6. For PHYSICAL TOUCH actions: react with body language, sounds, and physical sensations FIRST. Describe squirming, giggling, reaching, relaxing, or resisting. Verbal response is secondary (if any at the current expression_mode).
 
 For state_changes, ONLY include fields that genuinely changed. Use null for no change.
 - new_preference: if the child showed genuine sustained interest (not just momentary attention)
@@ -326,7 +454,10 @@ Output JSON:
   }}
 }}"""
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "generate_interaction_response",
+    })
     if result and isinstance(result, dict) and "baby_response" in result:
         # 表达模式后验证：检查 LLM 输出是否符合当前 expression_mode
         violation = _validate_expression_output(result["baby_response"], state.expression_mode)
@@ -397,6 +528,18 @@ def narrate_phase_events(
     phase = PHASES[state.current_phase]
     expr_mode = EXPRESSION_MODES[phase.expression_mode]
 
+    # 预计算每个事件的因果标签（cause_tags 在 LLM 调用前生成）
+    cause_tags_by_event: dict[str, list[str]] = {}
+    for event in all_events:
+        event_data = {
+            "sensory_channels": event.sensory_channels,
+            "intensity": event.intensity,
+            "category": event.category,
+        }
+        cause_tags_by_event[event.name] = generate_cause_tags(
+            event_data, state.identity, state,
+        )
+
     # 构建事件素材（含感知数据）
     events_material = ""
     for i, event in enumerate(all_events, 1):
@@ -413,13 +556,23 @@ def narrate_phase_events(
             f"刺激强度: {event.intensity}\n\n"
         )
 
-    recent_memories = state.memories[-3:]
-    memory_text = ""
-    if recent_memories:
-        memory_text = "\n".join(
-            f"- Day {m.age_days}: {m.event} → {m.reaction[:60]}..."
-            for m in recent_memories
-        )
+    # 记忆注入：V2=on 走三层金字塔（含 tag 一跳扩展）；V2=off 完全等同旧行为
+    if is_v2_enabled():
+        _ctx = "; ".join(e.display_name for e in all_events[:5])
+        # 聚合事件 cause_tags 作为检索 tags
+        _tags: set[str] = set()
+        for _t_list in cause_tags_by_event.values():
+            _tags.update(_t_list)
+        _rc = recall(state, context=_ctx, current_tags=_tags, token_budget=1500)
+        memory_text = build_memory_prompt_block(_rc, empty_fallback="")
+    else:
+        recent_memories = state.memories[-3:]
+        memory_text = ""
+        if recent_memories:
+            memory_text = "\n".join(
+                f"- Day {m.age_days}: {m.event} → {m.reaction[:60]}..."
+                for m in recent_memories
+            )
 
     prompt = f"""You are a nanny narrating a day in the life of a {state.species} infant. You are experienced, observant, warm but not sentimental. You narrate in first person.
 
@@ -512,13 +665,17 @@ Output as JSON array:
     "trace": "which innate constraint drove the baby's reaction",
     "growth_signal": "developmental significance if any (empty string if none)",
     "new_fear": "if a new fear formed (empty string if not)",
-    "new_preference": "if a new preference formed (empty string if not)"
+    "new_preference": "if a new preference formed (empty string if not)",
+    "life_tag_hint": "a lasting behavioral tag if this event changed the child, e.g. noise_sensitive, visual_learner (null if not)"
   }},
   ...
 ]
 """
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "narrate_phase_events",
+    })
 
     # LLM 失败降级：返回最小化场景，保证流程不断
     if result is None:
@@ -548,6 +705,11 @@ Output as JSON array:
             growth_signal=item.get("growth_signal", ""),
         )
 
+        # 因果标签：合并场景涉及的所有事件的 cause_tags
+        scene_cause_tags: list[str] = []
+        for en in event_names:
+            scene_cause_tags.extend(cause_tags_by_event.get(en, []))
+
         scenes.append({
             "scene": item.get("scene", len(scenes) + 1),
             "event_names": event_names,
@@ -563,6 +725,8 @@ Output as JSON array:
             "growth_signal": item.get("growth_signal", ""),
             "new_fear": item.get("new_fear", ""),
             "new_preference": item.get("new_preference", ""),
+            "life_tag_hint": item.get("life_tag_hint"),
+            "cause_tags": scene_cause_tags,
             "memory": memory,
         })
 
@@ -587,6 +751,14 @@ def process_critical_event(
     expr_mode = EXPRESSION_MODES[phase.expression_mode]
     perception = _perceptual_filter(event, state)
 
+    # 因果标签：LLM 调用前生成 cause_tags
+    event_data = {
+        "sensory_channels": event.sensory_channels,
+        "intensity": event.intensity,
+        "category": event.category,
+    }
+    cause_tags = generate_cause_tags(event_data, state.identity, state)
+
     # 找到父母选择的描述
     parent_desc = ""
     parent_effect = ""
@@ -598,8 +770,18 @@ def process_critical_event(
                 break
 
     recent_memories = state.memories[-5:] if state.memories else []
+    # 记忆注入：V2=on 用 recall 替换 _format_recent_memories；V2=off 完全等同旧行为
+    if is_v2_enabled():
+        _ctx = f"{event.display_name}: {event.description}"
+        _rc = recall(state, context=_ctx, current_tags=set(cause_tags), token_budget=1500)
+        _memories_block = build_memory_prompt_block(
+            _rc, empty_fallback="No memories yet — this is early life."
+        )
+    else:
+        _memories_block = _format_recent_memories(recent_memories)
 
-    prompt = f"""You are simulating a {state.species} infant's reaction to a critical life event.
+    prompt = f"""You are a game content generator for Angel Cradle, a Tamagotchi-style virtual pet simulation game.
+Generate a simulated {state.species} infant's reaction to a significant developmental event.
 
 ## Infant Profile
 - Name: {state.name or '(unnamed)'}
@@ -630,7 +812,7 @@ def process_critical_event(
 {f"- Imaginary friend: {state.emotional.imaginary_friend}" if state.emotional.imaginary_friend else ""}
 
 ## Recent Memories
-{_format_recent_memories(recent_memories)}
+{_memories_block}
 
 ## The Event
 **{event.display_name}**: {event.description}
@@ -663,7 +845,10 @@ Output as JSON:
 }}
 """
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "process_critical_event",
+    })
     if not isinstance(result, dict):
         logger.warning("Critical event LLM failed, degrading to minimal reaction (event=%s)", event.name)
         result = {
@@ -690,6 +875,7 @@ Output as JSON:
         "event": event.name,
         "event_display": event.display_name,
         "perception": perception,
+        "cause_tags": cause_tags,
         "memory": memory,
         **result,
     }
@@ -802,7 +988,10 @@ Output as JSON:
 }}
 """
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "generate_phase_summary",
+    })
     if not isinstance(result, dict):
         logger.warning("Phase summary LLM failed, degrading to empty summary")
         result = {"summary": "(Phase summary generation failed. Data saved.)"}
@@ -837,14 +1026,14 @@ _HEARTBEAT_FALLBACKS = {
                           "type": "exploratory", "trigger": "curious", "parent_hint": "The baby wants your attention"},
     "first_words": {"expression": "*'Mama!' looks at you*", "behavior_type": "verbal",
                     "type": "exploratory", "trigger": "share", "parent_hint": "The baby is calling you"},
-    "expanding_vocabulary": {"expression": "*'Come here!'*", "behavior_type": "verbal",
-                             "type": "exploratory", "trigger": "play", "parent_hint": "The baby wants you"},
+    "two_word": {"expression": "*'Come here!'*", "behavior_type": "verbal",
+                 "type": "exploratory", "trigger": "play", "parent_hint": "The baby wants you"},
+    "sentence": {"expression": "*'Mommy! Why is sky blue?'*", "behavior_type": "verbal",
+                 "type": "exploratory", "trigger": "curious", "parent_hint": "The child has a question"},
     "narrative": {"expression": "*'Mommy! Guess what!'*", "behavior_type": "verbal",
                   "type": "exploratory", "trigger": "share", "parent_hint": "The baby wants to share"},
-    "conversational": {"expression": "*'Hey, can I ask you something?'*", "behavior_type": "verbal",
-                       "type": "exploratory", "trigger": "curious", "parent_hint": "The child has a question"},
-    "reflective": {"expression": "*'Mom, I was thinking...'*", "behavior_type": "verbal",
-                   "type": "exploratory", "trigger": "share", "parent_hint": "The child wants to share a thought"},
+    "reasoning": {"expression": "*'Mom, I was thinking...'*", "behavior_type": "verbal",
+                  "type": "exploratory", "trigger": "share", "parent_hint": "The child wants to share a thought"},
     "independent": {"expression": "*'Mom, I need to talk to you.'*", "behavior_type": "verbal",
                     "type": "exploratory", "trigger": "share", "parent_hint": "The child wants to discuss something"},
 }
@@ -878,10 +1067,34 @@ def generate_heartbeat_evaluation(
     species = provider.get_species(state)
     age_days = provider.get_age_days(state)
 
-    prompt = f"""You are the subconscious of a {species} child aged {age_days} days.
+    # Few-shot：从场景库抽 3-5 条当前 phase 的真实场景注入 prompt
+    # 让 LLM 看到 phase 应有的表达风格，降低违规率
+    few_shot_block = ""
+    try:
+        from scenes import pick_scene, load_scenes_for_phase
+        phase_scenes = load_scenes_for_phase(state.current_phase)
+        if phase_scenes:
+            import random as _rnd
+            sample = _rnd.sample(phase_scenes, min(4, len(phase_scenes)))
+            shots = []
+            for s in sample:
+                shots.append(
+                    f"- Trigger: {s.trigger} | Context: {s.context}\n"
+                    f"  Expression: {s.expression}\n"
+                    f"  Intent: {s.intent}"
+                )
+            few_shot_block = (
+                "\n## Example Scenes for This Phase (few-shot — follow this style)\n"
+                + "\n".join(shots) + "\n"
+            )
+    except Exception:
+        few_shot_block = ""
 
-Based on the child's current internal state, decide: does this child
-want to reach out to (or actively avoid) their parent RIGHT NOW?
+    prompt = f"""You are a game content generator for Angel Cradle, a Tamagotchi-style virtual pet simulation game.
+Model the simulated internal state of a {species} individual aged {age_days} days.
+
+Based on the individual's current internal state, decide: does this simulated child
+want to reach out to (or actively avoid) their caregiver RIGHT NOW?
 
 ## Rules
 1. Most of the time, the answer is NO. Children are not constantly seeking
@@ -901,9 +1114,9 @@ want to reach out to (or actively avoid) their parent RIGHT NOW?
    Format: {expression_constraints.get('format', '')}
 6. ANTI-AI RULES: No literary language, no self-analysis, no metaphors.
    Real children, messy and immediate.
-7. If YES, expression must be SHORT: under 60 Chinese chars / 30 English words.
-8. Respond in Chinese if the child's context suggests Chinese-speaking family.
-
+7. If YES, expression must be SHORT: under 30 English words.
+8. ALWAYS respond in English. All expressions, hints, and output must be in English.
+{few_shot_block}
 {behavior_space.to_prompt_section()}
 
 ## The Child's Inner State
@@ -915,23 +1128,30 @@ Return JSON only:
   "initiative": true/false,
   "type": "urgent" | "exploratory" | null,
   "behavior_type": "verbal" | "physical" | "avoidance" | null,
-  "trigger": "hunger|fear|pain|sleepy|curious|bored|share|play|secret|boundary|autonomy" | null,
-  "expression": "the child's expression" | null,
-  "parent_hint": "brief hint for the parent" | null
+  "trigger": "hunger|sleepy|wet_diaper|soiled_diaper|gas_colic|teething|too_hot|too_cold|hiccup|pain|fear|lonely|boundary|overstimulated|curious|bored|play|share|secret|autonomy" | null,
+  "expression": {{
+    "vocalization": "the sound the child makes (cry type, babble, words) — short",
+    "facial": "facial expression (scrunched face, wide eyes, lip tremble, etc.)",
+    "body": "body action (kicking, arching, reaching, curling up, etc.)",
+    "signal": "the observable cue a caregiver would notice first"
+  }} | null,
+  "parent_hint": "brief hint for the parent explaining what the child needs" | null
 }}
 
 If initiative is false, set all other fields to null."""
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "generate_heartbeat_evaluation",
+    })
     if result and isinstance(result, dict):
         if result.get("initiative"):
             return result
         return None  # 静默
 
-    # LLM 失败 → 降级
-    logger.warning("Heartbeat LLM failed, using fallback for mode=%s", expression_mode)
-    fallback = _HEARTBEAT_FALLBACKS.get(expression_mode, _HEARTBEAT_FALLBACKS["cry_only"])
-    return {"initiative": True, **fallback}
+    # LLM 失败 → 默认静默（不应因 LLM 故障而触发主动行为）
+    logger.warning("Heartbeat LLM failed, defaulting to silence for mode=%s", expression_mode)
+    return None
 
 
 def generate_ignored_reaction(
@@ -950,10 +1170,9 @@ def generate_ignored_reaction(
     species = provider.get_species(state)
     age_days = provider.get_age_days(state)
 
-    prompt = f"""You are simulating a {species} child aged {age_days} days.
-
-The child just tried to get their parent's attention ({initiative_type}, {behavior_type})
-but was IGNORED. Generate the child's emotional reaction.
+    prompt = f"""You are a game content generator for Angel Cradle, a Tamagotchi-style virtual pet simulation game.
+A simulated {species} individual aged {age_days} days just tried to get their caregiver's attention
+({initiative_type}, {behavior_type}) but received no response. Generate the simulated emotional reaction.
 
 ## Reaction patterns (by attachment style: {attachment})
 - secure: brief disappointment → self-soothe → find something else
@@ -970,9 +1189,9 @@ Format: {expression_constraints.get('format', '')}
 - Stress level: {provider.get_stress_state(state).stress_level:.1f}
 
 ## Rules
-1. Under 50 Chinese chars / 25 English words.
+1. Under 25 English words.
 2. ANTI-AI: no literary language. Real child reactions.
-3. Respond in Chinese if context suggests Chinese-speaking family.
+3. ALWAYS respond in English.
 
 Output JSON:
 {{
@@ -980,7 +1199,10 @@ Output JSON:
   "emotional_tone": "positive/negative/neutral"
 }}"""
 
-    result = _call_and_parse(prompt)
+    result = _call_and_parse(prompt, metadata={
+        "baby_id": state.baby_id, "phase": state.current_phase,
+        "callsite": "generate_ignored_reaction",
+    })
     if result and isinstance(result, dict) and "reaction" in result:
         return result
 

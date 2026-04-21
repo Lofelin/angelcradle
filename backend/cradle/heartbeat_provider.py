@@ -357,36 +357,81 @@ class CradleMonologueProvider:
         ini = state.initiative
         sections: list[str] = []
 
-        # 1. 生理信号
+        # 1. 生理信号 + 生理时钟
         stress = state.stress
         ns = state.nutrition_sleep
         phys = state.physical
+        sim_t = state.sim_time
+
+        # 计算距上次生理事件的模拟小时数
+        hours_since_fed = sim_t - ns.last_fed_time if ns.last_fed_time > 0 else -1
+        hours_since_diaper = sim_t - ns.last_diaper_time if ns.last_diaper_time > 0 else -1
+        hours_since_sleep = sim_t - ns.last_sleep_time if ns.last_sleep_time > 0 else -1
+
         body_lines = [
             f"Stress level: {stress.stress_level:.2f}",
             f"Sleep quality: {ns.sleep_quality:.1f}, "
             f"night wakings: {ns.night_waking_frequency}",
             f"Feeding mode: {ns.feeding_mode}",
         ]
+        # 生理时钟——让 LLM 推断具体需求
+        if hours_since_fed >= 0:
+            body_lines.append(f"Hours since last feeding: {hours_since_fed:.1f}")
+            if hours_since_fed > 3:
+                body_lines.append("  → LIKELY HUNGRY (>3h since last feed)")
+        if hours_since_diaper >= 0:
+            body_lines.append(f"Hours since last diaper change: {hours_since_diaper:.1f}")
+            if hours_since_diaper > 2:
+                body_lines.append("  → LIKELY NEEDS DIAPER CHANGE (>2h)")
+        if hours_since_sleep >= 0:
+            body_lines.append(f"Hours since last sleep: {hours_since_sleep:.1f}")
+            if hours_since_sleep > 4:
+                body_lines.append("  → LIKELY SLEEPY (>4h awake)")
+        body_lines.append(f"Temperature comfort: {ns.comfort_temp}")
+        if ns.comfort_temp != "comfortable":
+            body_lines.append(f"  → UNCOMFORTABLE: {ns.comfort_temp}")
         if ns.sleep_regression_active:
             body_lines.append("Sleep regression is ACTIVE")
         if phys.teeth_count > 0:
             body_lines.append(f"Teething: {phys.teeth_count} teeth erupted")
+            if phys.teeth_count <= 4:
+                body_lines.append("  → Active teething phase — gums may be sore")
         if stress.regressed_capabilities:
             names = [r["capability"] for r in stress.regressed_capabilities]
             body_lines.append(f"Regressed capabilities: {', '.join(names)}")
-        sections.append("## Body Signals\n" + "\n".join(body_lines))
+        sections.append("## Body Signals & Physiological Clock\n" + "\n".join(body_lines))
 
-        # 2. 最近经历（最近 3 条 memories）
-        if state.memories:
-            recent = state.memories[-3:]
-            mem_lines = []
-            for m in recent:
-                valence = m.emotional_valence
-                mem_lines.append(
-                    f"- [{valence}] {m.event}: {m.reaction} "
-                    f"(intensity {m.intensity:.1f})"
-                )
-            sections.append("## Recent Experiences\n" + "\n".join(mem_lines))
+        # 2. 最近经历：V2=on 走 recall（相关性 + forget_score），V2=off 保留旧最近 3 条行为
+        try:
+            from memory import is_v2_enabled, recall, build_memory_prompt_block
+            if is_v2_enabled():
+                _rc = recall(state, context="internal monologue",
+                             current_tags=set(), token_budget=800)
+                _block = build_memory_prompt_block(_rc, empty_fallback="")
+                if _block:
+                    sections.append("## Recent Experiences\n" + _block)
+            elif state.memories:
+                recent = state.memories[-3:]
+                mem_lines = []
+                for m in recent:
+                    valence = m.emotional_valence
+                    mem_lines.append(
+                        f"- [{valence}] {m.event}: {m.reaction} "
+                        f"(intensity {m.intensity:.1f})"
+                    )
+                sections.append("## Recent Experiences\n" + "\n".join(mem_lines))
+        except Exception:
+            # 记忆模块失败不能阻断心跳；退回旧行为
+            if state.memories:
+                recent = state.memories[-3:]
+                mem_lines = []
+                for m in recent:
+                    valence = m.emotional_valence
+                    mem_lines.append(
+                        f"- [{valence}] {m.event}: {m.reaction} "
+                        f"(intensity {m.intensity:.1f})"
+                    )
+                sections.append("## Recent Experiences\n" + "\n".join(mem_lines))
 
         # 3. 情绪状态 + 偏好 + 恐惧
         emo = state.emotional
