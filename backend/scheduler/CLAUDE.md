@@ -29,7 +29,7 @@ from scheduler import scheduler, TIME_SCALES, EVENT_PACE, signal_need_responded
 - cradle/mind.py: LLM 调用
 - world.py: 日程生成/事件处理/快照
 - events/: 事件定义
-- initiative_needs.py: 需求评估
+- cradle/initiative_needs.py: 摇篮期需求政策（trigger 枚举 / 频率门 / 保姆降级）
 - config.py: 全局时间比例配置
 
 ## 内部依赖方向（单向无循环）

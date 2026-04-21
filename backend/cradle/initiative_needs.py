@@ -5,9 +5,9 @@ LLM 作为宝宝的潜意识判断是否发起需求（复用 heartbeat 引擎�
 规则层只做频率门卫。保姆降级为纯模板处理。
 
 [INPUT]: 依赖 heartbeat.py（引擎 + InitiativeState）、cradle/heartbeat_provider.py（CradleMonologueProvider）、cradle/mind.py（LLM 评估函数）
-[OUTPUT]: NeedUrgency, URGENCY_TIMEOUT, TRIGGER_URGENCY, NANNY_RESPONSES, evaluate_need()
-[POS]: 顶级模块，被 scheduler.py 消费
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+[OUTPUT]: NeedUrgency, URGENCY_TIMEOUT, TRIGGER_URGENCY, TRIGGER_LABELS, evaluate_need(), pick_nanny_response()
+[POS]: cradle 子模块——摇篮期主动需求政策，被 scheduler/ 消费
+[PROTOCOL]: 变更时更新此头部，然后检查 cradle/CLAUDE.md
 """
 
 from __future__ import annotations

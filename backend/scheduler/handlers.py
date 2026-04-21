@@ -398,7 +398,7 @@ async def on_day_tick(sched, event: SimEvent) -> None:
                 or llm_count < MIN_LLM_NEEDS_PER_PHASE
             )
             if use_llm:
-                from initiative_needs import evaluate_need
+                from cradle.initiative_needs import evaluate_need
                 need = await asyncio.to_thread(evaluate_need, state, day)
                 counts = sched._phase_llm_need_count.setdefault(baby_id, {})
                 counts[phase_idx] = counts.get(phase_idx, 0) + 1

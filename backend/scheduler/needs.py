@@ -38,7 +38,7 @@ async def handle_need(
     need_timeout = {"slow": 300, "normal": 15, "fast": 1, "turbo": 2}
     real_timeout = need_timeout.get(state.time_scale, 15)
 
-    from initiative_needs import TRIGGER_LABELS
+    from cradle.initiative_needs import TRIGGER_LABELS
     trigger_label = TRIGGER_LABELS.get(need["trigger"], need["trigger"])
     append_event(baby_id, {
         "event": "baby_need",
@@ -119,7 +119,7 @@ async def nanny_fallback(
 ) -> None:
     """保姆降级处理：纯规则模板，不调 LLM。"""
     from cradle.state import append_event, save_state
-    from initiative_needs import pick_nanny_response
+    from cradle.initiative_needs import pick_nanny_response
     from cradle.heartbeat_provider import shift_attachment_toward_avoidant
 
     ini = state.initiative
@@ -188,7 +188,7 @@ def rule_based_need(state, day: int) -> dict | None:
     纯规则判断宝宝是否发起需求。
     基于压力、年龄、随机因子，不调 LLM。
     """
-    from initiative_needs import NeedUrgency, TRIGGER_URGENCY, URGENCY_TIMEOUT
+    from cradle.initiative_needs import NeedUrgency, TRIGGER_URGENCY, URGENCY_TIMEOUT
 
     ini = state.initiative
     if ini.pending_initiative_id:
@@ -210,7 +210,7 @@ def rule_based_need(state, day: int) -> dict | None:
     # 从场景库按 phase 采样（阶段匹配：每阶段 ≥ 50 条 phase 特定场景，
     # 表达严格符合对应 expression_mode——见 specs/initiative-scene-library/）
     from scenes import pick_scene
-    from initiative_needs import TRIGGER_LABELS
+    from cradle.initiative_needs import TRIGGER_LABELS
 
     # 高压力时优先负向 trigger，通过场景库的 trigger 过滤实现
     if stress > 0.4:

@@ -54,7 +54,7 @@ from memory import (
 
 ```
 写路径（业务代码调用）:
-  nanny/mind/heartbeat/initiative_needs/conversation/scheduler
+  nanny/mind/heartbeat/cradle.initiative_needs/conversation/scheduler
     → memory.record_moment(state, baby_id, actor=..., ...)
       → next_moment_seq(baby_id)         (复用 state.py threading.Lock)
       → should_ingest(baby_id, moment)   (Jaccard + 强制白名单)

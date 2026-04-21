@@ -6,7 +6,7 @@
 
 ## 成员清单
 
-schema.py: `InitiativeScene` dataclass —— id / trigger / context / expression / signal / facial / body / intent / parent_hint / default_tags。trigger 必在 `initiative_needs.TRIGGER_URGENCY` 枚举，expression 必须符合对应 phase 的 `cradle.phases.EXPRESSION_MODES`。
+schema.py: `InitiativeScene` dataclass —— id / trigger / context / expression / signal / facial / body / intent / parent_hint / default_tags。trigger 必在 `cradle.initiative_needs.TRIGGER_URGENCY` 枚举，expression 必须符合对应 phase 的 `cradle.phases.EXPRESSION_MODES`。
 
 __init__.py: 加载门面 —— `load_scenes_for_phase(phase)` 懒加载 + 单例缓存；`pick_scene(phase, trigger=?, exclude_ids=?)` 加权随机选（避免重复）；`count_scenes` / `all_scenes` / `reset_cache` 供测试。
 
@@ -36,7 +36,7 @@ from scenes import (
 
 ## 依赖关系
 
-- `initiative_needs.TRIGGER_URGENCY`：trigger 枚举源（校验用）
+- `cradle.initiative_needs.TRIGGER_URGENCY`：trigger 枚举源（校验用）
 - `cradle.phases.EXPRESSION_MODES`：表达模式校验源
 - `cradle.mind._validate_expression_output`：测试环境的合法性断言
 - **无**外部 pip 依赖（纯 JSON + stdlib）
