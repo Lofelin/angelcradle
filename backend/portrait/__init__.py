@@ -4,9 +4,9 @@
 avatar/ 目录按国家命名（如 china_01.png, japan_02.png），
 分配时优先匹配宝宝的出生国家，无匹配则随机选择。
 
-[INPUT]: backend/avatar/*.png 预设头像库, state.birthplace
+[INPUT]: backend/portrait/avatar/*.png 预设头像库, state.birthplace
 [OUTPUT]: generate_portrait(), get_portrait_path(), get_latest_portrait(), should_update_portrait()
-[POS]: 顶级模块���被 cradle/__init__.py (admit) 和 scheduler/handlers.py (phase_complete) 消费
+[POS]: 顶级包（portrait/），avatar/ 为其私有资源；被 cradle/__init__.py (admit) 和 scheduler/handlers.py (phase_complete) 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
