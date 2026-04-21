@@ -2,8 +2,8 @@
 摇篮 API 端点。
 
 [INPUT]: 依赖 cradle/ 模块、scheduler.py（调度器单例）
-[OUTPUT]: FastAPI 路由（含 touch-actions、heartbeat/stream 统一生命流 SSE、interact 标记心跳响应）
-[POS]: API 层，暴露摇篮功能给前端；heartbeat/stream 订阅调度器事件通道
+[OUTPUT]: FastAPI 路由（含 touch-actions、lifeline SSE 日志读取器、interact 代理、heartbeat/stream 重定向、cradle-graph 发育图谱、portrait 肖像同步生成）
+[POS]: API 层，暴露摇篮功能给前端；lifeline 从 events.jsonl 读取事件流（会话/互动/主动需求事件已迁至 /conversations）；portrait 端点支持未入摇篮宝宝（从 birth.json 同步生成）
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
@@ -18,6 +18,7 @@ from typing import Optional
 
 # SSE heartbeat 间隔（秒）
 SSE_HEARTBEAT_INTERVAL = 15
+SIM_TICK_INTERVAL = 2           # 模拟时钟 tick 频率（秒）
 
 # SSE 响应头：禁止所有层面的缓冲
 _SSE_HEADERS = {
@@ -33,12 +34,76 @@ from cradle import (
     admit, admit_stream, load_state, list_cradle_babies,
     check_world_readiness, simulate_phase, simulate_phase_stream,
     resolve_critical_event, complete_phase, grow_stream, PHASES,
-    append_event, load_events, append_interaction, load_interactions,
+    append_event, load_events,
     save_state,
+    make_conv_id, get_or_create_conversation, post_parent_message,
+    list_messages,
 )
-from cradle.mind import generate_interaction_response
+
+# lifeline 不再推送的事件类型（迁至 /conversations 通道或为内部心跳）
+_LIFELINE_BLOCKLIST = {
+    "interaction",            # 旧亲子互动事件（历史数据兼容，新路径不再写）
+    "baby_need",              # 迁入 DM 会话，作为 baby 消息 subtype="need"
+    "need_responded",         # 迁入 DM 会话
+    # conversation_message: 放行到 lifeline（控制台简要展示互动摘要）
+    # heartbeat_initiative/ignored: 保留在 lifeline（Round 2 D.4 约定）
+}
 
 router = APIRouter(prefix="/cradle")
+
+
+# ============================================================
+# 肖像
+# ============================================================
+
+_portrait_generating: set[str] = set()  # 正在生成头像的 baby_id 集合
+
+
+@router.get("/baby/{baby_id}/portrait")
+async def get_portrait(baby_id: str, age: Optional[int] = None):
+    """获取宝宝肖像。
+
+    未入摇篮时从 birth.json 读取 birthplace 同步生成（首次访问即分配头像）。
+    已入摇篮时从 state 读取（含更完整的 birthplace 数据）。
+    """
+    from portrait import get_portrait_path, get_latest_portrait, generate_portrait
+    from fastapi.responses import FileResponse
+
+    if age is not None:
+        path = get_portrait_path(baby_id, age)
+    else:
+        path = get_latest_portrait(baby_id)
+
+    if path is not None:
+        return FileResponse(path, media_type="image/png")
+
+    # 无肖像：同步生成（从 state 或 birth registry 获取 birthplace）
+    if baby_id not in _portrait_generating:
+        _portrait_generating.add(baby_id)
+        try:
+            state = load_state(baby_id)
+            if state is not None:
+                generate_portrait(state, age_years=age or 0)
+            else:
+                # 未入摇篮：从出生注册表构造轻量对象
+                from api import registry
+                baby_data = registry.load(baby_id)
+                if baby_data is not None:
+                    class _BirthProxy:
+                        pass
+                    proxy = _BirthProxy()
+                    proxy.baby_id = baby_id
+                    proxy.birthplace = baby_data.get("birthplace", {})
+                    generate_portrait(proxy, age_years=age or 0)
+        finally:
+            _portrait_generating.discard(baby_id)
+
+    # 重新检查是否已生成
+    path = get_latest_portrait(baby_id)
+    if path is not None:
+        return FileResponse(path, media_type="image/png")
+
+    raise HTTPException(status_code=404, detail="Portrait not available")
 
 
 # ============================================================
@@ -56,28 +121,8 @@ class InterveneRequest(BaseModel):
     caregiver_id: str = "primary_parent"  # 介入的照护者
 
 
-class InteractRequest(BaseModel):
-    message: str
-    action_type: str = "message"   # "message" | "touch"
-    touch_key: Optional[str] = None   # 肢体动作标识（action_type=touch 时必填）
-
-
-class SocialStartRequest(BaseModel):
-    baby_ids: list[str]
-    context: str = ""
-
-
-class SocialTurnRequest(BaseModel):
-    session_id: str
-
-
-class SocialMessageRequest(BaseModel):
-    session_id: str
-    message: str
-
-
-class SocialEndRequest(BaseModel):
-    session_id: str
+class TimeScaleRequest(BaseModel):
+    time_scale: str   # "slow" | "normal" | "fast" | "turbo"
 
 
 # 并发锁：baby_id -> True 表示 grow_stream 正在运行
@@ -110,7 +155,7 @@ async def admit_baby(req: AdmitRequest):
 
 
 @router.get("/admit/stream")
-def admit_baby_stream(baby_id: str):
+async def admit_baby_stream(baby_id: str):
     """
     将婴儿放入摇篮（SSE 流式）。
 
@@ -121,32 +166,37 @@ def admit_baby_stream(baby_id: str):
     - {"event": "constraints_ready"}   — 约束编译完成
     - {"event": "admitted", ...}       — 入摇篮完成
     """
+    # 在 async 上下文中捕获事件循环引用，供同步生成器线程使用
+    _loop = asyncio.get_running_loop()
+
     def event_generator():
         admitted = False
         try:
             for step in admit_stream(baby_id):
                 data = {k: v for k, v in step.items() if not k.startswith("_")}
-                append_event(baby_id, data)
+                # 将分配的 seq 回填到 data，前端据此推进 lastSeq，
+                # 避免 lifeline 以 after_seq=0 连接时重放这些事件造成重复。
+                data["seq"] = append_event(baby_id, data)
                 yield _sse(data)
                 if step.get("event") == "admitted":
                     admitted = True
         except ValueError as e:
             err = {"event": "error", "message": str(e)}
-            append_event(baby_id, err)
+            err["seq"] = append_event(baby_id, err)
             yield _sse(err)
         except Exception as e:
             err = {"event": "error", "message": f"Admission failed: {e}"}
-            append_event(baby_id, err)
+            err["seq"] = append_event(baby_id, err)
             yield _sse(err)
         finally:
-            # 入摇篮成功后注册到调度器（后台任务）
+            # 入摇篮成功后注册到调度器
+            # 同步生成器在 StreamingResponse 线程中运行，
+            # 用 call_soon_threadsafe 将协程提交到主事件循环
             if admitted:
-                try:
-                    from scheduler import scheduler
-                    loop = asyncio.get_event_loop()
-                    loop.create_task(scheduler.register(baby_id))
-                except RuntimeError:
-                    pass  # 无事件循环时忽略，heartbeat/stream 连接时会自动注册
+                from scheduler import scheduler
+                _loop.call_soon_threadsafe(
+                    lambda: _loop.create_task(scheduler.register(baby_id))
+                )
 
     return StreamingResponse(
         _paced(_with_heartbeat(event_generator())),
@@ -169,6 +219,25 @@ def get_status(baby_id: str):
         raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
 
     phase = PHASES[state.current_phase]
+
+    # 恢复 pending need：从 events.jsonl 查找对应的 baby_need 事件
+    pending_need = None
+    ini = state.initiative
+    if ini.pending_initiative_id:
+        events = load_events(baby_id)
+        for evt in reversed(events):
+            if evt.get("event") == "baby_need" and evt.get("need_id") == ini.pending_initiative_id:
+                pending_need = {
+                    "need_id": evt["need_id"],
+                    "trigger": evt.get("trigger", ""),
+                    "urgency": evt.get("urgency", "social"),
+                    "timeout_sec": evt.get("timeout_sec", 15),
+                    "expression": evt.get("expression", ""),
+                    "behavior_type": evt.get("behavior_type", "verbal"),
+                    "parent_hint": evt.get("parent_hint", ""),
+                }
+                break
+
     return {
         "baby_id": state.baby_id,
         "name": state.name,
@@ -195,7 +264,25 @@ def get_status(baby_id: str):
         "nutrition_sleep": state.nutrition_sleep.to_dict(),
         "emotional": state.emotional.to_dict(),
         "physical": state.physical.to_dict(),
+        "pending_criticals": state.pending_criticals,
+        "pending_need": pending_need,
+        "phase_advancing": state.phase_advancing,
+        "time_scale": __import__("config").get_time_scale(),
+        "last_active_ts": state.last_active_ts,
+        "sim_time": state.sim_time,
+        "life_tags": sorted(state.life_tags),
     }
+
+
+@router.patch("/{baby_id}/time-scale")
+async def set_time_scale_legacy(baby_id: str, req: TimeScaleRequest):
+    """[代理] 旧端点向后兼容——实际设置全局速率。"""
+    from config import set_time_scale as _set_global, get_time_scale
+    from scheduler import TIME_SCALES
+    if req.time_scale not in TIME_SCALES:
+        raise HTTPException(400, f"Invalid time_scale: {req.time_scale}")
+    _set_global(req.time_scale)
+    return {"time_scale": get_time_scale()}
 
 
 @router.post("/{baby_id}/advance")
@@ -243,11 +330,15 @@ def advance_phase_stream(baby_id: str):
     if state.current_phase >= len(PHASES):
         raise HTTPException(400, "Already completed all phases")
 
+    # 不持久化到 events.jsonl 的进度事件（仅用于 SSE 保活）
+    _EPHEMERAL_EVENTS = {"narrating"}
+
     def event_generator():
         try:
             for step in simulate_phase_stream(state):
                 data = {k: v for k, v in step.items() if not k.startswith("_")}
-                append_event(baby_id, data)
+                if data.get("event") not in _EPHEMERAL_EVENTS:
+                    append_event(baby_id, data)
                 yield _sse(data)
         except Exception as e:
             err = {"event": "error", "message": str(e)}
@@ -262,8 +353,8 @@ def advance_phase_stream(baby_id: str):
 
 
 @router.post("/{baby_id}/intervene")
-def intervene(baby_id: str, req: InterveneRequest):
-    """父母介入处理关键事件。"""
+async def intervene(baby_id: str, req: InterveneRequest):
+    """父母介入处理关键事件。处理完后自动触发阶段继续。"""
     state = load_state(baby_id)
     if state is None:
         raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
@@ -280,6 +371,25 @@ def intervene(baby_id: str, req: InterveneRequest):
             parent_input=req.parent_input,
             caregiver_id=req.caregiver_id,
         )
+
+        # 将已处理的关键事件标记为不再等待父母
+        for c in state.pending_criticals:
+            if c.get("event_name") == req.event_name:
+                c["awaiting_parent"] = False
+        save_state(state)
+
+        # 持久化介入事件到日志（与 critical_event 配对）
+        append_event(baby_id, {
+            "event": "intervention",
+            "event_name": req.event_name,
+            "parent_action": req.parent_action,
+            "caregiver_id": req.caregiver_id,
+            "reaction": result.get("reaction", ""),
+            "emotional_valence": result.get("emotional_valence", ""),
+            "phase": state.current_phase,
+            "age_days": state.age_days,
+        })
+
         return result
     except Exception as e:
         raise HTTPException(500, f"Intervention failed: {e}")
@@ -376,15 +486,10 @@ def get_history(baby_id: str):
 @router.get("/{baby_id}/grow/stream")
 def grow(baby_id: str):
     """
-    自动成长（SSE 流式）。
+    手动成长（SSE 流式，备用路径）。
 
-    从当前阶段开始自动推进，连续跑所有阶段。
-    遇到关键事件时暂停（yield paused），等待：
-      1. POST /{baby_id}/intervene 处理关键事件
-      2. 重新调用 GET /{baby_id}/grow/stream 继续成长
-
-    无关键事件的阶段自动完成（含 LLM 阶段总结）。
-    全部阶段完成后 yield growth_complete。
+    主路径已由 scheduler 自驱动阶段推进接管。
+    此端点保留用于手动触发/调试。
     """
     state = load_state(baby_id)
     if state is None:
@@ -397,11 +502,15 @@ def grow(baby_id: str):
     if _grow_locks.get(baby_id):
         raise HTTPException(409, "Growth simulation already running for this baby.")
 
+    # 不持久化到 events.jsonl 的进度事件（与 advance/stream 对齐）
+    _GROW_EPHEMERAL = {"narrating", "phase_completing"}
+
     def event_generator():
         _grow_locks[baby_id] = True
         try:
             for step in grow_stream(state):
-                append_event(baby_id, step)
+                if step.get("event") not in _GROW_EPHEMERAL:
+                    append_event(baby_id, step)
                 yield _sse(step)
         except Exception as e:
             err = {"event": "error", "message": str(e)}
@@ -417,158 +526,91 @@ def grow(baby_id: str):
     )
 
 
-@router.post("/{baby_id}/interact")
-def interact(baby_id: str, req: InteractRequest):
-    """亲子对话：父母发消息，婴儿根据 expression_mode 反应。"""
-    if _grow_locks.get(baby_id):
-        raise HTTPException(409, "Growth simulation is running. Please wait or pause first.")
+
+@router.get("/{baby_id}/lifeline")
+async def lifeline(baby_id: str, after_seq: int = 0):
+    """
+    生命线 SSE -- 日志读取器 + 实时追踪。
+
+    Phase 1 (回放): 读 events.jsonl 中 seq > after_seq 的事件，50ms/条
+    Phase 2 (实时): await notify → 读最新事件 → 即时推送
+    每 2s 无事件 → sim_tick (时钟心跳)
+    """
+    from cradle.state import load_events_after, get_notify
 
     state = load_state(baby_id)
     if state is None:
         raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
 
-    # 肢体互动：查找动作描述，构造 LLM 输入
-    touch_desc = None
-    if req.action_type == "touch" and req.touch_key:
-        from cradle.touch import TOUCH_ACTIONS
-        action = next((a for a in TOUCH_ACTIONS if a.key == req.touch_key), None)
-        if action is None:
-            raise HTTPException(400, f"Unknown touch action: {req.touch_key}")
-        if not (action.phase_range[0] <= state.current_phase <= action.phase_range[1]):
-            raise HTTPException(400, f"Touch action '{req.touch_key}' not available at phase {state.current_phase}")
-        touch_desc = action.description
-
-    recent = load_interactions(baby_id, limit=5)
-    result = generate_interaction_response(state, req.message, recent,
-                                           action_type=req.action_type,
-                                           touch_description=touch_desc)
-
-    # 应用状态变更（LLM 判断的发育效应）
-    changes = result.get("state_changes", {})
-    applied_changes = {}
-    if changes.get("new_preference"):
-        pref = changes["new_preference"]
-        if pref not in state.preferences:
-            state.preferences.append(pref)
-            applied_changes["new_preference"] = pref
-    if changes.get("new_comfort_source"):
-        src = changes["new_comfort_source"]
-        if src not in state.comfort_sources:
-            state.comfort_sources.append(src)
-            applied_changes["new_comfort_source"] = src
-    if changes.get("fear_reduced"):
-        fear = changes["fear_reduced"]
-        if fear in state.fears:
-            state.fears.remove(fear)
-            applied_changes["fear_reduced"] = fear
-    if changes.get("new_fear"):
-        fear = changes["new_fear"]
-        if fear not in state.fears:
-            state.fears.append(fear)
-            applied_changes["new_fear"] = fear
-
-    # 构建记录
-    import time as _time
-    record = {
-        "parent_message": req.message,
-        "action_type": req.action_type,
-        "touch_key": req.touch_key,
-        "baby_response": result["baby_response"],
-        "expression_mode": state.expression_mode,
-        "emotional_tone": result.get("emotional_tone", "neutral"),
-        "phase": state.current_phase,
-        "age_days": state.age_days,
-        "state_changes": applied_changes or None,
-    }
-
-    # 双写：interactions.jsonl + events.jsonl
-    append_interaction(baby_id, record)
-    append_event(baby_id, {"event": "interaction", **record})
-
-    # 更新主照护者 interaction_count
-    primary_cg = state.caregivers.get("primary_parent")
-    if primary_cg:
-        primary_cg.interaction_count += 1
-    elif state.caregivers:
-        # 没有 primary_parent 时回退到第一个照护者
-        next(iter(state.caregivers.values())).interaction_count += 1
-
-    # 更新活跃时间戳（亲子互动 = 活跃）
-    state.last_active_ts = _time.time()
-
-    # 标记主动行为已被响应（SSE 流会处理后续心跳评估）
-    from heartbeat import mark_responded
-    mark_responded(state.initiative, state.caregivers)
-    state.initiative.last_interact_ts = _time.time()
-
-    save_state(state)
-
-    return {
-        "baby_response": result["baby_response"],
-        "expression_mode": state.expression_mode,
-        "emotional_tone": result.get("emotional_tone", "neutral"),
-        "state_changes": applied_changes or None,
-        "timestamp": _time.time(),
-    }
-
-
-@router.get("/{baby_id}/heartbeat/stream")
-async def heartbeat_stream(baby_id: str):
-    """
-    统一生命流 SSE。
-    合并调度器自主生命事件 + 心跳主动行为。
-
-    事件流：
-    - {"event": "autonomous_catchup", ...}    — 离线追赶摘要
-    - {"event": "autonomous_event", ...}      — 自主生命事件（有"事"）
-    - {"event": "autonomous_routine", ...}    — 日常事件
-    - {"event": "heartbeat_initiative", ...}  — 宝宝主动行为
-    - {"event": "heartbeat_ignored", ...}     — 被忽略后的反应
-    - ": heartbeat"（SSE 注释）               — 保活信号
-    """
-    state = load_state(baby_id)
-    if state is None:
-        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+    # 自动注册：如果婴儿已 admitted 但调度器未启动，补注册
+    from scheduler import scheduler
+    await scheduler.register(baby_id)
 
     async def event_generator():
-        from scheduler import scheduler
+        last_seq = after_seq
+        notify = get_notify(baby_id)
 
-        # 追赶模式：补跑离线期间事件
-        catchup_events = await scheduler.catchup(baby_id)
-        if catchup_events:
-            summary = {
-                "event": "autonomous_catchup",
-                "total_events": len(catchup_events),
-                "sim_days": (
-                    catchup_events[-1].get("sim_day", 0)
-                    - catchup_events[0].get("sim_day", 0) + 1
-                ) if catchup_events else 0,
-                "events": catchup_events[-10:],  # 只推最近 10 条
-            }
-            yield _sse(summary)
+        # Phase 1: 回放历史事件（跳过 _LIFELINE_BLOCKLIST，保留 seq 游标继续推进）
+        events = load_events_after(baby_id, last_seq)
+        for evt in events:
+            last_seq = evt.get("seq", last_seq)
+            if evt.get("event") in _LIFELINE_BLOCKLIST:
+                continue
+            yield _sse(evt)
+            await asyncio.sleep(0.2)  # 200ms 回放节奏，给前端渲染留出呼吸感
 
-        # 确保注册到调度器
-        if baby_id not in scheduler._agents:
-            await scheduler.register(baby_id)
+        # Phase 2: 实时追踪
+        while True:
+            # 先读再等（防漏）
+            new_events = load_events_after(baby_id, last_seq)
+            if new_events:
+                for evt in new_events:
+                    last_seq = evt.get("seq", last_seq)
+                    if evt.get("event") in _LIFELINE_BLOCKLIST:
+                        continue
+                    yield _sse(evt)
+                    await asyncio.sleep(0.2)  # 200ms 实时推送节奏
+                continue  # 可能还有更多，立即再读
 
-        # 订阅事件通道
-        queue = scheduler.subscribe(baby_id)
-        try:
-            while True:
-                try:
-                    event = await asyncio.wait_for(
-                        queue.get(), timeout=SSE_HEARTBEAT_INTERVAL,
-                    )
-                    yield _sse(event)
-                except asyncio.TimeoutError:
-                    yield _sse_heartbeat()
-        finally:
-            scheduler.unsubscribe(baby_id, queue)
+            # 无新事件，等通知
+            notify.clear()
+            # clear 后再检查一次（防止 clear 和 set 之间丢通知）
+            new_events = load_events_after(baby_id, last_seq)
+            if new_events:
+                for evt in new_events:
+                    last_seq = evt.get("seq", last_seq)
+                    if evt.get("event") in _LIFELINE_BLOCKLIST:
+                        continue
+                    yield _sse(evt)
+                    await asyncio.sleep(0.2)
+                continue
+
+            try:
+                await asyncio.wait_for(notify.wait(), timeout=SIM_TICK_INTERVAL)
+            except asyncio.TimeoutError:
+                # 推送 sim_tick 心跳
+                tick_state = load_state(baby_id)
+                if tick_state:
+                    yield _sse({
+                        "event": "sim_tick",
+                        "sim_day": int(tick_state.sim_time // 24),
+                        "sim_hour": round(tick_state.sim_time % 24, 1),
+                    })
 
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream",
         headers=_SSE_HEADERS,
+    )
+
+
+@router.get("/{baby_id}/heartbeat/stream")
+async def heartbeat_stream(baby_id: str):
+    """向后兼容：重定向到 lifeline。"""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(
+        url=f"/cradle/{baby_id}/lifeline?after_seq=0",
+        status_code=301,
     )
 
 
@@ -591,6 +633,22 @@ def get_events(baby_id: str):
     return {"events": load_events(baby_id)}
 
 
+@router.get("/{baby_id}/graph")
+def get_cradle_graph(baby_id: str):
+    """摇篮生命图谱（力导向格式）。
+
+    [STUB] lifegraph 引擎已删除待重构。端点保留以兼容前端；返回空图谱。
+    """
+    return {
+        "id": baby_id,
+        "schema_version": "1.0",
+        "stage": "cradle",
+        "baby_id": baby_id,
+        "nodes": [],
+        "links": [],
+    }
+
+
 @router.get("/{baby_id}/readiness")
 def get_readiness(baby_id: str):
     """检查世界就绪度。"""
@@ -601,82 +659,10 @@ def get_readiness(baby_id: str):
 
 
 # ============================================================
-# 多婴儿社交端点
+# 旧 /social/* 端点已迁移至 /conversations（见 api/conversations.py）。
+# 多宝宝社交 → POST /conversations {kind:"group", ...}
+# 1v1 亲子 → POST /conversations {kind:"dm", ...} 或继续走 /interact 代理
 # ============================================================
-
-from cradle.social import (
-    start_session, advance_turn, add_parent_message,
-    get_session_history, end_session, is_in_session,
-)
-
-
-@router.post("/social/start")
-def social_start(req: SocialStartRequest):
-    """创建社交会话。"""
-    if len(req.baby_ids) < 2:
-        raise HTTPException(400, "At least 2 babies required")
-    if len(req.baby_ids) != len(set(req.baby_ids)):
-        raise HTTPException(400, "Duplicate baby IDs")
-
-    states = []
-    for bid in req.baby_ids:
-        if _grow_locks.get(bid):
-            raise HTTPException(409, f"Growth running for: {bid}")
-        if is_in_session(bid):
-            raise HTTPException(409, f"Baby {bid} already in a social session")
-        state = load_state(bid)
-        if state is None:
-            raise HTTPException(404, f"Baby '{bid}' not found in cradle")
-        if state.current_phase < 8:
-            raise HTTPException(400, f"Baby '{bid}' not eligible (phase {state.current_phase}, need >= 8)")
-        states.append(state)
-
-    session = start_session(states, req.context)
-    return {
-        "session_id": session.session_id,
-        "participants": [
-            {"baby_id": s.baby_id, "name": s.name or s.baby_id,
-             "expression_mode": s.expression_mode, "phase": s.current_phase}
-            for s in states
-        ],
-        "context": session.context,
-    }
-
-
-@router.post("/social/turn")
-def social_turn(req: SocialTurnRequest):
-    """推进一轮社交对话。"""
-    try:
-        return advance_turn(req.session_id)
-    except ValueError as e:
-        raise HTTPException(404, str(e))
-
-
-@router.post("/social/message")
-def social_message(req: SocialMessageRequest):
-    """家长在社交会话中发言。"""
-    try:
-        return add_parent_message(req.session_id, req.message)
-    except ValueError as e:
-        raise HTTPException(404, str(e))
-
-
-@router.get("/social/{session_id}/history")
-def social_history(session_id: str):
-    """获取社交会话历史。"""
-    try:
-        return get_session_history(session_id)
-    except ValueError as e:
-        raise HTTPException(404, str(e))
-
-
-@router.post("/social/end")
-def social_end(req: SocialEndRequest):
-    """结束社交会话，结算 state_changes。"""
-    try:
-        return end_session(req.session_id)
-    except ValueError as e:
-        raise HTTPException(404, str(e))
 
 
 def _paced(gen):
