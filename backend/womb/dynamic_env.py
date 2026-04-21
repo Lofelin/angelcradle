@@ -1,8 +1,8 @@
 """
-动态环境引擎：阶段间环境变化 + 母体反馈数值化。
+动态环境引擎：阶段间环境变化 + budget delta 确定性计算。
 
-[INPUT]: 当前 env 字典、母体反馈 LLM 输出
-[OUTPUT]: 导出 roll_env_change, apply_maternal_feedback
+[INPUT]: 当前 env 字典、各子系统计算结果（hormones/placenta/nutrients/immune）
+[OUTPUT]: 导出 roll_env_change, apply_maternal_feedback, compute_budget_delta
 [POS]: womb/ 的动态环境子系统，被 stages.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
@@ -148,33 +148,76 @@ def roll_env_change(env: dict, probability: float = 0.20) -> tuple[dict, dict | 
     return updated, event
 
 
-def apply_maternal_feedback(env: dict, maternal_response: dict) -> tuple[dict, dict | None]:
+def apply_maternal_feedback(env: dict, budget_delta: float) -> tuple[dict, dict | None]:
     """
-    解析 LLM 母体反馈，数值化修改 budget_multiplier。
+    直接应用 budget_multiplier delta（不再解析文本）。
+
+    Args:
+        env: 当前环境字典
+        budget_delta: 确定性计算的 budget 增量
 
     Returns:
         (updated_env, adjustment_record) — adjustment_record 为 None 表示 neutral
     """
-    text = str(maternal_response.get("updated_environment_modifier", "")).lower()
-    current = env.get("modifiers", {}).get("budget_multiplier", 1.0)
-
-    if any(kw in text for kw in ("better", "improved", "favorable", "enhanced", "increased efficiency")):
-        delta = round(random.uniform(0.01, 0.03), 3)
-        direction = "better"
-    elif any(kw in text for kw in ("worse", "deteriorated", "declined", "stressed", "reduced", "constrained")):
-        delta = -round(random.uniform(0.01, 0.05), 3)
-        direction = "worse"
-    else:
+    if abs(budget_delta) < 0.001:
         return env, None
 
-    new_val = round(max(0.50, min(1.20, current + delta)), 3)
+    current = env.get("modifiers", {}).get("budget_multiplier", 1.0)
+    new_val = round(max(0.50, min(1.20, current + budget_delta)), 3)
     updated = dict(env)
     updated.setdefault("modifiers", {})["budget_multiplier"] = new_val
 
+    direction = "better" if budget_delta > 0 else "worse"
     record = {
         "direction": direction,
-        "delta": delta,
+        "delta": budget_delta,
         "old_budget_multiplier": current,
         "new_budget_multiplier": new_val,
     }
     return updated, record
+
+
+def compute_budget_delta(
+    hormones: dict,
+    placenta_state: dict,
+    nutrient_effects: dict,
+    immune_risks: dict,
+    env: dict,
+) -> float:
+    """
+    从子系统数值确定性计算 budget_multiplier 增量。
+    母体叙事文本由 LLM 生成（保留个体差异），budget 调整由代码计算（机械可靠）。
+
+    Returns:
+        budget_delta: clamp(-0.05, 0.03)
+    """
+    delta = 0.0
+
+    # 皮质醇
+    cortisol = hormones.get("cortisol", 0.0)
+    if cortisol > 0.7:
+        delta -= 0.02
+    elif cortisol > 0.4:
+        delta -= 0.01
+
+    # 胎盘
+    if placenta_state.get("complications"):
+        delta -= 0.02
+    elif placenta_state.get("efficiency", 0.8) < 0.5:
+        delta -= 0.01
+
+    # 营养素
+    if nutrient_effects.get("budget_penalty", 0) > 0:
+        delta -= 0.01
+
+    # 免疫
+    if immune_risks.get("defect_risk_boost", 1.0) > 1.3:
+        delta -= 0.01
+
+    # 正面因素
+    if env.get("nutrition") == "excellent":
+        delta += 0.01
+    if env.get("stress") == "minimal":
+        delta += 0.005
+
+    return round(max(-0.05, min(0.03, delta)), 3)

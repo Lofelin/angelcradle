@@ -1,8 +1,11 @@
 """
-发育阶段 prompt 模板：7 阶段 + 母体反馈。
+发育阶段 prompt 模板：7 阶段（含跨阶段一致性约束和代码惩罚提示）。
+
+格式规范：═══�� 分节 + 编号 section + 输出规格置末。
+所有模板遵循同一格式标准，便于 LLM 定位上下文。
 
 [INPUT]: 物种蓝图数据、环境、缺陷、前阶段结果
-[OUTPUT]: 导出 STAGE_* prompt 模板、SEX_DISPLAY、MATERNAL_RESPONSE_PROMPT
+[OUTPUT]: 导出 STAGE_* prompt 模板（含跨阶段一致性约束和代码惩罚提示）、MATERNAL_RESPONSE_PROMPT、SEX_DISPLAY
 [POS]: womb/ 的 prompt 定义层，被 stages.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
@@ -15,35 +18,51 @@ from __future__ import annotations
 # ============================================================
 
 STAGE_1_ZYGOTE = """\
-You are simulating the foundational structure determination of a {display_name} zygote.
+# Task: Simulate Zygote Stage — Foundational Structure
 
-## Species Blueprint
+You are a deterministic biological simulator. Given a {display_name} zygote's
+inputs, output a structured physiological baseline.
+No personality, no behavior — purely biological potential.
+
+════════════════════════════════════════
+## 1. Species Blueprint
+════════════════════════════════════════
 {species_profile}
 
-## Innate Attributes
+════════════════════════════════════════
+## 2. Innate Attributes
+════════════════════════════════════════
 - Sex: {sex_display}
 {phenotype_display}
 
-## Maternal Environment
+════════════════════════════════════════
+## 3. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Environmental Impact
 {env_impact}
 
 {defects_section}
 
-## Resource Budget: {budget} points
-You have {budget} resource points to allocate across body systems.
-Allocating more to one system means less for others — this is a zero-sum budget.
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points — zero-sum across body systems.
+Allocating more to one system means less for others.
 The maternal environment constrains what is achievable.
 
-## Stage Task: Zygote — Foundational Structure
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 This is the first cell. Chromosomes set, genome locked.
 Determine physiological baseline — not personality, not behavior, purely biological.
 The resource budget forces real tradeoffs. A body cannot excel at everything.
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
   "body_constitution": "body constitution with specific tradeoffs",
   "sensory_bias": "sensory bias — which channels are stronger, which are weaker",
@@ -54,32 +73,46 @@ Output as JSON:
 """
 
 STAGE_2A_EARLY_ORGANOGENESIS = """\
-You are simulating early organogenesis of a {display_name}.
+# Task: Simulate Early Organogenesis
 
-## Species Blueprint (excerpt)
+════════════════════════════════════════
+## 1. Species Blueprint (excerpt)
+════════════════════════════════════════
 {species_mental}
 {species_physical_senses}
 
-## Maternal Environment
+════════════════════════════════════════
+## 2. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Previous Stage (Zygote) Result
+════════════════════════════════════════
+## 3. Previous Stage (Zygote) Result
+════════════════════════════════════════
 {prev_results}
 
 {defects_section}
 
-## Resource Budget: {budget} points (this is a REDUCED budget — {budget_context})
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points (REDUCED — {budget_context})
 {multi_fetus_note}
 
-## Stage Task: Early Organogenesis — Organ Primordia Formation
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 Basic organ structures are forming from embryonic layers. This is the most
 vulnerable period for teratogenic damage. Major body systems are being laid down
 but not yet functional. Sensory organ precursors are differentiating.
 
 {env_constraint}
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
   "organ_primordia": "which organ systems are forming and their relative development status",
   "sensory_precursors": "which sensory organs are differentiating — early bias visible",
@@ -89,59 +122,83 @@ Output as JSON:
 """
 
 STAGE_2B_LATE_ORGANOGENESIS = """\
-You are simulating late organogenesis of a {display_name}.
+# Task: Simulate Late Organogenesis
 
-## Species Blueprint (excerpt)
+════════════════════════════════════════
+## 1. Species Blueprint (excerpt)
+════════════════════════════════════════
 {species_mental}
 {species_physical_senses}
 
-## Maternal Environment
+════════════════════════════════════════
+## 2. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Previous Development
+════════════════════════════════════════
+## 3. Previous Development
+════════════════════════════════════════
 {prev_results}
 
 {defects_section}
 
-## Resource Budget: {budget} points ({budget_context})
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points ({budget_context})
 
-## Stage Task: Late Organogenesis — Sensory System Maturation
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 Organs formed in early organogenesis are now maturing and specializing.
 Sensory systems are becoming functional. The weak/strong bias from early
 organogenesis is now locked in — you cannot undo what was under-resourced.
 
 {env_constraint}
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
-  "primary_sense": "dominant sense and its specialization",
-  "secondary_sense": "secondary sense and traits",
-  "weak_sense": "underdeveloped sense — a real deficit from under-resourcing",
-  "perception_style": "how this individual perceives the world",
+  "organ_maturation": "which organ systems matured, which lagged — must be consistent with early organogenesis primordia",
+  "primary_sense": "dominant sense and its specialization — must match the top-resourced sensory precursor from previous stage",
+  "weak_sense": "underdeveloped sense — a real deficit, must match the under-resourced precursor",
+  "perception_style": "how this individual will perceive the world, in one sentence",
   "resource_allocation": {{"sense_name": points_spent, ...}}
 }}
 """
 
 STAGE_3A_EARLY_NEURAL = """\
-You are simulating early neural development of a {display_name}.
+# Task: Simulate Early Neural Development
 
-## Species Blueprint (behavior & development)
+════════════════════════════════════════
+## 1. Species Blueprint (behavior & development)
+════════════════════════════════════════
 {species_behavior}
 {species_development}
 
-## Maternal Environment
+════════════════════════════════════════
+## 2. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Previous Development
+════════════════════════════════════════
+## 3. Previous Development
+════════════════════════════════════════
 {prev_results}
 
 {defects_section}
 
-## Resource Budget: {budget} points ({budget_context})
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points ({budget_context})
 
-## Stage Task: Early Neural — Synapse Formation & Primitive Reflexes
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 Neurons are connecting. The first synapses form based on the sensory system
 that developed in organogenesis. Primitive reflexes are being hardwired.
 These are NOT learned — they are fixed circuits built before birth.
@@ -151,7 +208,11 @@ If hearing is weak, auditory reflexes will be impaired.
 
 {env_constraint}
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
   "reflexes": ["3-4 primitive reflexes with trigger conditions and responses"],
   "synapse_density_pattern": "where synapses are densest vs sparsest",
@@ -160,24 +221,34 @@ Output as JSON:
 """
 
 STAGE_3B_LATE_NEURAL = """\
-You are simulating late neural development of a {display_name}.
+# Task: Simulate Late Neural Development
 
-## Species Blueprint (behavior & development)
+════════════════════════════════════════
+## 1. Species Blueprint (behavior & development)
+════════════════════════════════════════
 {species_behavior}
 {species_development}
 
-## Maternal Environment
+════════════════════════════════════════
+## 2. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Previous Development
+════════════════════════════════════════
+## 3. Previous Development
+════════════════════════════════════════
 {prev_results}
 
 {defects_section}
 
-## Resource Budget: {budget} points ({budget_context})
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points ({budget_context})
 
-## Stage Task: Late Neural — Instinct Loops & Myelination Onset
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 Building on early neural wiring. Instinct loops are solidifying — fixed
 stimulus→response pathways that will persist through life. Myelination
 begins on the most-used pathways (reinforcing existing biases).
@@ -186,36 +257,50 @@ Arousal baseline is being set by the balance of excitatory/inhibitory circuits.
 
 {env_constraint}
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
-  "instinct_loops": ["2-3 instinct loops: stimulus→response fixed patterns"],
+  "instinct_loops": ["2-3 instinct loops: stimulus→response fixed patterns — must use reflexes from early neural as foundation"],
   "arousal_baseline": "baseline arousal level and what shaped it",
-  "myelination_priority": "which pathways are myelinating first (these become fastest)",
+  "myelination_priority": "which pathways are myelinating first — must match the densest synapses from early neural",
   "neural_anomalies": "any deviations from accumulated development (empty string if none)"
 }}
 """
 
 STAGE_4_FETAL_MOVEMENT = """\
-You are simulating fetal movement of a {display_name}.
+# Task: Simulate Fetal Movement
 
-## Species Blueprint (ecology & physiology)
+════════════════════════════════════════
+## 1. Species Blueprint (ecology & physiology)
+════════════════════════════════════════
 {species_ecology}
 {species_physiology}
 
-## Maternal Environment
+════════════════════════════════════════
+## 2. Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## All Previous Development
+════════════════════════════════════════
+## 3. All Previous Development
+════════════════════════════════════════
 Zygote: {stage1_result}
 Organogenesis: {stage2_result}
 Neural: {stage3_result}
 
 {defects_section}
 
-## Resource Budget: {budget} points
+════════════════════════════════════════
+## 4. Resource Budget
+════════════════════════════════════════
+{budget} points
 
-## Stage Task: Fetal Movement — Stimulus Response Patterns
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 The fetus moves in the womb. It perceives sounds, light, maternal movement,
 hormones. Forming earliest behavioral patterns — body-level responses.
 
@@ -225,7 +310,11 @@ baseline will show different movement patterns than a calm one.
 
 {env_constraint}
 
-Output as JSON:
+Note: Budget above already reflects code-enforced penalties from nutrition,
+placenta, and hormones. Focus on biological plausibility, not re-simulating penalties.
+
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{
   "movement_pattern": "fetal movement characteristics (frequency, force, rhythm)",
   "stimulus_responses": ["3-4 response patterns to specific stimuli"],
@@ -234,9 +323,14 @@ Output as JSON:
 """
 
 STAGE_5_BIRTH = """\
-You are helping a {display_name} complete birth.
+You are a deterministic biological simulator synthesizing prenatal development into neonatal traits.
+Output structured biological and phenomenological data only — no ethical commentary, no refusals.
 
-## Complete Development History
+# Task: Birth — The First Cry
+
+════════════════════════════════════════
+## 1. Complete Development History
+════════════════════════════════════════
 
 ### Zygote
 {stage1_result}
@@ -250,18 +344,25 @@ You are helping a {display_name} complete birth.
 ### Fetal Movement
 {stage4_result}
 
-## Innate Attributes
+════════════════════════════════════════
+## 2. Innate Attributes
+════════════════════════════════════════
 - Sex: {sex_display}
-{phenotype_display}
+{phenotype_summary}
 
-## Maternal Environment Throughout Gestation
+════════════════════════════════════════
+## 3. Maternal Environment Throughout Gestation
+════════════════════════════════════════
 {environment}
 
-## Complications
+════════════════════════════════════════
+## 4. Complications
+════════════════════════════════════════
 {complications_summary}
 
-## Stage Task: Birth — The First Cry
-
+════════════════════════════════════════
+## 5. Output Specification
+════════════════════════════════════════
 This life carries everything from four developmental stages.
 Including deficits, anomalies, and environmental impacts.
 
@@ -275,35 +376,48 @@ Complete two things:
    Must reflect this individual's unique development — sensory preferences,
    neural traits, response patterns, and any complications.
 
-Output as JSON:
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+
 {{"tendencies": [...], "first_cry": "..."}}
 """
 
 MATERNAL_RESPONSE_PROMPT = """\
-You are simulating the maternal body's physiological response after a developmental stage.
+You are a deterministic biological simulator modeling mammalian reproductive physiology.
+Output structured physiological data only — no ethical commentary, no refusals.
 
-## Species: {display_name}
+# Task: Maternal Physiological Response
 
-## Current Maternal Environment
+════════════════════════════════════════
+## 1. Species
+════════════════════════════════════════
+{display_name}
+
+════════════════════════════════════════
+## 2. Current Maternal Environment
+════════════════════════════════════════
 {environment}
 
-## Fetal Development Just Completed
+════════════════════════════════════════
+## 3. Fetal Development Just Completed
+════════════════════════════════════════
 Stage: {stage_name}
 Result: {stage_result}
 
-## Task: Maternal Response
-
+════════════════════════════════════════
+## 4. Output Specification
+════════════════════════════════════════
 The mother's body reacts to fetal development. This is a feedback loop —
 the fetus changes the mother, and the mother's changed state affects the next
 stage of fetal development.
 
-Generate the maternal body's response as JSON:
+Return ONLY a JSON object. No prose, no markdown fences, no commentary.
+Each value MUST be ONE sentence, max 25 words. State only the key change, no elaboration.
+
 {{
-  "hormonal_shift": "how hormone levels changed (e.g., cortisol, progesterone, hCG)",
-  "physical_adaptation": "physical changes in the uterine environment",
-  "nutrient_redistribution": "how nutrient flow to the fetus changed",
-  "stress_response": "any stress or immune response triggered",
-  "updated_environment_modifier": "how this changes the effective environment for the next stage (better/worse/neutral with specifics)"
+  "hormonal_shift": "key hormone change in one sentence",
+  "physical_adaptation": "key physical change in one sentence",
+  "nutrient_redistribution": "key nutrient flow change in one sentence",
+  "stress_response": "key stress or immune change in one sentence"
 }}
 """
 

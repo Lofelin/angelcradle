@@ -173,11 +173,21 @@ def genotype_to_phenotype(genotype: dict, species: str = "human") -> dict:
     return phenotype
 
 
+# 影响发育和资源分配的性状；其余（如 earwax/dimples/freckles）仅为外观，
+# 记录在 gestation_log 但不注入 prompt 浪费 token
+_DEVELOPMENTAL_TRAITS = {
+    "eye_color", "hair_type", "hair_color", "skin_tone",
+    "height_tendency", "metabolism_type", "blood_type_abo",
+}
+
+
 def format_genetics_for_prompt(genotype: dict, phenotype: dict) -> str:
-    """生成 LLM prompt 注入文本：遗传基因型信息。"""
+    """生成 LLM prompt 注入文本：仅发育相关的遗传基因型信息。"""
     lines = ["## Genetic Inheritance"]
     lines.append("This individual's traits are inherited from parents:")
     for name, (a1, a2) in genotype.items():
+        if name not in _DEVELOPMENTAL_TRAITS:
+            continue
         expressed = phenotype.get(name, "?")
         lines.append(f"- {name}: genotype ({a1}/{a2}) → expressed as {expressed}")
     return "\n".join(lines)

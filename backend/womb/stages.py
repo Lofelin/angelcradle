@@ -1,5 +1,5 @@
 """
-发育阶段编排：7 阶段顺序调用 + 预算执法 + 母体反馈 + 流式输出。
+发育阶段编排：7 阶段顺序调用 + 预算执法 + LLM 母体叙事 + 代码 budget delta + 分层约束注入 + 跨阶段校验 + 流式输出。
 
 集成：动态环境、营养素阶段敏感性、致畸时间窗口、胎盘效率、免疫风险、遗传基因型注入。
 
@@ -15,7 +15,10 @@ import json
 import os
 from pathlib import Path
 
+import logging
 import yaml
+
+logger = logging.getLogger(__name__)
 
 from .llm import _create_client, _call_llm, _parse_json, _get_model
 from .prompts import (
@@ -25,7 +28,7 @@ from .prompts import (
 )
 from .environment import format_environment, environment_impact_text, get_effective_budget
 from .fate import validate_resource_semantics, validate_defect_consistency, roll_stage_miscarriage
-from .dynamic_env import roll_env_change, apply_maternal_feedback
+from .dynamic_env import roll_env_change, apply_maternal_feedback, compute_budget_delta
 from .nutrients import get_stage_nutrient_effects, format_nutrients_for_prompt
 from .teratogen import get_teratogen_risk, format_teratogen_for_prompt
 from .placenta import update_placenta, get_placenta_budget_factor, format_placenta_for_prompt
@@ -99,24 +102,18 @@ def _format_section(blueprint: dict, key: str, title: str) -> str:
 
 
 def _format_blueprint(blueprint: dict) -> str:
-    """Format the complete species blueprint."""
-    section_names = {
+    """Format species blueprint for Zygote stage — only sections relevant to
+    foundational biological structure. Zygote decides body constitution,
+    sensory bias, neural density, and resource allocation; it does not need
+    cognition, ecology, migration history, or evolutionary phylogeny."""
+    zygote_sections = {
         "physical": "Physical Traits",
-        "mental": "Mental Traits",
         "morphology": "Morphology",
         "reproduction": "Reproduction",
-        "reproductive_isolation": "Reproductive Isolation",
-        "genetics": "Genetics",
-        "ecology": "Ecology",
-        "physiology": "Physiology & Biochemistry",
-        "behavior": "Behavior",
-        "distribution": "Geographic Distribution",
         "development": "Development",
-        "evolution": "Evolutionary History",
-        "domestication": "Domestication",
     }
     sections = []
-    for key, title in section_names.items():
+    for key, title in zygote_sections.items():
         s = _format_section(blueprint, key, title)
         if s:
             sections.append(s)
@@ -229,6 +226,223 @@ def _build_env_constraint(env: dict) -> str:
     if "Favorable" in impact:
         return ""
     return f"Environmental constraint: {impact}"
+
+
+# ============================================================
+# 分层约束注入辅助函数
+# ============================================================
+
+def _build_critical_alerts(
+    nutrient_effects: dict, placenta_state: dict,
+    immune_risks: dict, hormones: dict,
+) -> str:
+    """提取异常状态，生成 Critical Alerts 区块（置于 Output Spec 之前）。"""
+    alerts = []
+
+    # 营养素缺乏
+    deficient = nutrient_effects.get("deficient_nutrients", [])
+    if deficient:
+        alerts.append(f"Nutrient deficiency: {', '.join(deficient)} — budget already penalized by code")
+
+    # 胎盘并发症
+    complications = placenta_state.get("complications", [])
+    if complications:
+        eff = placenta_state.get("efficiency", 1.0)
+        alerts.append(f"Placental complication: {', '.join(complications)} (efficiency {eff:.0%})")
+
+    # 免疫风险
+    if immune_risks.get("defect_risk_boost", 1.0) > 1.0:
+        infections = immune_risks.get("active_infections", [])
+        if infections:
+            alerts.append(f"Active immune risk: {', '.join(infections)}")
+
+    # 激素异常
+    cortisol = hormones.get("cortisol", 0)
+    if cortisol > 0.5:
+        alerts.append(f"Elevated cortisol ({cortisol:.2f}) — fetal stress response activated")
+    t4 = hormones.get("thyroid_t4", 0.5)
+    if t4 < 0.3:
+        alerts.append(f"Low thyroid T4 ({t4:.2f}) — neural development constrained")
+
+    if not alerts:
+        return ""
+
+    lines = ["## ⚠ Critical Constraints (code-enforced, already reflected in budget)"]
+    for a in alerts:
+        lines.append(f"- {a}")
+    lines.append("Your output MUST reflect these constraints in biological narrative.")
+    return "\n".join(lines)
+
+
+def _build_reference_status(
+    nutrients: dict, stage_name: str,
+    placenta_state: dict, immunity: dict,
+    hormones: dict, stage_idx: int,
+    methylation: dict = None, env: dict = None,
+) -> str:
+    """生成 Reference Status 区块（正常范围数据，置于 prompt 末尾）。"""
+    sections = []
+
+    # 营养素
+    nutrients_text = format_nutrients_for_prompt(nutrients, stage_name)
+    if nutrients_text:
+        sections.append(nutrients_text)
+
+    # 胎盘
+    placenta_text = format_placenta_for_prompt(placenta_state, stage_name)
+    if placenta_text:
+        sections.append(placenta_text)
+
+    # 免疫
+    immunity_text = format_immunity_for_prompt(immunity, stage_name)
+    if immunity_text:
+        sections.append(immunity_text)
+
+    # 激素
+    hormones_text = format_hormones_for_prompt(hormones, stage_name)
+    if hormones_text:
+        sections.append(hormones_text)
+
+    # 表观遗传（仅 zygote）
+    if stage_idx == 0 and methylation:
+        epi_text = format_epigenetics_for_prompt(methylation, env or {})
+        if epi_text:
+            sections.append(epi_text)
+
+    if not sections:
+        return ""
+
+    return "\n\n".join(sections)
+
+
+# ============================================================
+# 跨阶段一致性校验
+# ============================================================
+
+def _rule_maternal_response(stage_name: str, env: dict) -> dict:
+    """规则引擎替代 LLM 母体反馈（fast/turbo 模式）。
+
+    不产出叙事文本，只产出结构化数据。budget 调整仍由 compute_budget_delta 独立计算。
+    """
+    stress = env.get("stress_level", 0.3)
+    nutrition = env.get("nutrition_access", 0.7)
+    placenta = env.get("placenta", {}).get("efficiency", 0.9)
+
+    if stress > 0.6:
+        hormonal = "elevated cortisol, reduced progesterone"
+        physical = "increased uterine tension, reduced blood flow"
+        stress_resp = "fight-or-flight activated, fetal exposure elevated"
+    elif stress > 0.3:
+        hormonal = "mildly elevated cortisol"
+        physical = "normal progression with occasional tension"
+        stress_resp = "managed but present"
+    else:
+        hormonal = "stable hormonal balance"
+        physical = "normal uterine environment"
+        stress_resp = "well-managed, minimal fetal exposure"
+
+    if nutrition < 0.4:
+        nutrient = "compromised — deficiencies affecting fetal supply"
+    elif nutrition < 0.7:
+        nutrient = "adequate with minor gaps"
+    else:
+        nutrient = "well-supplied, optimal distribution"
+
+    return {
+        "hormonal_shift": hormonal,
+        "physical_adaptation": physical,
+        "nutrient_redistribution": nutrient,
+        "stress_response": stress_resp,
+    }
+
+
+def _get_maternal_response(
+    species: str, stage_name: str, stage_result: str,
+    environment: dict, client, model: str, provider: str,
+) -> dict:
+    """LLM 生成母体反馈叙事（保留个体差异）。budget 调整由 compute_budget_delta 独立计算。"""
+    blueprint = _load_blueprint(species)
+    display_name = blueprint.get("display_name", species)
+    env_text = format_environment(environment) if environment else "Not specified"
+
+    prompt = MATERNAL_RESPONSE_PROMPT.format(
+        display_name=display_name,
+        environment=env_text,
+        stage_name=stage_name,
+        stage_result=stage_result,
+    )
+
+    try:
+        raw = _call_llm(prompt, client, model, provider)
+        return _parse_json(raw)
+    except Exception as e:
+        import logging
+        logging.getLogger("womb").warning("母体反馈 LLM 调用失败 (%s): %s", stage_name, e)
+        return {
+            "hormonal_shift": "maternal response unavailable",
+            "physical_adaptation": "maternal response unavailable",
+            "nutrient_redistribution": "maternal response unavailable",
+            "stress_response": "maternal response unavailable",
+        }
+
+
+def _validate_cross_stage(stage_name: str, parsed: dict, stage_results: list[str]) -> dict:
+    """
+    跨阶段一致性校验：检查当前输出是否与前阶段一致。
+    不重试 LLM——只在 parsed 中添加 _consistency_warnings 字段。
+    """
+    import logging
+    logger = logging.getLogger("womb")
+    warnings = []
+
+    if not isinstance(parsed, dict):
+        return parsed
+
+    # Late Organogenesis: primary_sense 应与 Early Organogenesis 的 top sensory resource 一致
+    if stage_name == "late_organogenesis" and len(stage_results) >= 2:
+        try:
+            early_org = _parse_json(stage_results[1])
+            if isinstance(early_org, dict):
+                precursors = early_org.get("sensory_precursors", "")
+                primary = parsed.get("primary_sense", "").lower()
+                # 启发式检查：early_org 的 top precursor 是否出现在 late 的 primary_sense 中
+                if precursors and primary:
+                    for sense in ("visual", "auditory", "tactile", "olfactory"):
+                        if sense in precursors.lower()[:50] and sense not in primary[:50]:
+                            warnings.append(
+                                f"primary_sense '{primary[:30]}...' may not match "
+                                f"early organogenesis top precursor (starts with '{precursors[:30]}...')"
+                            )
+                            break
+        except Exception:
+            pass
+
+    # Late Neural: myelination 应与 Early Neural 的 synapse density 一致
+    if stage_name == "late_neural" and len(stage_results) >= 4:
+        try:
+            early_neural = _parse_json(stage_results[3])
+            if isinstance(early_neural, dict):
+                synapses = early_neural.get("synapse_density_pattern", "").lower()
+                myelin = parsed.get("myelination_priority", "").lower()
+                if synapses and myelin:
+                    # 检查 synapse 的 "highest density" 区域是否出现在 myelination 中
+                    for sense in ("visual", "auditory", "tactile", "somatosensory", "motor"):
+                        if "highest" in synapses and sense in synapses.split("highest")[0][-50:]:
+                            if sense not in myelin[:80]:
+                                warnings.append(
+                                    f"myelination_priority may not match early neural "
+                                    f"highest synapse density area (expected '{sense}')"
+                                )
+                            break
+        except Exception:
+            pass
+
+    if warnings:
+        parsed["_consistency_warnings"] = warnings
+        for w in warnings:
+            logger.warning("跨阶段一致性: %s — %s", stage_name, w)
+
+    return parsed
 
 
 # ============================================================
@@ -373,13 +587,18 @@ def build_stage_prompts(
     prompts.append(("fetal_movement", p, b))
     if len(stage_results) < 6: return prompts
 
-    # Stage 7: Birth
+    # Stage 7: Birth — 只注入 race/breed 摘要，详细基因型已被前 4 阶段消化
     cry = blueprint["womb"]["cry"]
+    birth_summary = ""
+    for f in ("race", "breed"):
+        if f in phenotype:
+            label = {"race": "Race", "breed": "Breed"}[f]
+            birth_summary += f"- {label}: {phenotype[f]}\n"
     p = STAGE_5_BIRTH.format(
         display_name=display_name,
         stage1_result=stage_results[0], stage2_result=stage_results[2],
         stage3_result=stage_results[4], stage4_result=stage_results[5],
-        sex_display=sex_display, phenotype_display=phenotype_display,
+        sex_display=sex_display, phenotype_summary=birth_summary.rstrip(),
         environment=env_text,
         complications_summary=_format_complications(defects, preterm),
         cry=cry,
@@ -387,36 +606,6 @@ def build_stage_prompts(
     prompts.append(("birth", p, RESOURCE_BUDGET["birth"]))
 
     return prompts
-
-
-# ============================================================
-# Maternal response
-# ============================================================
-
-def _get_maternal_response(
-    species: str, stage_name: str, stage_result: str,
-    environment: dict, client, model: str, provider: str,
-) -> dict:
-    """
-    Generate maternal body's response to fetal development.
-    This is the feedback loop: fetus → mother → next stage.
-    """
-    blueprint = _load_blueprint(species)
-    display_name = blueprint.get("display_name", species)
-    env_text = format_environment(environment) if environment else "Not specified"
-
-    prompt = MATERNAL_RESPONSE_PROMPT.format(
-        display_name=display_name,
-        environment=env_text,
-        stage_name=stage_name,
-        stage_result=stage_result,
-    )
-
-    try:
-        raw = _call_llm(prompt, client, model, provider)
-        return _parse_json(raw)
-    except Exception:
-        return {"updated_environment_modifier": "neutral — maternal response unknown"}
 
 
 # ============================================================
@@ -456,10 +645,13 @@ def express(
         stage_name = STAGE_NAMES[i]
         duration = _get_stage_duration(species, stage_name, env)
 
-        # --- 动态环境：阶段间概率触发变化 ---
+        # --- 动态环境（概率按速率调整）---
         env_event = None
         if i > 0:
-            env, env_event = roll_env_change(env, probability=0.20)
+            from config import get_time_scale as _gts
+            _env_prob = {"slow": 0.20, "normal": 0.20, "fast": 0.10, "turbo": 0.0}.get(_gts(), 0.20)
+            if _env_prob > 0:
+                env, env_event = roll_env_change(env, probability=_env_prob)
 
         # --- 胎盘更新 ---
         placenta_state = env.get("placenta", {})
@@ -526,46 +718,86 @@ def express(
         if hormone_effects["budget_penalty"] > 0:
             budget = max(1, round(budget * (1.0 - hormone_effects["budget_penalty"])))
 
-        # 注入营养素、致畸、胎盘、免疫、激素、表观遗传信息到 prompt
-        nutrients_text = format_nutrients_for_prompt(env.get("nutrients", {}), stage_name)
-        if nutrients_text:
-            prompt += "\n\n" + nutrients_text
+        # 分层约束注入：Critical Alerts 在 Output Spec 之前
+        critical = _build_critical_alerts(nutrient_effects, placenta_state, immune_risks, hormones)
+        if critical:
+            # 在 "Return ONLY" 之前插入 critical alerts
+            return_idx = prompt.rfind("Return ONLY")
+            if return_idx > 0:
+                # 找到 Return ONLY 前面的 Note: 行，在 Note 之前插入
+                note_idx = prompt.rfind("Note: Budget above", 0, return_idx)
+                insert_idx = note_idx if note_idx > 0 else return_idx
+                prompt = prompt[:insert_idx] + critical + "\n\n" + prompt[insert_idx:]
+
+        # 致畸信息（仍然平铺，因为致畸本身就是 critical）
         teratogen_text = format_teratogen_for_prompt(env.get("toxin_types", []), stage_name)
         if teratogen_text:
             prompt += "\n\n" + teratogen_text
-        placenta_text = format_placenta_for_prompt(placenta_state, stage_name)
-        if placenta_text:
-            prompt += "\n\n" + placenta_text
-        immunity_text = format_immunity_for_prompt(env.get("immunity", {}), stage_name)
-        if immunity_text:
-            prompt += "\n\n" + immunity_text
-        hormones_text = format_hormones_for_prompt(hormones, stage_name)
-        if hormones_text:
-            prompt += "\n\n" + hormones_text
-        # 表观遗传（仅 zygote 阶段注入，后续阶段已在基因型中体现）
+
+        # Reference Status（正常范围数据，置于末尾）
         methylation = phenotype.get("_methylation_profile", {})
-        if i == 0 and methylation:
-            epi_text = format_epigenetics_for_prompt(methylation, env)
-            if epi_text:
-                prompt += "\n\n" + epi_text
+        ref_status = _build_reference_status(
+            env.get("nutrients", {}), stage_name,
+            placenta_state, env.get("immunity", {}),
+            hormones, i, methylation if i == 0 else None, env,
+        )
+        if ref_status:
+            prompt += "\n\n" + ref_status
 
-        # 注入累积母体反馈
+        # 母体反馈文本注入
         if maternal_states:
-            prompt += "\n\n## Accumulated Maternal Feedback\n"
-            for ms in maternal_states[-2:]:
-                prompt += json.dumps(ms, ensure_ascii=False, indent=2) + "\n"
+            prompt += "\n\n## Latest Maternal Feedback\n"
+            prompt += json.dumps(maternal_states[-1], ensure_ascii=False, indent=2) + "\n"
 
-        try:
-            raw = _call_llm(prompt, client, model, provider)
-        except Exception as e:
-            raise RuntimeError(f"Stage {i+1} ({stage_name}) LLM call failed: {e}") from e
+        # 规则引擎：按速率决定是否跳过 LLM
+        from config import get_time_scale as _gts_sync
+        _RULE_STAGES_SYNC: dict[str, set[str]] = {
+            "slow":   set(),
+            "normal": set(),
+            "fast":   {"zygote", "early_organogenesis", "birth"},
+            "turbo":  {"zygote", "early_organogenesis", "early_neural", "fetal_movement", "birth"},
+        }
+        _use_rule = stage_name in _RULE_STAGES_SYNC.get(_gts_sync(), set())
 
-        stage_results.append(raw)
-
-        try:
-            parsed = _parse_json(raw)
-        except (json.JSONDecodeError, IndexError):
-            parsed = raw
+        if _use_rule:
+            from .rule_engine import (
+                rule_zygote, rule_early_organogenesis,
+                rule_early_neural, rule_fetal_movement, rule_birth,
+            )
+            if stage_name == "zygote":
+                parsed = rule_zygote(budget, env, genotype or {})
+            elif stage_name == "early_organogenesis":
+                prev_resp = _parse_json(stage_results[-1]) if stage_results else {}
+                if not isinstance(prev_resp, dict):
+                    prev_resp = {}
+                parsed = rule_early_organogenesis(budget, prev_resp, env)
+            elif stage_name == "early_neural":
+                parsed = rule_early_neural(budget, stage_results, env, defects or [])
+            elif stage_name == "fetal_movement":
+                _arousal = "moderate"
+                for sr in stage_results:
+                    try:
+                        _p = _parse_json(sr) if isinstance(sr, str) else sr
+                        if isinstance(_p, dict) and "arousal_baseline" in _p:
+                            _arousal = _p["arousal_baseline"]
+                    except Exception:
+                        pass
+                parsed = rule_fetal_movement(budget, stage_results, env, _arousal)
+            elif stage_name == "birth":
+                parsed = rule_birth(stage_results, genotype or {})
+            raw = json.dumps(parsed, ensure_ascii=False)
+            stage_results.append(raw)
+            logger.info("规则引擎(sync): stage=%s, time_scale=%s", stage_name, _gts_sync())
+        else:
+            try:
+                raw = _call_llm(prompt, client, model, provider)
+            except Exception as e:
+                raise RuntimeError(f"Stage {i+1} ({stage_name}) LLM call failed: {e}") from e
+            stage_results.append(raw)
+            try:
+                parsed = _parse_json(raw)
+            except (json.JSONDecodeError, IndexError):
+                parsed = raw
 
         # 代码层执法
         if isinstance(parsed, dict):
@@ -573,6 +805,8 @@ def express(
                 parsed = _enforce_budget(parsed, budget)
                 parsed = validate_resource_semantics(parsed, budget)
             parsed = validate_defect_consistency(parsed, defects or [])
+            if not _use_rule:
+                parsed = _validate_cross_stage(stage_name, parsed, stage_results)
 
         gestation_day += duration
         gestation_log.append({
@@ -592,15 +826,29 @@ def express(
             "vitals": vitals,
         })
 
-        # 母体反馈——出生阶段跳过
+        # 母体反馈——出生阶段跳过；按速率分级决定 LLM 还是规则
         if i < 6:
-            maternal_response = _get_maternal_response(
-                species, stage_name, raw, env, client, model, provider,
-            )
+            from config import get_time_scale as _gts
+            _ts_sync = _gts()
+            _MATERNAL_RULE_SYNC: dict[str, set[str]] = {
+                "slow":   set(),
+                "normal": set(),
+                "fast":   {"early_organogenesis", "early_neural", "fetal_movement"},
+                "turbo":  {"zygote", "early_organogenesis", "early_neural",
+                           "late_organogenesis", "late_neural", "fetal_movement"},
+            }
+            if stage_name in _MATERNAL_RULE_SYNC.get(_ts_sync, set()):
+                maternal_response = _rule_maternal_response(stage_name, env)
+            else:
+                maternal_response = _get_maternal_response(
+                    species, stage_name, raw, env, client, model, provider,
+                )
             maternal_states.append(maternal_response)
 
-            # --- 母体反馈数值化：真正修改 budget_multiplier ---
-            env, feedback_record = apply_maternal_feedback(env, maternal_response)
+            budget_delta = compute_budget_delta(
+                hormones, placenta_state, nutrient_effects, immune_risks, env,
+            )
+            env, feedback_record = apply_maternal_feedback(env, budget_delta)
             if feedback_record:
                 gestation_log[-1]["feedback_applied"] = feedback_record
 
@@ -644,10 +892,13 @@ def express_stream(
         duration = _get_stage_duration(species, stage_name, env)
         gestation_day += duration
 
-        # --- 动态环境 ---
+        # --- 动态环境（概率按速率调整）---
         env_event = None
         if i > 0:
-            env, env_event = roll_env_change(env, probability=0.20)
+            from config import get_time_scale as _gts
+            _env_prob = {"slow": 0.20, "normal": 0.20, "fast": 0.10, "turbo": 0.0}.get(_gts(), 0.20)
+            if _env_prob > 0:
+                env, env_event = roll_env_change(env, probability=_env_prob)
             if env_event:
                 yield {"stage": stage_name, "status": "env_change", "stage_num": i + 1, "event": env_event}
 
@@ -746,83 +997,136 @@ def express_stream(
         if hormone_effects["budget_penalty"] > 0:
             budget = max(1, round(budget * (1.0 - hormone_effects["budget_penalty"])))
 
-        # 注入营养素、致畸、胎盘、免疫、激素信息
-        nutrients_text = format_nutrients_for_prompt(env.get("nutrients", {}), stage_name)
-        if nutrients_text:
-            prompt += "\n\n" + nutrients_text
+        # 分层约束注入：Critical Alerts 在 Output Spec 之前
+        critical = _build_critical_alerts(nutrient_effects, placenta_state, immune_risks, hormones)
+        if critical:
+            # 在 "Return ONLY" 之前插入 critical alerts
+            return_idx = prompt.rfind("Return ONLY")
+            if return_idx > 0:
+                note_idx = prompt.rfind("Note: Budget above", 0, return_idx)
+                insert_idx = note_idx if note_idx > 0 else return_idx
+                prompt = prompt[:insert_idx] + critical + "\n\n" + prompt[insert_idx:]
+
+        # 致畸信息（仍然平铺，因为致畸本身就是 critical）
         teratogen_text = format_teratogen_for_prompt(env.get("toxin_types", []), stage_name)
         if teratogen_text:
             prompt += "\n\n" + teratogen_text
-        placenta_text = format_placenta_for_prompt(placenta_state, stage_name)
-        if placenta_text:
-            prompt += "\n\n" + placenta_text
-        immunity_text = format_immunity_for_prompt(env.get("immunity", {}), stage_name)
-        if immunity_text:
-            prompt += "\n\n" + immunity_text
-        hormones_text = format_hormones_for_prompt(hormones, stage_name)
-        if hormones_text:
-            prompt += "\n\n" + hormones_text
-        # 表观遗传（仅 zygote）
+
+        # Reference Status（正常范围数据，置于末尾）
         methylation = phenotype.get("_methylation_profile", {})
-        if i == 0 and methylation:
-            epi_text = format_epigenetics_for_prompt(methylation, env)
-            if epi_text:
-                prompt += "\n\n" + epi_text
+        ref_status = _build_reference_status(
+            env.get("nutrients", {}), stage_name,
+            placenta_state, env.get("immunity", {}),
+            hormones, i, methylation if i == 0 else None, env,
+        )
+        if ref_status:
+            prompt += "\n\n" + ref_status
 
+        # 母体反馈文本注入
         if maternal_states:
-            prompt += "\n\n## Accumulated Maternal Feedback\n"
-            for ms in maternal_states[-2:]:
-                prompt += json.dumps(ms, ensure_ascii=False, indent=2) + "\n"
+            prompt += "\n\n## Latest Maternal Feedback\n"
+            prompt += json.dumps(maternal_states[-1], ensure_ascii=False, indent=2) + "\n"
 
-        # LLM 调用放到线程，主线程每秒 yield 进度心跳；失败时指数退避重试，
-        # 仅在全部重试都失败后才终止 gestation。
-        from concurrent.futures import ThreadPoolExecutor
-        import time as _time
+        # ── 子宫规则引擎：按��率决定哪些阶段用规则替代 LLM ──
+        #   slow/normal：全部 LLM（完整体验）
+        #   fast：跳过 3 个纯资源分配/叙事阶段（Stage 1, 2A, 5）
+        #   turbo：跳过 5 个非关键阶段，仅保留 2B + 3B 的 LLM
+        from config import get_time_scale as _gts_stage
+        _RULE_STAGES_BY_SPEED: dict[str, set[str]] = {
+            "slow":   set(),
+            "normal": set(),
+            "fast":   {"zygote", "early_organogenesis", "birth"},
+            "turbo":  {"zygote", "early_organogenesis", "early_neural", "fetal_movement", "birth"},
+        }
+        _use_rule_engine = stage_name in _RULE_STAGES_BY_SPEED.get(_gts_stage(), set())
 
-        raw = None
-        _last_error: Exception | None = None
-        _max_attempts = 3
-        for _attempt in range(1, _max_attempts + 1):
-            _executor = ThreadPoolExecutor(max_workers=1)
-            _future = _executor.submit(_call_llm, prompt, client, model, provider)
-            _elapsed = 0
-            try:
-                while not _future.done():
-                    _time.sleep(1)
-                    _elapsed += 1
-                    yield {
-                        "stage": stage_name, "status": "thinking",
-                        "stage_num": i + 1, "elapsed": _elapsed,
-                        "attempt": _attempt,
-                    }
-                raw = _future.result()
-                _last_error = None
-                break
-            except Exception as e:
-                _last_error = e
-                yield {
-                    "stage": stage_name, "status": "retrying",
-                    "stage_num": i + 1, "attempt": _attempt,
-                    "max_attempts": _max_attempts, "error": str(e),
-                }
-            finally:
-                _executor.shutdown(wait=False)
-            if _attempt < _max_attempts:
-                _time.sleep(2 ** (_attempt - 1))  # 1s, 2s 指数退避
+        if _use_rule_engine:
+            from .rule_engine import (
+                rule_zygote, rule_early_organogenesis,
+                rule_early_neural, rule_fetal_movement, rule_birth,
+            )
+            if stage_name == "zygote":
+                parsed = rule_zygote(budget, env, genotype or {})
+            elif stage_name == "early_organogenesis":
+                prev_resp = _parse_json(stage_results[-1]) if stage_results else {}
+                if not isinstance(prev_resp, dict):
+                    prev_resp = {}
+                parsed = rule_early_organogenesis(budget, prev_resp, env)
+            elif stage_name == "early_neural":
+                parsed = rule_early_neural(budget, stage_results, env, defects or [])
+            elif stage_name == "fetal_movement":
+                # 从 late_neural 结果提取 arousal_baseline
+                _arousal = "moderate"
+                for sr in stage_results:
+                    try:
+                        _p = _parse_json(sr) if isinstance(sr, str) else sr
+                        if isinstance(_p, dict) and "arousal_baseline" in _p:
+                            _arousal = _p["arousal_baseline"]
+                    except Exception:
+                        pass
+                parsed = rule_fetal_movement(budget, stage_results, env, _arousal)
+            elif stage_name == "birth":
+                parsed = rule_birth(stage_results, genotype or {})
 
-        if _last_error is not None or raw is None:
+            raw = json.dumps(parsed, ensure_ascii=False)
+            stage_results.append(raw)
+            logger.info("规则引擎: stage=%s, time_scale=%s (跳过 LLM)", stage_name, _gts_stage())
             yield {
-                "stage": stage_name, "status": "failed",
-                "error": f"LLM failed after {_max_attempts} attempts: {_last_error}",
+                "stage": stage_name, "status": "rule_engine",
+                "stage_num": i + 1,
             }
-            return
+        else:
+            # LLM 调用放到线程，主线程每秒 yield 进度心跳；失败时指数退避重试，
+            # 仅在全部重试都失败后才终止 gestation。
+            from concurrent.futures import ThreadPoolExecutor
+            import time as _time
 
-        stage_results.append(raw)
+            raw = None
+            _last_error: Exception | None = None
+            _max_attempts = 3
+            for _attempt in range(1, _max_attempts + 1):
+                _executor = ThreadPoolExecutor(max_workers=1)
+                _future = _executor.submit(_call_llm, prompt, client, model, provider)
+                _elapsed = 0
+                try:
+                    while not _future.done():
+                        _time.sleep(1)
+                        _elapsed += 1
+                        yield {
+                            "stage": stage_name, "status": "thinking",
+                            "stage_num": i + 1, "elapsed": _elapsed,
+                            "attempt": _attempt,
+                        }
+                    raw = _future.result()
+                    _last_error = None
+                    break
+                except Exception as e:
+                    _last_error = e
+                    yield {
+                        "stage": stage_name, "status": "retrying",
+                        "stage_num": i + 1, "attempt": _attempt,
+                        "max_attempts": _max_attempts, "error": str(e),
+                    }
+                finally:
+                    _executor.shutdown(wait=False)
+                if _attempt < _max_attempts:
+                    _time.sleep(2 ** (_attempt - 1))  # 1s, 2s 指数退避
 
-        try:
-            parsed = _parse_json(raw)
-        except (json.JSONDecodeError, IndexError):
-            parsed = raw
+            if _last_error is not None or raw is None:
+                yield {
+                    "stage": stage_name, "status": "failed",
+                    "error": f"LLM failed after {_max_attempts} attempts: {_last_error}",
+                }
+                return
+
+            stage_results.append(raw)
+
+        # 规则引擎已经产出 dict，跳过 JSON 解析
+        if not _use_rule_engine:
+            try:
+                parsed = _parse_json(raw)
+            except (json.JSONDecodeError, IndexError):
+                parsed = raw
 
         budget_enforced = False
         if isinstance(parsed, dict):
@@ -831,6 +1135,8 @@ def express_stream(
                 parsed = validate_resource_semantics(parsed, budget)
                 budget_enforced = parsed.get("budget_enforced", False)
             parsed = validate_defect_consistency(parsed, defects or [])
+            if not _use_rule_engine:
+                parsed = _validate_cross_stage(stage_name, parsed, stage_results)
 
         gestation_log.append({
             "stage": stage_name,
@@ -856,26 +1162,54 @@ def express_stream(
             "budget_enforced": budget_enforced,
         }
 
+        # 母体反馈——fast/turbo 用规则引擎替代 LLM（省 6 次 LLM 调用）
         if i < 6:
-            yield {"stage": stage_name, "status": "maternal_response", "stage_num": i + 1}
-            _executor2 = ThreadPoolExecutor(max_workers=1)
-            _future2 = _executor2.submit(
-                _get_maternal_response, species, stage_name, raw, env, client, model, provider,
-            )
-            _elapsed2 = 0
-            while not _future2.done():
-                _time.sleep(1)
-                _elapsed2 += 1
+            from config import get_time_scale as _gts
+            _ts = _gts()
+            logger.info("母体反馈决策: stage=%s, time_scale=%s", stage_name, _ts)
+            # 母体反馈按速率分级：
+            #   slow/normal: 全部 6 次 LLM
+            #   fast: 3 LLM (zygote + late_org + late_neural) + 3 规则
+            #   turbo: 全部 6 次规则
+            _MATERNAL_RULE_STAGES: dict[str, set[str]] = {
+                "slow":   set(),
+                "normal": set(),
+                "fast":   {"early_organogenesis", "early_neural", "fetal_movement"},
+                "turbo":  {"zygote", "early_organogenesis", "early_neural",
+                           "late_organogenesis", "late_neural", "fetal_movement"},
+            }
+            _maternal_use_rule = stage_name in _MATERNAL_RULE_STAGES.get(_ts, set())
+
+            if _maternal_use_rule:
+                maternal_response = _rule_maternal_response(stage_name, env)
+                logger.info("母体反馈走规则引擎: stage=%s, time_scale=%s", stage_name, _ts)
                 yield {
-                    "stage": stage_name, "status": "maternal_thinking",
-                    "stage_num": i + 1, "elapsed": _elapsed2,
+                    "stage": stage_name, "status": "maternal_response_rule",
+                    "stage_num": i + 1,
                 }
-            maternal_response = _future2.result()
-            _executor2.shutdown(wait=False)
+            else:
+                yield {"stage": stage_name, "status": "maternal_response", "stage_num": i + 1}
+                _executor2 = ThreadPoolExecutor(max_workers=1)
+                _future2 = _executor2.submit(
+                    _get_maternal_response, species, stage_name, raw, env, client, model, provider,
+                )
+                _elapsed2 = 0
+                while not _future2.done():
+                    _time.sleep(1)
+                    _elapsed2 += 1
+                    yield {
+                        "stage": stage_name, "status": "maternal_thinking",
+                        "stage_num": i + 1, "elapsed": _elapsed2,
+                    }
+                maternal_response = _future2.result()
+                _executor2.shutdown(wait=False)
             maternal_states.append(maternal_response)
 
-            # --- 母体反馈数值化 ---
-            env, feedback_record = apply_maternal_feedback(env, maternal_response)
+            # budget delta 由代码从子系统数值确定性计算
+            budget_delta = compute_budget_delta(
+                hormones, placenta_state, nutrient_effects, immune_risks, env,
+            )
+            env, feedback_record = apply_maternal_feedback(env, budget_delta)
             yield {
                 "stage": stage_name, "status": "maternal_response_done",
                 "stage_num": i + 1, "maternal_response": maternal_response,

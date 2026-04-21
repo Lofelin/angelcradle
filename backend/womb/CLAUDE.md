@@ -9,8 +9,8 @@ __init__.py: 入口，导出 conceive()，编排遗传→表观遗传→环境�
 baby.py: Baby/ConceptionResult 数据模型，ID 生成，性别/表型决定
 environment.py: 母体环境生成 + 量化修正系数（budget/defect_risk/miscarriage_risk）
 fate.py: 命运引擎——流产/多胎/死产/缺陷掷骰，基于 WHO/CDC 真实概率
-stages.py: 7 阶段发育编排——prompt 构建 + 预算执法 + 母体反馈 + SSE 流
-prompts.py: 7 阶段 prompt 模板 + 母体反馈 prompt
+stages.py: 7 阶段发育编排——prompt 构建 + 预算执法 + 确定性母体反馈 + 分层约束注入 + 跨阶段校验 + SSE 流
+prompts.py: 7 阶段 prompt 模板（含跨阶段一致性约束和代码惩罚提示）
 genetics.py: 向后兼容薄层，re-export stages.py 和 llm.py 的接口
 llm.py: 向后兼容层，re-export 根级 llm.py 的 LLM 客户端接口
 
@@ -22,7 +22,7 @@ birthplace.py: 出生地系统——地区数据加载/人口加权掷骰/环境
 
 nutrients.py: 5 种营养素（folate/iodine/iron/dha/calcium）+ 阶段敏感性 + 风险聚合
 teratogen.py: 6 种致畸毒素 × 7 阶段风险矩阵 + 风险聚合
-dynamic_env.py: 阶段间动态环境变化（概率触发）+ 母体反馈数值化
+dynamic_env.py: 阶段间动态环境变化（概率触发）+ 确定性母体反馈计算 + budget delta 应用
 heredity.py: 简化孟德尔遗传——10 个性状的显隐性/不完全显性/共显性
 epigenetics.py: 甲基化噪声模型——同基因个体产生可追溯差异（Barker 假说/叶酸甲基供体）
 placenta.py: 胎盘效率曲线 + 并发症 + budget 乘数
@@ -64,7 +64,8 @@ conceive()
        ├── 每阶段: compute_vitals (心率/体重/身长/羊水/胎动/血压/血氧)
        ├── build_stage_prompts (含遗传/表观遗传/营养/致畸/胎盘/免疫/激素注入)
        ├── _call_llm → _enforce_budget → validate_*
-       └── apply_maternal_feedback → 下一阶段
+       ├── compute_maternal_response → 确定性母体反馈（替代 LLM 调用）
+       └── apply_maternal_feedback(budget_delta) → 下一阶段
 ```
 
 ## SSE 流事件（前端可消费）
