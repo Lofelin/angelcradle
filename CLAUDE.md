@@ -4,7 +4,7 @@ AI 孵化的数字生命模拟：物种蓝图孕育 → 12 阶段成长 → 进�
 Python FastAPI + React + Vite + D3 + LLM 编排
 
 <directory>
-backend/ - 后端引擎（api / womb / cradle / scheduler / lifegraph / events / world / memory）
+backend/ - 后端引擎（api / womb / cradle / scheduler / events / world / memory / llm / portrait / scenes）
 frontend/ - React 观察界面（力导向图谱 + SSE lifeline + 对话系统）
 specs/ - 设计文档（causal-graph-engine / autonomous-life / baby-initiative 等）
 openspec/ - OpenSpec 变更管理

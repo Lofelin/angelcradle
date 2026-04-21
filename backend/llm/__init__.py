@@ -5,8 +5,8 @@ LLM 客户端抽象层：provider 配置、调用、JSON 解析。
 
 [INPUT]: 环境变量 DEEPSEEK_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY / LLM_PROVIDER
          可选覆盖 base_url: DEEPSEEK_BASE_URL / FSAPI_BASE_URL / GEMINI_BASE_URL
-[OUTPUT]: 导出 PROVIDERS, create_client, call_llm, parse_json, get_model
-[POS]: 项目根级 LLM 基础设施
+[OUTPUT]: 导出 PROVIDERS, create_client, call_llm, parse_json, get_model；子模块 llm.log.persist_llm_call
+[POS]: 顶级包（llm/），llm.log 为调用日志子模块；被 womb/ 和 cradle/ 共同消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
@@ -199,7 +199,7 @@ def call_llm(
         raise RuntimeError(f"LLM returned empty response (provider={provider}, model={model})")
 
     if metadata:
-        from llm_log import persist_llm_call
+        from llm.log import persist_llm_call
         persist_llm_call(metadata, prompt, text, provider, model, elapsed, usage)
 
     return text
@@ -254,7 +254,7 @@ def call_llm_chat(
         raise RuntimeError(f"LLM returned empty response (provider={provider}, model={model})")
 
     if metadata:
-        from llm_log import persist_llm_call
+        from llm.log import persist_llm_call
         prompt_data = {"system": system, "messages": messages}
         persist_llm_call(metadata, prompt_data, text, provider, model, elapsed, usage)
 

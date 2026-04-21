@@ -4,10 +4,10 @@ LLM 调用持��化日志。
 每次 LLM 请求的完整 prompt 和 response 以 JSONL 格式追加写入
 archive/{baby_id}/llm_calls.jsonl，供调试和回溯。
 
-[INPUT]: 由 llm.py 的 call_llm / call_llm_chat 在调用末尾触发
+[INPUT]: 由 llm/__init__.py 的 call_llm / call_llm_chat 在调用末尾触发
 [OUTPUT]: persist_llm_call()
-[POS]: 顶级模块，与 llm.py 同级
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+[POS]: llm/ 包的日志子模块
+[PROTOCOL]: 变更时更新此头部，然后检查 llm/__init__.py
 """
 
 from __future__ import annotations
