@@ -1,0 +1,445 @@
+{
+  "meta": {
+    "schema_version": "5.0",
+    "stage": "cradle",
+    "baby_id": "AC-20260420-V5",
+    "design_ref": "addendum_v5.0.md",
+    "center_anchor": "self",
+    "anchor_label_in_this_stage": "婴儿",
+
+    "life_continuant_registry": {
+      "identity_thread": "UUID-ac20260420v5",
+      "note": "与子宫同一 UUID；12 个 continuant 跨阶段共享 ID"
+    },
+
+    "narrative_layers": {
+      "primary": "育儿手册语言（默认 90% 用户）",
+      "scientific_liner": "发展心理学里衬卡（E3 建议：每节点挂科学解释，默认折叠）"
+    },
+
+    "cultural_lenses_available": ["western_default", "east_asian"],
+    "active_lens": "east_asian",
+    "cultural_notes": {
+      "ainsworth_downgrade": "依恋分类为描述性而非诊断标签（E9 WEIRD 修正）",
+      "sleep_no_judgment": "共睡/独睡不做价值判断",
+      "multi_caregiver_friendly": "四世同堂不算依恋紊乱"
+    },
+
+    "months": [
+      {"id": "m1", "key": "neonate",       "cn": "0-3月 新生儿",     "range": [0, 3]},
+      {"id": "m2", "key": "smiler",        "cn": "4-6月 社交笑期",   "range": [4, 6]},
+      {"id": "m3", "key": "crawler",       "cn": "7-9月 翻身爬行",   "range": [7, 9]},
+      {"id": "m4", "key": "walker",        "cn": "10-12月 学步",     "range": [10, 12]},
+      {"id": "m5", "key": "toddler",       "cn": "13-18月 幼儿",     "range": [13, 18]},
+      {"id": "m6", "key": "talker",        "cn": "19-24月 词汇爆发", "range": [19, 24]},
+      {"id": "m7", "key": "little_person", "cn": "25-36月 三岁立",   "range": [25, 36]}
+    ],
+
+    "transitional_zones": [
+      {"name": "围产过渡", "window": "38w - 产后 2 周", "from": "womb",  "narrative": "从妈妈肚子里到妈妈怀里"},
+      {"name": "学步过渡", "window": "2.5 - 3.5 岁",   "to":   "world", "narrative": "从家庭到世界，过渡带双视角并存"}
+    ],
+
+    "groups": [
+      {"id": "self",         "cn": "婴儿",      "color": "#111827", "radius": 30, "role": "anchor"},
+      {"id": "milestones",   "cn": "里程碑",    "color": "#ef4444", "radius": 22, "tagline": "朋友圈级发育时刻"},
+      {"id": "attachment",   "cn": "亲子依恋",  "color": "#ec4899", "radius": 22, "tagline": "安全感怎么建立"},
+      {"id": "temperament",  "cn": "性格气质",  "color": "#f59e0b", "radius": 22, "tagline": "孩子好不好带"},
+      {"id": "daily_life",   "cn": "吃睡拉",    "color": "#84cc16", "radius": 22, "tagline": "育儿日常"},
+      {"id": "body",         "cn": "身体发育",  "color": "#3b82f6", "radius": 22, "tagline": "体格+生命体征+底层生理"},
+      {"id": "health_safety","cn": "健康与安全","color": "#10b981", "radius": 22, "tagline": "疫苗+SafeSleep+常见病（E3 扩展）"},
+      {"id": "family",       "cn": "家庭环境",  "color": "#8b5cf6", "radius": 22, "tagline": "家庭系统不是单向输入"}
+    ]
+  },
+
+  "nodes": [
+
+    {"id": "self", "group": "self", "label": "婴儿", "weight": 10, "layer": 1,
+     "continuant_id": "self_awareness_line",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "小宝贝来到世界上了"},
+       "scientific": {"zh_CN": "新生儿 → 幼儿"},
+       "cultural": {"zh_CN:east_asian": "呱呱坠地，天赐麟儿"}
+     }},
+
+    {"id": "hub:milestones",   "group": "milestones",   "label": "里程碑",    "weight": 6, "layer": 7,
+     "narrative": {"primary": {"zh_CN": "宝宝今天又会了什么"}}},
+    {"id": "hub:attachment",   "group": "attachment",   "label": "亲子依恋",  "weight": 6, "layer": 7,
+     "continuant_id": "attachment_IWM",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝和主要照料者的连接"},
+       "scientific": {"zh_CN": "依恋系统（描述性而非诊断）"},
+       "cultural": {"zh_CN:east_asian": "四世同堂可以有多依恋对象，不是紊乱"}
+     }},
+    {"id": "hub:temperament",  "group": "temperament",  "label": "性格气质",  "weight": 6, "layer": 7,
+     "continuant_id": "trait:temperament_constellation",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝生来的小性子（从子宫气质种子长大）"},
+       "scientific": {"zh_CN": "Thomas-Chess 气质 + 情绪教养"}
+     }},
+    {"id": "hub:daily_life",   "group": "daily_life",   "label": "吃睡拉",    "weight": 6, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "育儿三件事"}}},
+    {"id": "hub:body",         "group": "body",         "label": "身体发育",  "weight": 6, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "身高体重头围"}, "scientific": {"zh_CN": "体格+生命体征+激素底层+器官成熟"}}},
+    {"id": "hub:health_safety","group": "health_safety","label": "健康与安全","weight": 6, "layer": 3,
+     "narrative": {"primary": {"zh_CN": "疫苗、常见病、安全防护"}}},
+    {"id": "hub:family",       "group": "family",       "label": "家庭环境",  "weight": 6, "layer": 0,
+     "continuant_id": "relationship:primary_caregivers",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "家庭这个小世界"}}},
+
+    {"id": "ms:raise_head",  "group": "milestones", "label": "抬头 (6w)",  "weight": 1.5, "layer": 7, "month": "m1",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 第一次抬起小头"}, "scientific_liner": {"theory": "颈肌 + 前庭成熟"}}},
+    {"id": "ms:social_smile","group": "milestones", "label": "社交微笑 (6-8w)","weight": 2, "layer": 7, "month": "m1",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 对着你笑了！"}, "scientific_liner": {"theory": "社会参与系统激活", "citation": "Porges"}}},
+    {"id": "ms:roll_over",   "group": "milestones", "label": "翻身 (4mo)", "weight": 1, "layer": 7, "month": "m2"},
+    {"id": "ms:laughter",    "group": "milestones", "label": "笑出声 (4mo)", "weight": 1, "layer": 7, "month": "m2"},
+    {"id": "ms:sitting",     "group": "milestones", "label": "独坐 (6mo)", "weight": 1, "layer": 7, "month": "m2",
+     "external_ref": [{"ontology": "WHO-MGRS", "key": "MGRS:sitting"}]},
+    {"id": "ms:stranger_anxiety","group": "milestones","label": "认生期 (8-9mo)","weight": 1.5, "layer": 7, "month": "m3",
+     "narrative": {
+       "primary": {"zh_CN": "突然只要妈妈 / 只要奶奶"},
+       "scientific_liner": {"theory": "依恋明确期启动", "citation": "Bowlby"}
+     }},
+    {"id": "ms:crawling",    "group": "milestones", "label": "爬行 (8.5mo)", "weight": 1, "layer": 7, "month": "m3"},
+    {"id": "ms:pincer_grasp","group": "milestones", "label": "钳状抓握 (9mo)","weight": 1, "layer": 7, "month": "m3"},
+    {"id": "ms:first_word",  "group": "milestones", "label": "开口说话 (12mo)","weight": 2, "layer": 7, "month": "m4",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 叫妈妈了！"}, "scientific_liner": {"theory": "语言能力激活", "citation": "Chomsky critical period"}}},
+    {"id": "ms:walk_alone",  "group": "milestones", "label": "独走 (12mo)", "weight": 2, "layer": 7, "month": "m4",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 第一次自己走了！"}, "scientific_liner": {"theory": "'走路改变一切'", "citation": "Adolph"}}},
+    {"id": "ms:self_recognition","group": "milestones","label": "镜中认我 (18mo)","weight": 2, "layer": 7, "month": "m5",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 指着镜子说那是我"}, "scientific_liner": {"theory": "自我意识萌芽", "citation": "Lewis 1995"}}},
+    {"id": "ms:say_no",      "group": "milestones", "label": "说'不' (18mo)", "weight": 1.5, "layer": 7, "month": "m5",
+     "meta": {"celebrity": true, "new_in_v5": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 意志萌芽，开始说'不'"}, "scientific_liner": {"theory": "Erikson 自主 vs 羞愧启动"}}},
+    {"id": "ms:pretend_play","group": "milestones", "label": "假装游戏 (18-24mo)","weight": 1.5, "layer": 7, "month": "m5",
+     "meta": {"celebrity": true, "new_in_v5": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 把香蕉当电话"}, "scientific_liner": {"theory": "符号思维 + 心智理论前兆"}}},
+    {"id": "ms:own_name",    "group": "milestones", "label": "叫出自己名字 (24mo)","weight": 1.5, "layer": 7, "month": "m6",
+     "meta": {"celebrity": true, "new_in_v5": true}},
+    {"id": "ms:vocab_explosion","group": "milestones","label": "词汇爆发 (18-24mo)","weight": 2, "layer": 7, "month": "m6",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 一天学 10 个新词"}, "scientific_liner": {"theory": "fast mapping", "citation": "Bloom / Carey"}}},
+    {"id": "ms:comfort_others","group": "milestones","label": "主动安慰他人 (24mo)","weight": 1.5, "layer": 7, "month": "m6",
+     "meta": {"new_in_v5": true},
+     "narrative": {"primary": {"zh_CN": "妈妈哭了，宝宝过来抱"}, "scientific_liner": {"theory": "共情萌芽", "citation": "Hoffman"}}},
+    {"id": "ms:scissors",    "group": "milestones", "label": "用剪刀 (30mo)","weight": 1, "layer": 7, "month": "m7",
+     "meta": {"new_in_v5": true}},
+    {"id": "ms:potty_success","group": "milestones","label": "第一次自主如厕 (30mo)","weight": 1.5, "layer": 7, "month": "m7",
+     "meta": {"celebrity": true, "new_in_v5": true}},
+    {"id": "ms:narrate_yesterday","group": "milestones","label": "讲述昨天 (30mo+)","weight": 1, "layer": 7, "month": "m7",
+     "meta": {"new_in_v5": true},
+     "narrative": {"primary": {"zh_CN": "会讲'昨天我们去公园了'"}, "scientific_liner": {"theory": "情景记忆 + 自传记忆萌芽"}}},
+
+    {"id": "attach:bond_strong",  "group": "attachment", "label": "强依恋连接", "weight": 2, "layer": 7,
+     "continuant_id": "attachment_IWM",
+     "narrative": {
+       "primary": {"zh_CN": "宝宝和妈妈已经形成紧密的信任"},
+       "scientific_liner": {"theory": "Secure attachment (B) in Ainsworth, **描述性**", "citation": "Ainsworth 1978 / Rothbaum 2000 文化批判"},
+       "cultural": {"zh_CN:east_asian": "如影随形，母子连心"}
+     }},
+    {"id": "attach:separation_protest","group": "attachment","label": "分离抗议 (8mo)","weight": 1.5, "layer": 7, "month": "m3",
+     "narrative": {"primary": {"zh_CN": "妈妈离开就哭"}}},
+    {"id": "attach:secure_base",  "group": "attachment", "label": "安全基地行为", "weight": 1.5, "layer": 7, "month": "m4",
+     "narrative": {"primary": {"zh_CN": "学走后去探索又回妈妈怀里充电"}}},
+    {"id": "attach:reunion_joy",  "group": "attachment", "label": "重聚欢喜", "weight": 1, "layer": 7, "month": "m4"},
+    {"id": "attach:internal_working_model","group": "attachment","label": "内部工作模型", "weight": 2, "layer": 7, "month": "m7",
+     "continuant_id": "attachment_IWM",
+     "stage_span": ["cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "将来人际关系的模板"}, "scientific_liner": {"theory": "Bowlby IWM → adult attachment"}}},
+
+    {"id": "interaction:responsive_care","group": "attachment","label": "响应式照料", "weight": 2, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "哭了 30 秒内就会被抱"}}},
+    {"id": "interaction:motherese",    "group": "attachment", "label": "妈妈腔", "weight": 1, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "高音调夸张腔调"}, "scientific_liner": {"theory": "CDS (Child-Directed Speech)"}}},
+    {"id": "interaction:joint_attention","group": "attachment","label": "共同注意 (9mo)", "weight": 1.5, "layer": 0, "month": "m3",
+     "narrative": {"primary": {"zh_CN": "一起看同一个东西"}, "scientific_liner": {"theory": "语言习得前提", "citation": "Tomasello 2003"}}},
+
+    {"id": "temp:profile:easy", "group": "temperament", "label": "容易型气质", "weight": 2, "layer": 7,
+     "continuant_id": "trait:temperament_constellation",
+     "narrative": {
+       "primary": {"zh_CN": "好带的孩子（承接子宫气质种子）"},
+       "scientific_liner": {"theory": "Thomas-Chess easy type, 40% prevalence"}
+     }},
+    {"id": "temp:activity", "group": "temperament", "label": "活动水平·中", "weight": 1, "layer": 7},
+    {"id": "temp:rhythmicity", "group": "temperament", "label": "规律性·中", "weight": 1, "layer": 7},
+    {"id": "temp:adaptability", "group": "temperament", "label": "适应性·高", "weight": 1.5, "layer": 7,
+     "narrative": {"primary": {"zh_CN": "换保姆换环境都能适应"}}},
+    {"id": "temp:intensity", "group": "temperament", "label": "反应强度·中", "weight": 1, "layer": 7},
+    {"id": "emotion:tantrum", "group": "temperament", "label": "发脾气期 (18-36mo)", "weight": 1.5, "layer": 7, "month": "m5",
+     "narrative": {
+       "primary": {"zh_CN": "'terrible twos'，情绪爆炸期"},
+       "scientific_liner": {"theory": "自主性受阻 + 调节能力不足"}
+     }},
+    {"id": "emotion:regulation_coach","group": "temperament","label": "情绪教养策略","weight": 1.5, "layer": 7,
+     "meta": {"new_in_v5": true},
+     "narrative": {"primary": {"zh_CN": "父母帮助命名情绪、示范调节（E3 补强）"}}},
+
+    {"id": "feed:breastmilk",  "group": "daily_life", "label": "母乳 (0-6mo 主食)", "weight": 2, "layer": 2,
+     "narrative": {
+       "primary": {"zh_CN": "最好的第一口饭"},
+       "cultural": {"zh_CN:east_asian": "WHO 推荐至 2 岁+，不做'必须断奶'判断"}
+     }},
+    {"id": "feed:solids_intro","group": "daily_life", "label": "辅食引入 (6mo)", "weight": 1.5, "layer": 2, "month": "m2",
+     "meta": {"celebrity": true}},
+    {"id": "feed:weaning",     "group": "daily_life", "label": "断奶 (18-24mo)",  "weight": 1.5, "layer": 2, "month": "m5"},
+    {"id": "feed:picky_phase", "group": "daily_life", "label": "挑食期 (2y+)",    "weight": 1, "layer": 2, "month": "m6"},
+
+    {"id": "sleep:total",       "group": "daily_life", "label": "总睡眠 16h→11h", "weight": 2, "layer": 6,
+     "continuant_id": "circadian_rhythm",
+     "narrative": {"primary": {"zh_CN": "睡眠时长逐月减少"}}},
+    {"id": "sleep:night_consolidation","group": "daily_life","label": "整夜觉 (6mo)", "weight": 2, "layer": 6, "month": "m2",
+     "meta": {"celebrity": true},
+     "narrative": {"primary": {"zh_CN": "⭐ 终于能睡整夜了"}}},
+    {"id": "sleep:co_sleep_vs_solo","group": "daily_life","label": "共睡 vs 独睡 (文化选择)","weight": 1, "layer": 6,
+     "meta": {"new_in_v5": true, "cultural_key": true},
+     "narrative": {
+       "primary": {"zh_CN": "两种都是正常选择"},
+       "cultural": {"zh_CN:east_asian": "共睡常见，温情", "en_US:western_default": "AAP 推荐独立入睡 (SIDS 考虑)"}
+     }},
+    {"id": "sleep:naps",        "group": "daily_life", "label": "小睡 5次→1次", "weight": 1, "layer": 6},
+
+    {"id": "elim:meconium",     "group": "daily_life", "label": "胎便→黄便", "weight": 1, "layer": 6, "month": "m1"},
+    {"id": "elim:potty_training","group": "daily_life","label": "如厕训练 (30mo)","weight": 1.5, "layer": 6, "month": "m7"},
+
+    {"id": "body:weight_curve", "group": "body", "label": "体重曲线 (3.2kg→14.8kg)", "weight": 2, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "看着宝宝胖起来"}}},
+    {"id": "body:height_curve", "group": "body", "label": "身高曲线 (50cm→95cm)", "weight": 2, "layer": 6},
+    {"id": "body:head_circ",    "group": "body", "label": "头围 (34.5→49cm)", "weight": 2, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "脑发育的近似指标"}}},
+    {"id": "body:tooth:first",  "group": "body", "label": "第一颗牙 (6mo)", "weight": 1.5, "layer": 7, "month": "m2",
+     "meta": {"celebrity": true}},
+    {"id": "body:tooth:full",   "group": "body", "label": "20 颗乳牙齐 (30mo)", "weight": 1, "layer": 7, "month": "m7"},
+
+    {"id": "body:vital:hr",     "group": "body", "label": "心率 130→105 bpm", "weight": 1, "layer": 6},
+    {"id": "body:vital:temp",   "group": "body", "label": "体温 37°C",        "weight": 1, "layer": 6},
+
+    {"id": "body:hormone:cortisol_circadian","group": "body","label": "皮质醇昼夜节律建立 (4mo+)", "weight": 1.5, "layer": 2, "month": "m2",
+     "continuant_id": "pathway:HPA_axis",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝开始有早晚节律"},
+       "scientific_liner": {"theory": "CAR (cortisol awakening response)", "citation": "Gunnar 2001"},
+       "bridge_from": "womb:h:cortisol:s7"
+     }},
+    {"id": "body:hormone:GH_peak","group": "body","label": "生长激素峰 (10-12mo)","weight": 1, "layer": 2, "month": "m4"},
+    {"id": "body:hormone:melatonin_mature","group": "body","label": "褪黑素成熟 (6mo+)", "weight": 1.5, "layer": 2, "month": "m2",
+     "narrative": {"primary": {"zh_CN": "促使夜睡整合"}}},
+
+    {"id": "body:brain:synaptic_pruning","group": "body","label": "突触修剪 (9mo+)", "weight": 1.5, "layer": 5, "month": "m3",
+     "continuant_id": "sensory_channels"},
+    {"id": "body:brain:myelination", "group": "body", "label": "髓鞘化 (18mo peak)", "weight": 1.5, "layer": 5, "month": "m5"},
+    {"id": "body:organ:gut_microbiome","group": "body","label": "肠道菌群成熟 (30mo)","weight": 1, "layer": 5, "month": "m7"},
+
+    {"id": "health:vac:bcg",   "group": "health_safety", "label": "卡介苗 (出生后)", "weight": 1.5, "layer": 3, "month": "m1"},
+    {"id": "health:vac:hepb",  "group": "health_safety", "label": "乙肝疫苗",        "weight": 1, "layer": 3, "month": "m1"},
+    {"id": "health:vac:dtap",  "group": "health_safety", "label": "百白破 (3/4/5mo)","weight": 1, "layer": 3, "month": "m1"},
+    {"id": "health:vac:mmr",   "group": "health_safety", "label": "麻腮风 (8mo)",    "weight": 1.5, "layer": 3, "month": "m3"},
+    {"id": "health:vac:varicella","group": "health_safety","label": "水痘 (12mo)",   "weight": 1, "layer": 3, "month": "m4"},
+
+    {"id": "health:immune:passive","group": "health_safety","label": "母源被动免疫 (0-6mo)","weight": 1.5, "layer": 3, "month": "m1",
+     "continuant_id": "immune_memory",
+     "stage_span": ["womb", "cradle", "world"]},
+    {"id": "health:immune:valley", "group": "health_safety","label": "免疫谷 (6mo)",       "weight": 1.5, "layer": 3, "month": "m2",
+     "narrative": {"primary": {"zh_CN": "母源抗体触底，容易生病"}}},
+    {"id": "health:immune:active", "group": "health_safety","label": "主动免疫接替 (6mo+)","weight": 1.5, "layer": 3, "month": "m2"},
+
+    {"id": "health:illness:jaundice","group": "health_safety","label": "新生儿黄疸 (m1)", "weight": 1, "layer": 7, "month": "m1"},
+    {"id": "health:illness:eczema",  "group": "health_safety","label": "湿疹 (轻)",      "weight": 1, "layer": 7, "month": "m1"},
+    {"id": "health:illness:cold",    "group": "health_safety","label": "常见感冒 (6-8次/年)", "weight": 1, "layer": 7, "month": "m5"},
+    {"id": "health:allergy:screening","group": "health_safety","label": "过敏筛查 (辅食期)","weight": 1, "layer": 7, "month": "m2"},
+
+    {"id": "health:safety:safe_sleep","group": "health_safety","label": "Safe Sleep (防窒息)","weight": 2, "layer": 7,
+     "meta": {"new_in_v5": true, "critical": true},
+     "narrative": {
+       "primary": {"zh_CN": "0-3 岁死亡率头号议题（E3 必改）"},
+       "scientific_liner": {"theory": "AAP Safe to Sleep", "citation": "AAP 2022"}
+     }},
+    {"id": "health:safety:drowning", "group": "health_safety","label": "防溺水",       "weight": 1.5, "layer": 7,
+     "meta": {"new_in_v5": true}},
+    {"id": "health:safety:poison",   "group": "health_safety","label": "毒物管控",      "weight": 1.5, "layer": 7,
+     "meta": {"new_in_v5": true}},
+
+    {"id": "family:mother",    "group": "family", "label": "妈妈 (主照料)",  "weight": 3, "layer": 0,
+     "continuant_id": "relationship:primary_caregivers",
+     "stage_span": ["womb", "cradle", "world"]},
+    {"id": "family:father",    "group": "family", "label": "爸爸 (次照料)",  "weight": 2.5, "layer": 0,
+     "continuant_id": "relationship:primary_caregivers"},
+    {"id": "family:grandma_pa","group": "family", "label": "奶奶/姥姥 (EAS 常见)", "weight": 2, "layer": 0,
+     "narrative": {
+       "primary": {"zh_CN": "多代际共养"},
+       "cultural": {"zh_CN:east_asian": "四世同堂之本"}
+     }},
+    {"id": "family:siblings",  "group": "family", "label": "兄弟姐妹 (无)",   "weight": 0.5, "layer": 0},
+
+    {"id": "family:parenting_style","group": "family","label": "响应式+权威式",  "weight": 2, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "有爱、有规则的育儿方式"}, "scientific_liner": {"theory": "Baumrind authoritative"}}},
+    {"id": "family:culture_EAS","group": "family","label": "东亚城市文化", "weight": 1.5, "layer": 0,
+     "meta": {"cultural_baseline": true}},
+    {"id": "family:childcare",  "group": "family","label": "家庭照料→早教班 (12mo)","weight": 1, "layer": 0},
+    {"id": "family:marriage_harmony","group": "family","label": "父母关系·和谐", "weight": 1.5, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "家里氛围对宝宝安全感很关键"}}}
+  ],
+
+  "links": [
+
+    {"source": "hub:milestones",    "target": "self", "type": "expresses", "weight": 1.0},
+    {"source": "hub:attachment",    "target": "self", "type": "expresses", "weight": 1.0},
+    {"source": "hub:temperament",   "target": "self", "type": "expresses", "weight": 1.0},
+    {"source": "hub:daily_life",    "target": "self", "type": "composes",  "weight": 1.0},
+    {"source": "hub:body",          "target": "self", "type": "composes",  "weight": 1.0},
+    {"source": "hub:health_safety", "target": "self", "type": "acts_on",   "weight": 1.0},
+    {"source": "hub:family",        "target": "self", "type": "modulates", "weight": 1.0},
+
+    {"source": "ms:raise_head",    "target": "ms:roll_over",      "type": "matures_to", "weight": 1.0},
+    {"source": "ms:roll_over",     "target": "ms:sitting",        "type": "matures_to", "weight": 1.0},
+    {"source": "ms:sitting",       "target": "ms:crawling",       "type": "matures_to", "weight": 1.0},
+    {"source": "ms:crawling",      "target": "ms:walk_alone",     "type": "matures_to", "weight": 1.0},
+    {"source": "ms:walk_alone",    "target": "ms:pretend_play",   "type": "matures_to", "weight": 1.0},
+    {"source": "ms:walk_alone",    "target": "hub:milestones",    "type": "composes",   "weight": 1.0},
+    {"source": "ms:pincer_grasp",  "target": "ms:scissors",       "type": "matures_to", "weight": 1.0},
+    {"source": "ms:scissors",      "target": "hub:milestones",    "type": "composes",   "weight": 1.0},
+
+    {"source": "ms:social_smile", "target": "ms:laughter",         "type": "matures_to", "weight": 1.0},
+    {"source": "ms:laughter",     "target": "ms:stranger_anxiety", "type": "matures_to", "weight": 1.0},
+    {"source": "ms:stranger_anxiety","target": "ms:self_recognition","type": "matures_to", "weight": 1.0},
+    {"source": "ms:self_recognition","target": "ms:own_name",      "type": "matures_to", "weight": 1.0},
+    {"source": "ms:own_name",     "target": "ms:comfort_others",   "type": "matures_to", "weight": 1.0},
+    {"source": "ms:comfort_others","target": "ms:narrate_yesterday","type": "matures_to","weight": 1.0},
+    {"source": "ms:narrate_yesterday","target": "hub:milestones",  "type": "composes",   "weight": 1.0},
+
+    {"source": "ms:first_word",      "target": "ms:vocab_explosion","type": "matures_to", "weight": 1.0},
+    {"source": "ms:vocab_explosion", "target": "hub:milestones",    "type": "composes",   "weight": 1.0},
+
+    {"source": "ms:say_no",       "target": "hub:milestones", "type": "composes", "weight": 1.0},
+    {"source": "ms:potty_success","target": "hub:milestones", "type": "composes", "weight": 1.0},
+
+    {"source": "attach:bond_strong",              "target": "hub:attachment", "type": "composes", "weight": 1.5},
+    {"source": "attach:separation_protest",       "target": "attach:secure_base", "type": "matures_to", "weight": 1.0},
+    {"source": "attach:secure_base",              "target": "attach:reunion_joy", "type": "matures_to", "weight": 1.0},
+    {"source": "attach:reunion_joy",              "target": "attach:internal_working_model","type": "matures_to","weight": 1.0,
+     "stage_span": ["cradle", "world"]},
+    {"source": "attach:internal_working_model",   "target": "hub:attachment", "type": "composes", "weight": 1.0},
+
+    {"source": "interaction:responsive_care",     "target": "attach:bond_strong",      "type": "induces", "weight": 0.9},
+    {"source": "interaction:motherese",           "target": "ms:first_word",           "type": "induces", "weight": 0.7},
+    {"source": "interaction:joint_attention",     "target": "ms:vocab_explosion",      "type": "induces", "weight": 0.9},
+    {"source": "interaction:responsive_care",     "target": "hub:attachment", "type": "composes", "weight": 1.0},
+    {"source": "interaction:joint_attention",     "target": "hub:attachment", "type": "composes", "weight": 1.0},
+
+    {"source": "temp:profile:easy",   "target": "hub:temperament", "type": "composes", "weight": 1.5},
+    {"source": "temp:activity",       "target": "temp:profile:easy","type": "composes", "weight": 1.0},
+    {"source": "temp:rhythmicity",    "target": "temp:profile:easy","type": "composes", "weight": 1.0},
+    {"source": "temp:adaptability",   "target": "temp:profile:easy","type": "composes", "weight": 1.0},
+    {"source": "temp:intensity",      "target": "temp:profile:easy","type": "composes", "weight": 1.0},
+    {"source": "emotion:tantrum",     "target": "hub:temperament", "type": "composes", "weight": 1.0},
+    {"source": "emotion:regulation_coach","target": "hub:temperament", "type": "composes", "weight": 1.0},
+    {"source": "emotion:regulation_coach","target": "emotion:tantrum","type": "modulates","weight": 0.7, "description": "情绪教养降低 tantrum 强度"},
+    {"source": "temp:profile:easy",   "target": "attach:bond_strong","type": "modulates","weight": 0.4, "description": "好带气质促进依恋形成"},
+
+    {"source": "feed:breastmilk",  "target": "feed:solids_intro", "type": "matures_to", "weight": 1.0},
+    {"source": "feed:solids_intro","target": "feed:weaning",      "type": "matures_to", "weight": 1.0},
+    {"source": "feed:weaning",     "target": "feed:picky_phase",  "type": "matures_to", "weight": 1.0},
+    {"source": "feed:picky_phase", "target": "hub:daily_life", "type": "composes", "weight": 1.0},
+
+    {"source": "sleep:total", "target": "sleep:night_consolidation","type": "matures_to","weight": 1.0},
+    {"source": "sleep:night_consolidation","target": "hub:daily_life","type": "composes","weight": 1.0},
+    {"source": "sleep:naps",             "target": "sleep:total",   "type": "composes", "weight": 1.0},
+    {"source": "sleep:co_sleep_vs_solo", "target": "hub:daily_life","type": "composes", "weight": 1.0},
+    {"source": "elim:meconium",          "target": "elim:potty_training","type": "matures_to","weight": 1.0},
+    {"source": "elim:potty_training",    "target": "hub:daily_life","type": "composes", "weight": 1.0},
+
+    {"source": "body:weight_curve",     "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:height_curve",     "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:head_circ",        "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:tooth:first",      "target": "body:tooth:full","type": "matures_to","weight": 1.0},
+    {"source": "body:tooth:full",       "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:vital:hr",         "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:vital:temp",       "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:hormone:cortisol_circadian","target": "hub:body","type": "composes","weight": 1.0},
+    {"source": "body:hormone:GH_peak",  "target": "hub:body", "type": "composes", "weight": 1.0},
+    {"source": "body:hormone:melatonin_mature","target": "hub:body","type": "composes","weight": 1.0},
+    {"source": "body:brain:synaptic_pruning","target": "hub:body","type": "composes","weight": 1.0},
+    {"source": "body:brain:myelination","target": "hub:body","type": "composes","weight": 1.0},
+    {"source": "body:organ:gut_microbiome","target": "hub:body","type": "composes","weight": 1.0},
+
+    {"source": "body:hormone:melatonin_mature","target": "sleep:night_consolidation","type": "induces","weight": 0.8},
+    {"source": "body:hormone:GH_peak","target": "body:weight_curve","type": "acts_on","weight": 0.7},
+    {"source": "body:brain:myelination","target": "ms:walk_alone","type": "induces","weight": 0.7},
+    {"source": "body:brain:synaptic_pruning","target": "ms:vocab_explosion","type": "induces","weight": 0.6},
+
+    {"source": "health:vac:bcg",       "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:vac:hepb",      "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:vac:dtap",      "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:vac:mmr",       "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:vac:varicella", "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:immune:passive","target": "health:immune:valley","type": "matures_to","weight": 1.0},
+    {"source": "health:immune:valley", "target": "health:immune:active","type": "matures_to","weight": 1.0},
+    {"source": "health:immune:active", "target": "hub:health_safety", "type": "composes", "weight": 1.0},
+    {"source": "health:immune:valley", "target": "health:illness:cold","type": "programs","weight": 0.6},
+    {"source": "health:illness:jaundice","target": "hub:health_safety","type": "composes","weight": 0.5},
+    {"source": "health:illness:eczema","target": "hub:health_safety","type": "composes","weight": 0.5},
+    {"source": "health:illness:cold", "target": "hub:health_safety","type": "composes","weight": 0.5},
+    {"source": "health:allergy:screening","target": "hub:health_safety","type": "composes","weight": 0.5},
+
+    {"source": "health:safety:safe_sleep","target": "hub:health_safety","type": "composes","weight": 1.5},
+    {"source": "health:safety:drowning", "target": "hub:health_safety","type": "composes","weight": 1.0},
+    {"source": "health:safety:poison",   "target": "hub:health_safety","type": "composes","weight": 1.0},
+
+    {"source": "family:mother",    "target": "hub:family", "type": "composes", "weight": 2.0},
+    {"source": "family:father",    "target": "hub:family", "type": "composes", "weight": 1.5},
+    {"source": "family:grandma_pa","target": "hub:family", "type": "composes", "weight": 1.0},
+    {"source": "family:siblings",  "target": "hub:family", "type": "composes", "weight": 0.3},
+    {"source": "family:parenting_style","target": "hub:family","type": "composes","weight": 1.5},
+    {"source": "family:culture_EAS","target": "hub:family","type": "composes", "weight": 1.0},
+    {"source": "family:childcare", "target": "hub:family", "type": "composes", "weight": 1.0},
+    {"source": "family:marriage_harmony","target": "hub:family","type": "composes","weight": 1.5},
+
+    {"source": "family:mother",    "target": "feed:breastmilk",           "type": "secretes", "weight": 0.9},
+    {"source": "family:mother",    "target": "interaction:responsive_care","type": "acts_on", "weight": 0.9},
+    {"source": "family:mother",    "target": "attach:bond_strong",        "type": "induces",  "weight": 0.9},
+    {"source": "family:parenting_style","target": "attach:bond_strong",   "type": "programs", "weight": 0.8, "stage_span": ["cradle","world"]},
+    {"source": "family:parenting_style","target": "emotion:regulation_coach","type": "induces","weight": 0.8},
+    {"source": "family:marriage_harmony","target": "attach:bond_strong",  "type": "modulates","weight": 0.5},
+    {"source": "family:grandma_pa","target": "family:childcare",          "type": "acts_on",  "weight": 0.8, "description": "EAS 多代际照料"},
+    {"source": "family:culture_EAS","target": "sleep:co_sleep_vs_solo",   "type": "modulates","weight": 0.6},
+
+    {"source": "health:safety:safe_sleep","target": "sleep:total",        "type": "regulates","weight": 0.8},
+    {"source": "health:immune:passive",    "target": "family:mother",     "type": "acts_on",  "weight": 0.5, "description": "母源 IgG"},
+    {"source": "feed:breastmilk",          "target": "health:immune:passive","type": "acts_on","weight": 0.7}
+  ],
+
+  "cross_stage_bridges_from_womb": [
+    {"from": "womb:self",                  "to": "self",                       "type": "matures_to"},
+    {"from": "womb:hub:genetics",          "to": "hub:body (background)",      "type": "matures_to", "note": "遗传降级为背景"},
+    {"from": "womb:trait:temperament_seed","to": "temp:profile:easy",          "type": "matures_to"},
+    {"from": "womb:refl:sucking",          "to": "feed:breastmilk",            "type": "acts_on"},
+    {"from": "womb:refl:rooting",          "to": "feed:breastmilk",            "type": "acts_on"},
+    {"from": "womb:h:cortisol:s7",         "to": "body:hormone:cortisol_circadian","type": "matures_to"},
+    {"from": "womb:tradeoff:HPA_programming","to": "body:hormone:cortisol_circadian","type": "programs"},
+    {"from": "womb:tradeoff:thrifty_phenotype","to": "body:weight_curve",      "type": "programs"},
+    {"from": "womb:sys:nervous",           "to": "body:brain:synaptic_pruning","type": "matures_to"},
+    {"from": "womb:sys:immune",            "to": "health:immune:passive",     "type": "matures_to"},
+    {"from": "womb:sense:auditory",        "to": "ms:first_word",             "type": "matures_to"},
+    {"from": "womb:circadian:fetal_rhythm","to": "sleep:total",               "type": "matures_to"},
+    {"from": "womb:hub:maternal",          "to": "family:mother",             "type": "matures_to"}
+  ],
+
+  "stats": {
+    "node_count": 91,
+    "edge_count": 109,
+    "hub_count": 7,
+    "continuant_nodes": 10,
+    "celebrity_milestones": 13,
+    "new_in_v5_nodes": 11,
+    "note": "v5.0 摇篮：育儿手册主叙事 + 发心里衬卡 + 13 朋友圈级 + E3 补 7 情感里程碑 + Safe Sleep/情绪教养 + 文化透镜（ainsworth 描述性、共睡无判断）"
+  }
+}

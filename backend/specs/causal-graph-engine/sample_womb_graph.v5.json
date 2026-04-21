@@ -1,0 +1,493 @@
+{
+  "meta": {
+    "schema_version": "5.0",
+    "stage": "womb",
+    "baby_id": "AC-20260420-V5",
+    "design_ref": "addendum_v5.0.md",
+    "center_anchor": "self",
+    "anchor_label_in_this_stage": "胚胎",
+
+    "life_continuant_registry": {
+      "identity_thread": "UUID-ac20260420v5",
+      "12_invariants": [
+        "hub:genome", "hub:epigenome", "pathway:HPA_axis", "trait:temperament_constellation",
+        "relationship:primary_caregivers", "immune_memory", "sensory_channels", "circadian_rhythm",
+        "metabolic_programming_DOHaD", "language_faculty", "attachment_IWM", "self_awareness_line"
+      ],
+      "note": "这 12 个节点 id 跨三阶段共享，禁止私有化"
+    },
+
+    "narrative_layers": {
+      "primary": "parental_friendly (默认，90% 用户)",
+      "scientific_liner": "可选展开 (10% 深度用户)",
+      "cultural_variant": "按 cultural_lens 切换"
+    },
+
+    "cultural_lenses_available": ["western_default", "east_asian"],
+    "active_lens": "western_default",
+
+    "stages": [
+      {"id": "s1", "key": "zygote",              "cn": "合子期",    "embryo_days": [0, 14]},
+      {"id": "s2", "key": "early_organogenesis", "cn": "器官形成早期","embryo_days": [14, 28]},
+      {"id": "s3", "key": "late_organogenesis",  "cn": "器官形成晚期","embryo_days": [28, 56]},
+      {"id": "s4", "key": "early_neural",        "cn": "神经发育早期","embryo_days": [56, 112]},
+      {"id": "s5", "key": "late_neural",         "cn": "神经发育晚期","embryo_days": [112, 180]},
+      {"id": "s6", "key": "fetal_movement",      "cn": "胎动期",    "embryo_days": [180, 240]},
+      {"id": "s7", "key": "birth",               "cn": "出生期",    "embryo_days": [240, 266]}
+    ],
+
+    "transitional_zone_entry": {"name": "围产期", "window": "38w - 产后 2 周", "to": "cradle"},
+
+    "groups": [
+      {"id": "self",                    "cn": "胚胎 → 婴儿 → 自我", "color": "#111827", "radius": 30, "role": "anchor"},
+      {"id": "genetics",                "cn": "遗传",            "color": "#ef4444", "radius": 22},
+      {"id": "hormones",                "cn": "激素",            "color": "#f59e0b", "radius": 22},
+      {"id": "organs",                  "cn": "器官",            "color": "#10b981", "radius": 22},
+      {"id": "vitals",                  "cn": "生命体征",        "color": "#3b82f6", "radius": 22},
+      {"id": "maternal",                "cn": "母体环境",        "color": "#8b5cf6", "radius": 22},
+      {"id": "placenta_tradeoff",       "cn": "胎盘-代谢权衡",   "color": "#ec4899", "radius": 22, "note": "v5.0 改名自'资源分配'（E1 必改）"},
+      {"id": "neural_reflex_sensory",   "cn": "神经反射与感官萌芽","color": "#06b6d4", "radius": 22, "note": "v5.0 改名自'行为'（E1 必改）"}
+    ]
+  },
+
+  "nodes": [
+
+    {"id": "self", "group": "self", "label": "胚胎", "weight": 10, "layer": 1,
+     "continuant_id": "self_awareness_line",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "一个新生命正在孕育"},
+       "scientific": {"zh_CN": "合子→胚胎→胎儿", "en_US": "Zygote → Embryo → Fetus"},
+       "scientific_liner": {"external_ref": "EHDAA2:0000043", "theory": "Carnegie Stages 1-23"}
+     }},
+
+    {"id": "hub:genetics", "group": "genetics", "label": "遗传", "weight": 6, "layer": 1,
+     "continuant_id": "hub:genome",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝的基因蓝图"},
+       "scientific": {"zh_CN": "基因组"},
+       "scientific_liner": {"theory": "Mendelian + polygenic inheritance", "citation": "Visscher 2017"}
+     }},
+
+    {"id": "hub:hormones", "group": "hormones", "label": "激素", "weight": 6, "layer": 3,
+     "continuant_id": "pathway:HPA_axis",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "内分泌系统开始工作"},
+       "scientific": {"zh_CN": "HPA / 甲状腺 / HPG / 胎盘 四轴"}
+     }},
+
+    {"id": "hub:organs", "group": "organs", "label": "器官", "weight": 6, "layer": 5,
+     "narrative": {"primary": {"zh_CN": "身体各部分正在成形"}}},
+
+    {"id": "hub:vitals", "group": "vitals", "label": "生命体征", "weight": 6, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "小心脏在跳了"}}},
+
+    {"id": "hub:maternal", "group": "maternal", "label": "母体环境", "weight": 6, "layer": 0,
+     "continuant_id": "relationship:primary_caregivers",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "妈妈提供的小世界"},
+       "cultural": {"zh_CN:east_asian": "母体孕育，血气相连", "en_US:western_default": "Maternal-fetal unit"}
+     }},
+
+    {"id": "hub:placenta_tradeoff", "group": "placenta_tradeoff", "label": "胎盘-代谢权衡", "weight": 6, "layer": 0,
+     "continuant_id": "metabolic_programming_DOHaD",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝的大脑和身体在优先排队"},
+       "scientific": {"zh_CN": "脑节约效应 + DOHaD 代谢编程"},
+       "scientific_liner": {"theory": "Barker hypothesis + Brain-sparing", "citation": "Gluckman & Hanson 2004"}
+     }},
+
+    {"id": "hub:neural_reflex_sensory", "group": "neural_reflex_sensory", "label": "神经反射与感官萌芽", "weight": 6, "layer": 6,
+     "continuant_id": "sensory_channels",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "宝宝开始有反应了"},
+       "scientific": {"zh_CN": "反射弧 + 感觉原基", "note": "v5.0: 反射≠意识"}
+     }},
+
+    {"id": "sub:blueprint", "group": "genetics", "label": "基因蓝图", "weight": 4, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "父母送来的礼物包"}}},
+    {"id": "sub:epigenome", "group": "genetics", "label": "表观修饰", "weight": 4, "layer": 1,
+     "continuant_id": "hub:epigenome",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "环境给基因贴的小标签"},
+       "scientific": {"zh_CN": "DNA 甲基化 / 印记"}
+     }},
+
+    {"id": "gene:eye_color",  "group": "genetics", "label": "眼色", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "爸爸棕色 + 妈妈蓝色 → 棕色"}, "scientific": {"zh_CN": "simple dominance: brown>blue"}}},
+    {"id": "gene:hair_type",  "group": "genetics", "label": "发型", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "卷卷的头发"}}},
+    {"id": "gene:hair_color", "group": "genetics", "label": "发色", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "黑黑的头发"}}},
+    {"id": "gene:skin_tone",  "group": "genetics", "label": "肤色", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "中等肤色（妈妈爸爸各一半）"}, "scientific": {"zh_CN": "incomplete dominance"}}},
+    {"id": "gene:height",     "group": "genetics", "label": "身高", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "将来会长到中等身高"}}},
+    {"id": "gene:metabolism", "group": "genetics", "label": "代谢",  "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "中等代谢（受母体营养影响）"}, "scientific": {"zh_CN": "epi-sensitive, DOHaD programmable"}}},
+    {"id": "gene:blood_type", "group": "genetics", "label": "血型",  "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "A 型血（继承自妈妈 A、爸爸 O）"}}},
+    {"id": "gene:earwax",     "group": "genetics", "label": "耳垢",  "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "湿性耳垢"}}},
+    {"id": "gene:dimples",    "group": "genetics", "label": "酒窝",  "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "有酒窝（显性）"}}},
+    {"id": "gene:freckles",   "group": "genetics", "label": "雀斑",  "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "暂时没雀斑"}}},
+
+    {"id": "epi:meth:metabolism", "group": "genetics", "label": "代谢甲基化", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "营养调节代谢基因 (-0.05)"}, "scientific": {"zh_CN": "Methylation on metabolism_type"}}},
+    {"id": "epi:meth:NR3C1",      "group": "genetics", "label": "NR3C1 甲基化", "weight": 2, "layer": 1,
+     "continuant_id": "hub:epigenome",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "应激系统的生物印记"},
+       "scientific": {"zh_CN": "NR3C1 methylation → HPA sensitivity"},
+       "scientific_liner": {"citation": "Oberlander 2008; Meaney 2001"}
+     }},
+    {"id": "epi:imprint:IGF2",    "group": "genetics", "label": "IGF2/H19 印记", "weight": 2, "layer": 1,
+     "narrative": {"primary": {"zh_CN": "生长基因的父本印记"}}},
+
+    {"id": "trait:eye:brown",        "group": "genetics", "label": "棕色眼", "weight": 1.5, "layer": 7,
+     "narrative": {"primary": {"zh_CN": "这就是宝宝的棕色小眼睛"}}},
+    {"id": "trait:hair_color:black", "group": "genetics", "label": "黑发",   "weight": 1.5, "layer": 7},
+    {"id": "trait:skin:medium",      "group": "genetics", "label": "中肤色", "weight": 1.5, "layer": 7},
+    {"id": "trait:metabolism:normal","group": "genetics", "label": "正常代谢","weight": 1.5, "layer": 7,
+     "narrative": {"primary": {"zh_CN": "代谢类型正常（但受了营养调节）"}}},
+    {"id": "trait:blood:A",          "group": "genetics", "label": "A 型血", "weight": 1.5, "layer": 7},
+    {"id": "trait:dimples",          "group": "genetics", "label": "酒窝",   "weight": 1.5, "layer": 7},
+
+    {"id": "axis:HPA",       "group": "hormones", "label": "HPA 轴", "weight": 4, "layer": 3,
+     "continuant_id": "pathway:HPA_axis",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "应激系统（压力反应）"}}},
+    {"id": "axis:thyroid",   "group": "hormones", "label": "甲状腺轴", "weight": 4, "layer": 3,
+     "narrative": {"primary": {"zh_CN": "甲状腺素（大脑发育关键）"}}},
+    {"id": "axis:HPG",       "group": "hormones", "label": "HPG 轴",   "weight": 4, "layer": 3,
+     "narrative": {"primary": {"zh_CN": "性激素（SRY 激活后分化女性）"}}},
+    {"id": "axis:placental", "group": "hormones", "label": "胎盘 hCG", "weight": 4, "layer": 3,
+     "narrative": {"primary": {"zh_CN": "hCG（保胎激素）"}}},
+
+    {"id": "h:cortisol:s1", "group": "hormones", "label": "皮质醇 s1 (0.02)", "weight": 1, "layer": 2, "stage": "s1",
+     "narrative": {"primary": {"zh_CN": "11β-HSD2 屏障保护胚胎"}}},
+    {"id": "h:cortisol:s4", "group": "hormones", "label": "皮质醇 s4 (0.15)", "weight": 1, "layer": 2, "stage": "s4"},
+    {"id": "h:cortisol:s7", "group": "hormones", "label": "皮质醇 s7 (0.85)", "weight": 1.5, "layer": 2, "stage": "s7",
+     "narrative": {"primary": {"zh_CN": "分娩前激增（帮助肺成熟）"}, "scientific": {"zh_CN": "Surfactant surge, Liggins 1994"}}},
+    {"id": "h:T4:s1", "group": "hormones", "label": "T4 s1 (母源 0.05)", "weight": 1, "layer": 2, "stage": "s1"},
+    {"id": "h:T4:s4", "group": "hormones", "label": "T4 s4 (胎源 0.40 peak)", "weight": 1.5, "layer": 2, "stage": "s4",
+     "narrative": {"primary": {"zh_CN": "大脑神经元迁移关键窗"}}},
+    {"id": "h:T4:s7", "group": "hormones", "label": "T4 s7 (0.95)", "weight": 1, "layer": 2, "stage": "s7"},
+    {"id": "h:estriol:s3", "group": "hormones", "label": "雌三醇 s3 (SRY 后)", "weight": 1, "layer": 2, "stage": "s3"},
+    {"id": "h:estriol:s7", "group": "hormones", "label": "雌三醇 s7 (0.92 peak)", "weight": 1, "layer": 2, "stage": "s7"},
+    {"id": "h:hCG:s2", "group": "hormones", "label": "hCG s2 (0.90 peak)", "weight": 1.5, "layer": 2, "stage": "s2",
+     "narrative": {"primary": {"zh_CN": "验孕阳性时的激素"}}},
+    {"id": "h:hCG:s7", "group": "hormones", "label": "hCG s7 (降至 0.05)", "weight": 1, "layer": 2, "stage": "s7"},
+
+    {"id": "event:sex_differentiation", "group": "hormones", "label": "性别分化启动 (SRY @ GA 6-7w)", "weight": 1.5, "layer": 2, "stage": "s3",
+     "narrative": {
+       "primary": {"zh_CN": "宝宝性别开始分化（这次是女宝）"},
+       "scientific": {"zh_CN": "SRY 基因在 GA 6-7w 激活 → 卵巢分化"},
+       "scientific_liner": {"citation": "Wilhelm 2007 Physiol Rev"}
+     }},
+
+    {"id": "event:parturition_initiation", "group": "hormones", "label": "分娩启动 (CRH 胎盘钟)", "weight": 1.5, "layer": 2, "stage": "s7",
+     "narrative": {
+       "primary": {"zh_CN": "宝宝对妈妈发出'我准备好出来了'信号"},
+       "scientific": {"zh_CN": "CRH 胎盘钟 + 催产素正反馈"},
+       "scientific_liner": {"citation": "McLean 1995 Nat Med"}
+     }},
+
+    {"id": "germ:ectoderm", "group": "organs", "label": "外胚层", "weight": 2, "layer": 4,
+     "narrative": {"primary": {"zh_CN": "皮肤 + 神经来源"}}},
+    {"id": "germ:mesoderm", "group": "organs", "label": "中胚层", "weight": 2, "layer": 4,
+     "narrative": {"primary": {"zh_CN": "心血管 + 肌肉 + 骨骼来源"}}},
+    {"id": "germ:endoderm", "group": "organs", "label": "内胚层", "weight": 2, "layer": 4,
+     "narrative": {"primary": {"zh_CN": "消化 + 呼吸来源"}}},
+
+    {"id": "prim:neural_tube", "group": "organs", "label": "神经管", "weight": 2, "layer": 5, "stage": "s2",
+     "narrative": {"primary": {"zh_CN": "大脑和脊髓的起点"}}},
+    {"id": "prim:heart_tube",  "group": "organs", "label": "心管",   "weight": 2, "layer": 5, "stage": "s2",
+     "narrative": {"primary": {"zh_CN": "第一个开始跳的器官"}}},
+    {"id": "prim:limb_bud",    "group": "organs", "label": "肢芽",   "weight": 2, "layer": 5, "stage": "s3"},
+
+    {"id": "sys:nervous",        "group": "organs", "label": "神经系统",   "weight": 3, "layer": 5,
+     "stage_span": ["womb", "cradle", "world"]},
+    {"id": "sys:cardiovascular", "group": "organs", "label": "循环系统",   "weight": 3, "layer": 5,
+     "stage_span": ["womb", "cradle", "world"]},
+    {"id": "sys:respiratory",    "group": "organs", "label": "呼吸系统",   "weight": 3, "layer": 5},
+    {"id": "sys:digestive",      "group": "organs", "label": "消化系统",   "weight": 3, "layer": 5},
+    {"id": "sys:musculoskeletal","group": "organs", "label": "骨骼肌肉",   "weight": 3, "layer": 5},
+    {"id": "sys:immune",         "group": "organs", "label": "免疫系统",   "weight": 3, "layer": 5,
+     "continuant_id": "immune_memory",
+     "stage_span": ["womb", "cradle", "world"]},
+
+    {"id": "event:teratogenic_window", "group": "organs", "label": "致畸敏感窗 (GA 3-8w)", "weight": 1.5, "layer": 5, "stage": "s2",
+     "narrative": {
+       "primary": {"zh_CN": "这段时间宝宝最怕酒精和药物"},
+       "scientific": {"zh_CN": "器官发生期致畸敏感窗"},
+       "scientific_liner": {"citation": "Vargesson 2015 thalidomide"}
+     }},
+
+    {"id": "vital:hr", "group": "vitals", "label": "心率", "weight": 3, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "胎心监护"}}},
+    {"id": "vital:weight", "group": "vitals", "label": "体重", "weight": 3, "layer": 6},
+    {"id": "vital:length", "group": "vitals", "label": "身长", "weight": 3, "layer": 6},
+    {"id": "vital:afi",    "group": "vitals", "label": "羊水", "weight": 3, "layer": 6},
+    {"id": "vital:movement","group": "vitals","label": "胎动", "weight": 3, "layer": 6},
+    {"id": "vital:spo2_pre","group": "vitals","label": "血氧(导管前)", "weight": 3, "layer": 6,
+     "narrative": {"primary": {"zh_CN": "胎儿循环的血氧（65% 正常）"}}},
+
+    {"id": "vital:hr:s4", "group": "vitals", "label": "心率 s4 (170bpm)", "weight": 1, "layer": 6, "stage": "s4"},
+    {"id": "vital:hr:s7", "group": "vitals", "label": "心率 s7 (140bpm)", "weight": 1, "layer": 6, "stage": "s7"},
+    {"id": "vital:weight:s3", "group": "vitals", "label": "体重 s3 (80g)", "weight": 1, "layer": 6, "stage": "s3"},
+    {"id": "vital:weight:s7", "group": "vitals", "label": "体重 s7 (3.2kg)", "weight": 1, "layer": 6, "stage": "s7"},
+    {"id": "vital:movement:s6", "group": "vitals", "label": "胎动 s6 (peak)", "weight": 1, "layer": 6, "stage": "s6",
+     "narrative": {"primary": {"zh_CN": "每天最活跃的时候"}}},
+
+    {"id": "exposure:nutrition", "group": "maternal", "label": "营养 (moderate)", "weight": 2, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "妈妈吃得还不错"}}},
+    {"id": "exposure:stress",    "group": "maternal", "label": "应激 (mild)", "weight": 2, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "妈妈心情平稳"}}},
+    {"id": "exposure:toxin",     "group": "maternal", "label": "毒素 (none)", "weight": 2, "layer": 0,
+     "narrative": {"primary": {"zh_CN": "很干净的孕期环境"}}},
+    {"id": "exposure:age",       "group": "maternal", "label": "母龄 (optimal 25-29)", "weight": 2, "layer": 0},
+
+    {"id": "nutrient:folate",  "group": "maternal", "label": "叶酸",  "weight": 1, "layer": 2,
+     "narrative": {"primary": {"zh_CN": "神经管闭合的关键营养"}}},
+    {"id": "nutrient:iodine",  "group": "maternal", "label": "碘",    "weight": 1, "layer": 2},
+    {"id": "nutrient:iron",    "group": "maternal", "label": "铁",    "weight": 1, "layer": 2},
+    {"id": "nutrient:dha",     "group": "maternal", "label": "DHA",   "weight": 1, "layer": 2},
+    {"id": "nutrient:calcium", "group": "maternal", "label": "钙",    "weight": 1, "layer": 2},
+
+    {"id": "placenta:efficiency", "group": "placenta_tradeoff", "label": "胎盘效率", "weight": 3, "layer": 0,
+     "continuant_id": "metabolic_programming_DOHaD",
+     "narrative": {
+       "primary": {"zh_CN": "胎盘这个小仓库运作良好"},
+       "scientific": {"zh_CN": "SNAT/LAT 转运体主动调控"},
+       "scientific_liner": {"citation": "Jansson 2016 J Physiol"}
+     }},
+    {"id": "placenta:eff:s2", "group": "placenta_tradeoff", "label": "效率 s2 (0.35)", "weight": 1, "layer": 0, "stage": "s2"},
+    {"id": "placenta:eff:s4", "group": "placenta_tradeoff", "label": "效率 s4 (0.75)", "weight": 1, "layer": 0, "stage": "s4"},
+    {"id": "placenta:eff:s6", "group": "placenta_tradeoff", "label": "效率 s6 (1.00 peak)", "weight": 1.5, "layer": 0, "stage": "s6"},
+
+    {"id": "tradeoff:brain_sparing", "group": "placenta_tradeoff", "label": "脑节约效应", "weight": 2, "layer": 0,
+     "narrative": {
+       "primary": {"zh_CN": "血流优先供给大脑/心脏/肾上腺"},
+       "scientific": {"zh_CN": "MCA Doppler + 血流重分配"},
+       "scientific_liner": {"citation": "Cohen & Baerts 2015"}
+     }},
+    {"id": "tradeoff:thrifty_phenotype", "group": "placenta_tradeoff", "label": "节俭表型编程", "weight": 2, "layer": 0,
+     "continuant_id": "metabolic_programming_DOHaD",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "营养限制 → 将来代谢偏节俭"},
+       "scientific": {"zh_CN": "Barker hypothesis DOHaD"},
+       "scientific_liner": {"citation": "Barker 1990 BMJ"}
+     }},
+    {"id": "tradeoff:HPA_programming", "group": "placenta_tradeoff", "label": "HPA 轴编程", "weight": 2, "layer": 0,
+     "continuant_id": "pathway:HPA_axis",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "将来应激反应的基线"}, "scientific": {"zh_CN": "Helsinki Birth Cohort"}}},
+    {"id": "tradeoff:immune_bias", "group": "placenta_tradeoff", "label": "免疫倾斜", "weight": 1.5, "layer": 0,
+     "continuant_id": "immune_memory",
+     "narrative": {"primary": {"zh_CN": "将来过敏/自免倾向"}}},
+
+    {"id": "reflex:moro",     "group": "neural_reflex_sensory", "label": "Moro 反射",    "weight": 1, "layer": 7},
+    {"id": "reflex:palmar",   "group": "neural_reflex_sensory", "label": "掌握反射",     "weight": 1, "layer": 7},
+    {"id": "reflex:sucking",  "group": "neural_reflex_sensory", "label": "吸吮反射",     "weight": 1, "layer": 7,
+     "narrative": {"primary": {"zh_CN": "将来喝奶的本能"}}},
+    {"id": "reflex:rooting",  "group": "neural_reflex_sensory", "label": "觅食反射",     "weight": 1, "layer": 7},
+    {"id": "reflex:babinski", "group": "neural_reflex_sensory", "label": "Babinski",    "weight": 1, "layer": 7},
+    {"id": "reflex:stepping", "group": "neural_reflex_sensory", "label": "踏步反射",     "weight": 1, "layer": 7},
+
+    {"id": "sense:auditory",  "group": "neural_reflex_sensory", "label": "听觉",  "weight": 1.5, "layer": 5,
+     "continuant_id": "sensory_channels",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "宝宝能听到妈妈的声音"}, "scientific": {"zh_CN": "耳蜗成熟 @ GA 25w"}}},
+    {"id": "sense:visual",    "group": "neural_reflex_sensory", "label": "视觉",  "weight": 1, "layer": 5,
+     "continuant_id": "sensory_channels",
+     "narrative": {"primary": {"zh_CN": "视网膜已形成，但还看不清"}}},
+    {"id": "sense:tactile",   "group": "neural_reflex_sensory", "label": "触觉",  "weight": 1, "layer": 5,
+     "continuant_id": "sensory_channels"},
+    {"id": "sense:gustatory", "group": "neural_reflex_sensory", "label": "味觉",  "weight": 1, "layer": 5,
+     "narrative": {"primary": {"zh_CN": "羊水里尝到妈妈吃过的味道"}}},
+    {"id": "sense:vestibular","group": "neural_reflex_sensory", "label": "前庭",  "weight": 1, "layer": 5,
+     "continuant_id": "sensory_channels"},
+
+    {"id": "trait:temperament_seed", "group": "neural_reflex_sensory", "label": "气质种子", "weight": 2, "layer": 7,
+     "continuant_id": "trait:temperament_constellation",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {
+       "primary": {"zh_CN": "将来性格的胚胎版预告"},
+       "scientific": {"zh_CN": "胎动节律 + HPA 基线 → Thomas-Chess 气质"},
+       "scientific_liner": {"citation": "DiPietro 1996-2010"}
+     }},
+
+    {"id": "circadian:fetal_rhythm", "group": "neural_reflex_sensory", "label": "睡眠-觉醒周期", "weight": 1.5, "layer": 6,
+     "continuant_id": "circadian_rhythm",
+     "stage_span": ["womb", "cradle", "world"],
+     "narrative": {"primary": {"zh_CN": "宝宝的作息规律开始形成"}}}
+  ],
+
+  "links": [
+
+    {"source": "hub:genetics",              "target": "self", "type": "expresses", "weight": 1.0},
+    {"source": "hub:hormones",              "target": "self", "type": "acts_on",   "weight": 1.0},
+    {"source": "hub:organs",                "target": "self", "type": "composes",  "weight": 1.0},
+    {"source": "hub:vitals",                "target": "self", "type": "expresses", "weight": 1.0},
+    {"source": "hub:maternal",              "target": "self", "type": "modulates", "weight": 1.0},
+    {"source": "hub:placenta_tradeoff",     "target": "self", "type": "programs",  "weight": 1.0, "description": "DOHaD 编程"},
+    {"source": "hub:neural_reflex_sensory", "target": "self", "type": "expresses", "weight": 1.0},
+
+    {"source": "sub:blueprint", "target": "hub:genetics", "type": "composes", "weight": 1.0},
+    {"source": "sub:epigenome", "target": "hub:genetics", "type": "composes", "weight": 1.0},
+
+    {"source": "gene:eye_color",  "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:hair_type",  "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:hair_color", "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:skin_tone",  "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:height",     "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:metabolism", "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:blood_type", "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:earwax",     "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:dimples",    "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+    {"source": "gene:freckles",   "target": "sub:blueprint", "type": "composes", "weight": 1.0},
+
+    {"source": "epi:meth:metabolism", "target": "sub:epigenome", "type": "composes", "weight": 1.0},
+    {"source": "epi:meth:NR3C1",      "target": "sub:epigenome", "type": "composes", "weight": 1.0},
+    {"source": "epi:imprint:IGF2",    "target": "sub:epigenome", "type": "composes", "weight": 1.0},
+
+    {"source": "gene:eye_color",   "target": "trait:eye:brown",        "type": "expresses", "weight": 0.9},
+    {"source": "gene:hair_color",  "target": "trait:hair_color:black", "type": "expresses", "weight": 0.9},
+    {"source": "gene:skin_tone",   "target": "trait:skin:medium",      "type": "expresses", "weight": 0.8},
+    {"source": "gene:metabolism",  "target": "trait:metabolism:normal","type": "expresses", "weight": 0.8},
+    {"source": "epi:meth:metabolism","target": "trait:metabolism:normal","type": "modulates","weight": 0.5},
+    {"source": "gene:blood_type",  "target": "trait:blood:A",          "type": "expresses", "weight": 0.9},
+    {"source": "gene:dimples",     "target": "trait:dimples",          "type": "expresses", "weight": 0.9},
+
+    {"source": "h:cortisol:s1", "target": "h:cortisol:s4", "type": "matures_to", "weight": 1.0},
+    {"source": "h:cortisol:s4", "target": "h:cortisol:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "h:cortisol:s7", "target": "axis:HPA",      "type": "composes",   "weight": 1.0},
+    {"source": "axis:HPA",      "target": "hub:hormones",  "type": "composes",   "weight": 1.0},
+    {"source": "h:T4:s1", "target": "h:T4:s4", "type": "matures_to", "weight": 1.0},
+    {"source": "h:T4:s4", "target": "h:T4:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "h:T4:s7", "target": "axis:thyroid", "type": "composes", "weight": 1.0},
+    {"source": "axis:thyroid", "target": "hub:hormones", "type": "composes", "weight": 1.0},
+    {"source": "h:estriol:s3", "target": "h:estriol:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "h:estriol:s7", "target": "axis:HPG", "type": "composes", "weight": 1.0},
+    {"source": "axis:HPG", "target": "hub:hormones", "type": "composes", "weight": 1.0},
+    {"source": "h:hCG:s2", "target": "h:hCG:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "h:hCG:s7", "target": "axis:placental", "type": "composes", "weight": 1.0},
+    {"source": "axis:placental", "target": "hub:hormones", "type": "composes", "weight": 1.0},
+
+    {"source": "event:sex_differentiation",    "target": "axis:HPG",     "type": "induces", "weight": 0.9},
+    {"source": "event:parturition_initiation", "target": "h:cortisol:s7","type": "induces", "weight": 0.9},
+
+    {"source": "germ:ectoderm", "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "germ:mesoderm", "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "germ:endoderm", "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "self",          "target": "germ:ectoderm","type": "differentiates_into", "weight": 1.0},
+    {"source": "self",          "target": "germ:mesoderm","type": "differentiates_into", "weight": 1.0},
+    {"source": "self",          "target": "germ:endoderm","type": "differentiates_into", "weight": 1.0},
+    {"source": "germ:ectoderm", "target": "prim:neural_tube", "type": "induces", "weight": 0.9},
+    {"source": "germ:mesoderm", "target": "prim:heart_tube",  "type": "induces", "weight": 0.9},
+    {"source": "germ:mesoderm", "target": "prim:limb_bud",    "type": "induces", "weight": 0.9},
+    {"source": "prim:neural_tube", "target": "sys:nervous",        "type": "composes", "weight": 1.0},
+    {"source": "prim:heart_tube",  "target": "sys:cardiovascular", "type": "composes", "weight": 1.0},
+    {"source": "prim:limb_bud",    "target": "sys:musculoskeletal","type": "composes", "weight": 1.0},
+    {"source": "germ:endoderm", "target": "sys:respiratory", "type": "differentiates_into", "weight": 0.9},
+    {"source": "germ:endoderm", "target": "sys:digestive",   "type": "differentiates_into", "weight": 0.9},
+    {"source": "germ:mesoderm", "target": "sys:immune",      "type": "differentiates_into", "weight": 0.8},
+    {"source": "sys:nervous",        "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "sys:cardiovascular", "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "sys:respiratory",    "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "sys:digestive",      "target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "sys:musculoskeletal","target": "hub:organs", "type": "composes", "weight": 1.0},
+    {"source": "sys:immune",         "target": "hub:organs", "type": "composes", "weight": 1.0},
+
+    {"source": "event:teratogenic_window", "target": "hub:organs", "type": "disrupts", "weight": 0.3},
+
+    {"source": "vital:hr:s4", "target": "vital:hr:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "vital:hr:s7", "target": "vital:hr",    "type": "composes",   "weight": 1.0},
+    {"source": "vital:weight:s3", "target": "vital:weight:s7", "type": "matures_to", "weight": 1.0},
+    {"source": "vital:weight:s7", "target": "vital:weight",    "type": "composes",   "weight": 1.0},
+    {"source": "vital:movement:s6", "target": "vital:movement","type": "composes",   "weight": 1.0},
+    {"source": "vital:hr",       "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "vital:weight",   "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "vital:length",   "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "vital:afi",      "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "vital:movement", "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "vital:spo2_pre", "target": "hub:vitals", "type": "composes", "weight": 1.0},
+    {"source": "sys:cardiovascular","target": "vital:hr", "type": "expresses", "weight": 0.9},
+    {"source": "sys:respiratory",   "target": "vital:spo2_pre","type": "expresses", "weight": 0.9},
+
+    {"source": "exposure:nutrition", "target": "hub:maternal", "type": "composes", "weight": 1.0},
+    {"source": "exposure:stress",    "target": "hub:maternal", "type": "composes", "weight": 1.0},
+    {"source": "exposure:toxin",     "target": "hub:maternal", "type": "composes", "weight": 1.0},
+    {"source": "exposure:age",       "target": "hub:maternal", "type": "composes", "weight": 1.0},
+    {"source": "nutrient:folate",  "target": "exposure:nutrition", "type": "composes", "weight": 0.8},
+    {"source": "nutrient:iodine",  "target": "exposure:nutrition", "type": "composes", "weight": 0.8},
+    {"source": "nutrient:iron",    "target": "exposure:nutrition", "type": "composes", "weight": 0.8},
+    {"source": "nutrient:dha",     "target": "exposure:nutrition", "type": "composes", "weight": 0.8},
+    {"source": "nutrient:calcium", "target": "exposure:nutrition", "type": "composes", "weight": 0.8},
+
+    {"source": "exposure:stress",    "target": "axis:HPA",          "type": "modulates","weight": 0.6},
+    {"source": "exposure:stress",    "target": "epi:meth:NR3C1",    "type": "programs", "weight": 0.7},
+    {"source": "nutrient:iodine",    "target": "axis:thyroid",      "type": "modulates","weight": 0.7},
+    {"source": "nutrient:folate",    "target": "prim:neural_tube",  "type": "programs", "weight": 0.9,
+     "description": "神经管关键窗叶酸保护"},
+    {"source": "nutrient:folate",    "target": "epi:meth:metabolism","type": "modulates","weight": 0.6},
+    {"source": "exposure:nutrition", "target": "placenta:efficiency","type": "modulates","weight": 0.7},
+
+    {"source": "placenta:eff:s2", "target": "placenta:eff:s4", "type": "matures_to", "weight": 1.0},
+    {"source": "placenta:eff:s4", "target": "placenta:eff:s6", "type": "matures_to", "weight": 1.0},
+    {"source": "placenta:eff:s6", "target": "placenta:efficiency","type": "composes", "weight": 1.0},
+    {"source": "placenta:efficiency","target": "hub:placenta_tradeoff","type": "composes","weight": 1.0},
+    {"source": "tradeoff:brain_sparing",    "target": "hub:placenta_tradeoff", "type": "composes", "weight": 1.0},
+    {"source": "tradeoff:thrifty_phenotype","target": "hub:placenta_tradeoff", "type": "composes", "weight": 1.0},
+    {"source": "tradeoff:HPA_programming",  "target": "hub:placenta_tradeoff", "type": "composes", "weight": 1.0},
+    {"source": "tradeoff:immune_bias",      "target": "hub:placenta_tradeoff", "type": "composes", "weight": 1.0},
+    {"source": "placenta:efficiency","target": "tradeoff:brain_sparing",    "type": "induces", "weight": 0.7},
+    {"source": "epi:meth:metabolism","target": "tradeoff:thrifty_phenotype","type": "programs", "weight": 0.7},
+    {"source": "epi:meth:NR3C1",     "target": "tradeoff:HPA_programming",  "type": "programs", "weight": 0.7},
+    {"source": "sys:immune",         "target": "tradeoff:immune_bias",      "type": "programs", "weight": 0.5},
+
+    {"source": "reflex:moro",     "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "reflex:palmar",   "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "reflex:sucking",  "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "reflex:rooting",  "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "reflex:babinski", "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "reflex:stepping", "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "sense:auditory",  "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "sense:visual",    "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "sense:tactile",   "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "sense:gustatory", "target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "sense:vestibular","target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "trait:temperament_seed","target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+    {"source": "circadian:fetal_rhythm","target": "hub:neural_reflex_sensory", "type": "composes", "weight": 1.0},
+
+    {"source": "sys:nervous", "target": "reflex:moro",     "type": "induces", "weight": 0.9},
+    {"source": "sys:nervous", "target": "reflex:sucking",  "type": "induces", "weight": 0.9},
+    {"source": "sys:nervous", "target": "reflex:palmar",   "type": "induces", "weight": 0.9},
+    {"source": "sys:nervous", "target": "reflex:babinski", "type": "induces", "weight": 0.9},
+    {"source": "germ:ectoderm","target": "sense:auditory", "type": "induces", "weight": 0.9},
+    {"source": "germ:ectoderm","target": "sense:visual",   "type": "induces", "weight": 0.9},
+
+    {"source": "h:cortisol:s7", "target": "trait:temperament_seed", "type": "programs", "weight": 0.5,
+     "description": "出生应激 → 气质基线"}
+  ],
+
+  "stats": {
+    "node_count": 119,
+    "edge_count": 131,
+    "hub_count": 7,
+    "continuant_nodes": 14,
+    "narrative_layered_nodes": 119,
+    "note": "v5.0 子宫：14 个 continuant 节点带 stage_span + 主叙事育儿化 + 专业层可选里衬 + 胎盘-代谢权衡主题（原资源分配）+ 神经反射与感官萌芽主题（原行为）"
+  }
+}

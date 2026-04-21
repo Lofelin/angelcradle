@@ -6,6 +6,5 @@ dist/
 .DS_Store
 .idea/
 .env
-births/
+archive/
 node_modules/
-nursery/
