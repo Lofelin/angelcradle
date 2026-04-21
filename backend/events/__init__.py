@@ -125,6 +125,18 @@ def roll_emergent_event(
     if not candidates:
         return None
 
+    # 冷却：同一涌现事件 3 模拟天内不重复触发
+    if state is not None:
+        sim_day = int(getattr(state, "sim_time", 0) // 24)
+        cooldown_days = 3
+        recent_events = set()
+        for m in getattr(state, "memories", []):
+            if hasattr(m, "age_days") and sim_day - m.age_days < cooldown_days:
+                recent_events.add(m.event)
+        candidates = [e for e in candidates if e.name not in recent_events]
+        if not candidates:
+            return None
+
     # 基础触发概率
     base_prob = 0.25
 

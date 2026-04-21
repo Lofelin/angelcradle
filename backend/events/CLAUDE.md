@@ -5,8 +5,8 @@
 
 ## 成员清单
 
-__init__.py: Event 数据类（含 hour_range/requires_tags/excludes_tags/duration_hours/generates_next）+ route_events() 三重过滤 + roll_emergent_event() 涌现事件
-definitions.py: 全部事件常量定义（13 日常 + 19 环境 + 16 关键 + 15 日程骨架 = 63 种）+ ALL_EVENTS + get_event()
+__init__.py: Event 数据类（含 hour_range/requires_tags/excludes_tags/duration_hours/generates_next）+ route_events() 三重过滤 + roll_emergent_event() 涌现事件（**legacy fallback**：主路径已迁移到 world.py 的世界快照驱动，此函数仅在 LLM 失败时由 world.roll_emergent_event_legacy 包装调用）
+definitions.py: 全部事件常量定义（13 日常 + 47 环境 + 16 关键 + 15 日程骨架 = 91 种）+ ALL_EVENTS + get_event()
 modifiers.py: _compute_affinity() 身份亲和度 + _phase_weight_modifier() 阶段权重调制（睡眠回退高发期/tantrum 曲线/压力敏感度）
 
 ## 对外暴露
