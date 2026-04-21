@@ -136,18 +136,18 @@
 /* ── 布局过渡 (iOS spring curve) ── */
 
 .stage-card-running {
-  animation: running-border-pulse 2s ease-in-out infinite;
+  animation: running-border-breathe 1.2s ease-in-out infinite;
 }
-@keyframes running-border-pulse {
-  0%, 100% { box-shadow: 0 0 0 1px oklch(0.723 0.219 149.579 / 0.4); }
-  50% { box-shadow: 0 0 8px 1px oklch(0.723 0.219 149.579 / 0.3); }
+@keyframes running-border-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px transparent; }
+  50% { box-shadow: 0 0 10px 1px #34d399, 0 0 0 1px #34d399; }
 }
 .stage-card-maternal {
-  animation: maternal-border-pulse 2s ease-in-out infinite;
+  animation: maternal-border-breathe 1.2s ease-in-out infinite;
 }
-@keyframes maternal-border-pulse {
-  0%, 100% { box-shadow: 0 0 0 1px color-mix(in oklch, var(--color-maternal), transparent 60%); }
-  50% { box-shadow: 0 0 8px 1px color-mix(in oklch, var(--color-maternal), transparent 70%); }
+@keyframes maternal-border-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px transparent; }
+  50% { box-shadow: 0 0 10px 1px var(--color-maternal), 0 0 0 1px var(--color-maternal); }
 }
 
 /* ── 控制台 / 终端样式 (深色主题) ── */
@@ -195,8 +195,8 @@
 
 .blink-dot {
   display: inline-block; width: 6px; height: 6px;
-  background: var(--primary); border-radius: 50%;
-  margin-right: 8px; animation: blink 1.2s ease-in-out infinite;
+  border-radius: 50%;
+  margin-right: 8px; animation: green-breathe 1.2s ease-in-out infinite;
   vertical-align: middle;
 }
 
@@ -216,22 +216,20 @@
   box-shadow: 0 0 8px color-mix(in oklch, var(--color-maternal), transparent 50%);
   animation: blink 1.2s ease-in-out infinite;
 }
+/* 透明↔绿色呼吸脉动 */
+@keyframes green-breathe {
+  0%, 100% { background: transparent; box-shadow: none; }
+  50% { background: #34d399; box-shadow: 0 0 6px #34d39980; }
+}
 .step-dot-running {
-  background: oklch(0.723 0.219 149.579);
-  animation: blink 1.2s ease-in-out infinite;
+  animation: green-breathe 1.2s ease-in-out infinite;
+}
+.dot-lifeline {
+  animation: green-breathe 1.2s ease-in-out infinite;
 }
 .step-dot-maternal {
   background: var(--color-maternal);
   animation: blink 1.2s ease-in-out infinite;
-}
-
-/* 生命线脉搏：灰→绿→灰 */
-@keyframes lifeline-pulse {
-  0%, 100% { background: #34d39930; box-shadow: none; }
-  50% { background: #34d399; box-shadow: 0 0 6px #34d39980; }
-}
-.dot-lifeline {
-  animation: lifeline-pulse 2s ease-in-out infinite;
 }
 
 .no-scrollbar { overflow-y: auto; scrollbar-width: none; }
@@ -257,3 +255,35 @@
   border-radius: 12px;
   padding: 12px;
 }
+
+/* 阶段卡片需求边框呼吸（border-color + shadow 同步脉冲） */
+@keyframes glow-red {
+  0%, 100% { border-color: transparent; box-shadow: 0 0 0 rgba(239,68,68,0); }
+  50% { border-color: rgba(239,68,68,0.5); box-shadow: 0 0 14px rgba(239,68,68,0.25); }
+}
+@keyframes glow-amber {
+  0%, 100% { border-color: transparent; box-shadow: 0 0 0 rgba(245,158,11,0); }
+  50% { border-color: rgba(245,158,11,0.5); box-shadow: 0 0 14px rgba(245,158,11,0.25); }
+}
+@keyframes glow-blue {
+  0%, 100% { border-color: transparent; box-shadow: 0 0 0 rgba(59,130,246,0); }
+  50% { border-color: rgba(59,130,246,0.5); box-shadow: 0 0 14px rgba(59,130,246,0.25); }
+}
+.animate-glow-red { animation: glow-red 2s ease-in-out infinite; }
+.animate-glow-amber { animation: glow-amber 2s ease-in-out infinite; }
+.animate-glow-blue { animation: glow-blue 2s ease-in-out infinite; }
+
+/* 宝宝卡片文字：有头像=白色，无头像/加载中=黑色；阶段标签用青翠色以示区分 */
+.baby-card-name { color: #1a1a1a; }
+.baby-card-sub { color: #666; }
+.baby-card-badge { background: #d1fae5; color: #047857; }
+.baby-card-badge-dim { color: #10b981; }
+.baby-card-dim { color: #999; }
+/* 有头像时覆盖为白色 */
+.has-portrait .baby-card-name { color: white; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.has-portrait .baby-card-sub { color: rgba(255,255,255,.7); }
+.has-portrait .baby-card-badge { background: rgba(16,185,129,.35); color: #ecfdf5; backdrop-filter: blur(4px); }
+.has-portrait .baby-card-badge-dim { color: rgba(236,253,245,.7); }
+.has-portrait .baby-card-dim { color: rgba(255,255,255,.5); }
+/* 无头像 */
+.no-portrait { background: #f0f0f0 !important; }

@@ -12,11 +12,14 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
-import { ArrowLeftRight } from 'lucide-react'
+import { ArrowLeftRight, Maximize2, Minimize2, Scale, Ruler, Droplet, Activity, Heart, Wind, ChevronDown, Dna, Gauge } from 'lucide-react'
 import ConsolePanel from '@/components/ConsolePanel'
+import LifeGraph from '@/components/LifeGraph'
+import { graphReducer, GRAPH_INITIAL, useCausalGraph } from '@/hooks/useCausalGraph'
 import Cradle from './Cradle'
 
 const API = 'http://localhost:8000'
+const WOMB_SESSION_KEY = 'wombSession'
 
 const SPECIES_ICONS = { human: '\u{1F476}', dog: '\u{1F415}', cat: '\u{1F408}' }
 
@@ -54,10 +57,11 @@ function flattenToLogs(obj, time, stageName = '') {
   return entries
 }
 
+
 function wombReducer(state, action) {
   switch (action.type) {
     case 'RESET':
-      return { logs: [], stageProgress: {}, maternalProgress: {}, currentStage: '', statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, running: true, startedAt: Date.now(), elapsed: null }
+      return { logs: [], stageProgress: {}, maternalProgress: {}, currentStage: '', statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, running: true, startedAt: Date.now(), elapsed: null, stageTimings: {} }
     case 'SSE_EVENT': {
       const { data, ts, t, lang } = action
       // thinking heartbeat: overwrite last log of same type (no spam), keep console alive
@@ -70,7 +74,7 @@ function wombReducer(state, action) {
         return { ...state, logs }
       }
       const newLogs = [...state.logs, { time: ts, type: data.event || 'data', data }]
-      let { stageProgress, maternalProgress, currentStage, statusText, babyState, environment, parentGenomes, vitals, running } = state
+      let { stageProgress, maternalProgress, currentStage, statusText, babyState, environment, parentGenomes, vitals, running, stageTimings } = state
 
       if (data.event === 'stage' && data.status === 'done' && data.response && typeof data.response === 'object') {
         newLogs.push(...flattenToLogs(data.response, ts, data.stage))
@@ -92,6 +96,7 @@ function wombReducer(state, action) {
           currentStage = data.stage
           statusText = t.developing(data.stage, data.gestation_day)
           stageProgress = { ...stageProgress, [data.stage]: 'active' }
+          stageTimings = { ...stageTimings, [data.stage]: { startedAt: Date.now() } }
         } else if (data.status === 'vitals') {
           vitals = data.vitals
         } else if (data.status === 'hormones' || data.status === 'nutrients' || data.status === 'placenta' || data.status === 'immunity') {
@@ -112,13 +117,20 @@ function wombReducer(state, action) {
           stageProgress = { ...stageProgress, [data.stage]: 'done' }
           statusText = t.done(data.stage)
           if (babyState && data.response && typeof data.response === 'object') {
-            babyState = { ...babyState, stages: { ...babyState.stages, [data.stage]: data.response } }
+            const prev = babyState.stages?.[data.stage] || {}
+            babyState = { ...babyState, stages: { ...babyState.stages, [data.stage]: { ...prev, ...data.response } } }
           }
+          const prev = stageTimings[data.stage] || {}
+          stageTimings = { ...stageTimings, [data.stage]: { ...prev, doneAt: Date.now() } }
         } else if (data.status === 'maternal_response') {
           statusText = t.maternal_responding
           maternalProgress = { ...maternalProgress, [data.stage]: 'active' }
+          const prev = stageTimings[data.stage] || {}
+          stageTimings = { ...stageTimings, [data.stage]: { ...prev, maternalStartedAt: Date.now() } }
         } else if (data.status === 'maternal_response_done') {
           maternalProgress = { ...maternalProgress, [data.stage]: 'done' }
+          const prev = stageTimings[data.stage] || {}
+          stageTimings = { ...stageTimings, [data.stage]: { ...prev, maternalDoneAt: Date.now() } }
         } else if (data.status === 'failed') {
           stageProgress = { ...stageProgress, [data.stage]: 'failed' }
         }
@@ -142,18 +154,18 @@ function wombReducer(state, action) {
         }
       }
 
-      return { ...state, logs: newLogs, stageProgress, maternalProgress, currentStage, statusText, babyState, environment, parentGenomes, vitals, running }
+      return { ...state, logs: newLogs, stageProgress, maternalProgress, currentStage, statusText, babyState, environment, parentGenomes, vitals, running, stageTimings }
     }
     case 'CLOSE':
       return { ...state, running: false, logs: [...state.logs, { time: getTime(), type: 'system', text: action.text }] }
     case 'CLEAR_PROGRESS':
-      return { ...state, stageProgress: {}, maternalProgress: {}, statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null }
+      return { ...state, stageProgress: {}, maternalProgress: {}, statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, stageTimings: {} }
     default:
       return state
   }
 }
 
-const INIT_STATE = { logs: [], stageProgress: {}, maternalProgress: {}, currentStage: '', statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, running: false, startedAt: null, elapsed: null }
+const INIT_STATE = { logs: [], stageProgress: {}, maternalProgress: {}, currentStage: '', statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, running: false, startedAt: null, elapsed: null, stageTimings: {} }
 
 function App() {
   const navigate = useNavigate()
@@ -161,6 +173,7 @@ function App() {
   const tab = location.pathname.split('/')[1] || 'womb'
 
   const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en')
+  const [timeScale, setTimeScale] = useState(() => localStorage.getItem('timeScale') || 'normal')
   const [species, setSpecies] = useState('human')
   const [speciesList, setSpeciesList] = useState([])
   const [selectedSex, setSelectedSex] = useState('random')
@@ -173,10 +186,17 @@ function App() {
   const [blueprint, setBlueprint] = useState(EMPTY_BLUEPRINT)
   const [blueprintReady, setBlueprintReady] = useState(false)
   const [state, dispatch] = useReducer(wombReducer, INIT_STATE)
+  const [graphState, graphDispatch] = useReducer(graphReducer, GRAPH_INITIAL)
+  const graphStateRef = useRef(graphState)
+  graphStateRef.current = graphState
+  const causalGraph = useCausalGraph(graphState, graphDispatch)
   const consoleRef = useRef(null)
   const leftPanelRef = useRef(null)
   const stageCardsRef = useRef(null)
   const [expandedTag, setExpandedTag] = useState(null)
+  const [consoleFullscreen, setConsoleFullscreen] = useState(false)
+  const [graphFullscreen, setGraphFullscreen] = useState(false)
+  const [showGeneticPopover, setShowGeneticPopover] = useState(false)
 
   const t = messages[lang]
 
@@ -185,6 +205,20 @@ function App() {
       .then(r => r.json())
       .then(data => setSpeciesList(data.species))
       .catch(() => setSpeciesList(['human', 'dog', 'cat']))
+    // 速率同步：localStorage 优先，服务器重启后自动恢复用户偏好
+    const savedTs = localStorage.getItem('timeScale')
+    if (savedTs && ['slow', 'normal', 'fast', 'turbo'].includes(savedTs)) {
+      fetch(`${API}/system/time-scale`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ time_scale: savedTs }),
+      }).then(r => r.ok && setTimeScale(savedTs)).catch(() => {})
+    } else {
+      fetch(`${API}/system/time-scale`)
+        .then(r => r.json())
+        .then(data => { localStorage.setItem('timeScale', data.time_scale); setTimeScale(data.time_scale) })
+        .catch(() => {})
+    }
   }, [])
 
   useEffect(() => {
@@ -209,8 +243,69 @@ function App() {
     }
   }, [state.logs.length])
 
+  // 子宫图谱节流 fetch：关键事件后从后端 lifegraph 拉取最新图谱
+  const wombGraphBabyIdRef = useRef(null)
+  const wombGraphFetchTimerRef = useRef(null)
+
+  const fetchWombGraph = useCallback(() => {
+    // 进入宝宝详情（/cradle/*）后，图谱由 Cradle 自行加载，子宫侧停止覆盖
+    if (window.location.pathname.startsWith('/cradle')) return
+    const babyId = wombGraphBabyIdRef.current
+    if (!babyId) return
+    fetch(`${API}/baby/${babyId}/causal-graph`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.nodes?.length > 0 || data?.links?.length > 0) {
+          graphDispatch({ type: 'LOAD_GRAPH', payload: data })
+        }
+      })
+      .catch(() => { /* ignore */ })
+  }, [graphDispatch])
+
+  const scheduleWombGraphFetch = useCallback(() => {
+    if (wombGraphFetchTimerRef.current) clearTimeout(wombGraphFetchTimerRef.current)
+    wombGraphFetchTimerRef.current = setTimeout(fetchWombGraph, 300)
+  }, [fetchWombGraph])
+
+  // 把一条 SSE URL 绑到 EventSource 上，统一处理 session 识别 / 事件分发 / 关闭清理。
+  // 会话结束（complete/error/miscarriage 前置终止）后清掉 localStorage，避免刷新复活死会话。
+  const attachSessionStream = useCallback((url) => {
+    const source = new EventSource(url)
+    source.onmessage = (e) => {
+      try {
+        const data = JSON.parse(e.data)
+        if (data.event === 'session') {
+          if (data.session_id && data.status === 'running') {
+            localStorage.setItem(WOMB_SESSION_KEY, JSON.stringify({ id: data.session_id, ts: Date.now() }))
+          }
+          return
+        }
+        if (data.event === 'complete' || data.event === 'error') {
+          localStorage.removeItem(WOMB_SESSION_KEY)
+        }
+        dispatch({ type: 'SSE_EVENT', data, ts: getTime(), t, lang })
+
+        // 子宫图谱：从 SSE 事件抓 baby_id，关键事件后节流 fetch 后端 lifegraph
+        if (data.baby_id && !wombGraphBabyIdRef.current) {
+          wombGraphBabyIdRef.current = data.baby_id  // 取第一个 baby（多胎暂只展示首个）
+        }
+        if (data.event === 'offspring_fate' || data.event === 'born' || data.event === 'complete'
+            || (data.event === 'stage' && data.status === 'done')) {
+          scheduleWombGraphFetch()
+        }
+      } catch { /* ignore */ }
+    }
+    source.onerror = () => {
+      dispatch({ type: 'CLOSE', text: t.closed })
+      source.close()
+    }
+    return source
+  }, [t, lang, scheduleWombGraphFetch])
+
   const conceive = useCallback(() => {
     dispatch({ type: 'RESET' })
+    graphDispatch({ type: 'CLEAR_GRAPH' })
+    wombGraphBabyIdRef.current = null  // 重置子宫图谱 baby 标识
     const params = new URLSearchParams({ species, lang })
     if (selectedSex !== 'random') params.set('sex', selectedSex)
     if (selectedPhenotype !== 'random') params.set('phenotype', selectedPhenotype)
@@ -220,23 +315,50 @@ function App() {
     if (selectedAge !== 'random') params.set('maternal_age_factor', selectedAge)
     if (selectedOffspring !== 'random') params.set('offspring_count', selectedOffspring)
 
-    const source = new EventSource(`${API}/conceive/stream?${params}`)
-    source.onmessage = (e) => {
-      try {
-        const data = JSON.parse(e.data)
-        dispatch({ type: 'SSE_EVENT', data, ts: getTime(), t, lang })
-      } catch { /* ignore */ }
-    }
-    source.onerror = () => {
-      dispatch({ type: 'CLOSE', text: t.closed })
-      source.close()
-    }
-  }, [species, lang, selectedSex, selectedPhenotype, selectedNutrition, selectedStress, selectedToxin, selectedAge, selectedOffspring, t])
+    attachSessionStream(`${API}/conceive/stream?${params}`)
+  }, [species, lang, selectedSex, selectedPhenotype, selectedNutrition, selectedStress, selectedToxin, selectedAge, selectedOffspring, attachSessionStream])
 
-  const { logs, stageProgress, maternalProgress, statusText, babyState, running } = state
+  // 刷新后恢复进行中的孕育：读 localStorage → 探针 /sessions/{id} → 订阅同一 session 回放事件。
+  // 仅在组件挂载时执行一次；失效会话会被清理。
+  const resumedRef = useRef(false)
+  useEffect(() => {
+    if (resumedRef.current) return
+    resumedRef.current = true
+    const raw = localStorage.getItem(WOMB_SESSION_KEY)
+    if (!raw) return
+    let saved
+    try { saved = JSON.parse(raw) } catch {
+      localStorage.removeItem(WOMB_SESSION_KEY)
+      return
+    }
+    if (!saved?.id) return
+    fetch(`${API}/conceive/sessions/${saved.id}`)
+      .then(r => {
+        if (!r.ok) {
+          localStorage.removeItem(WOMB_SESSION_KEY)
+          return null
+        }
+        return r.json()
+      })
+      .then(info => {
+        if (!info) return
+        dispatch({ type: 'RESET' })
+        attachSessionStream(`${API}/conceive/stream?session_id=${encodeURIComponent(saved.id)}`)
+      })
+      .catch(() => localStorage.removeItem(WOMB_SESSION_KEY))
+  }, [attachSessionStream])
+
+  const { logs, stageProgress, maternalProgress, statusText, babyState, running, stageTimings } = state
   const environment = state.environment
   const tk = (v) => translateKey(v, lang)
   const isConceiving = running || Object.keys(stageProgress).length > 0
+
+  const [tick, setTick] = useState(0)
+  useEffect(() => {
+    if (!running) return
+    const id = setInterval(() => setTick(t => t + 1), 1000)
+    return () => clearInterval(id)
+  }, [running])
 
   // 孕育过程中左屏内容变化时，自动滑到底部
   useEffect(() => {
@@ -247,14 +369,14 @@ function App() {
     }
   }, [isConceiving, babyState, environment, state.vitals, stageProgress])
 
-  // 阶段卡片自动滚底
+  // 阶段卡片自动滚底（running 变化时按钮出现/消失，需要再滚一次）
   useEffect(() => {
     if (isConceiving && stageCardsRef.current) {
       requestAnimationFrame(() => {
         stageCardsRef.current?.scrollTo({ top: stageCardsRef.current.scrollHeight, behavior: 'smooth' })
       })
     }
-  }, [isConceiving, stageProgress, maternalProgress])
+  }, [isConceiving, stageProgress, maternalProgress, running])
 
   // ── Log renderer ──
   const renderLog = (entry, i) => {
@@ -602,18 +724,18 @@ function App() {
     <div className="flex flex-col gap-6 px-1">
       {/* 系统就绪 */}
       <div>
-        <div className="text-[11px] text-muted-foreground tracking-wider mb-2 flex items-center gap-1.5"><span className="relative flex h-1.5 w-1.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" /></span>{lang === 'zh' ? '系统状态' : 'System Status'}</div>
+        <div className="text-[11px] text-muted-foreground tracking-wider mb-2 flex items-center gap-1.5"><span className="inline-block w-1.5 h-1.5 rounded-full step-dot-running" />{lang === 'zh' ? '系统状态' : 'System Status'}</div>
         <h2 className="font-heading text-3xl font-bold tracking-tight leading-tight">{lang === 'zh' ? '准备就绪' : 'System Ready'}</h2>
         <p className="text-sm text-muted-foreground mt-1.5">{lang === 'zh' ? '系统已准备好模拟生命孕育' : 'System is ready to simulate life conception'}</p>
       </div>
 
       {/* 发育阶段流程 */}
       <div>
-        <div className="text-[11px] text-muted-foreground tracking-wider mb-4">{lang === 'zh' ? '· 发育流程' : '· Workflow Steps'}</div>
-        <div className="flex flex-col divide-y divide-border">
+        <div className="text-[11px] text-muted-foreground tracking-wider mb-4">{lang === 'zh' ? '发育流程' : 'Workflow Steps'}</div>
+        <div className="flex flex-col">
           {WORKFLOW_STEPS.map((step, i) => (
             <div key={step.name} className="flex gap-4 py-4 first:pt-0">
-              <span className="text-xl font-heading font-bold text-muted-foreground/20 w-7 shrink-0 tabular-nums pt-0.5">{String(i + 1).padStart(2, '0')}</span>
+              <span className="text-2xl font-heading font-bold text-primary/70 w-8 shrink-0 tabular-nums pt-0.5">{String(i + 1).padStart(2, '0')}</span>
               <div className="flex-1 min-w-0">
                 <div className="font-heading font-semibold text-[13px]">{lang === 'zh' ? step.zh : step.en}</div>
                 <div className="text-xs text-muted-foreground/60 mt-1 leading-relaxed">{lang === 'zh' ? step.desc_zh : step.desc_en}</div>
@@ -727,7 +849,7 @@ function App() {
         </div>
         {/* 孕育按钮 */}
         <button
-          className="w-full flex items-center justify-between px-5 py-3.5 text-base font-heading font-semibold text-primary border border-border hover:bg-primary/5 transition-colors cursor-pointer mt-auto"
+          className="w-full flex items-center justify-between px-5 py-3.5 text-base font-heading font-semibold text-primary bg-rose-50 border border-border hover:bg-rose-100 transition-colors cursor-pointer mt-auto"
           onClick={conceive}
         >
           {t.conceive}
@@ -738,13 +860,71 @@ function App() {
   )
 
   // ── 发育监视器 (孕育后) ──
+  // 遗传特征卡片内容（inline 与 popover 共用）
+  const renderGeneticTraitsCard = () => {
+    if (!babyState) return null
+    const pheno = Object.entries(babyState.phenotype || {})
+    const hasDefects = babyState.defects?.length > 0
+    const defectText = hasDefects
+      ? babyState.defects.map(d => typeof d === 'object' ? tk((d.defect || '').replace(/_/g, ' ')) : tk(d.replace(/_/g, ' '))).join(', ')
+      : t.no_defects
+    const stability = Math.max(0, 100 - (babyState.defects?.length || 0) * 2.5).toFixed(1)
+    return (
+      <div className="relative bg-card ring-1 ring-border rounded-2xl p-5">
+        {/* 右上角稳定性徽章 */}
+        <div className="absolute top-4 right-4">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-primary/15 text-primary uppercase">
+            {stability}% {lang === 'zh' ? '稳定性' : 'Stability'}
+          </span>
+        </div>
+        {/* 3 列网格 */}
+        <div className="grid grid-cols-3 gap-x-4 gap-y-5 pt-8">
+          {pheno.map(([k, v]) => (
+            <div key={k} className="min-w-0">
+              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">{tk(k.replace(/_/g, ' '))}</div>
+              <div className="text-base font-semibold text-foreground capitalize truncate mt-1">{tk(v)}</div>
+            </div>
+          ))}
+          <div className="min-w-0">
+            <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{t.defects}</div>
+            <div className={cn(
+              "text-base font-semibold capitalize mt-1 break-words",
+              hasDefects ? "text-destructive" : "text-primary"
+            )}>{defectText}</div>
+          </div>
+        </div>
+        {/* 底部校验线：真实标记数 + baby ID */}
+        <div className="mt-6 pt-4 border-t border-dashed border-border text-center text-[10px] font-semibold text-muted-foreground/60 tracking-[0.22em] uppercase font-mono">
+          {pheno.length} {lang === 'zh' ? '个标记' : 'Markers'}
+          {babyState.id && <> · {String(babyState.id).slice(0, 8)}</>}
+          {' · '}{lang === 'zh' ? '已校验' : 'Verified'}
+        </div>
+      </div>
+    )
+  }
+
   const renderMonitorHeader = () => (
     babyState ? (
       <div className="flex items-center gap-2 px-2 capitalize flex-wrap">
-        <span className="text-2xl leading-none">{SPECIES_ICONS[species] || '\u{1F9EC}'}</span>
         <h1 className="font-heading text-xl font-semibold">{tk(species)}</h1>
         <span className="text-muted-foreground">/</span>
         <span className="text-sm text-muted-foreground">{tk(babyState.sex)}</span>
+        {/* 遗传特征标签：点击切换浮层 */}
+        <button
+          type="button"
+          onClick={() => setShowGeneticPopover(v => !v)}
+          className={cn(
+            "ml-1 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider transition-colors normal-case",
+            showGeneticPopover
+              ? "bg-primary/15 text-primary ring-1 ring-primary/30"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          )}
+          title={lang === 'zh' ? '遗传特征' : 'Genetic Traits'}
+        >
+          <Dna className="size-3" />
+          <span className="uppercase tracking-wider">{lang === 'zh' ? '遗传特征' : 'Genetic Traits'}</span>
+          <ChevronDown className={cn("size-3 transition-transform", showGeneticPopover && "rotate-180")} />
+        </button>
         {babyState.id && <span className="ml-auto text-[10px] text-muted-foreground font-mono normal-case">{babyState.id}</span>}
       </div>
     ) : null
@@ -752,139 +932,228 @@ function App() {
 
   const renderMonitor = () => (
     <>
-      {/* 遗传特征 */}
-      {babyState && (() => {
-        const pheno = Object.entries(babyState.phenotype || {})
-        const hasDefects = babyState.defects?.length > 0
-        return (
-          <div className="px-1">
-            <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{t.fetal_status}</div>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm capitalize">
-              {pheno.map(([k, v]) => (
-                <div key={k}>
-                  <span className="text-muted-foreground">{tk(k.replace(/_/g, ' '))}</span>{' '}
-                  <span className="font-medium text-foreground">{tk(v)}</span>
+
+      {/* 母体环境 */}
+      {environment && (() => {
+        const fmt = (v) => {
+          if (v === null || v === undefined) return '-'
+          if (typeof v === 'number') return Number.isInteger(v) ? String(v) : v.toFixed(2)
+          if (typeof v === 'boolean') return v ? (lang === 'zh' ? '是' : 'Yes') : (lang === 'zh' ? '否' : 'No')
+          if (Array.isArray(v)) return v.length ? v.map(x => typeof x === 'object' ? JSON.stringify(x) : tk(String(x).replace(/_/g, ' '))).join(', ') : '-'
+          if (typeof v === 'object') return null
+          return tk(String(v).replace(/_/g, ' '))
+        }
+
+        // ── 汇总所有核心指标：横向滑动显示 ──
+        const nutrientsDict = environment.nutrients || null
+        const nutritionPct = nutrientsDict
+          ? Math.round((Object.values(nutrientsDict).reduce((a, b) => a + (Number(b) || 0), 0) / Math.max(1, Object.keys(nutrientsDict).length)) * 100)
+          : null
+        const placentaEff = environment.placenta?.efficiency != null ? Math.round(environment.placenta.efficiency * 100) : null
+        const stressMap = { low: 15, moderate: 45, high: 75, extreme: 95 }
+        const stressPct = stressMap[environment.stress] ?? 50
+        const toxinMap = { none: 5, low: 30, moderate: 60, high: 85 }
+        const toxinPct = toxinMap[environment.toxin_exposure] ?? 50
+        const ageMap = { very_young: 55, optimal: 100, moderate: 80, advanced: 55, very_advanced: 30 }
+        const agePct = ageMap[environment.maternal_age_factor] ?? 70
+
+        const GRADIENTS = {
+          cyan: 'linear-gradient(90deg, #22d3ee, #06b6d4)',
+          purple: 'linear-gradient(90deg, #7c3aed, #8b5cf6)',
+          teal: 'linear-gradient(90deg, #0f766e, #14b8a6)',
+          amber: 'linear-gradient(90deg, #f59e0b, #f97316)',
+          rose: 'linear-gradient(90deg, #f43f5e, #ec4899)',
+          emerald: 'linear-gradient(90deg, #10b981, #059669)',
+          indigo: 'linear-gradient(90deg, #6366f1, #4f46e5)',
+          sky: 'linear-gradient(90deg, #0ea5e9, #0284c7)',
+          lime: 'linear-gradient(90deg, #84cc16, #65a30d)',
+        }
+
+        // 指标卡数据：label / value / pct(0-100) / color
+        const metrics = [
+          { label: t.nutrition, value: nutritionPct != null ? `${nutritionPct}%` : tk(environment.nutrition), pct: nutritionPct ?? 60, color: GRADIENTS.cyan },
+          { label: t.placenta_label, value: placentaEff != null ? `${placentaEff}%` : '—', pct: placentaEff ?? 0, color: GRADIENTS.purple },
+          { label: t.stress, value: tk(environment.stress), pct: 100 - stressPct, color: GRADIENTS.teal },
+          { label: t.toxin, value: tk(environment.toxin_exposure), pct: 100 - toxinPct, color: GRADIENTS.rose, sub: environment.toxin_types?.length > 0 ? environment.toxin_types.map(x => tk(String(x).replace(/_/g, ' '))).join(', ') : null },
+          { label: t.age, value: (AGE_LABELS[lang] || AGE_LABELS.en)[environment.maternal_age_factor] || tk(environment.maternal_age_factor), pct: agePct, color: GRADIENTS.amber },
+        ]
+        if (environment.modifiers) {
+          metrics.push({
+            label: t.budget,
+            value: `${(environment.modifiers.budget_multiplier * 100).toFixed(0)}%`,
+            pct: Math.min(100, environment.modifiers.budget_multiplier * 100),
+            color: GRADIENTS.emerald,
+          })
+          const riskMul = environment.modifiers.defect_risk_multiplier
+          metrics.push({
+            label: t.risk,
+            value: `${riskMul.toFixed(1)}x`,
+            pct: Math.max(0, Math.min(100, (2 - riskMul) * 50)),
+            color: GRADIENTS.indigo,
+          })
+        }
+        // 免疫：由 rh 不兼容 + TORCH 感染数计算健康度
+        if (environment.immunity) {
+          const imm = environment.immunity
+          const rhPenalty = imm.rh_incompatible ? 30 : 0
+          const infCount = Array.isArray(imm.torch_infections) ? imm.torch_infections.length : 0
+          const immPct = Math.max(0, 100 - rhPenalty - infCount * 15)
+          metrics.push({
+            label: t.immunity_label,
+            value: `${immPct}%`,
+            pct: immPct,
+            color: GRADIENTS.rose,
+          })
+        }
+
+        // 追加 5 种营养素
+        if (nutrientsDict) {
+          const nutrientColors = [GRADIENTS.sky, GRADIENTS.lime, GRADIENTS.amber, GRADIENTS.purple, GRADIENTS.emerald]
+          Object.entries(nutrientsDict).forEach(([k, v], i) => {
+            const pct = Math.round((Number(v) || 0) * 100)
+            metrics.push({
+              label: tk(k.replace(/_/g, ' ')),
+              value: `${pct}%`,
+              pct,
+              color: nutrientColors[i % nutrientColors.length],
+            })
+          })
+        }
+
+        const renderBox = (title, items) => (
+          <div className="bg-muted rounded-2xl p-4">
+            {title && <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{title}</div>}
+            <div className="flex flex-col divide-y divide-border text-sm capitalize">
+              {items.map(([label, val], i) => (
+                <div key={i} className="flex justify-between py-2.5 first:pt-0 last:pb-0">
+                  <span className="text-muted-foreground">{label}</span>
+                  <span className="font-medium">{val}</span>
                 </div>
               ))}
-              <div>
-                <span className="text-muted-foreground">{t.defects}</span>{' '}
-                <span className={cn("font-medium", hasDefects ? "text-destructive" : "text-foreground")}>
-                  {hasDefects
-                    ? babyState.defects.map(d => typeof d === 'object' ? tk((d.defect || '').replace(/_/g, ' ')) : tk(d.replace(/_/g, ' '))).join(', ')
-                    : t.no_defects}
-                </span>
+            </div>
+          </div>
+        )
+
+        return (
+          <div className="px-1">
+            <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{t.env_conditions}</div>
+            {/* 横向滑动的指标卡 */}
+            <div className="-mx-1 overflow-x-auto scrollbar-thin">
+              <div className="flex gap-3 px-1 pb-1 snap-x snap-mandatory">
+                {metrics.map((m, i) => (
+                  <div
+                    key={i}
+                    className="bg-muted rounded-2xl px-4 py-3.5 flex flex-col gap-2 w-[calc((100%-1.5rem)/3)] min-w-[140px] shrink-0 snap-start"
+                  >
+                    <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider truncate">{m.label}</div>
+                    <div className="text-2xl font-heading font-semibold text-primary truncate capitalize">{m.value}</div>
+                    {m.sub && <div className="text-[10px] text-muted-foreground truncate capitalize">{m.sub}</div>}
+                    <div className="h-1.5 w-full rounded-full bg-foreground/10 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{ width: `${Math.max(0, Math.min(100, m.pct ?? 0))}%`, background: m.color }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )
       })()}
 
-      {/* 母体环境 */}
-      {environment && (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t.env_conditions}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {(() => {
-              const fmt = (v) => {
-                if (v === null || v === undefined) return '-'
-                if (typeof v === 'number') return Number.isInteger(v) ? String(v) : v.toFixed(2)
-                if (typeof v === 'boolean') return v ? (lang === 'zh' ? '是' : 'Yes') : (lang === 'zh' ? '否' : 'No')
-                if (Array.isArray(v)) return v.length ? v.map(x => typeof x === 'object' ? JSON.stringify(x) : tk(String(x).replace(/_/g, ' '))).join(', ') : '-'
-                if (typeof v === 'object') return null
-                return tk(String(v).replace(/_/g, ' '))
-              }
-
-              const renderBox = (title, items) => (
-                <div className="bg-muted rounded-2xl p-4">
-                  {title && <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{title}</div>}
-                  <div className="flex flex-col divide-y divide-border text-sm capitalize">
-                    {items.map(([label, val], i) => (
-                      <div key={i} className="flex justify-between py-2.5 first:pt-0 last:pb-0">
-                        <span className="text-muted-foreground">{label}</span>
-                        <span className="font-medium">{val}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-
-              const baseItems = [
-                [t.nutrition, tk(environment.nutrition)],
-                [t.stress, tk(environment.stress)],
-                [t.toxin, tk(environment.toxin_exposure)],
-                [t.age, (AGE_LABELS[lang] || AGE_LABELS.en)[environment.maternal_age_factor] || tk(environment.maternal_age_factor)],
-              ]
-              if (environment.modifiers) {
-                baseItems.push([t.budget, `${(environment.modifiers.budget_multiplier * 100).toFixed(0)}%`])
-                baseItems.push([t.risk, `${environment.modifiers.defect_risk_multiplier.toFixed(1)}x`])
-              }
-
-              const subSections = [
-                ['nutrients', t.nutrients_label],
-                ['toxin_types', t.toxin_types_label],
-                ['placenta', t.placenta_label],
-                ['immunity', t.immunity_label],
-              ]
-
-              return (
-                <div className="flex flex-col gap-3">
-                  {renderBox(null, baseItems)}
-                  {subSections.map(([key, label]) => {
-                    const val = environment[key]
-                    if (!val) return null
-                    if (Array.isArray(val) && val.length > 0) {
-                      return renderBox(label, [[label, val.map(x => tk(String(x).replace(/_/g, ' '))).join(', ')]])
-                    }
-                    if (typeof val === 'object' && !Array.isArray(val)) {
-                      const items = Object.entries(val)
-                        .map(([k, v]) => [tk(k.replace(/_/g, ' ')), fmt(v)])
-                        .filter(([, v]) => v !== null)
-                      if (items.length > 0) return renderBox(label, items)
-                    }
-                    return null
-                  })}
-                </div>
-              )
-            })()}
-          </CardContent>
-        </Card>
-      )}
-
       {/* 胎儿生命体征 */}
-      {state.vitals && (
-        <Card>
-          <CardHeader>
-            <CardTitle>{lang === 'zh' ? '生命体征' : 'Vital Signs'}</CardTitle>
-            <CardDescription>{state.vitals.status || ''}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-muted rounded-2xl p-4">
-              <div className="flex flex-col divide-y divide-border text-sm">
-                {[
-                  [lang === 'zh' ? '体重' : 'Weight', state.vitals.weight],
-                  [lang === 'zh' ? '身长' : 'Length', state.vitals.length],
-                  [lang === 'zh' ? '羊水' : 'Amniotic Fluid', state.vitals.amniotic_fluid],
-                  [lang === 'zh' ? '胎动' : 'Movement', state.vitals.movement],
-                  [lang === 'zh' ? '血压' : 'Blood Pressure', state.vitals.blood_pressure],
-                  [lang === 'zh' ? '血氧' : 'Oxygen', state.vitals.oxygen],
-                ].map(([label, val], i) => (
-                  <div key={i} className="flex justify-between py-2.5 first:pt-0 last:pb-0">
-                    <span className="text-muted-foreground">{label}</span>
-                    <span className="font-medium">{val}</span>
-                  </div>
-                ))}
+      {state.vitals && (() => {
+        // 解析 "142 BPM" / "2.3 kg" / "120/80 mmHg" 形式的值为主数值 + 单位
+        const splitValue = (raw) => {
+          if (raw == null || raw === '') return { main: '—', unit: '' }
+          const s = String(raw).trim()
+          const m = s.match(/^([\d./-]+)\s*(.*)$/)
+          if (m) return { main: m[1], unit: m[2] }
+          return { main: s, unit: '' }
+        }
+        const v = state.vitals
+
+        // 随机但稳定的 sparkline 条形：基于标签做伪随机，保证同 key 高度一致
+        const sparkBars = (seed) => {
+          const heights = []
+          let h = 0
+          for (let i = 0; i < 7; i++) {
+            h = (seed.charCodeAt(i % seed.length) * (i + 3)) % 100
+            heights.push(30 + (h % 60))
+          }
+          return heights
+        }
+
+        const cards = [
+          { key: 'weight', label: lang === 'zh' ? '体重' : 'Weight', raw: v.weight, Icon: Scale, color: 'text-cyan-500', barColor: 'bg-cyan-500' },
+          { key: 'length', label: lang === 'zh' ? '身长' : 'Length', raw: v.length, Icon: Ruler, color: 'text-emerald-500', barColor: 'bg-emerald-500' },
+          { key: 'blood_pressure', label: lang === 'zh' ? '血压' : 'Blood Pressure', raw: v.blood_pressure, Icon: Heart, color: 'text-rose-500', barColor: 'bg-rose-500' },
+          { key: 'oxygen', label: lang === 'zh' ? '血氧' : 'Oxygen', raw: v.oxygen, Icon: Wind, color: 'text-sky-500', barColor: 'bg-sky-500' },
+          { key: 'movement', label: lang === 'zh' ? '胎动' : 'Movement', raw: v.movement, Icon: Activity, color: 'text-violet-500', barColor: 'bg-violet-500' },
+          { key: 'amniotic_fluid', label: lang === 'zh' ? '羊水' : 'Amniotic Fluid', raw: v.amniotic_fluid, Icon: Droplet, color: 'text-indigo-500', barColor: 'bg-indigo-500' },
+        ].filter(c => c.raw != null && c.raw !== '')
+
+        return (
+          <div className="px-1">
+            <div className="flex items-center gap-2 mb-3">
+              <Activity className="size-4 text-primary" />
+              <div className="text-[13px] font-semibold text-foreground">
+                {lang === 'zh' ? '生命体征' : 'Vital Signs'}
               </div>
+              {v.status && (
+                <span className="text-[10px] text-muted-foreground font-mono normal-case ml-1">{v.status}</span>
+              )}
             </div>
-            {state.vitals.alerts?.length > 0 && (
+            <div className="grid grid-cols-2 gap-3">
+              {cards.map(({ key, label, raw, Icon, color, barColor }) => {
+                const { main, unit } = splitValue(raw)
+                const bars = sparkBars(key)
+                return (
+                  <div
+                    key={key}
+                    className="relative bg-card ring-1 ring-border rounded-2xl p-5 overflow-hidden min-w-0 h-[140px]"
+                  >
+                    {/* 右侧大号水印图标 */}
+                    <Icon
+                      className={cn("absolute -right-4 top-1/2 -translate-y-1/2 size-28 opacity-[0.12] pointer-events-none", color)}
+                      strokeWidth={1.5}
+                      fill="currentColor"
+                    />
+                    {/* 内容层 */}
+                    <div className="relative flex flex-col justify-between h-full min-w-0">
+                      <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.12em]">
+                        {label}
+                      </div>
+                      <div className="flex items-baseline gap-1.5 min-w-0">
+                        <span className="text-[2.25rem] leading-none font-heading font-bold text-primary truncate">{main}</span>
+                        {unit && (
+                          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide truncate">{unit}</span>
+                        )}
+                      </div>
+                      {/* 底部装饰条形图 */}
+                      <div className="flex items-end gap-0.5 h-5">
+                        {bars.map((h, i) => (
+                          <div
+                            key={i}
+                            className={cn("w-1 rounded-sm opacity-80", barColor)}
+                            style={{ height: `${h}%` }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            {v.alerts?.length > 0 && (
               <div className="mt-3 bg-destructive/10 rounded-2xl p-4 text-sm text-destructive">
-                {state.vitals.alerts.map((a, i) => <div key={i}>{a}</div>)}
+                {v.alerts.map((a, i) => <div key={i}>{a}</div>)}
               </div>
             )}
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        )
+      })()}
 
       {/* 先天倾向 */}
       {babyState?.tendencies?.length > 0 && (
@@ -899,7 +1168,7 @@ function App() {
                   <span className="mt-1.5 w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                     <span className="w-2 h-2 rounded-full bg-primary" />
                   </span>
-                  <span className="text-sm text-foreground leading-relaxed">{tend}</span>
+                  <span className="text-sm text-foreground leading-relaxed">{typeof tend === 'object' ? (tend.description || tend.name || JSON.stringify(tend)) : tend}</span>
                 </div>
               ))}
             </div>
@@ -933,6 +1202,19 @@ function App() {
     return String(v)
   }
 
+  const formatElapsed = (ms) => {
+    const s = Math.floor(ms / 1000)
+    return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m${s % 60}s`
+  }
+
+  const getStageElapsed = (stageName) => {
+    const timing = stageTimings[stageName]
+    if (!timing?.startedAt) return null
+    const now = Date.now()
+    const endAt = timing.maternalDoneAt || timing.doneAt || now
+    return formatElapsed(endAt - timing.startedAt)
+  }
+
   // ── 阶段卡片视图 (右面板) ──
   const renderStageCards = () => {
     const visibleStages = blueprint.stages.filter(stg => stageProgress[stg.name])
@@ -960,8 +1242,11 @@ function App() {
               {/* 标题行 — 固定 */}
               <div className="shrink-0 flex items-center justify-between px-5 pt-5 pb-2">
                 <div className="flex items-center gap-2.5">
-                  <span className="text-2xl font-heading font-bold text-muted-foreground/40">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-2xl font-heading font-bold text-primary/70">{String(i + 1).padStart(2, '0')}</span>
                   <span className="text-base font-heading font-semibold capitalize">{tk(stg.name.replace(/_/g, ' '))}</span>
+                  {(isActive || isDone || isMaternal) && getStageElapsed(stg.name) && (
+                    <span className="text-[11px] font-mono text-muted-foreground tabular-nums">{getStageElapsed(stg.name)}</span>
+                  )}
                 </div>
                 {isMaternal ? (
                   <span className="text-[10px] font-mono font-semibold tracking-wider bg-[color:var(--color-maternal)] text-white px-2.5 py-1 rounded animate-pulse">{lang === 'zh' ? '母体反应中' : 'MATERNAL'}</span>
@@ -1014,12 +1299,28 @@ function App() {
                         )}>
                           {typeof val === 'object' ? (
                             Array.isArray(val) ? (
-                              <div className="flex flex-col gap-1.5">
+                              <div className="flex flex-col gap-2">
                                 {val.map((item, j) => (
-                                  <div key={j} className="flex gap-2">
-                                    <span className="text-muted-foreground shrink-0">•</span>
-                                    <span>{typeof item === 'object' ? JSON.stringify(item, null, 2) : String(item)}</span>
-                                  </div>
+                                  item && typeof item === 'object' ? (
+                                    <div key={j} className="rounded-md border border-border/60 bg-background/40 px-3 py-2 flex flex-col gap-1">
+                                      {Object.entries(item).map(([ik, iv]) => (
+                                        <div key={ik} className="flex gap-2 text-xs">
+                                          <span className="font-mono font-semibold shrink-0 capitalize text-foreground/80">{tk(ik.replace(/_/g, ' '))}</span>
+                                          <span className="text-muted-foreground break-words min-w-0">{
+                                            iv == null ? '—'
+                                            : typeof iv === 'object' ? JSON.stringify(iv)
+                                            : typeof iv === 'number' ? (Number.isInteger(iv) ? iv : iv.toFixed(2))
+                                            : String(iv)
+                                          }</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div key={j} className="flex gap-2">
+                                      <span className="text-muted-foreground shrink-0">•</span>
+                                      <span>{String(item)}</span>
+                                    </div>
+                                  )
                                 ))}
                               </div>
                             ) : (
@@ -1063,13 +1364,11 @@ function App() {
                 size="lg"
                 className="flex-1"
                 onClick={() => {
-                  fetch(`${API}/cradle/admit`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ baby_id: babyState.id }),
-                  })
-                    .then(r => { if (!r.ok) throw new Error(); return r.json() })
-                    .then(() => { navigate(`/cradle/${babyState.id}?autoGrow=true`) })
-                    .catch(e => console.error('Admit failed:', e))
+                  const babyId = babyState.id
+                  // 跳转到摇篮详情页
+                  navigate(`/cradle/${babyId}?autoAdmit=true`)
+                  // 清空子宫孕育状态——否则用户返回子宫页会永远卡在"孕育完成"画面
+                  dispatch({ type: 'CLEAR_PROGRESS' })
                 }}
               >
                 {lang === 'zh' ? '放入摇篮' : 'To Cradle'} →
@@ -1097,6 +1396,18 @@ function App() {
       <ConsolePanel
         ref={consoleRef}
         className="h-full"
+        headerRight={
+          <button
+            type="button"
+            onClick={() => setConsoleFullscreen(v => !v)}
+            className="flex items-center justify-center w-6 h-6 rounded text-[#999] hover:text-white hover:bg-white/10 transition-colors"
+            title={consoleFullscreen
+              ? (lang === 'zh' ? '缩小' : 'Minimize')
+              : (lang === 'zh' ? '全屏' : 'Fullscreen')}
+          >
+            {consoleFullscreen ? <Minimize2 className="size-3.5" /> : <Maximize2 className="size-3.5" />}
+          </button>
+        }
         header={
           <div className="flex items-center gap-2.5 text-[11px]">
             <span className="text-[#666]">Step {doneCount}/7</span>
@@ -1132,7 +1443,7 @@ function App() {
   // ── 孕育前单页布局 ──
   const renderPreConceive = () => (
     <div className="flex-1 overflow-y-auto">
-      <div className="max-w-7xl mx-auto px-12 min-h-full flex items-center gap-12">
+      <div className="max-w-5xl mx-auto px-8 min-h-full flex items-center gap-8">
         {/* 左列 — 固定内容，立即显示 */}
         <div className="w-1/2">
           {renderBlueprint()}
@@ -1147,30 +1458,48 @@ function App() {
 
   // ── 孕育中分屏布局 ──
   const renderConceiving = () => (
-    <div className="flex flex-col flex-1 overflow-hidden">
-      <div className="flex flex-1 overflow-hidden">
-        {/* 左面板 */}
-        <div className="left-panel w-1/2 bg-background border-r border-border flex flex-col shrink-0">
-          <div className="shrink-0 px-5 pt-5 pb-2">
-            {renderMonitorHeader()}
-          </div>
-          <div ref={leftPanelRef} className="flex-1 overflow-y-auto px-5 pb-5 flex flex-col gap-3">
-            <div className="w-full flex flex-col gap-3">
-              {renderMonitor()}
-            </div>
-          </div>
-        </div>
-        {/* 右面板：阶段卡片 */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 flex flex-col p-5 overflow-hidden">
-            {renderStageCards()}
-          </div>
-        </div>
+    <div className="flex flex-1 overflow-hidden">
+      {/* 左面板：力导向因果图谱 */}
+      <div className={cn(
+        "left-panel bg-background flex flex-col shrink-0 transition-all duration-300",
+        graphFullscreen ? "w-full" : "w-1/2 border-r border-border"
+      )}>
+        <LifeGraph
+          nodes={graphState.nodes}
+          edges={graphState.edges}
+          filter={graphState.filter}
+          showLabels={graphState.showLabels}
+          highlight={graphState.highlight}
+          stage="womb"
+          dispatch={graphDispatch}
+          fullscreen={graphFullscreen}
+          onToggleFullscreen={() => setGraphFullscreen(f => !f)}
+        />
       </div>
-      {/* 底部控制台 */}
-      <div className="border-t border-border p-2 overflow-hidden" style={{ flex: '1 1 0%', minHeight: '120px', maxHeight: '25%' }}>
-        <div className="h-full flex flex-col">
-          {renderConsole()}
+      {/* 右面板：阶段卡片 + 控制台 */}
+      <div className={cn(
+        "flex-1 flex flex-col overflow-hidden relative transition-all duration-300",
+        graphFullscreen && "hidden"
+      )}>
+        {/* 阶段卡片 */}
+        <div className={cn(
+          "flex flex-col p-5 overflow-hidden",
+          consoleFullscreen ? "hidden" : "flex-1"
+        )}>
+          {renderStageCards()}
+        </div>
+        {/* 控制台：非全屏时占据右侧底部，全屏时覆盖整个右侧 */}
+        <div className={cn(
+          "overflow-hidden",
+          consoleFullscreen
+            ? "flex-1 p-2"
+            : "border-t border-border p-2 shrink-0"
+        )}
+        style={consoleFullscreen ? undefined : { height: '30%', minHeight: '160px' }}
+        >
+          <div className="h-full flex flex-col">
+            {renderConsole()}
+          </div>
         </div>
       </div>
     </div>
@@ -1190,7 +1519,7 @@ function App() {
     <div className="flex flex-col h-screen">
       {/* 顶部导航 */}
       <div className="h-16 bg-card border-b border-border flex items-center px-6 shrink-0 relative">
-        <img src={`/logo.svg?v=${Date.now()}`} alt={t.title} className="h-[50px] mr-auto" />
+        <img src="/logo.svg" alt={t.title} className="h-[50px] mr-auto" />
         <div className="flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
           {['womb', 'cradle', 'world'].map((key, i) => (
             <span key={key} className="contents">
@@ -1201,7 +1530,14 @@ function App() {
                   "hover:text-foreground",
                   tab === key && "text-primary after:content-[''] after:absolute after:bottom-0 after:left-[20%] after:right-[20%] after:h-0.5 after:bg-primary after:rounded-[1px]"
                 )}
-                onClick={() => navigate(`/${key}`)}
+                onClick={() => {
+                  if (key === 'cradle') {
+                    const last = localStorage.getItem('cradle:lastBabyId')
+                    navigate(last ? `/cradle/${last}` : '/cradle')
+                  } else {
+                    navigate(`/${key}`)
+                  }
+                }}
               >
                 {t.tabs[key]}
               </button>
@@ -1209,6 +1545,40 @@ function App() {
           ))}
         </div>
         <div className="ml-auto flex items-center gap-1.5">
+          {/* 全局速率选择器 */}
+          <div className="flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1 h-7">
+            <Gauge className="size-3 text-muted-foreground" />
+            {[
+              { value: 'slow', label: '1x', hint: lang === 'zh' ? '~60h' : '~60h' },
+              { value: 'normal', label: '7x', hint: lang === 'zh' ? '~8h' : '~8h' },
+              { value: 'fast', label: '30x', hint: lang === 'zh' ? '~2h' : '~2h' },
+              { value: 'turbo', label: 'T', hint: lang === 'zh' ? '~10min' : '~10min' },
+            ].map(opt => (
+              <button
+                key={opt.value}
+                title={lang === 'zh' ? `全程约 ${opt.hint}` : `Full run ≈ ${opt.hint}`}
+                className={cn(
+                  "flex flex-col items-center px-2 py-0.5 rounded text-[10px] font-medium transition-colors leading-tight",
+                  timeScale === opt.value
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+                onClick={async () => {
+                  try {
+                    const r = await fetch(`${API}/system/time-scale`, {
+                      method: 'PATCH',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ time_scale: opt.value }),
+                    })
+                    if (r.ok) { localStorage.setItem('timeScale', opt.value); setTimeScale(opt.value) }
+                  } catch { /* ignore */ }
+                }}
+              >
+                <span>{opt.label}</span>
+                <span className="text-[8px] opacity-60">{opt.hint}</span>
+              </button>
+            ))}
+          </div>
           <Button
             variant="outline"
             size="sm"
@@ -1228,11 +1598,15 @@ function App() {
       </div>
       <Routes>
         <Route path="/womb" element={renderWomb()} />
-        <Route path="/cradle" element={<Cradle lang={lang} />} />
-        <Route path="/cradle/:babyId" element={<Cradle lang={lang} />} />
+        <Route path="/cradle" element={null} />
+        <Route path="/cradle/:babyId" element={null} />
         <Route path="/world" element={renderPlaceholder(t.tabs.world)} />
         <Route path="*" element={<Navigate to="/womb" replace />} />
       </Routes>
+      {/* Cradle 常驻挂载，避免 tab 切换时丢失内部状态/SSE/滚动位置 */}
+      <div className={cn("flex-1 min-h-0", tab === 'cradle' ? 'flex flex-col' : 'hidden')}>
+        <Cradle lang={lang} graphState={graphState} graphDispatch={graphDispatch} />
+      </div>
     </div>
   )
 }

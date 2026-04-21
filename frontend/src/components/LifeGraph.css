@@ -1,0 +1,423 @@
+/* LifeGraph — 完整复刻 MiroFish/GraphPanel.vue 的视觉。lg- 前缀避免全局污染 */
+
+.lg-panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #FAFAFA;
+  background-image: radial-gradient(#D0D0D0 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 全屏态不再改变定位，交由父容器 w-1/2 ↔ w-full 的 transition 驱动，
+   这样放大与缩小都有一致的过渡动画，且天然处在顶部导航下方。 */
+.lg-panel.lg-fullscreen {
+  /* intentionally empty */
+}
+
+/* Header */
+.lg-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 16px 20px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+.lg-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  pointer-events: auto;
+}
+
+.lg-header-tools {
+  pointer-events: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.lg-tool-btn {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #E0E0E0;
+  background: #FFF;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  font-size: 13px;
+}
+
+.lg-tool-btn:hover {
+  background: #F5F5F5;
+  color: #000;
+  border-color: #CCC;
+}
+
+/* Container：占据除 legend 外的全部高度 */
+.lg-container {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.lg-view, .lg-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Empty state */
+.lg-state {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #999;
+}
+
+.lg-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.2;
+}
+
+/* Legend (底部流式布局，非浮层) */
+.lg-legend {
+  flex-shrink: 0;
+  background: #FFFFFF;
+  padding: 10px 20px;
+  border-top: 1px solid #EAEAEA;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lg-legend-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #E91E63;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.lg-legend-items {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 隐藏滚动条但保留滚动能力 */
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE / 老 Edge */
+}
+
+.lg-legend-items::-webkit-scrollbar {
+  display: none;                  /* WebKit / Blink */
+}
+
+.lg-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.lg-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.lg-legend-label {
+  white-space: nowrap;
+}
+
+/* Edge Labels Toggle (in header, inline) */
+.lg-labels-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF;
+  padding: 6px 12px;
+  border-radius: 18px;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  height: 32px;
+}
+
+.lg-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.lg-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lg-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #E0E0E0;
+  border-radius: 18px;
+  transition: 0.3s;
+}
+
+.lg-slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.lg-switch input:checked + .lg-slider {
+  background-color: #7B2D8E;
+}
+
+.lg-switch input:checked + .lg-slider:before {
+  transform: translateX(14px);
+}
+
+.lg-toggle-label {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Detail Panel (Right Side) */
+.lg-detail-panel {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 320px;
+  max-height: calc(100% - 100px);
+  background: #FFF;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  font-size: 13px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #FAFAFA;
+  border-bottom: 1px solid #EEE;
+  flex-shrink: 0;
+}
+
+.lg-detail-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.lg-detail-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.lg-detail-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.lg-detail-close:hover {
+  color: #333;
+}
+
+.lg-detail-content {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.lg-detail-row {
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.lg-detail-label {
+  color: #888;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.lg-detail-value {
+  color: #333;
+  flex: 1;
+  word-break: break-word;
+}
+
+.lg-uuid-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #666;
+}
+
+.lg-detail-section {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #F0F0F0;
+}
+
+.lg-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.lg-summary-text {
+  line-height: 1.6;
+  color: #444;
+  font-size: 12px;
+}
+
+.lg-edge-header {
+  background: #F8F8F8;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Self-loop styles */
+.lg-loop-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+  border: 1px solid #C8E6C9;
+}
+
+.lg-loop-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: #666;
+  background: rgba(255,255,255,0.8);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.lg-loop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lg-loop-item {
+  background: #FAFAFA;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+}
+
+.lg-loop-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #F5F5F5;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lg-loop-item-header:hover {
+  background: #EEEEEE;
+}
+
+.lg-loop-item.expanded .lg-loop-item-header {
+  background: #E8E8E8;
+}
+
+.lg-loop-index {
+  font-size: 10px;
+  font-weight: 600;
+  color: #888;
+  background: #E0E0E0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.lg-loop-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.lg-loop-toggle {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  background: #E0E0E0;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.lg-loop-item-content {
+  padding: 12px;
+  border-top: 1px solid #EAEAEA;
+}
