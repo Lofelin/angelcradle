@@ -6,7 +6,7 @@
 
 ## 成员清单
 
-schema.py: `InitiativeScene` dataclass —— id / trigger / context / expression / signal / facial / body / intent / parent_hint / default_tags。trigger 必在 `cradle.initiative_needs.TRIGGER_URGENCY` 枚举，expression 必须符合对应 phase 的 `cradle.phases.EXPRESSION_MODES`。
+schema.py: `InitiativeScene` dataclass —— id / trigger / context / expression / signal / facial / body / intent / parent_hint / default_tags，以及双语副字段 `*_zh` / `*_en`（context/expression/signal/facial/body 以及 intent_en / parent_hint_en）。trigger 必在 `cradle.initiative_needs.TRIGGER_URGENCY` 枚举，expression 必须符合对应 phase 的 `cradle.phases.EXPRESSION_MODES`。提供 `localized(lang)` 便捷取值：按语种返回纯中/纯英一组字段，缺失字段自动 fallback 到主字段。
 
 __init__.py: 加载门面 —— `load_scenes_for_phase(phase)` 懒加载 + 单例缓存；`pick_scene(phase, trigger=?, exclude_ids=?)` 加权随机选（避免重复）；`count_scenes` / `all_scenes` / `reset_cache` 供测试。
 
@@ -32,6 +32,11 @@ from scenes import (
     load_scenes_for_phase, count_scenes, all_scenes,
     pick_scene, reset_cache,
 )
+
+# 双语取值（lang='zh' 或 'en'）
+scene = pick_scene(phase=3)
+zh = scene.localized("zh")   # context/expression/signal/facial/body/intent/parent_hint 均为中文
+en = scene.localized("en")   # 全英文，缺失自动 fallback 到主字段
 ```
 
 ## 依赖关系
@@ -69,6 +74,15 @@ from scenes import (
 - phase 0 无 autonomy / phase 11 无 teething（发育合理性）✓
 - id 全局唯一 ✓
 - pick_scene 轮转测试通过 ✓
+
+## 双语适配（2026-04-22）
+
+- 全部 603 条已补齐双语副字段：
+  - phase 0-3：英文主字段 + `*_zh` 中文版本
+  - phase 4-7：混合形式（context/signal/facial/body 英文主，expression/intent/parent_hint 中文主），互补补齐反语种字段
+  - phase 8-11：英文主字段 + 完整 `*_zh` 中文翻译
+- `localized('zh')` / `localized('en')` 均能返回一整组纯语种字段
+- scheduler/needs.py 的 `rule_based_need` / `force_emit_need` 向 baby_need 事件透传 `expression_zh/en`、`signal_zh/en`、`facial_zh/en`、`body_zh/en`、`parent_hint_zh/en`，原主字段保留以维持向后兼容
 
 ## 非目标
 
