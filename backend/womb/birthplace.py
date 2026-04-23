@@ -3,7 +3,7 @@
 
 仅 human 物种支持。非 human 物种所有函数返回 None。
 
-[INPUT]: womb/data/regions.yaml
+[INPUT]: womb/data/regions.yaml, womb/geo_sampler（坐标采样）
 [OUTPUT]: 导出 load_regions, roll_birthplace, resolve_birthplace, get_race_weights, get_environment_bias
 [POS]: womb/ 的地理维度基础设施，被 __init__.py 和 api/conceive.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -17,22 +17,29 @@ from pathlib import Path
 
 import yaml
 
+from . import geo_sampler
+
 logger = logging.getLogger(__name__)
 
 _DATA_DIR = Path(__file__).parent / "data"
 _REGIONS_CACHE: dict | None = None
+_REGIONS_CACHE_MTIME: float | None = None
 
 
 def load_regions() -> dict:
-    """加载并缓存 regions.yaml。缺失或格式错误时返回空结构。"""
-    global _REGIONS_CACHE
-    if _REGIONS_CACHE is not None:
-        return _REGIONS_CACHE
+    """加载 regions.yaml，按文件 mtime 自动失效。缺失或格式错误时返回空结构。"""
+    global _REGIONS_CACHE, _REGIONS_CACHE_MTIME
 
     path = _DATA_DIR / "regions.yaml"
     if not path.is_file():
-        logger.warning("regions.yaml not found at %s, birthplace disabled", path)
+        if _REGIONS_CACHE is None:
+            logger.warning("regions.yaml not found at %s, birthplace disabled", path)
         _REGIONS_CACHE = {"regional_defaults": {}, "countries": []}
+        _REGIONS_CACHE_MTIME = None
+        return _REGIONS_CACHE
+
+    mtime = path.stat().st_mtime
+    if _REGIONS_CACHE is not None and _REGIONS_CACHE_MTIME == mtime:
         return _REGIONS_CACHE
 
     try:
@@ -40,19 +47,36 @@ def load_regions() -> dict:
         if not isinstance(data, dict) or "countries" not in data:
             raise ValueError("Invalid regions.yaml structure")
         _REGIONS_CACHE = data
+        _REGIONS_CACHE_MTIME = mtime
+        logger.info("Loaded regions.yaml: %d countries", len(data.get("countries", [])))
     except Exception as e:
         logger.warning("Failed to load regions.yaml: %s, birthplace disabled", e)
         _REGIONS_CACHE = {"regional_defaults": {}, "countries": []}
+        _REGIONS_CACHE_MTIME = mtime
 
     return _REGIONS_CACHE
 
 
 def _build_birthplace_dict(country: dict) -> dict:
-    """从国家条目构建标准化的 birthplace dict。"""
+    """从国家条目构建标准化的 birthplace dict。
+
+    coordinates + city 按三级降级链生成：
+      L1 geo_sampler.sample_city_and_point — 城市加权 + 高斯抖动，city 为英文城市名
+      L2 geo_sampler 内部降级到 polygon 均匀采样，city 为 None
+      L3 regions.yaml 的国家中心点（shapely/数据不可用时），city 为 None
+    """
+    sampled = geo_sampler.sample_city_and_point(country.get("code", ""))
+    if sampled is not None:
+        coordinates = {"lat": sampled["lat"], "lng": sampled["lng"]}
+        city = sampled.get("city")
+    else:
+        coordinates = country.get("coordinates", {})
+        city = None
     return {
         "name": country["name"],
         "code": country["code"],
-        "coordinates": country.get("coordinates", {}),
+        "city": city,
+        "coordinates": coordinates,
         "region": country.get("region", ""),
         "race_distribution": country.get("race_distribution", {}),
         "environment_modifiers": country.get("environment_modifiers", {}),

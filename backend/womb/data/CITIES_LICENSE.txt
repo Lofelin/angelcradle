@@ -1,0 +1,22 @@
+cities.csv 数据归属
+===================
+
+数据来源：GeoNames cities15000 dataset
+  URL: https://download.geonames.org/export/dump/cities15000.zip
+  原始格式：TSV, 19 列
+  包含：人口 ≥ 15000 的城市/聚居地
+
+许可：Creative Commons Attribution 4.0 International (CC BY 4.0)
+  https://creativecommons.org/licenses/by/4.0/
+
+归属声明（需同时出现在产品可见位置）：
+  "City data © GeoNames contributors, licensed under CC BY 4.0
+   (https://download.geonames.org)"
+
+本项目使用情况：
+  - 仅保留列：city, lat, lng, iso2, population
+  - 仅保留 feature_class == 'P'（城市/聚居地）且 population > 0 的条目
+  - 构建脚本：scripts/build_cities_dataset.py
+
+下载时间：2026-04-23
+行数：33564
