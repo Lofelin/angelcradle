@@ -1,0 +1,3833 @@
+{
+  "baby_id": "AC-20260421-36472",
+  "species": "human",
+  "sex": "female",
+  "schema": "v3-business-as-graph",
+  "status": "world_ready",
+  "saved_at": "2026-04-22T12:00:00Z",
+  "phases_completed": 12,
+  "center_anchor": "baby_this",
+  "role": {
+    "anchor": "baby_this"
+  },
+  "nodes": [
+    {
+      "id": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "label": "Motor Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "motor",
+        "display_zh": "运动发育",
+        "raw_id": "dimension:motor"
+      },
+      "continuant_id": "dimension:motor",
+      "narrative": {
+        "primary": {
+          "zh_CN": "粗大动作到精细动作：反射 → 抓握 → 爬站走 → 工具使用 → 精细协调。",
+          "en": "Gross to fine motor: reflexes → grasp → crawl/stand/walk → tool use → fine coordination."
+        }
+      }
+    },
+    {
+      "id": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "label": "Cognitive Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "cognitive",
+        "display_zh": "认知发育",
+        "raw_id": "dimension:cognitive"
+      },
+      "continuant_id": "dimension:cognitive",
+      "narrative": {
+        "primary": {
+          "zh_CN": "从反射循环反应到前运算期的符号与因果思维——Piaget 六阶段的前两大期。",
+          "en": "From reflex circular reactions to preoperational symbolic/causal thinking — Piaget's first two major stages."
+        }
+      }
+    },
+    {
+      "id": "e7304039-a53f-5786-aca8-913f0954b923",
+      "label": "Language Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "language",
+        "display_zh": "语言发育",
+        "raw_id": "dimension:language"
+      },
+      "continuant_id": "dimension:language",
+      "narrative": {
+        "primary": {
+          "zh_CN": "哭泣 → 咕咕 → 咿呀 → 首词 → 双词 → 句子 → 叙事。",
+          "en": "Cry → cooing → babble → first words → two-word → sentence → narrative."
+        }
+      }
+    },
+    {
+      "id": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "label": "Social Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "social",
+        "display_zh": "社交发育",
+        "raw_id": "dimension:social"
+      },
+      "continuant_id": "dimension:social",
+      "narrative": {
+        "primary": {
+          "zh_CN": "印记 → 识别 → 依附 → 平行游戏 → 合作 → 道德意识。",
+          "en": "Imprint → recognize → attachment → parallel play → cooperative → moral sense."
+        }
+      }
+    },
+    {
+      "id": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "label": "Emotional Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "emotional",
+        "display_zh": "情绪发育",
+        "raw_id": "dimension:emotional"
+      },
+      "continuant_id": "dimension:emotional",
+      "narrative": {
+        "primary": {
+          "zh_CN": "反射情感 → 基本情绪分化 → 自我意识情绪 → 同理心 → 情绪调节。",
+          "en": "Reflex affect → primary emotions → self-conscious emotions → empathy → regulation."
+        }
+      }
+    },
+    {
+      "id": "e4920545-6bda-5237-b0b5-923c78d5c636",
+      "label": "Physical Development",
+      "group": "dimension",
+      "metadata": {
+        "kind": "dimension",
+        "dim": "physical",
+        "display_zh": "体格发育",
+        "raw_id": "dimension:physical"
+      },
+      "continuant_id": "dimension:physical",
+      "narrative": {
+        "primary": {
+          "zh_CN": "身高 / 体重 / 生理节律 / 如厕独立 / 分房睡——可量化的生理成长曲线。",
+          "en": "Height / weight / circadian / toilet training / independent sleep — quantifiable growth."
+        }
+      }
+    },
+    {
+      "id": "6f9ffc97-ee63-5197-96de-c422e1bef349",
+      "label": "Motor · neonatal",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "motor",
+        "stage": "neonatal",
+        "age_range_zh": "0-1 个月",
+        "age_range_en": "0-1 mo",
+        "raw_id": "phase:motor:neonatal"
+      },
+      "continuant_id": "phase:motor:neonatal"
+    },
+    {
+      "id": "dbbbf109-a79c-55bf-b2af-d1e946815677",
+      "label": "Motor · early infant",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "motor",
+        "stage": "early_infant",
+        "age_range_zh": "1-6 个月",
+        "age_range_en": "1-6 mo",
+        "raw_id": "phase:motor:early_infant"
+      },
+      "continuant_id": "phase:motor:early_infant"
+    },
+    {
+      "id": "99a3368f-928f-5b72-9862-222b1dabd703",
+      "label": "Motor · late infant",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "motor",
+        "stage": "late_infant",
+        "age_range_zh": "6-12 个月",
+        "age_range_en": "6-12 mo",
+        "raw_id": "phase:motor:late_infant"
+      },
+      "continuant_id": "phase:motor:late_infant"
+    },
+    {
+      "id": "d4e8656b-ebbb-54e3-bae7-60e0f6b004d4",
+      "label": "Motor · toddler",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "motor",
+        "stage": "toddler",
+        "age_range_zh": "1-3 岁",
+        "age_range_en": "1-3 yr",
+        "raw_id": "phase:motor:toddler"
+      },
+      "continuant_id": "phase:motor:toddler"
+    },
+    {
+      "id": "e1dfa153-1e90-5db8-a81d-ea112c79ff57",
+      "label": "Motor · preschool",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "motor",
+        "stage": "preschool",
+        "age_range_zh": "3-7 岁",
+        "age_range_en": "3-7 yr",
+        "raw_id": "phase:motor:preschool"
+      },
+      "continuant_id": "phase:motor:preschool"
+    },
+    {
+      "id": "5696ecab-5e6e-536c-9624-5d895297b2eb",
+      "label": "Cognitive · sensorimotor reflex",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "cognitive",
+        "stage": "sensorimotor_reflex",
+        "age_range_zh": "0-3 个月",
+        "age_range_en": "0-3 mo",
+        "raw_id": "phase:cognitive:sensorimotor_reflex"
+      },
+      "continuant_id": "phase:cognitive:sensorimotor_reflex"
+    },
+    {
+      "id": "52683338-30e7-5874-92f2-6439545c9569",
+      "label": "Cognitive · primary circular",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "cognitive",
+        "stage": "primary_circular",
+        "age_range_zh": "3-9 个月",
+        "age_range_en": "3-9 mo",
+        "raw_id": "phase:cognitive:primary_circular"
+      },
+      "continuant_id": "phase:cognitive:primary_circular"
+    },
+    {
+      "id": "9b9b8bf0-2ce6-5476-af86-c8579b9dc165",
+      "label": "Cognitive · coordination",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "cognitive",
+        "stage": "coordination",
+        "age_range_zh": "9-18 个月",
+        "age_range_en": "9-18 mo",
+        "raw_id": "phase:cognitive:coordination"
+      },
+      "continuant_id": "phase:cognitive:coordination"
+    },
+    {
+      "id": "ebbd3d77-c4ce-5a18-93d5-c44044287865",
+      "label": "Cognitive · symbolic",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "cognitive",
+        "stage": "symbolic",
+        "age_range_zh": "1.5-3 岁",
+        "age_range_en": "1.5-3 yr",
+        "raw_id": "phase:cognitive:symbolic"
+      },
+      "continuant_id": "phase:cognitive:symbolic"
+    },
+    {
+      "id": "836bd653-9781-5110-9dfc-f97bf6d2f513",
+      "label": "Cognitive · preoperational",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "cognitive",
+        "stage": "preoperational",
+        "age_range_zh": "3-7 岁",
+        "age_range_en": "3-7 yr",
+        "raw_id": "phase:cognitive:preoperational"
+      },
+      "continuant_id": "phase:cognitive:preoperational"
+    },
+    {
+      "id": "5b127bc7-c85f-5b6e-b17a-c56db3381a3f",
+      "label": "Language · cry",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "cry",
+        "age_range_zh": "0-2 个月",
+        "age_range_en": "0-2 mo",
+        "raw_id": "phase:language:cry"
+      },
+      "continuant_id": "phase:language:cry"
+    },
+    {
+      "id": "12f34c3d-646f-5b70-a183-a2843d3d5c42",
+      "label": "Language · cooing",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "cooing",
+        "age_range_zh": "2-4 个月",
+        "age_range_en": "2-4 mo",
+        "raw_id": "phase:language:cooing"
+      },
+      "continuant_id": "phase:language:cooing"
+    },
+    {
+      "id": "a7074366-37a3-5269-a46a-aa9b7c1e4ac7",
+      "label": "Language · babble",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "babble",
+        "age_range_zh": "4-12 个月",
+        "age_range_en": "4-12 mo",
+        "raw_id": "phase:language:babble"
+      },
+      "continuant_id": "phase:language:babble"
+    },
+    {
+      "id": "367eaed3-1159-5ad4-9c2d-d21ccc5b6a91",
+      "label": "Language · first words",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "first_words",
+        "age_range_zh": "1-1.5 岁",
+        "age_range_en": "1-1.5 yr",
+        "raw_id": "phase:language:first_words"
+      },
+      "continuant_id": "phase:language:first_words"
+    },
+    {
+      "id": "50b2a2d0-6f52-519a-8843-4bef8a53f6c1",
+      "label": "Language · sentence",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "sentence",
+        "age_range_zh": "1.5-3 岁",
+        "age_range_en": "1.5-3 yr",
+        "raw_id": "phase:language:sentence"
+      },
+      "continuant_id": "phase:language:sentence"
+    },
+    {
+      "id": "5ab57038-9e84-5473-bb31-c10671a3134d",
+      "label": "Language · narrative",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "language",
+        "stage": "narrative",
+        "age_range_zh": "3-7 岁",
+        "age_range_en": "3-7 yr",
+        "raw_id": "phase:language:narrative"
+      },
+      "continuant_id": "phase:language:narrative"
+    },
+    {
+      "id": "72a6e6f4-d067-56ec-9b32-b73f3577f0fc",
+      "label": "Social · imprint",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "imprint",
+        "age_range_zh": "0-3 个月",
+        "age_range_en": "0-3 mo",
+        "raw_id": "phase:social:imprint"
+      },
+      "continuant_id": "phase:social:imprint"
+    },
+    {
+      "id": "1f9609ed-37fa-55ad-bf48-438b7a0028fb",
+      "label": "Social · recognize",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "recognize",
+        "age_range_zh": "3-6 个月",
+        "age_range_en": "3-6 mo",
+        "raw_id": "phase:social:recognize"
+      },
+      "continuant_id": "phase:social:recognize"
+    },
+    {
+      "id": "ddc34a7d-8044-572d-b4ee-81c65e41c885",
+      "label": "Social · attachment",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "attachment",
+        "age_range_zh": "6-18 个月",
+        "age_range_en": "6-18 mo",
+        "raw_id": "phase:social:attachment"
+      },
+      "continuant_id": "phase:social:attachment"
+    },
+    {
+      "id": "b8d0db3d-da26-5f5b-af25-0feddaf8332d",
+      "label": "Social · parallel play",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "parallel_play",
+        "age_range_zh": "1.5-3 岁",
+        "age_range_en": "1.5-3 yr",
+        "raw_id": "phase:social:parallel_play"
+      },
+      "continuant_id": "phase:social:parallel_play"
+    },
+    {
+      "id": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "label": "Social · cooperative",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "cooperative",
+        "age_range_zh": "3-5 岁",
+        "age_range_en": "3-5 yr",
+        "raw_id": "phase:social:cooperative"
+      },
+      "continuant_id": "phase:social:cooperative"
+    },
+    {
+      "id": "c0328e6f-ed4c-524f-995d-4f1e2fea5e58",
+      "label": "Social · moral",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "social",
+        "stage": "moral",
+        "age_range_zh": "5-7 岁",
+        "age_range_en": "5-7 yr",
+        "raw_id": "phase:social:moral"
+      },
+      "continuant_id": "phase:social:moral"
+    },
+    {
+      "id": "fe813674-a11c-561a-aa83-56ca776f55ab",
+      "label": "Emotional · reflex affect",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "emotional",
+        "stage": "reflex_affect",
+        "age_range_zh": "0-3 个月",
+        "age_range_en": "0-3 mo",
+        "raw_id": "phase:emotional:reflex_affect"
+      },
+      "continuant_id": "phase:emotional:reflex_affect"
+    },
+    {
+      "id": "0d91d02b-ea26-5232-b252-3ff6e94d0411",
+      "label": "Emotional · primary emotions",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "emotional",
+        "stage": "primary_emotions",
+        "age_range_zh": "3-12 个月",
+        "age_range_en": "3-12 mo",
+        "raw_id": "phase:emotional:primary_emotions"
+      },
+      "continuant_id": "phase:emotional:primary_emotions"
+    },
+    {
+      "id": "1ff15db7-3684-5191-a91e-f058f0785fbf",
+      "label": "Emotional · self awareness",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "emotional",
+        "stage": "self_awareness",
+        "age_range_zh": "1-3 岁",
+        "age_range_en": "1-3 yr",
+        "raw_id": "phase:emotional:self_awareness"
+      },
+      "continuant_id": "phase:emotional:self_awareness"
+    },
+    {
+      "id": "53815a99-1e6d-5a8a-8d5e-32e8e3fab36e",
+      "label": "Emotional · empathy",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "emotional",
+        "stage": "empathy",
+        "age_range_zh": "3-5 岁",
+        "age_range_en": "3-5 yr",
+        "raw_id": "phase:emotional:empathy"
+      },
+      "continuant_id": "phase:emotional:empathy"
+    },
+    {
+      "id": "473582b5-7957-551a-b771-83a45087e808",
+      "label": "Emotional · regulation",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "emotional",
+        "stage": "regulation",
+        "age_range_zh": "5-7 岁",
+        "age_range_en": "5-7 yr",
+        "raw_id": "phase:emotional:regulation"
+      },
+      "continuant_id": "phase:emotional:regulation"
+    },
+    {
+      "id": "fc362711-5352-51fa-b384-c96c6ab88a8b",
+      "label": "Physical · neonate",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "physical",
+        "stage": "neonate",
+        "age_range_zh": "0-1 个月",
+        "age_range_en": "0-1 mo",
+        "raw_id": "phase:physical:neonate"
+      },
+      "continuant_id": "phase:physical:neonate"
+    },
+    {
+      "id": "06df5d67-d7d4-5d4e-acbe-32f5098d13c0",
+      "label": "Physical · early infant",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "physical",
+        "stage": "early_infant",
+        "age_range_zh": "1-12 个月",
+        "age_range_en": "1-12 mo",
+        "raw_id": "phase:physical:early_infant"
+      },
+      "continuant_id": "phase:physical:early_infant"
+    },
+    {
+      "id": "dfffb353-9e04-5e31-b619-54e3f75ce014",
+      "label": "Physical · toddler body",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "physical",
+        "stage": "toddler_body",
+        "age_range_zh": "1-3 岁",
+        "age_range_en": "1-3 yr",
+        "raw_id": "phase:physical:toddler_body"
+      },
+      "continuant_id": "phase:physical:toddler_body"
+    },
+    {
+      "id": "2ed8cfca-442a-58de-b7fe-42ee8cb17f15",
+      "label": "Physical · preschool body",
+      "group": "phase",
+      "metadata": {
+        "kind": "phase_dim",
+        "dim": "physical",
+        "stage": "preschool_body",
+        "age_range_zh": "3-7 岁",
+        "age_range_en": "3-7 yr",
+        "raw_id": "phase:physical:preschool_body"
+      },
+      "continuant_id": "phase:physical:preschool_body"
+    },
+    {
+      "id": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "label": "This Baby",
+      "group": "identity",
+      "metadata": {
+        "kind": "baby",
+        "baby_id": "AC-20260421-36472",
+        "sex": "female",
+        "species": "human",
+        "status": "world_ready",
+        "raw_id": "baby_this"
+      },
+      "continuant_id": "AC-20260421-36472",
+      "narrative": {
+        "primary": {
+          "zh_CN": "摇篮期新生命锚点——所有照护、能力、事件、依附发生的主体。",
+          "en": "Cradle-phase self anchor: the subject of all care, capability, event and attachment."
+        }
+      }
+    },
+    {
+      "id": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "label": "Mother",
+      "group": "caregiver",
+      "metadata": {
+        "kind": "caregiver",
+        "caregiver_id": "mother",
+        "role": "mother",
+        "status": "active",
+        "identity_traits": [
+          "patient",
+          "attentive"
+        ],
+        "raw_id": "caregiver_mother"
+      },
+      "continuant_id": "caregiver:mother",
+      "narrative": {
+        "primary": {
+          "zh_CN": "主照护者，全程陪伴，依附核心。",
+          "en": "Primary caregiver, full-time companion, attachment core."
+        }
+      }
+    },
+    {
+      "id": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "label": "Father",
+      "group": "caregiver",
+      "metadata": {
+        "kind": "caregiver",
+        "caregiver_id": "father",
+        "role": "father",
+        "status": "active",
+        "identity_traits": [
+          "playful",
+          "protective"
+        ],
+        "raw_id": "caregiver_father"
+      },
+      "continuant_id": "caregiver:father",
+      "narrative": {
+        "primary": {
+          "zh_CN": "间歇陪伴的父亲，命名仪式主导者。",
+          "en": "Intermittent father; leads naming ceremony."
+        }
+      }
+    },
+    {
+      "id": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "label": "Grandmother",
+      "group": "caregiver",
+      "metadata": {
+        "kind": "caregiver",
+        "caregiver_id": "grandmother",
+        "role": "grandparent",
+        "status": "active",
+        "identity_traits": [
+          "warm"
+        ],
+        "raw_id": "caregiver_grandmother"
+      },
+      "continuant_id": "caregiver:grandmother",
+      "narrative": {
+        "primary": {
+          "zh_CN": "外婆，从 3 个月起间歇照护。",
+          "en": "Grandmother, intermittent from 3mo."
+        }
+      }
+    },
+    {
+      "id": "e636120c-5ece-56f1-be41-71f09ef893f1",
+      "label": "Neonatal",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "neonatal",
+        "phase_index": 0,
+        "raw_id": "progression:neonatal"
+      },
+      "continuant_id": "progression:neonatal",
+      "narrative": {
+        "primary": {
+          "zh_CN": "全反射、纯生理、完全依赖——世界是感官模糊流。",
+          "en": "All reflex, pure physiology, total dependence — the world is a sensory blur."
+        }
+      }
+    },
+    {
+      "id": "92a741ef-f329-5003-a7a7-5bf599487156",
+      "label": "Sensory Awakening",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "sensory_awakening",
+        "phase_index": 1,
+        "raw_id": "progression:sensory_awakening"
+      },
+      "continuant_id": "progression:sensory_awakening",
+      "narrative": {
+        "primary": {
+          "zh_CN": "开始追声追视，社交微笑登场。",
+          "en": "Sound/light tracking begins; social smile emerges."
+        }
+      }
+    },
+    {
+      "id": "f8eb54eb-6ab8-5bcd-8c0b-53a2deba2731",
+      "label": "Body Discovery",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "body_discovery",
+        "phase_index": 2,
+        "raw_id": "progression:body_discovery"
+      },
+      "continuant_id": "progression:body_discovery",
+      "narrative": {
+        "primary": {
+          "zh_CN": "发现自己的手、抓握、翻身——身体是第一个工具。",
+          "en": "Hands discovered, grasp + roll — the body is the first tool."
+        }
+      }
+    },
+    {
+      "id": "3b8b6b40-0fd7-586e-968e-b9b6c41a2f80",
+      "label": "Object Permanence",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "object_permanence",
+        "phase_index": 3,
+        "raw_id": "progression:object_permanence"
+      },
+      "continuant_id": "progression:object_permanence",
+      "narrative": {
+        "primary": {
+          "zh_CN": "物体消失仍存在——世界开始有记忆，陌生人焦虑峰值。",
+          "en": "Objects persist when hidden — the world gains memory; stranger anxiety peaks."
+        }
+      }
+    },
+    {
+      "id": "3b7c67f9-d374-53ac-ba84-4e7e613678dd",
+      "label": "Locomotion",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "locomotion",
+        "phase_index": 4,
+        "raw_id": "progression:locomotion"
+      },
+      "continuant_id": "progression:locomotion",
+      "narrative": {
+        "primary": {
+          "zh_CN": "爬行开启探索，首个实义词出现。",
+          "en": "Crawling opens exploration; first meaningful words emerge."
+        }
+      }
+    },
+    {
+      "id": "509f78c4-a0cb-5dda-aa44-abe9a92c1eef",
+      "label": "First Word",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "first_word",
+        "phase_index": 5,
+        "raw_id": "progression:first_word"
+      },
+      "continuant_id": "progression:first_word",
+      "narrative": {
+        "primary": {
+          "zh_CN": "词汇 10-50，工具使用，独立行走。",
+          "en": "Vocab 10-50, tool use, independent walking."
+        }
+      }
+    },
+    {
+      "id": "3ebef4b8-ff70-5be8-9b0c-646fe66d035f",
+      "label": "Language Explosion",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "language_explosion",
+        "phase_index": 6,
+        "raw_id": "progression:language_explosion"
+      },
+      "continuant_id": "progression:language_explosion",
+      "narrative": {
+        "primary": {
+          "zh_CN": "双词句、假装游戏、镜中自识。",
+          "en": "Two-word phrases, pretend play, mirror self-recognition."
+        }
+      }
+    },
+    {
+      "id": "00552cd6-2b29-5a11-8138-7b9cb496488d",
+      "label": "Why Phase",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "why_phase",
+        "phase_index": 7,
+        "raw_id": "progression:why_phase"
+      },
+      "continuant_id": "progression:why_phase",
+      "narrative": {
+        "primary": {
+          "zh_CN": "完整句 + 无尽为什么 + 情绪风暴。",
+          "en": "Full sentences + endless whys + emotional storms."
+        }
+      }
+    },
+    {
+      "id": "4d1d4f8f-ffa1-5cde-b6db-c1e181e747e9",
+      "label": "Social Budding",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "social_budding",
+        "phase_index": 8,
+        "raw_id": "progression:social_budding"
+      },
+      "continuant_id": "progression:social_budding",
+      "narrative": {
+        "primary": {
+          "zh_CN": "同伴意识、角色扮演、道德萌芽。",
+          "en": "Peer awareness, role play, moral bud."
+        }
+      }
+    },
+    {
+      "id": "23ec8da5-7df4-5fb3-97bc-bc959bf2c057",
+      "label": "Rule Understanding",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "rule_understanding",
+        "phase_index": 9,
+        "raw_id": "progression:rule_understanding"
+      },
+      "continuant_id": "progression:rule_understanding",
+      "narrative": {
+        "primary": {
+          "zh_CN": "知道规则存在，开始试探边界。",
+          "en": "Rules exist and boundaries get tested."
+        }
+      }
+    },
+    {
+      "id": "92f42049-c9fb-573f-882b-1d8b3047ab7b",
+      "label": "Abstract Beginning",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "abstract_beginning",
+        "phase_index": 10,
+        "raw_id": "progression:abstract_beginning"
+      },
+      "continuant_id": "progression:abstract_beginning",
+      "narrative": {
+        "primary": {
+          "zh_CN": "类比 + 时间概念 + 简单假设推理。",
+          "en": "Analogy + time concept + simple hypothetical reasoning."
+        }
+      }
+    },
+    {
+      "id": "6e420ec7-3cfa-56d5-b45b-1b660f6f4228",
+      "label": "Independence",
+      "group": "progression",
+      "metadata": {
+        "kind": "progression",
+        "phase_name": "independence",
+        "phase_index": 11,
+        "raw_id": "progression:independence"
+      },
+      "continuant_id": "progression:independence",
+      "narrative": {
+        "primary": {
+          "zh_CN": "'我自己来'，有观点、能辩论，准备进入世界。",
+          "en": "'I'll do it myself' — has opinions, argues, ready for the world."
+        }
+      }
+    },
+    {
+      "id": "3194aab1-4b91-5678-922f-db3f8d7e7c8d",
+      "label": "Sucking Reflex",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "sucking_reflex",
+        "dim": "motor",
+        "unlocked_at_phase": 0,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_sucking_reflex"
+      },
+      "continuant_id": "capability:sucking_reflex",
+      "narrative": {
+        "primary": {
+          "zh_CN": "运动发育维度能力：Sucking Reflex。",
+          "en": "Motor Development dimension capability: Sucking Reflex."
+        }
+      }
+    },
+    {
+      "id": "343caf6e-bf61-59a6-9ca0-841559181c96",
+      "label": "capability_unlock @ P0",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 0,
+        "seq": "sucking_reflex",
+        "result": "sucking_reflex",
+        "raw_id": "event:capability_unlock:0:sucking_reflex"
+      }
+    },
+    {
+      "id": "32264242-4801-53a6-8d81-9e4cda37260a",
+      "label": "Crying",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "crying",
+        "dim": "language",
+        "unlocked_at_phase": 0,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_crying"
+      },
+      "continuant_id": "capability:crying",
+      "narrative": {
+        "primary": {
+          "zh_CN": "语言发育维度能力：Crying。",
+          "en": "Language Development dimension capability: Crying."
+        }
+      }
+    },
+    {
+      "id": "8985fde4-87ad-5053-ba07-a69fb2f51773",
+      "label": "capability_unlock @ P0",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 0,
+        "seq": "crying",
+        "result": "crying",
+        "raw_id": "event:capability_unlock:0:crying"
+      }
+    },
+    {
+      "id": "992be677-e0fc-5288-9815-3b28118e15ec",
+      "label": "Social Smile",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "social_smile",
+        "dim": "social",
+        "unlocked_at_phase": 1,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_social_smile"
+      },
+      "continuant_id": "capability:social_smile",
+      "narrative": {
+        "primary": {
+          "zh_CN": "针对照护者面孔的定向微笑——依附系统的第一次对话。",
+          "en": "Directed smile at caregiver's face — first dialogue of attachment system."
+        }
+      }
+    },
+    {
+      "id": "de728d35-f444-505d-81c5-11dc170fb123",
+      "label": "capability_unlock @ P1",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 1,
+        "seq": "social_smile",
+        "result": "social_smile",
+        "raw_id": "event:capability_unlock:1:social_smile"
+      }
+    },
+    {
+      "id": "a62f4a30-b953-5564-98b9-4a6f273480de",
+      "label": "Visual Tracking",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "visual_tracking",
+        "dim": "cognitive",
+        "unlocked_at_phase": 1,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_visual_tracking"
+      },
+      "continuant_id": "capability:visual_tracking",
+      "narrative": {
+        "primary": {
+          "zh_CN": "认知发育维度能力：Visual Tracking。",
+          "en": "Cognitive Development dimension capability: Visual Tracking."
+        }
+      }
+    },
+    {
+      "id": "65a0115e-e5da-5d4c-8d56-5f45d96216d9",
+      "label": "capability_unlock @ P1",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 1,
+        "seq": "visual_tracking",
+        "result": "visual_tracking",
+        "raw_id": "event:capability_unlock:1:visual_tracking"
+      }
+    },
+    {
+      "id": "44116534-6e0a-5786-a7eb-a1708ae09df1",
+      "label": "Grasping",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "grasping",
+        "dim": "motor",
+        "unlocked_at_phase": 2,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_grasping"
+      },
+      "continuant_id": "capability:grasping",
+      "narrative": {
+        "primary": {
+          "zh_CN": "运动发育维度能力：Grasping。",
+          "en": "Motor Development dimension capability: Grasping."
+        }
+      }
+    },
+    {
+      "id": "5687ebf4-3fad-571d-ab45-3a33299e8cec",
+      "label": "capability_unlock @ P2",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 2,
+        "seq": "grasping",
+        "result": "grasping",
+        "raw_id": "event:capability_unlock:2:grasping"
+      }
+    },
+    {
+      "id": "790d1329-b224-5da5-862b-a91fa761bceb",
+      "label": "Rolling",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "rolling",
+        "dim": "motor",
+        "unlocked_at_phase": 2,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_rolling"
+      },
+      "continuant_id": "capability:rolling",
+      "narrative": {
+        "primary": {
+          "zh_CN": "运动发育维度能力：Rolling。",
+          "en": "Motor Development dimension capability: Rolling."
+        }
+      }
+    },
+    {
+      "id": "011d5699-5812-57be-8366-3d3f9f88bf77",
+      "label": "capability_unlock @ P2",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 2,
+        "seq": "rolling",
+        "result": "rolling",
+        "raw_id": "event:capability_unlock:2:rolling"
+      }
+    },
+    {
+      "id": "72128167-0300-5168-a1a2-f5618d05b825",
+      "label": "Object Permanence",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "object_permanence",
+        "dim": "cognitive",
+        "unlocked_at_phase": 3,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_object_permanence"
+      },
+      "continuant_id": "capability:object_permanence",
+      "narrative": {
+        "primary": {
+          "zh_CN": "理解物体消失后依然存在——Piaget coordination 阶段的认知飞跃。",
+          "en": "Understanding objects persist when unseen — Piaget coordination-stage leap."
+        }
+      }
+    },
+    {
+      "id": "895dbc1a-995b-5d33-9b16-22bad7c58d1a",
+      "label": "capability_unlock @ P3",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 3,
+        "seq": "object_permanence",
+        "result": "object_permanence",
+        "raw_id": "event:capability_unlock:3:object_permanence"
+      }
+    },
+    {
+      "id": "ffc0d3cc-fa50-5dcb-afad-984492ab4e07",
+      "label": "Stranger Anxiety",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "stranger_anxiety",
+        "dim": "social",
+        "unlocked_at_phase": 3,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_stranger_anxiety"
+      },
+      "continuant_id": "capability:stranger_anxiety",
+      "narrative": {
+        "primary": {
+          "zh_CN": "对陌生面孔回避哭泣——依附分化的健康标志。",
+          "en": "Avoidance/crying to strangers — healthy marker of attachment differentiation."
+        }
+      }
+    },
+    {
+      "id": "14ed8762-68ee-577b-846a-912f6d6eef57",
+      "label": "capability_unlock @ P3",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 3,
+        "seq": "stranger_anxiety",
+        "result": "stranger_anxiety",
+        "raw_id": "event:capability_unlock:3:stranger_anxiety"
+      }
+    },
+    {
+      "id": "6efea46b-1754-5b77-8439-3a015810ee86",
+      "label": "Crawling",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "crawling",
+        "dim": "motor",
+        "unlocked_at_phase": 4,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_crawling"
+      },
+      "continuant_id": "capability:crawling",
+      "narrative": {
+        "primary": {
+          "zh_CN": "运动发育维度能力：Crawling。",
+          "en": "Motor Development dimension capability: Crawling."
+        }
+      }
+    },
+    {
+      "id": "8567b79d-9f02-5215-b9ba-9545c4c35df3",
+      "label": "capability_unlock @ P4",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 4,
+        "seq": "crawling",
+        "result": "crawling",
+        "raw_id": "event:capability_unlock:4:crawling"
+      }
+    },
+    {
+      "id": "1483e9b1-b6a8-5835-a532-6018681587bc",
+      "label": "First Words",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "first_words",
+        "dim": "language",
+        "unlocked_at_phase": 4,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_first_words"
+      },
+      "continuant_id": "capability:first_words",
+      "narrative": {
+        "primary": {
+          "zh_CN": "首批指称性词汇：mama / dada / 常见物。",
+          "en": "First referential words: mama / dada / frequent objects."
+        }
+      }
+    },
+    {
+      "id": "871d66c2-9238-5450-9e9f-9d2f043b5443",
+      "label": "capability_unlock @ P4",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 4,
+        "seq": "first_words",
+        "result": "first_words",
+        "raw_id": "event:capability_unlock:4:first_words"
+      }
+    },
+    {
+      "id": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "label": "Walking",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "walking",
+        "dim": "motor",
+        "unlocked_at_phase": 5,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_walking"
+      },
+      "continuant_id": "capability:walking",
+      "narrative": {
+        "primary": {
+          "zh_CN": "双足离地自主移动——运动发育里程碑。",
+          "en": "Bipedal independent locomotion — motor milestone."
+        }
+      }
+    },
+    {
+      "id": "ab8b9fb4-5beb-5f0e-bcaa-61383eb167cc",
+      "label": "capability_unlock @ P5",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 5,
+        "seq": "walking",
+        "result": "walking",
+        "raw_id": "event:capability_unlock:5:walking"
+      }
+    },
+    {
+      "id": "d2daafdc-b107-5cb5-9014-ca13c0227d3e",
+      "label": "Tool Use",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "tool_use",
+        "dim": "motor",
+        "unlocked_at_phase": 5,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_tool_use"
+      },
+      "continuant_id": "capability:tool_use",
+      "narrative": {
+        "primary": {
+          "zh_CN": "运动发育维度能力：Tool Use。",
+          "en": "Motor Development dimension capability: Tool Use."
+        }
+      }
+    },
+    {
+      "id": "976948fe-c607-544e-b544-eab063360aed",
+      "label": "capability_unlock @ P5",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 5,
+        "seq": "tool_use",
+        "result": "tool_use",
+        "raw_id": "event:capability_unlock:5:tool_use"
+      }
+    },
+    {
+      "id": "f28e87fe-9323-5a12-836d-471cf3efadc4",
+      "label": "Pretend Play",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "pretend_play",
+        "dim": "cognitive",
+        "unlocked_at_phase": 6,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_pretend_play"
+      },
+      "continuant_id": "capability:pretend_play",
+      "narrative": {
+        "primary": {
+          "zh_CN": "把香蕉当电话——符号思维上线。",
+          "en": "Banana-as-phone — symbolic thought online."
+        }
+      }
+    },
+    {
+      "id": "3cdf5f56-5804-5ef4-9edd-b089b2aa6dbb",
+      "label": "capability_unlock @ P6",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 6,
+        "seq": "pretend_play",
+        "result": "pretend_play",
+        "raw_id": "event:capability_unlock:6:pretend_play"
+      }
+    },
+    {
+      "id": "8719af33-f156-5fea-b0fc-24e435a6b9c2",
+      "label": "Self Recognition",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "self_recognition",
+        "dim": "cognitive",
+        "unlocked_at_phase": 6,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_self_recognition"
+      },
+      "continuant_id": "capability:self_recognition",
+      "narrative": {
+        "primary": {
+          "zh_CN": "镜面测试通过，自我意识的决定性标志。",
+          "en": "Passes mirror test — decisive marker of self-awareness."
+        }
+      }
+    },
+    {
+      "id": "06705306-b584-52f5-9670-4cf1c6af496d",
+      "label": "capability_unlock @ P6",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 6,
+        "seq": "self_recognition",
+        "result": "self_recognition",
+        "raw_id": "event:capability_unlock:6:self_recognition"
+      }
+    },
+    {
+      "id": "2b109c63-bfab-5eee-bee8-b4e1b685404a",
+      "label": "Why Questions",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "why_questions",
+        "dim": "language",
+        "unlocked_at_phase": 7,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_why_questions"
+      },
+      "continuant_id": "capability:why_questions",
+      "narrative": {
+        "primary": {
+          "zh_CN": "对因果链的主动探询——认知发动机上线。",
+          "en": "Active inquiry into causal chains — cognitive engine on."
+        }
+      }
+    },
+    {
+      "id": "12a95760-d02e-5590-9c66-c684746f907a",
+      "label": "capability_unlock @ P7",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 7,
+        "seq": "why_questions",
+        "result": "why_questions",
+        "raw_id": "event:capability_unlock:7:why_questions"
+      }
+    },
+    {
+      "id": "0543760d-741d-52f0-9ede-cda15cf308c9",
+      "label": "Emotional Storms",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "emotional_storms",
+        "dim": "emotional",
+        "unlocked_at_phase": 7,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_emotional_storms"
+      },
+      "continuant_id": "capability:emotional_storms",
+      "narrative": {
+        "primary": {
+          "zh_CN": "tantrum 高发期——情绪强度远超调节能力。",
+          "en": "Tantrum-prone era — emotion intensity outstrips regulation."
+        }
+      }
+    },
+    {
+      "id": "4b52ae81-32a2-5019-ae4b-c646f18c6d80",
+      "label": "capability_unlock @ P7",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 7,
+        "seq": "emotional_storms",
+        "result": "emotional_storms",
+        "raw_id": "event:capability_unlock:7:emotional_storms"
+      }
+    },
+    {
+      "id": "851b0312-fc9e-5ef9-a0cb-5953edac1569",
+      "label": "Moral Sense",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "moral_sense",
+        "dim": "social",
+        "unlocked_at_phase": 8,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_moral_sense"
+      },
+      "continuant_id": "capability:moral_sense",
+      "narrative": {
+        "primary": {
+          "zh_CN": "社交发育维度能力：Moral Sense。",
+          "en": "Social Development dimension capability: Moral Sense."
+        }
+      }
+    },
+    {
+      "id": "482856c9-052a-5698-8574-833948f07704",
+      "label": "capability_unlock @ P8",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 8,
+        "seq": "moral_sense",
+        "result": "moral_sense",
+        "raw_id": "event:capability_unlock:8:moral_sense"
+      }
+    },
+    {
+      "id": "ab018660-f754-5bcb-a7cc-4e3477de8035",
+      "label": "Peer Awareness",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "peer_awareness",
+        "dim": "social",
+        "unlocked_at_phase": 8,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_peer_awareness"
+      },
+      "continuant_id": "capability:peer_awareness",
+      "narrative": {
+        "primary": {
+          "zh_CN": "社交发育维度能力：Peer Awareness。",
+          "en": "Social Development dimension capability: Peer Awareness."
+        }
+      }
+    },
+    {
+      "id": "658f0a82-6fc9-5d38-ad82-9f0d42d73ecc",
+      "label": "capability_unlock @ P8",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 8,
+        "seq": "peer_awareness",
+        "result": "peer_awareness",
+        "raw_id": "event:capability_unlock:8:peer_awareness"
+      }
+    },
+    {
+      "id": "dd141b92-af4f-58f4-8aa1-5d379619b97f",
+      "label": "Rule Following",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "rule_following",
+        "dim": "social",
+        "unlocked_at_phase": 9,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_rule_following"
+      },
+      "continuant_id": "capability:rule_following",
+      "narrative": {
+        "primary": {
+          "zh_CN": "社交发育维度能力：Rule Following。",
+          "en": "Social Development dimension capability: Rule Following."
+        }
+      }
+    },
+    {
+      "id": "aa62f8ab-dd92-5410-8312-582e230d67ae",
+      "label": "capability_unlock @ P9",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 9,
+        "seq": "rule_following",
+        "result": "rule_following",
+        "raw_id": "event:capability_unlock:9:rule_following"
+      }
+    },
+    {
+      "id": "400706bc-cc86-5832-9ed1-a60098f36004",
+      "label": "Basic Empathy",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "basic_empathy",
+        "dim": "social",
+        "unlocked_at_phase": 9,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_basic_empathy"
+      },
+      "continuant_id": "capability:basic_empathy",
+      "narrative": {
+        "primary": {
+          "zh_CN": "社交发育维度能力：Basic Empathy。",
+          "en": "Social Development dimension capability: Basic Empathy."
+        }
+      }
+    },
+    {
+      "id": "7e26074e-0552-5345-91ef-5ad900dff4d2",
+      "label": "capability_unlock @ P9",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 9,
+        "seq": "basic_empathy",
+        "result": "basic_empathy",
+        "raw_id": "event:capability_unlock:9:basic_empathy"
+      }
+    },
+    {
+      "id": "15d7a548-2dcd-51b5-a5d7-726f5425e07a",
+      "label": "Time Concept",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "time_concept",
+        "dim": "cognitive",
+        "unlocked_at_phase": 10,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_time_concept"
+      },
+      "continuant_id": "capability:time_concept",
+      "narrative": {
+        "primary": {
+          "zh_CN": "认知发育维度能力：Time Concept。",
+          "en": "Cognitive Development dimension capability: Time Concept."
+        }
+      }
+    },
+    {
+      "id": "d7b52f37-fa53-5ab2-ade7-b0ffb5871669",
+      "label": "capability_unlock @ P10",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 10,
+        "seq": "time_concept",
+        "result": "time_concept",
+        "raw_id": "event:capability_unlock:10:time_concept"
+      }
+    },
+    {
+      "id": "cdc92ee2-9770-575c-b008-9be7c26c67c1",
+      "label": "Analogy",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "analogy",
+        "dim": "cognitive",
+        "unlocked_at_phase": 10,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_analogy"
+      },
+      "continuant_id": "capability:analogy",
+      "narrative": {
+        "primary": {
+          "zh_CN": "认知发育维度能力：Analogy。",
+          "en": "Cognitive Development dimension capability: Analogy."
+        }
+      }
+    },
+    {
+      "id": "5f7e53a6-7095-5849-baee-c83dd4c0085b",
+      "label": "capability_unlock @ P10",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 10,
+        "seq": "analogy",
+        "result": "analogy",
+        "raw_id": "event:capability_unlock:10:analogy"
+      }
+    },
+    {
+      "id": "330e2018-2948-55b7-b45a-b76464ce481c",
+      "label": "Self Advocacy",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "self_advocacy",
+        "dim": "social",
+        "unlocked_at_phase": 11,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_self_advocacy"
+      },
+      "continuant_id": "capability:self_advocacy",
+      "narrative": {
+        "primary": {
+          "zh_CN": "社交发育维度能力：Self Advocacy。",
+          "en": "Social Development dimension capability: Self Advocacy."
+        }
+      }
+    },
+    {
+      "id": "6395f868-c6d2-5910-a9b6-0d80229606b5",
+      "label": "capability_unlock @ P11",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 11,
+        "seq": "self_advocacy",
+        "result": "self_advocacy",
+        "raw_id": "event:capability_unlock:11:self_advocacy"
+      }
+    },
+    {
+      "id": "093f5051-691f-5719-a938-9ebd98275a36",
+      "label": "Complex Emotion",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "complex_emotion",
+        "dim": "emotional",
+        "unlocked_at_phase": 11,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_complex_emotion"
+      },
+      "continuant_id": "capability:complex_emotion",
+      "narrative": {
+        "primary": {
+          "zh_CN": "情绪发育维度能力：Complex Emotion。",
+          "en": "Emotional Development dimension capability: Complex Emotion."
+        }
+      }
+    },
+    {
+      "id": "f35aee0f-34eb-51d4-87fb-d19d02918159",
+      "label": "capability_unlock @ P11",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "capability_unlock",
+        "phase_index": 11,
+        "seq": "complex_emotion",
+        "result": "complex_emotion",
+        "raw_id": "event:capability_unlock:11:complex_emotion"
+      }
+    },
+    {
+      "id": "0adad05f-babc-51c0-914c-3681f1c27797",
+      "label": "First Social Smile",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "capability_unlock",
+        "slug": "first_social_smile",
+        "achieved_at_phase": 1,
+        "raw_id": "milestone_first_social_smile"
+      },
+      "continuant_id": "milestone:first_social_smile"
+    },
+    {
+      "id": "736ade76-efb5-5ea9-85a8-a48e723e85c4",
+      "label": "First Word",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "capability_unlock",
+        "slug": "first_word",
+        "achieved_at_phase": 4,
+        "raw_id": "milestone_first_word"
+      },
+      "continuant_id": "milestone:first_word",
+      "narrative": {
+        "primary": {
+          "zh_CN": "首个带指称的词汇——语言里程碑。",
+          "en": "First referential word — language milestone."
+        }
+      }
+    },
+    {
+      "id": "8d280001-1052-53a6-9769-3a8091cc2e15",
+      "label": "First Steps",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "capability_unlock",
+        "slug": "first_steps",
+        "achieved_at_phase": 5,
+        "raw_id": "milestone_first_steps"
+      },
+      "continuant_id": "milestone:first_steps",
+      "narrative": {
+        "primary": {
+          "zh_CN": "独立迈出连续两步——运动自主性里程碑。",
+          "en": "Two unsupported steps in a row — motor autonomy milestone."
+        }
+      }
+    },
+    {
+      "id": "bd954708-96d1-5a5a-adf2-075a1fbb32cc",
+      "label": "Naming Ceremony",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "naming",
+        "slug": "naming",
+        "achieved_at_phase": 6,
+        "raw_id": "milestone_naming"
+      },
+      "continuant_id": "milestone:naming",
+      "narrative": {
+        "primary": {
+          "zh_CN": "照护者正式命名——身份坐标的锚点。",
+          "en": "Caregiver bestows name — identity anchor."
+        }
+      }
+    },
+    {
+      "id": "f6353bb8-497d-5558-b8be-3604af0823f6",
+      "label": "Separation Success",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "milestone",
+        "slug": "separation_success",
+        "achieved_at_phase": 8,
+        "raw_id": "milestone_separation_success"
+      },
+      "continuant_id": "milestone:separation_success",
+      "narrative": {
+        "primary": {
+          "zh_CN": "短时分离未引发崩溃——依附安全的可操作标志。",
+          "en": "Brief separation without collapse — operational safe-attachment marker."
+        }
+      }
+    },
+    {
+      "id": "4dc3db64-54c7-5dfd-b8ee-04b4f76abc49",
+      "label": "Toilet Trained",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "milestone",
+        "slug": "toilet_trained",
+        "achieved_at_phase": 9,
+        "raw_id": "milestone_toilet_trained"
+      },
+      "continuant_id": "milestone:toilet_trained",
+      "narrative": {
+        "primary": {
+          "zh_CN": "主动感知 + 控制排泄——自我照料的基础技能。",
+          "en": "Active sense + control of elimination — basic self-care."
+        }
+      }
+    },
+    {
+      "id": "3c46d847-308d-59fb-a426-b90896b4d430",
+      "label": "Capability Recovered",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "capability_recovered",
+        "slug": "capability_recovered",
+        "achieved_at_phase": 8,
+        "raw_id": "milestone_capability_recovered"
+      },
+      "continuant_id": "milestone:capability_recovered",
+      "narrative": {
+        "primary": {
+          "zh_CN": "压力回退的能力在照护下重建，有时更强韧。",
+          "en": "Regressed capability rebuilt with care, sometimes strengthened."
+        }
+      }
+    },
+    {
+      "id": "f007d0df-952e-5f9a-99ce-e9b7e5ca17ea",
+      "label": "World Ready",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "milestone",
+        "milestone_kind": "terminus",
+        "slug": "world_ready",
+        "achieved_at_phase": 11,
+        "raw_id": "milestone_world_ready"
+      },
+      "continuant_id": "milestone:world_ready",
+      "narrative": {
+        "primary": {
+          "zh_CN": "通过所有硬性条件，可离开摇篮进入世界。",
+          "en": "All hard conditions met; can leave cradle and enter the world."
+        }
+      }
+    },
+    {
+      "id": "ef642eb4-ee39-5bdd-baba-0e9a06a04f67",
+      "label": "Preference: music",
+      "group": "trait",
+      "metadata": {
+        "kind": "preference",
+        "tag": "music",
+        "category": "audio",
+        "strength": 0.7,
+        "acquired_at_phase": 4,
+        "raw_id": "preference_music"
+      },
+      "continuant_id": "preference:music"
+    },
+    {
+      "id": "ba962b46-aa71-5bee-ad7c-ab122613a692",
+      "label": "Preference: red",
+      "group": "trait",
+      "metadata": {
+        "kind": "preference",
+        "tag": "red",
+        "category": "visual",
+        "strength": 0.5,
+        "acquired_at_phase": 5,
+        "raw_id": "preference_red"
+      },
+      "continuant_id": "preference:red"
+    },
+    {
+      "id": "674887f5-39cd-5c93-931e-50cde82a268b",
+      "label": "Preference: doll",
+      "group": "trait",
+      "metadata": {
+        "kind": "preference",
+        "tag": "doll",
+        "category": "object",
+        "strength": 0.8,
+        "acquired_at_phase": 6,
+        "raw_id": "preference_doll"
+      },
+      "continuant_id": "preference:doll"
+    },
+    {
+      "id": "11f411ee-6c31-5688-80e5-27bec52206a1",
+      "label": "Fear: stranger",
+      "group": "trait",
+      "metadata": {
+        "kind": "fear",
+        "tag": "stranger",
+        "severity": 0.7,
+        "acquired_at_phase": 3,
+        "raw_id": "fear_stranger"
+      },
+      "continuant_id": "fear:stranger"
+    },
+    {
+      "id": "ed4eda2d-6b2b-5d13-8e48-6a32c39364e0",
+      "label": "Fear: loud noise",
+      "group": "trait",
+      "metadata": {
+        "kind": "fear",
+        "tag": "loud_noise",
+        "severity": 0.6,
+        "acquired_at_phase": 8,
+        "raw_id": "fear_loud_noise"
+      },
+      "continuant_id": "fear:loud_noise"
+    },
+    {
+      "id": "077b3dbf-7630-5590-a370-bcc9fea46a48",
+      "label": "Comfort: blanket",
+      "group": "trait",
+      "metadata": {
+        "kind": "comfort",
+        "tag": "blanket",
+        "comfort_kind": "object",
+        "acquired_at_phase": 1,
+        "raw_id": "comfort_blanket"
+      },
+      "continuant_id": "comfort:blanket"
+    },
+    {
+      "id": "896c428e-acbf-51f6-bb55-56e0435e7ebd",
+      "label": "Comfort: mother voice",
+      "group": "trait",
+      "metadata": {
+        "kind": "comfort",
+        "tag": "mother_voice",
+        "comfort_kind": "routine",
+        "acquired_at_phase": 10,
+        "raw_id": "comfort_mother_voice"
+      },
+      "continuant_id": "comfort:mother_voice"
+    },
+    {
+      "id": "35100645-ce5e-57b4-8319-1f1998e89cb0",
+      "label": "Temperament",
+      "group": "trait",
+      "metadata": {
+        "kind": "temperament",
+        "dimensions": {
+          "openness": 0.65,
+          "neuroticism": 0.4,
+          "extraversion": 0.55,
+          "agreeableness": 0.7,
+          "conscientiousness": 0.5
+        },
+        "defined_at_phase": 6,
+        "raw_id": "temperament"
+      },
+      "continuant_id": "temperament",
+      "narrative": {
+        "primary": {
+          "zh_CN": "温和偏外向，好奇心适中。",
+          "en": "Mild and slightly extraverted, moderate curiosity."
+        }
+      }
+    },
+    {
+      "id": "d33ae46f-96ef-52b4-bb41-2602c0a413ee",
+      "label": "Hunger",
+      "group": "need",
+      "metadata": {
+        "kind": "need_type",
+        "trigger": "hunger",
+        "urgency": "physiological",
+        "raw_id": "need:hunger"
+      },
+      "continuant_id": "need:hunger",
+      "narrative": {
+        "primary": {
+          "zh_CN": "饥饿",
+          "en": "Hunger"
+        }
+      }
+    },
+    {
+      "id": "d2cfdc9e-d8e8-5c16-b7de-9986ad5d4acb",
+      "label": "Sleepy",
+      "group": "need",
+      "metadata": {
+        "kind": "need_type",
+        "trigger": "sleepy",
+        "urgency": "physiological",
+        "raw_id": "need:sleepy"
+      },
+      "continuant_id": "need:sleepy",
+      "narrative": {
+        "primary": {
+          "zh_CN": "困倦",
+          "en": "Sleepy"
+        }
+      }
+    },
+    {
+      "id": "51dbac8d-5392-5ddb-81cd-8a90c0da7c2d",
+      "label": "Comfort",
+      "group": "need",
+      "metadata": {
+        "kind": "need_type",
+        "trigger": "comfort",
+        "urgency": "emotional",
+        "raw_id": "need:comfort"
+      },
+      "continuant_id": "need:comfort",
+      "narrative": {
+        "primary": {
+          "zh_CN": "求抚慰",
+          "en": "Seeking Comfort"
+        }
+      }
+    },
+    {
+      "id": "03b7a573-bdc8-5287-8769-df2a5ff66361",
+      "label": "Curious",
+      "group": "need",
+      "metadata": {
+        "kind": "need_type",
+        "trigger": "curious",
+        "urgency": "social",
+        "raw_id": "need:curious"
+      },
+      "continuant_id": "need:curious",
+      "narrative": {
+        "primary": {
+          "zh_CN": "好奇",
+          "en": "Curious"
+        }
+      }
+    },
+    {
+      "id": "047d6a9e-ee99-5dd9-8768-88ec17194eb1",
+      "label": "Fear",
+      "group": "need",
+      "metadata": {
+        "kind": "need_type",
+        "trigger": "fear",
+        "urgency": "emotional",
+        "raw_id": "need:fear"
+      },
+      "continuant_id": "need:fear",
+      "narrative": {
+        "primary": {
+          "zh_CN": "恐惧",
+          "en": "Fear"
+        }
+      }
+    },
+    {
+      "id": "8d1ab128-1406-5811-9430-e6213f774d02",
+      "label": "need @ P0",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "need",
+        "phase_index": 0,
+        "seq": "hunger",
+        "day_index": 5,
+        "result": "resolved",
+        "context": "middle-of-night feed",
+        "raw_id": "event:need:0:hunger"
+      }
+    },
+    {
+      "id": "ac956313-625b-5444-a1f3-6ddf1d9a7b73",
+      "label": "need @ P1",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "need",
+        "phase_index": 1,
+        "seq": "sleepy",
+        "day_index": 20,
+        "result": "resolved",
+        "context": "overstimulated after visitor",
+        "raw_id": "event:need:1:sleepy"
+      }
+    },
+    {
+      "id": "8ff48bf2-1ad9-5e71-82c8-15927a7e8693",
+      "label": "need @ P3",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "need",
+        "phase_index": 3,
+        "seq": "fear",
+        "day_index": 10,
+        "result": "resolved",
+        "context": "stranger at the door",
+        "raw_id": "event:need:3:fear"
+      }
+    },
+    {
+      "id": "015b327b-1ce4-5ec4-92c2-7e396e2cdc0b",
+      "label": "need @ P5",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "need",
+        "phase_index": 5,
+        "seq": "curious",
+        "day_index": 15,
+        "result": "resolved",
+        "context": "new toy exploration",
+        "raw_id": "event:need:5:curious"
+      }
+    },
+    {
+      "id": "ca9e703a-e2f0-5b56-9d9a-d386e39456ca",
+      "label": "need @ P7",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "need",
+        "phase_index": 7,
+        "seq": "comfort",
+        "day_index": 12,
+        "result": "resolved",
+        "context": "post-tantrum need comfort",
+        "raw_id": "event:need:7:comfort"
+      }
+    },
+    {
+      "id": "5a8e99c7-785f-5991-b9f6-b2844508ab17",
+      "label": "Regression · walking",
+      "group": "event",
+      "metadata": {
+        "kind": "regression",
+        "cap_key": "walking",
+        "phase_index": 7,
+        "stress_level_at": 0.78,
+        "raw_id": "event_regression:walking:7"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "why_phase 情绪风暴期暂失行走能力。",
+          "en": "Walking regressed during why_phase emotional storms."
+        }
+      }
+    },
+    {
+      "id": "05979888-4e56-5560-910f-28bbaa4a2754",
+      "label": "Recovery · walking",
+      "group": "event",
+      "metadata": {
+        "kind": "recovery",
+        "cap_key": "walking",
+        "phase_index": 8,
+        "strengthened": true,
+        "care_from": "caregiver_mother",
+        "raw_id": "event_recovery:walking:8"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "母亲陪伴 + social_budding 同伴示范下恢复，更强韧。",
+          "en": "Recovered with mother's companionship in social_budding; stronger."
+        }
+      }
+    },
+    {
+      "id": "3abb1ee9-87eb-51ae-874e-100a02de4c1a",
+      "label": "Critical @ P6",
+      "group": "event",
+      "metadata": {
+        "kind": "critical_event",
+        "phase_index": 6,
+        "seq": 0,
+        "reason": "naming_ceremony",
+        "status": "resolved",
+        "raw_id": "critical:6:0"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "命名仪式——身份锚点建立。",
+          "en": "Naming ceremony — establishing identity anchor."
+        }
+      }
+    },
+    {
+      "id": "1a6b5f5b-787b-545b-b6c3-b5380a8052e8",
+      "label": "Babbling Syllables",
+      "group": "capability_milestone",
+      "metadata": {
+        "kind": "capability",
+        "cap_key": "babbling_syllables",
+        "dim": "language",
+        "unlocked_at_phase": 3,
+        "strength": 1.0,
+        "regression_history": [],
+        "raw_id": "capability_babbling_syllables"
+      },
+      "continuant_id": "capability:babbling_syllables",
+      "narrative": {
+        "primary": {
+          "zh_CN": "语言发育维度能力：Babbling Syllables。",
+          "en": "Language Development dimension capability: Babbling Syllables."
+        }
+      }
+    },
+    {
+      "id": "e21801a4-bf45-5c38-bdb3-bbf7c324f6df",
+      "label": "Narrative · P0",
+      "group": "narrative",
+      "metadata": {
+        "kind": "narrative",
+        "phase_index": 0,
+        "length_chars": 26,
+        "raw_id": "narrative:phase_0"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "新生儿期：纯反射、睡眠占主导、母亲哺乳建立最初联结。",
+          "en": "Neonatal: pure reflexes, sleep-dominant; mother builds first bond via feeding."
+        }
+      }
+    },
+    {
+      "id": "55a2db22-cef2-5c78-a0ef-929791786ce0",
+      "label": "Narrative · P3",
+      "group": "narrative",
+      "metadata": {
+        "kind": "narrative",
+        "phase_index": 3,
+        "length_chars": 28,
+        "raw_id": "narrative:phase_3"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "陌生人焦虑峰值，外婆首次到访引起警戒；依附系统出现波动。",
+          "en": "Stranger anxiety peaks; grandmother's first visit triggers wariness; attachment wobbles."
+        }
+      }
+    },
+    {
+      "id": "09612ea6-413e-51f4-8c59-178608dde755",
+      "label": "Narrative · P6",
+      "group": "narrative",
+      "metadata": {
+        "kind": "narrative",
+        "phase_index": 6,
+        "length_chars": 26,
+        "raw_id": "narrative:phase_6"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "命名仪式：父亲赐名 Lily，自我意识通过镜面测试。",
+          "en": "Naming ceremony: father bestows 'Lily'; self-awareness via mirror test."
+        }
+      }
+    },
+    {
+      "id": "9dcdd1f4-20c1-560f-8d98-50f5646009ee",
+      "label": "Narrative · P8",
+      "group": "narrative",
+      "metadata": {
+        "kind": "narrative",
+        "phase_index": 8,
+        "length_chars": 26,
+        "raw_id": "narrative:phase_8"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "压力回退后的恢复期，同伴游戏让走路重新稳固，更强韧。",
+          "en": "Post-regression recovery; peer play restores walking, stronger this time."
+        }
+      }
+    },
+    {
+      "id": "69e67a46-7628-5d96-b94a-bc7594dd4fe4",
+      "label": "Narrative · P11",
+      "group": "narrative",
+      "metadata": {
+        "kind": "narrative",
+        "phase_index": 11,
+        "length_chars": 18,
+        "raw_id": "narrative:phase_11"
+      },
+      "narrative": {
+        "primary": {
+          "zh_CN": "独立期：有观点能辩论，可以进入世界。",
+          "en": "Independence: opinions and debate, ready for the world."
+        }
+      }
+    },
+    {
+      "id": "c68975b5-50c4-5b09-8bbd-5f6f021829c3",
+      "label": "Mother × Lily · DM",
+      "group": "event",
+      "metadata": {
+        "kind": "conversation",
+        "conv_id": "dm:AC-20260421-36472",
+        "conv_kind": "dm",
+        "participants": [
+          "AC-20260421-36472"
+        ],
+        "message_count": 2,
+        "raw_id": "conv:dm:AC-20260421-36472"
+      },
+      "continuant_id": "conv:dm:AC-20260421-36472"
+    },
+    {
+      "id": "7d03ae09-3c94-5109-bfd5-ab074699c643",
+      "label": "world_ready @ P11",
+      "group": "event",
+      "metadata": {
+        "kind": "event",
+        "event_type": "world_ready",
+        "phase_index": 11,
+        "seq": 0,
+        "result": "graduated",
+        "raw_id": "event:world_ready:11:0"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "uuid": "bb6c1b97-00a4-5e38-a1bd-433db74e3fd5",
+      "source": "6f9ffc97-ee63-5197-96de-c422e1bef349",
+      "target": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "545b4a65-224e-5ca4-aba0-82a7dbde09e6",
+      "source": "dbbbf109-a79c-55bf-b2af-d1e946815677",
+      "target": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "369f0fdb-8fff-58cf-bf53-f7576604823e",
+      "source": "99a3368f-928f-5b72-9862-222b1dabd703",
+      "target": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "477b5b94-b6c4-51cf-944e-d7b91fd9afd5",
+      "source": "d4e8656b-ebbb-54e3-bae7-60e0f6b004d4",
+      "target": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "31055814-28c3-5428-ba21-3ba01fcb9b2f",
+      "source": "e1dfa153-1e90-5db8-a81d-ea112c79ff57",
+      "target": "cd8e5096-9178-50c9-b22b-1f49c0bad8f6",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "9619c0f9-a97e-5458-b0ba-1de83dbdf6f1",
+      "source": "5696ecab-5e6e-536c-9624-5d895297b2eb",
+      "target": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "7b45a03f-a85c-52ec-993f-b88325574d5c",
+      "source": "52683338-30e7-5874-92f2-6439545c9569",
+      "target": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "4d35eb05-6c40-57cd-86e4-04377b955492",
+      "source": "9b9b8bf0-2ce6-5476-af86-c8579b9dc165",
+      "target": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "f6982655-95bd-58ab-a079-23395034ad6e",
+      "source": "ebbd3d77-c4ce-5a18-93d5-c44044287865",
+      "target": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "ee1a1889-12c8-568a-823b-d839473b836a",
+      "source": "836bd653-9781-5110-9dfc-f97bf6d2f513",
+      "target": "1c2b2ccb-c51f-54e1-97f6-45c6aab56a4d",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "c9a34cef-e48d-50d3-bd0b-eaeb4a0000cc",
+      "source": "5b127bc7-c85f-5b6e-b17a-c56db3381a3f",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "864f66a4-cf9c-5d7b-bfb9-fcb6c0cb2aa9",
+      "source": "12f34c3d-646f-5b70-a183-a2843d3d5c42",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "9deecdae-7120-59cc-a741-d350bddd0bb7",
+      "source": "a7074366-37a3-5269-a46a-aa9b7c1e4ac7",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "200518ae-0bd9-5268-a86d-f1b8b1298f03",
+      "source": "367eaed3-1159-5ad4-9c2d-d21ccc5b6a91",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "11f24cd3-675b-5411-9ab4-ec2644abb006",
+      "source": "50b2a2d0-6f52-519a-8843-4bef8a53f6c1",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "6bb48dd1-b0e1-5f66-9139-f4d2f6157546",
+      "source": "5ab57038-9e84-5473-bb31-c10671a3134d",
+      "target": "e7304039-a53f-5786-aca8-913f0954b923",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "8c8c841c-1fc9-50b2-9d0c-f3894b534631",
+      "source": "72a6e6f4-d067-56ec-9b32-b73f3577f0fc",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "203ed554-6a11-5f69-969c-8d872170a804",
+      "source": "1f9609ed-37fa-55ad-bf48-438b7a0028fb",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "258da49e-6fa4-5f26-9762-692e4f721bb5",
+      "source": "ddc34a7d-8044-572d-b4ee-81c65e41c885",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "d68fbd08-3fd0-55cb-bd87-121a9fcfde7b",
+      "source": "b8d0db3d-da26-5f5b-af25-0feddaf8332d",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "dca92e12-f9b1-578d-8f89-20e05cbf0170",
+      "source": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "555df035-39f8-5f2b-b0e2-0e8496cbf31b",
+      "source": "c0328e6f-ed4c-524f-995d-4f1e2fea5e58",
+      "target": "0d8aebb0-08f3-5471-bdda-3a69f3780155",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "e2ab3362-d038-5da5-b5af-c508f3676c9d",
+      "source": "fe813674-a11c-561a-aa83-56ca776f55ab",
+      "target": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "a1cc53f8-2bd1-54b1-9cb5-9389845d96cc",
+      "source": "0d91d02b-ea26-5232-b252-3ff6e94d0411",
+      "target": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "419bef8f-9af7-5960-9da6-05c60211d747",
+      "source": "1ff15db7-3684-5191-a91e-f058f0785fbf",
+      "target": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "58fe1d57-6dfe-5f42-9dca-c179cd0d8151",
+      "source": "53815a99-1e6d-5a8a-8d5e-32e8e3fab36e",
+      "target": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "a6d17fc3-ac32-5022-9624-11660c0720fb",
+      "source": "473582b5-7957-551a-b771-83a45087e808",
+      "target": "7555e4b3-c897-577a-a95f-d2abbe315067",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "5a973930-04d4-5d26-a399-820b88154aeb",
+      "source": "fc362711-5352-51fa-b384-c96c6ab88a8b",
+      "target": "e4920545-6bda-5237-b0b5-923c78d5c636",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "8b14738f-9455-5c16-a0c3-54c218f4f5c7",
+      "source": "06df5d67-d7d4-5d4e-acbe-32f5098d13c0",
+      "target": "e4920545-6bda-5237-b0b5-923c78d5c636",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "cc1c8dd5-db97-5c3a-a87f-746e980441b8",
+      "source": "dfffb353-9e04-5e31-b619-54e3f75ce014",
+      "target": "e4920545-6bda-5237-b0b5-923c78d5c636",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "f09ac0b2-f040-59be-a49e-65770be27ca9",
+      "source": "2ed8cfca-442a-58de-b7fe-42ee8cb17f15",
+      "target": "e4920545-6bda-5237-b0b5-923c78d5c636",
+      "type": "BELONGS_TO"
+    },
+    {
+      "uuid": "cdc62dae-2b2f-5ebd-9b1d-7f3c784a10d5",
+      "source": "e636120c-5ece-56f1-be41-71f09ef893f1",
+      "target": "92a741ef-f329-5003-a7a7-5bf599487156",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "05f62cd8-dc11-5c8a-8f86-ae5ee4d2164d",
+      "source": "92a741ef-f329-5003-a7a7-5bf599487156",
+      "target": "f8eb54eb-6ab8-5bcd-8c0b-53a2deba2731",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "6e3b75dd-957f-58ea-a936-5b889f971837",
+      "source": "f8eb54eb-6ab8-5bcd-8c0b-53a2deba2731",
+      "target": "3b8b6b40-0fd7-586e-968e-b9b6c41a2f80",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "1a4de9e3-b795-5328-b6e3-07916910aef9",
+      "source": "3b8b6b40-0fd7-586e-968e-b9b6c41a2f80",
+      "target": "3b7c67f9-d374-53ac-ba84-4e7e613678dd",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "2c46c4e1-3eb1-57b5-86aa-96d070b18e5b",
+      "source": "3b7c67f9-d374-53ac-ba84-4e7e613678dd",
+      "target": "509f78c4-a0cb-5dda-aa44-abe9a92c1eef",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "8a67766a-b669-5064-afdb-cec289c3c242",
+      "source": "509f78c4-a0cb-5dda-aa44-abe9a92c1eef",
+      "target": "3ebef4b8-ff70-5be8-9b0c-646fe66d035f",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "91f7dcb3-1b82-5fbc-819e-317a69268bc5",
+      "source": "3ebef4b8-ff70-5be8-9b0c-646fe66d035f",
+      "target": "00552cd6-2b29-5a11-8138-7b9cb496488d",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "eeb9f0f4-b731-5ac5-ad6c-003931b0cea2",
+      "source": "00552cd6-2b29-5a11-8138-7b9cb496488d",
+      "target": "4d1d4f8f-ffa1-5cde-b6db-c1e181e747e9",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "5bf5560a-890d-545d-b75f-89bc04b74f52",
+      "source": "4d1d4f8f-ffa1-5cde-b6db-c1e181e747e9",
+      "target": "23ec8da5-7df4-5fb3-97bc-bc959bf2c057",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "a3c10bf8-dceb-563b-a24f-94d34e66264e",
+      "source": "23ec8da5-7df4-5fb3-97bc-bc959bf2c057",
+      "target": "92f42049-c9fb-573f-882b-1d8b3047ab7b",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "7c744161-4ea2-5e88-8bd7-e35b8cd6bf69",
+      "source": "92f42049-c9fb-573f-882b-1d8b3047ab7b",
+      "target": "6e420ec7-3cfa-56d5-b45b-1b660f6f4228",
+      "type": "NEXT"
+    },
+    {
+      "uuid": "1f064309-5e28-535c-86c6-e874bb5cce7c",
+      "source": "3194aab1-4b91-5678-922f-db3f8d7e7c8d",
+      "target": "6f9ffc97-ee63-5197-96de-c422e1bef349",
+      "type": "OCCURS_IN",
+      "phase_index": 0
+    },
+    {
+      "uuid": "79868fe8-ffdc-579c-81c2-75a6f71b94c0",
+      "source": "343caf6e-bf61-59a6-9ca0-841559181c96",
+      "target": "3194aab1-4b91-5678-922f-db3f8d7e7c8d",
+      "type": "UNLOCKS",
+      "phase_index": 0,
+      "description": "sucking_reflex unlocked in phase 0"
+    },
+    {
+      "uuid": "ca72a2b7-8d0e-54e7-921b-69d1c331f5da",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "343caf6e-bf61-59a6-9ca0-841559181c96",
+      "type": "EXPERIENCES",
+      "phase_index": 0,
+      "description": "experienced sucking_reflex unlock"
+    },
+    {
+      "uuid": "f16d77e9-8b0d-59c8-8bb5-b6c60c4034fc",
+      "source": "32264242-4801-53a6-8d81-9e4cda37260a",
+      "target": "5b127bc7-c85f-5b6e-b17a-c56db3381a3f",
+      "type": "OCCURS_IN",
+      "phase_index": 0
+    },
+    {
+      "uuid": "ac34d906-e8aa-53a2-950b-f9277b5c21f2",
+      "source": "8985fde4-87ad-5053-ba07-a69fb2f51773",
+      "target": "32264242-4801-53a6-8d81-9e4cda37260a",
+      "type": "UNLOCKS",
+      "phase_index": 0,
+      "description": "crying unlocked in phase 0"
+    },
+    {
+      "uuid": "8b3ee250-4841-5ad6-a9de-f5cf5969c561",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "8985fde4-87ad-5053-ba07-a69fb2f51773",
+      "type": "EXPERIENCES",
+      "phase_index": 0,
+      "description": "experienced crying unlock"
+    },
+    {
+      "uuid": "1f30ef54-ed75-5f73-b395-9761d164cc91",
+      "source": "992be677-e0fc-5288-9815-3b28118e15ec",
+      "target": "72a6e6f4-d067-56ec-9b32-b73f3577f0fc",
+      "type": "OCCURS_IN",
+      "phase_index": 1
+    },
+    {
+      "uuid": "5427c2dd-5b6e-53a3-ba2e-e05ef0857341",
+      "source": "de728d35-f444-505d-81c5-11dc170fb123",
+      "target": "992be677-e0fc-5288-9815-3b28118e15ec",
+      "type": "UNLOCKS",
+      "phase_index": 1,
+      "description": "social_smile unlocked in phase 1"
+    },
+    {
+      "uuid": "046a88cc-71d7-57db-949c-b9b29f82bb1a",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "de728d35-f444-505d-81c5-11dc170fb123",
+      "type": "EXPERIENCES",
+      "phase_index": 1,
+      "description": "experienced social_smile unlock"
+    },
+    {
+      "uuid": "5b0ee637-ccc0-5f5a-8041-90bb4b36663a",
+      "source": "a62f4a30-b953-5564-98b9-4a6f273480de",
+      "target": "5696ecab-5e6e-536c-9624-5d895297b2eb",
+      "type": "OCCURS_IN",
+      "phase_index": 1
+    },
+    {
+      "uuid": "5d133e68-4f2c-5421-8d14-c1a25f11472f",
+      "source": "65a0115e-e5da-5d4c-8d56-5f45d96216d9",
+      "target": "a62f4a30-b953-5564-98b9-4a6f273480de",
+      "type": "UNLOCKS",
+      "phase_index": 1,
+      "description": "visual_tracking unlocked in phase 1"
+    },
+    {
+      "uuid": "bdd24fba-88a8-51be-b276-c3b87450bb79",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "65a0115e-e5da-5d4c-8d56-5f45d96216d9",
+      "type": "EXPERIENCES",
+      "phase_index": 1,
+      "description": "experienced visual_tracking unlock"
+    },
+    {
+      "uuid": "35639661-66a0-58e5-9950-fdbd8f6c5816",
+      "source": "44116534-6e0a-5786-a7eb-a1708ae09df1",
+      "target": "dbbbf109-a79c-55bf-b2af-d1e946815677",
+      "type": "OCCURS_IN",
+      "phase_index": 2
+    },
+    {
+      "uuid": "8e988cc6-01e1-5a16-a2b1-d41942b50530",
+      "source": "5687ebf4-3fad-571d-ab45-3a33299e8cec",
+      "target": "44116534-6e0a-5786-a7eb-a1708ae09df1",
+      "type": "UNLOCKS",
+      "phase_index": 2,
+      "description": "grasping unlocked in phase 2"
+    },
+    {
+      "uuid": "f099f29b-e4ef-5778-848e-bbe9441ebcfc",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "5687ebf4-3fad-571d-ab45-3a33299e8cec",
+      "type": "EXPERIENCES",
+      "phase_index": 2,
+      "description": "experienced grasping unlock"
+    },
+    {
+      "uuid": "6ce0ab6a-6b93-53e2-a7f0-018b9122c67b",
+      "source": "790d1329-b224-5da5-862b-a91fa761bceb",
+      "target": "dbbbf109-a79c-55bf-b2af-d1e946815677",
+      "type": "OCCURS_IN",
+      "phase_index": 2
+    },
+    {
+      "uuid": "7f96ed7b-da7c-588f-90e6-e3aa781bf42d",
+      "source": "011d5699-5812-57be-8366-3d3f9f88bf77",
+      "target": "790d1329-b224-5da5-862b-a91fa761bceb",
+      "type": "UNLOCKS",
+      "phase_index": 2,
+      "description": "rolling unlocked in phase 2"
+    },
+    {
+      "uuid": "787ea235-2f74-5fe5-873f-921ce32236c7",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "011d5699-5812-57be-8366-3d3f9f88bf77",
+      "type": "EXPERIENCES",
+      "phase_index": 2,
+      "description": "experienced rolling unlock"
+    },
+    {
+      "uuid": "162dcb98-e390-569f-9c57-9c2a33086868",
+      "source": "72128167-0300-5168-a1a2-f5618d05b825",
+      "target": "52683338-30e7-5874-92f2-6439545c9569",
+      "type": "OCCURS_IN",
+      "phase_index": 3
+    },
+    {
+      "uuid": "f04dbeb0-25c1-5308-8386-cba245c68785",
+      "source": "895dbc1a-995b-5d33-9b16-22bad7c58d1a",
+      "target": "72128167-0300-5168-a1a2-f5618d05b825",
+      "type": "UNLOCKS",
+      "phase_index": 3,
+      "description": "object_permanence unlocked in phase 3"
+    },
+    {
+      "uuid": "ab35e449-0d02-51d2-bf93-79ce21414bf6",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "895dbc1a-995b-5d33-9b16-22bad7c58d1a",
+      "type": "EXPERIENCES",
+      "phase_index": 3,
+      "description": "experienced object_permanence unlock"
+    },
+    {
+      "uuid": "b9565df4-ae1e-5e66-a7c5-03998972d658",
+      "source": "ffc0d3cc-fa50-5dcb-afad-984492ab4e07",
+      "target": "ddc34a7d-8044-572d-b4ee-81c65e41c885",
+      "type": "OCCURS_IN",
+      "phase_index": 3
+    },
+    {
+      "uuid": "859d02b4-233b-5630-8388-e611e0faff10",
+      "source": "14ed8762-68ee-577b-846a-912f6d6eef57",
+      "target": "ffc0d3cc-fa50-5dcb-afad-984492ab4e07",
+      "type": "UNLOCKS",
+      "phase_index": 3,
+      "description": "stranger_anxiety unlocked in phase 3"
+    },
+    {
+      "uuid": "45ef321f-0425-5aa7-a4ff-19abf899947c",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "14ed8762-68ee-577b-846a-912f6d6eef57",
+      "type": "EXPERIENCES",
+      "phase_index": 3,
+      "description": "experienced stranger_anxiety unlock"
+    },
+    {
+      "uuid": "9d98d39e-0249-5f44-9f59-0c66070c19b9",
+      "source": "6efea46b-1754-5b77-8439-3a015810ee86",
+      "target": "99a3368f-928f-5b72-9862-222b1dabd703",
+      "type": "OCCURS_IN",
+      "phase_index": 4
+    },
+    {
+      "uuid": "388941fc-ae21-5c79-8fb4-58f38c6a60d9",
+      "source": "8567b79d-9f02-5215-b9ba-9545c4c35df3",
+      "target": "6efea46b-1754-5b77-8439-3a015810ee86",
+      "type": "UNLOCKS",
+      "phase_index": 4,
+      "description": "crawling unlocked in phase 4"
+    },
+    {
+      "uuid": "2c13ce07-e982-58b7-ab93-7d2ef76266d4",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "8567b79d-9f02-5215-b9ba-9545c4c35df3",
+      "type": "EXPERIENCES",
+      "phase_index": 4,
+      "description": "experienced crawling unlock"
+    },
+    {
+      "uuid": "5f24661f-3f5b-53aa-9c40-8bf614fc5224",
+      "source": "1483e9b1-b6a8-5835-a532-6018681587bc",
+      "target": "a7074366-37a3-5269-a46a-aa9b7c1e4ac7",
+      "type": "OCCURS_IN",
+      "phase_index": 4
+    },
+    {
+      "uuid": "a797581b-49c0-50f0-b192-c4b36e9aa7b8",
+      "source": "871d66c2-9238-5450-9e9f-9d2f043b5443",
+      "target": "1483e9b1-b6a8-5835-a532-6018681587bc",
+      "type": "UNLOCKS",
+      "phase_index": 4,
+      "description": "first_words unlocked in phase 4"
+    },
+    {
+      "uuid": "7a43e688-78c0-568c-8ce1-209280f2dfe6",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "871d66c2-9238-5450-9e9f-9d2f043b5443",
+      "type": "EXPERIENCES",
+      "phase_index": 4,
+      "description": "experienced first_words unlock"
+    },
+    {
+      "uuid": "cbb8273c-ace8-5a7e-b0bf-c821c85dcdef",
+      "source": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "target": "d4e8656b-ebbb-54e3-bae7-60e0f6b004d4",
+      "type": "OCCURS_IN",
+      "phase_index": 5
+    },
+    {
+      "uuid": "126b9f49-2d39-5815-9512-9f30fc4439a4",
+      "source": "ab8b9fb4-5beb-5f0e-bcaa-61383eb167cc",
+      "target": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "type": "UNLOCKS",
+      "phase_index": 5,
+      "description": "walking unlocked in phase 5"
+    },
+    {
+      "uuid": "a1969313-a94d-596f-a7a4-4ab244c89a63",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ab8b9fb4-5beb-5f0e-bcaa-61383eb167cc",
+      "type": "EXPERIENCES",
+      "phase_index": 5,
+      "description": "experienced walking unlock"
+    },
+    {
+      "uuid": "2b5bccc2-25ff-5037-87ce-7a46cf0eb3fb",
+      "source": "d2daafdc-b107-5cb5-9014-ca13c0227d3e",
+      "target": "d4e8656b-ebbb-54e3-bae7-60e0f6b004d4",
+      "type": "OCCURS_IN",
+      "phase_index": 5
+    },
+    {
+      "uuid": "dfa9a3b4-038c-599a-9059-7d4f048b662d",
+      "source": "976948fe-c607-544e-b544-eab063360aed",
+      "target": "d2daafdc-b107-5cb5-9014-ca13c0227d3e",
+      "type": "UNLOCKS",
+      "phase_index": 5,
+      "description": "tool_use unlocked in phase 5"
+    },
+    {
+      "uuid": "1a08ea39-de50-5ad6-bcea-391a9ae3a824",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "976948fe-c607-544e-b544-eab063360aed",
+      "type": "EXPERIENCES",
+      "phase_index": 5,
+      "description": "experienced tool_use unlock"
+    },
+    {
+      "uuid": "35b80378-3b05-56b0-a5b0-9587489761d3",
+      "source": "f28e87fe-9323-5a12-836d-471cf3efadc4",
+      "target": "ebbd3d77-c4ce-5a18-93d5-c44044287865",
+      "type": "OCCURS_IN",
+      "phase_index": 6
+    },
+    {
+      "uuid": "8f4a8409-3ad4-50bc-a9a9-129153475b67",
+      "source": "3cdf5f56-5804-5ef4-9edd-b089b2aa6dbb",
+      "target": "f28e87fe-9323-5a12-836d-471cf3efadc4",
+      "type": "UNLOCKS",
+      "phase_index": 6,
+      "description": "pretend_play unlocked in phase 6"
+    },
+    {
+      "uuid": "70cdb8bf-2b3a-5b7b-b744-07abbf8b3777",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "3cdf5f56-5804-5ef4-9edd-b089b2aa6dbb",
+      "type": "EXPERIENCES",
+      "phase_index": 6,
+      "description": "experienced pretend_play unlock"
+    },
+    {
+      "uuid": "ae8b2e61-6783-58e0-aa56-142dbe63cf0e",
+      "source": "8719af33-f156-5fea-b0fc-24e435a6b9c2",
+      "target": "ebbd3d77-c4ce-5a18-93d5-c44044287865",
+      "type": "OCCURS_IN",
+      "phase_index": 6
+    },
+    {
+      "uuid": "d3fede75-fd31-594f-81a9-4c66a1f2eaab",
+      "source": "06705306-b584-52f5-9670-4cf1c6af496d",
+      "target": "8719af33-f156-5fea-b0fc-24e435a6b9c2",
+      "type": "UNLOCKS",
+      "phase_index": 6,
+      "description": "self_recognition unlocked in phase 6"
+    },
+    {
+      "uuid": "ba36631d-8be6-5df9-8cf1-a9ab751254dd",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "06705306-b584-52f5-9670-4cf1c6af496d",
+      "type": "EXPERIENCES",
+      "phase_index": 6,
+      "description": "experienced self_recognition unlock"
+    },
+    {
+      "uuid": "664c780f-534c-5229-83e0-1563ddf55a7c",
+      "source": "2b109c63-bfab-5eee-bee8-b4e1b685404a",
+      "target": "50b2a2d0-6f52-519a-8843-4bef8a53f6c1",
+      "type": "OCCURS_IN",
+      "phase_index": 7
+    },
+    {
+      "uuid": "75629762-0ea3-5e74-82ff-bb173c3eed0f",
+      "source": "12a95760-d02e-5590-9c66-c684746f907a",
+      "target": "2b109c63-bfab-5eee-bee8-b4e1b685404a",
+      "type": "UNLOCKS",
+      "phase_index": 7,
+      "description": "why_questions unlocked in phase 7"
+    },
+    {
+      "uuid": "fdb00fd9-243d-5f5e-ae21-0d6c553dda3e",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "12a95760-d02e-5590-9c66-c684746f907a",
+      "type": "EXPERIENCES",
+      "phase_index": 7,
+      "description": "experienced why_questions unlock"
+    },
+    {
+      "uuid": "47baa121-0189-5933-904e-61bfdc3b3f8b",
+      "source": "0543760d-741d-52f0-9ede-cda15cf308c9",
+      "target": "1ff15db7-3684-5191-a91e-f058f0785fbf",
+      "type": "OCCURS_IN",
+      "phase_index": 7
+    },
+    {
+      "uuid": "bcd995dc-9b33-5be4-acc9-88f3528592c0",
+      "source": "4b52ae81-32a2-5019-ae4b-c646f18c6d80",
+      "target": "0543760d-741d-52f0-9ede-cda15cf308c9",
+      "type": "UNLOCKS",
+      "phase_index": 7,
+      "description": "emotional_storms unlocked in phase 7"
+    },
+    {
+      "uuid": "e603392e-27a4-5e6f-8d42-39f35f48208e",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "4b52ae81-32a2-5019-ae4b-c646f18c6d80",
+      "type": "EXPERIENCES",
+      "phase_index": 7,
+      "description": "experienced emotional_storms unlock"
+    },
+    {
+      "uuid": "7793ba92-7d7e-50bc-9a3b-54207de15cb7",
+      "source": "851b0312-fc9e-5ef9-a0cb-5953edac1569",
+      "target": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "type": "OCCURS_IN",
+      "phase_index": 8
+    },
+    {
+      "uuid": "d8577525-5031-5060-9188-00e7ad5d77ca",
+      "source": "482856c9-052a-5698-8574-833948f07704",
+      "target": "851b0312-fc9e-5ef9-a0cb-5953edac1569",
+      "type": "UNLOCKS",
+      "phase_index": 8,
+      "description": "moral_sense unlocked in phase 8"
+    },
+    {
+      "uuid": "0b8e06b6-3240-5317-9e88-9d4b88fe2419",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "482856c9-052a-5698-8574-833948f07704",
+      "type": "EXPERIENCES",
+      "phase_index": 8,
+      "description": "experienced moral_sense unlock"
+    },
+    {
+      "uuid": "010c38eb-aa58-5a14-b34a-acb1eac84163",
+      "source": "ab018660-f754-5bcb-a7cc-4e3477de8035",
+      "target": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "type": "OCCURS_IN",
+      "phase_index": 8
+    },
+    {
+      "uuid": "b6dfce42-21ac-5ea6-add6-3047d7632fe5",
+      "source": "658f0a82-6fc9-5d38-ad82-9f0d42d73ecc",
+      "target": "ab018660-f754-5bcb-a7cc-4e3477de8035",
+      "type": "UNLOCKS",
+      "phase_index": 8,
+      "description": "peer_awareness unlocked in phase 8"
+    },
+    {
+      "uuid": "7e6f0b7d-3e0a-504a-80f6-f039f206c431",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "658f0a82-6fc9-5d38-ad82-9f0d42d73ecc",
+      "type": "EXPERIENCES",
+      "phase_index": 8,
+      "description": "experienced peer_awareness unlock"
+    },
+    {
+      "uuid": "e2d1c18a-1c85-5c88-bf74-deeb07aa72f5",
+      "source": "dd141b92-af4f-58f4-8aa1-5d379619b97f",
+      "target": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "type": "OCCURS_IN",
+      "phase_index": 9
+    },
+    {
+      "uuid": "53c800c7-15a3-52e6-8226-5ef6afed7d79",
+      "source": "aa62f8ab-dd92-5410-8312-582e230d67ae",
+      "target": "dd141b92-af4f-58f4-8aa1-5d379619b97f",
+      "type": "UNLOCKS",
+      "phase_index": 9,
+      "description": "rule_following unlocked in phase 9"
+    },
+    {
+      "uuid": "1e2a12f6-f9a8-572f-a389-0e7ee3a252da",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "aa62f8ab-dd92-5410-8312-582e230d67ae",
+      "type": "EXPERIENCES",
+      "phase_index": 9,
+      "description": "experienced rule_following unlock"
+    },
+    {
+      "uuid": "2a461222-71ad-5958-8466-1cd0f8d2f021",
+      "source": "400706bc-cc86-5832-9ed1-a60098f36004",
+      "target": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "type": "OCCURS_IN",
+      "phase_index": 9
+    },
+    {
+      "uuid": "d32f5feb-2df4-550c-9cb6-7ae9b728d2ab",
+      "source": "7e26074e-0552-5345-91ef-5ad900dff4d2",
+      "target": "400706bc-cc86-5832-9ed1-a60098f36004",
+      "type": "UNLOCKS",
+      "phase_index": 9,
+      "description": "basic_empathy unlocked in phase 9"
+    },
+    {
+      "uuid": "fc4e1e72-9bbb-506d-a5de-aa5cc56d8b79",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "7e26074e-0552-5345-91ef-5ad900dff4d2",
+      "type": "EXPERIENCES",
+      "phase_index": 9,
+      "description": "experienced basic_empathy unlock"
+    },
+    {
+      "uuid": "15b8e51a-2853-5415-9953-2d01e6ade28b",
+      "source": "15d7a548-2dcd-51b5-a5d7-726f5425e07a",
+      "target": "836bd653-9781-5110-9dfc-f97bf6d2f513",
+      "type": "OCCURS_IN",
+      "phase_index": 10
+    },
+    {
+      "uuid": "1d02350d-22b8-56f4-81c9-f30bf693ea7e",
+      "source": "d7b52f37-fa53-5ab2-ade7-b0ffb5871669",
+      "target": "15d7a548-2dcd-51b5-a5d7-726f5425e07a",
+      "type": "UNLOCKS",
+      "phase_index": 10,
+      "description": "time_concept unlocked in phase 10"
+    },
+    {
+      "uuid": "652b8b54-9fa4-5085-9024-137f199898ed",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "d7b52f37-fa53-5ab2-ade7-b0ffb5871669",
+      "type": "EXPERIENCES",
+      "phase_index": 10,
+      "description": "experienced time_concept unlock"
+    },
+    {
+      "uuid": "3e4a8fff-e183-57e3-a5df-0ea5fc755314",
+      "source": "cdc92ee2-9770-575c-b008-9be7c26c67c1",
+      "target": "836bd653-9781-5110-9dfc-f97bf6d2f513",
+      "type": "OCCURS_IN",
+      "phase_index": 10
+    },
+    {
+      "uuid": "7f387a03-a2bc-568e-89c3-786d1e3fc9d1",
+      "source": "5f7e53a6-7095-5849-baee-c83dd4c0085b",
+      "target": "cdc92ee2-9770-575c-b008-9be7c26c67c1",
+      "type": "UNLOCKS",
+      "phase_index": 10,
+      "description": "analogy unlocked in phase 10"
+    },
+    {
+      "uuid": "c1ed8256-2030-5a65-9fb3-24517f522b6f",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "5f7e53a6-7095-5849-baee-c83dd4c0085b",
+      "type": "EXPERIENCES",
+      "phase_index": 10,
+      "description": "experienced analogy unlock"
+    },
+    {
+      "uuid": "30f4c55e-dc64-536e-8395-981684a396bb",
+      "source": "330e2018-2948-55b7-b45a-b76464ce481c",
+      "target": "c0328e6f-ed4c-524f-995d-4f1e2fea5e58",
+      "type": "OCCURS_IN",
+      "phase_index": 11
+    },
+    {
+      "uuid": "bc03fb4a-e749-5f65-83ad-049196729c4b",
+      "source": "6395f868-c6d2-5910-a9b6-0d80229606b5",
+      "target": "330e2018-2948-55b7-b45a-b76464ce481c",
+      "type": "UNLOCKS",
+      "phase_index": 11,
+      "description": "self_advocacy unlocked in phase 11"
+    },
+    {
+      "uuid": "dc286325-37a8-5234-858c-52d6c368a556",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "6395f868-c6d2-5910-a9b6-0d80229606b5",
+      "type": "EXPERIENCES",
+      "phase_index": 11,
+      "description": "experienced self_advocacy unlock"
+    },
+    {
+      "uuid": "2011a69c-97ec-5fd9-84b8-67df25c2ad3c",
+      "source": "093f5051-691f-5719-a938-9ebd98275a36",
+      "target": "473582b5-7957-551a-b771-83a45087e808",
+      "type": "OCCURS_IN",
+      "phase_index": 11
+    },
+    {
+      "uuid": "34e449c4-b538-516c-aaec-63bcb2813453",
+      "source": "f35aee0f-34eb-51d4-87fb-d19d02918159",
+      "target": "093f5051-691f-5719-a938-9ebd98275a36",
+      "type": "UNLOCKS",
+      "phase_index": 11,
+      "description": "complex_emotion unlocked in phase 11"
+    },
+    {
+      "uuid": "afab856f-3d97-593f-aaed-db774651e4c5",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "f35aee0f-34eb-51d4-87fb-d19d02918159",
+      "type": "EXPERIENCES",
+      "phase_index": 11,
+      "description": "experienced complex_emotion unlock"
+    },
+    {
+      "uuid": "05aadfb8-d334-5a8a-a71b-fcec2aadb088",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "0adad05f-babc-51c0-914c-3681f1c27797",
+      "type": "ACHIEVES",
+      "phase_index": 1
+    },
+    {
+      "uuid": "3656a501-3b42-569d-bd26-047bdc4be797",
+      "source": "0adad05f-babc-51c0-914c-3681f1c27797",
+      "target": "72a6e6f4-d067-56ec-9b32-b73f3577f0fc",
+      "type": "OCCURS_IN",
+      "phase_index": 1
+    },
+    {
+      "uuid": "a1291a37-b49f-52b5-bc07-e8b35702390d",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "736ade76-efb5-5ea9-85a8-a48e723e85c4",
+      "type": "ACHIEVES",
+      "phase_index": 4
+    },
+    {
+      "uuid": "19c340b7-6c74-55b6-87c8-cab746928114",
+      "source": "736ade76-efb5-5ea9-85a8-a48e723e85c4",
+      "target": "a7074366-37a3-5269-a46a-aa9b7c1e4ac7",
+      "type": "OCCURS_IN",
+      "phase_index": 4
+    },
+    {
+      "uuid": "f2e5b231-6530-5498-9147-c6ec995b6d3b",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "8d280001-1052-53a6-9769-3a8091cc2e15",
+      "type": "ACHIEVES",
+      "phase_index": 5
+    },
+    {
+      "uuid": "b7b4a232-4b6c-59ce-89ac-3fd646738f84",
+      "source": "8d280001-1052-53a6-9769-3a8091cc2e15",
+      "target": "d4e8656b-ebbb-54e3-bae7-60e0f6b004d4",
+      "type": "OCCURS_IN",
+      "phase_index": 5
+    },
+    {
+      "uuid": "b71bda6f-5721-5449-935a-32a0ed1de6f0",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "bd954708-96d1-5a5a-adf2-075a1fbb32cc",
+      "type": "ACHIEVES",
+      "phase_index": 6
+    },
+    {
+      "uuid": "99e5f577-ef52-538c-880d-13646b46beaf",
+      "source": "bd954708-96d1-5a5a-adf2-075a1fbb32cc",
+      "target": "b8d0db3d-da26-5f5b-af25-0feddaf8332d",
+      "type": "OCCURS_IN",
+      "phase_index": 6
+    },
+    {
+      "uuid": "fc4917ae-a323-5283-b0ad-bc20fa521f2c",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "f6353bb8-497d-5558-b8be-3604af0823f6",
+      "type": "ACHIEVES",
+      "phase_index": 8
+    },
+    {
+      "uuid": "69be7906-93f2-5d62-9fc9-1dec57e263b7",
+      "source": "f6353bb8-497d-5558-b8be-3604af0823f6",
+      "target": "1a5f6a04-4e5c-54d2-bf25-01bf4e1d7aa3",
+      "type": "OCCURS_IN",
+      "phase_index": 8
+    },
+    {
+      "uuid": "aff4b4a0-94e3-538d-8b44-60e26bb350ce",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "4dc3db64-54c7-5dfd-b8ee-04b4f76abc49",
+      "type": "ACHIEVES",
+      "phase_index": 9
+    },
+    {
+      "uuid": "f923f5f9-c7a1-55b3-a516-7e02a32f823b",
+      "source": "4dc3db64-54c7-5dfd-b8ee-04b4f76abc49",
+      "target": "2ed8cfca-442a-58de-b7fe-42ee8cb17f15",
+      "type": "OCCURS_IN",
+      "phase_index": 9
+    },
+    {
+      "uuid": "86fc1ba4-a312-5e02-a28c-1a01f893198f",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "3c46d847-308d-59fb-a426-b90896b4d430",
+      "type": "ACHIEVES",
+      "phase_index": 8
+    },
+    {
+      "uuid": "0d01abfa-5e3e-5e18-91ec-a6fbe1f5e2ca",
+      "source": "3c46d847-308d-59fb-a426-b90896b4d430",
+      "target": "e1dfa153-1e90-5db8-a81d-ea112c79ff57",
+      "type": "OCCURS_IN",
+      "phase_index": 8
+    },
+    {
+      "uuid": "36be8ff5-700e-5dee-801d-bb0e16f13492",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "f007d0df-952e-5f9a-99ce-e9b7e5ca17ea",
+      "type": "ACHIEVES",
+      "phase_index": 11
+    },
+    {
+      "uuid": "fa45d9b1-eec7-5087-bf56-dd30533984e9",
+      "source": "f007d0df-952e-5f9a-99ce-e9b7e5ca17ea",
+      "target": "836bd653-9781-5110-9dfc-f97bf6d2f513",
+      "type": "OCCURS_IN",
+      "phase_index": 11
+    },
+    {
+      "uuid": "08839a43-6986-5b2e-8e84-f4f4b0d11535",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 0,
+      "weight": 0.95,
+      "description": "breastfeeding & swaddling"
+    },
+    {
+      "uuid": "41cfb789-3aaa-5db2-932a-74b242e4269e",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 1,
+      "weight": 0.9,
+      "description": "gaze play & cooing response"
+    },
+    {
+      "uuid": "3a99ccb4-1544-5f31-ad90-cec9e55c1c24",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 2,
+      "weight": 0.88,
+      "description": "tummy time & hand play"
+    },
+    {
+      "uuid": "54d9d3fc-9c07-5180-8de5-2a16cedf019b",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 3,
+      "weight": 0.92,
+      "description": "separation games & peekaboo"
+    },
+    {
+      "uuid": "9d8b9483-a5fe-5779-92e1-bcc643b0738c",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 4,
+      "weight": 0.9,
+      "description": "walking practice"
+    },
+    {
+      "uuid": "59e9f477-6826-59c7-b30f-c31d716beaa8",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 5,
+      "weight": 0.85,
+      "description": "word coaching"
+    },
+    {
+      "uuid": "41e52469-ec45-5418-a4bc-8db80bec8197",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 7,
+      "weight": 0.8,
+      "description": "tantrum containment"
+    },
+    {
+      "uuid": "c2e711d5-2bac-5e3f-a4e7-565b9b1eb5ce",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 9,
+      "weight": 0.9,
+      "description": "rule co-creation"
+    },
+    {
+      "uuid": "c28c6d9e-fbcd-5c37-ae96-bccbdd90a7a5",
+      "source": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 11,
+      "weight": 0.95,
+      "description": "pre-world emotional prep"
+    },
+    {
+      "uuid": "c9d50491-e632-5a19-93af-77900717842c",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 1,
+      "weight": 0.7,
+      "description": "evening bathing"
+    },
+    {
+      "uuid": "8203480d-2d5d-5961-b477-af485dbc525d",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 4,
+      "weight": 0.75,
+      "description": "rough play"
+    },
+    {
+      "uuid": "dc9adbd7-affd-5be1-89c6-91fb458bb28b",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 6,
+      "weight": 0.88,
+      "description": "naming ceremony"
+    },
+    {
+      "uuid": "690b3c60-96f2-52d2-ac18-ed671e8787ca",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 8,
+      "weight": 0.8,
+      "description": "peer setup"
+    },
+    {
+      "uuid": "5e11a0bc-67f9-5de6-bed0-7711566c26b6",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 11,
+      "weight": 0.82,
+      "description": "debate coaching"
+    },
+    {
+      "uuid": "b151ba34-f62f-56cd-bfc7-36c52de7a9e0",
+      "source": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 3,
+      "weight": 0.65,
+      "description": "first visit after 3mo"
+    },
+    {
+      "uuid": "90ae7956-c538-5052-8fa2-d3037f9af80f",
+      "source": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 6,
+      "weight": 0.72,
+      "description": "holiday stay"
+    },
+    {
+      "uuid": "579aa857-0336-5459-841f-b46119d1dd05",
+      "source": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "CARED_BY",
+      "phase_index": 9,
+      "weight": 0.7,
+      "description": "weekend visits"
+    },
+    {
+      "uuid": "ba966e62-db13-5ee6-bca2-bed8b5e2f7e1",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "type": "ATTACHES_TO",
+      "phase_index": 1,
+      "description": "初次依附形成",
+      "state": "secure",
+      "since_day": 30
+    },
+    {
+      "uuid": "05a183e7-410f-5290-8a38-f04901b03b08",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "type": "ATTACHES_TO",
+      "phase_index": 3,
+      "description": "陌生人焦虑副作用波及主依附",
+      "state": "anxious",
+      "since_day": 200
+    },
+    {
+      "uuid": "abb7795f-bf04-5636-80bc-1dd411c4c805",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "type": "ATTACHES_TO",
+      "phase_index": 4,
+      "description": "通过躲猫猫重建安全感",
+      "state": "secure",
+      "since_day": 290
+    },
+    {
+      "uuid": "3c36deeb-6c18-5043-b083-a253e4f4d7cf",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "d90a8328-1994-5fec-9fe1-ab128dead481",
+      "type": "ATTACHES_TO",
+      "phase_index": 9,
+      "description": "规则共建巩固依附",
+      "state": "secure",
+      "since_day": 1500
+    },
+    {
+      "uuid": "2d3cfe93-6b8e-54ba-ad06-22920d6bb7fa",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "type": "ATTACHES_TO",
+      "phase_index": 6,
+      "description": "命名仪式建立父女依附",
+      "state": "secure",
+      "since_day": 600
+    },
+    {
+      "uuid": "2136e08f-d418-50b9-977e-fb8c76cead5d",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "type": "ATTACHES_TO",
+      "phase_index": 3,
+      "description": "新面孔警戒",
+      "state": "anxious",
+      "since_day": 250
+    },
+    {
+      "uuid": "b68bf141-c9cf-5ad8-8f70-5539382de536",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "e4d18c06-558b-5072-a887-cddd76575c05",
+      "type": "ATTACHES_TO",
+      "phase_index": 9,
+      "description": "累积信任",
+      "state": "secure",
+      "since_day": 1550
+    },
+    {
+      "uuid": "ab6d85d6-cc5d-5ec9-b763-47a13b856435",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ef642eb4-ee39-5bdd-baba-0e9a06a04f67",
+      "type": "ACQUIRES",
+      "phase_index": 4
+    },
+    {
+      "uuid": "1f0b632d-260f-5355-a697-e7653ebc61eb",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ba962b46-aa71-5bee-ad7c-ab122613a692",
+      "type": "ACQUIRES",
+      "phase_index": 5
+    },
+    {
+      "uuid": "74ec7d5a-3f4d-5716-91f6-db2e14114e0d",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "674887f5-39cd-5c93-931e-50cde82a268b",
+      "type": "ACQUIRES",
+      "phase_index": 6
+    },
+    {
+      "uuid": "10855dab-e794-58c6-b37d-d1f0bb12640e",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "11f411ee-6c31-5688-80e5-27bec52206a1",
+      "type": "ACQUIRES",
+      "phase_index": 3
+    },
+    {
+      "uuid": "f9463105-91bb-5f3e-bcf0-75782445be6a",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ed4eda2d-6b2b-5d13-8e48-6a32c39364e0",
+      "type": "ACQUIRES",
+      "phase_index": 8
+    },
+    {
+      "uuid": "115a87d2-b5f0-5b88-b751-9eb5b589b71f",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "077b3dbf-7630-5590-a370-bcc9fea46a48",
+      "type": "ACQUIRES",
+      "phase_index": 1
+    },
+    {
+      "uuid": "30eab1e1-8110-5d03-81ff-e829d571be80",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "896c428e-acbf-51f6-bb55-56e0435e7ebd",
+      "type": "ACQUIRES",
+      "phase_index": 10
+    },
+    {
+      "uuid": "a1d308fa-f1ed-5df7-bced-798b4ebcd99c",
+      "source": "077b3dbf-7630-5590-a370-bcc9fea46a48",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "SOOTHES",
+      "phase_index": 3,
+      "weight": 0.3,
+      "description": "夜醒安抚",
+      "stress_delta": -0.3
+    },
+    {
+      "uuid": "95187998-ac72-58ef-9c4f-df37ef3215c5",
+      "source": "896c428e-acbf-51f6-bb55-56e0435e7ebd",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "SOOTHES",
+      "phase_index": 10,
+      "weight": 0.4,
+      "description": "分离时听录音",
+      "stress_delta": -0.4
+    },
+    {
+      "uuid": "81c956b2-653c-5a43-87ac-d4ce54659bbd",
+      "source": "8d1ab128-1406-5811-9430-e6213f774d02",
+      "target": "d33ae46f-96ef-52b4-bb41-2602c0a413ee",
+      "type": "TRIGGERED_BY",
+      "phase_index": 0,
+      "day_index": 5,
+      "resolution": "caregiver_response"
+    },
+    {
+      "uuid": "fb246074-0210-5a03-a214-8bf318567a19",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "8d1ab128-1406-5811-9430-e6213f774d02",
+      "type": "EXPERIENCES",
+      "phase_index": 0,
+      "day_index": 5
+    },
+    {
+      "uuid": "2d190da6-0eea-5fd6-93ab-dd2869b5e496",
+      "source": "ac956313-625b-5444-a1f3-6ddf1d9a7b73",
+      "target": "d2cfdc9e-d8e8-5c16-b7de-9986ad5d4acb",
+      "type": "TRIGGERED_BY",
+      "phase_index": 1,
+      "day_index": 20,
+      "resolution": "caregiver_response"
+    },
+    {
+      "uuid": "c6f690fb-9fbf-54e2-bfa3-1a5de245b08c",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ac956313-625b-5444-a1f3-6ddf1d9a7b73",
+      "type": "EXPERIENCES",
+      "phase_index": 1,
+      "day_index": 20
+    },
+    {
+      "uuid": "ad4770f4-3e8f-5839-a8a1-d6cabce6a3da",
+      "source": "8ff48bf2-1ad9-5e71-82c8-15927a7e8693",
+      "target": "047d6a9e-ee99-5dd9-8768-88ec17194eb1",
+      "type": "TRIGGERED_BY",
+      "phase_index": 3,
+      "day_index": 10,
+      "resolution": "caregiver_response"
+    },
+    {
+      "uuid": "45cefb8b-1447-573e-b7ca-5e14ad55b669",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "8ff48bf2-1ad9-5e71-82c8-15927a7e8693",
+      "type": "EXPERIENCES",
+      "phase_index": 3,
+      "day_index": 10
+    },
+    {
+      "uuid": "29bbf202-1ada-5645-8173-87a33637d8d7",
+      "source": "015b327b-1ce4-5ec4-92c2-7e396e2cdc0b",
+      "target": "03b7a573-bdc8-5287-8769-df2a5ff66361",
+      "type": "TRIGGERED_BY",
+      "phase_index": 5,
+      "day_index": 15,
+      "resolution": "caregiver_response"
+    },
+    {
+      "uuid": "49fa49dc-7a50-5627-a7d3-9bc3174d03bb",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "015b327b-1ce4-5ec4-92c2-7e396e2cdc0b",
+      "type": "EXPERIENCES",
+      "phase_index": 5,
+      "day_index": 15
+    },
+    {
+      "uuid": "47fb9922-2a19-536f-8011-8c5f020c62ab",
+      "source": "ca9e703a-e2f0-5b56-9d9a-d386e39456ca",
+      "target": "51dbac8d-5392-5ddb-81cd-8a90c0da7c2d",
+      "type": "TRIGGERED_BY",
+      "phase_index": 7,
+      "day_index": 12,
+      "resolution": "caregiver_response"
+    },
+    {
+      "uuid": "a156ddcc-acff-51f9-8108-c9675a09d869",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "ca9e703a-e2f0-5b56-9d9a-d386e39456ca",
+      "type": "EXPERIENCES",
+      "phase_index": 7,
+      "day_index": 12
+    },
+    {
+      "uuid": "c2d18045-cf8f-5066-bc1a-8723df4230cc",
+      "source": "5a8e99c7-785f-5991-b9f6-b2844508ab17",
+      "target": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "type": "REGRESSES",
+      "phase_index": 7,
+      "description": "2 days of refusing to walk",
+      "stress_level_at": 0.78
+    },
+    {
+      "uuid": "28b24a21-44f2-5d8c-a0da-f0b805a66e47",
+      "source": "05979888-4e56-5560-910f-28bbaa4a2754",
+      "target": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "type": "RECOVERS",
+      "phase_index": 8,
+      "description": "regained with stronger resilience",
+      "strengthened": true,
+      "care_from": "caregiver_mother"
+    },
+    {
+      "uuid": "3d502cea-7849-5a39-933e-7fad22fab3c2",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "3abb1ee9-87eb-51ae-874e-100a02de4c1a",
+      "type": "EXPERIENCES",
+      "phase_index": 6,
+      "description": "naming event happens"
+    },
+    {
+      "uuid": "eb4d1929-747b-5737-8ec8-a7335c0773b7",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "3abb1ee9-87eb-51ae-874e-100a02de4c1a",
+      "type": "RESOLVES",
+      "phase_index": 6,
+      "day_index": 600,
+      "description": "父亲赐名",
+      "action": "bestowed_name",
+      "tag_effects": [
+        "named",
+        "identity_stable"
+      ]
+    },
+    {
+      "uuid": "ccf56044-bb60-5950-a9b8-c0386019e100",
+      "source": "6002471e-6555-5108-97f4-01c5cbe6812b",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "NAMED_BY",
+      "day_index": 600,
+      "name_given": "Lily"
+    },
+    {
+      "uuid": "a88a84ba-d0c2-583a-ba96-07e6caddfc8b",
+      "source": "1483e9b1-b6a8-5835-a532-6018681587bc",
+      "target": "1a6b5f5b-787b-545b-b6c3-b5380a8052e8",
+      "type": "DRIVEN_BY",
+      "weight": 0.8
+    },
+    {
+      "uuid": "bb2005bb-d393-5dd5-8669-e756b4ebd96f",
+      "source": "a939c297-e35b-5d27-afc0-d830c0711ce6",
+      "target": "6efea46b-1754-5b77-8439-3a015810ee86",
+      "type": "DRIVEN_BY",
+      "weight": 0.9
+    },
+    {
+      "uuid": "9fb07c8a-8760-58b7-98f8-10433bdf0951",
+      "source": "f28e87fe-9323-5a12-836d-471cf3efadc4",
+      "target": "72128167-0300-5168-a1a2-f5618d05b825",
+      "type": "DRIVEN_BY",
+      "weight": 0.7
+    },
+    {
+      "uuid": "efdebf3a-2446-5d28-a114-4a7033df7bd0",
+      "source": "2b109c63-bfab-5eee-bee8-b4e1b685404a",
+      "target": "1483e9b1-b6a8-5835-a532-6018681587bc",
+      "type": "DRIVEN_BY",
+      "weight": 0.6
+    },
+    {
+      "uuid": "4cdcd014-d85d-56e1-9fed-5900d0004ff2",
+      "source": "1a6b5f5b-787b-545b-b6c3-b5380a8052e8",
+      "target": "a7074366-37a3-5269-a46a-aa9b7c1e4ac7",
+      "type": "OCCURS_IN",
+      "phase_index": 3
+    },
+    {
+      "uuid": "fe5b3083-47d0-5c50-962f-608e3c52c784",
+      "source": "e21801a4-bf45-5c38-bdb3-bbf7c324f6df",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "DESCRIBES",
+      "phase_index": 0
+    },
+    {
+      "uuid": "4e0563b0-b444-54e3-a217-51f1d51466f8",
+      "source": "55a2db22-cef2-5c78-a0ef-929791786ce0",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "DESCRIBES",
+      "phase_index": 3
+    },
+    {
+      "uuid": "9930abeb-89c2-5ce8-9b9d-439ef2d0cb8c",
+      "source": "09612ea6-413e-51f4-8c59-178608dde755",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "DESCRIBES",
+      "phase_index": 6
+    },
+    {
+      "uuid": "953b50a4-4bed-58b0-bf76-8dffff67ea46",
+      "source": "9dcdd1f4-20c1-560f-8d98-50f5646009ee",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "DESCRIBES",
+      "phase_index": 8
+    },
+    {
+      "uuid": "f6570fc0-4756-5b82-80c4-f61312b5583b",
+      "source": "69e67a46-7628-5d96-b94a-bc7594dd4fe4",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "DESCRIBES",
+      "phase_index": 11
+    },
+    {
+      "uuid": "4cefe70b-202b-5863-a50a-5e43533446ab",
+      "source": "5a8e99c7-785f-5991-b9f6-b2844508ab17",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "STRESSES",
+      "phase_index": 7,
+      "weight": 0.3,
+      "description": "能力失灵加剧焦虑",
+      "stress_delta": 0.3,
+      "reason": "regression_impact"
+    },
+    {
+      "uuid": "0400d648-3c80-5f35-9660-896a62a96914",
+      "source": "5a8e99c7-785f-5991-b9f6-b2844508ab17",
+      "target": "ed4eda2d-6b2b-5d13-8e48-6a32c39364e0",
+      "type": "CAUSED_BY",
+      "phase_index": 7,
+      "weight": 0.5,
+      "description": "噪声恐惧放大情绪风暴"
+    },
+    {
+      "uuid": "859912ac-cd90-5faa-b675-be7e581aee91",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "c68975b5-50c4-5b09-8bbd-5f6f021829c3",
+      "type": "SPEAKS_TO",
+      "phase_index": 10,
+      "description": "首次 DM 对话：谈论天气",
+      "msg_seq": 1
+    },
+    {
+      "uuid": "e2dd8044-ee80-5d86-bd95-4329e6d131b4",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "c68975b5-50c4-5b09-8bbd-5f6f021829c3",
+      "type": "SPEAKS_TO",
+      "phase_index": 11,
+      "description": "对话中表达自己的意见",
+      "msg_seq": 2
+    },
+    {
+      "uuid": "2cce080f-87aa-5b84-91c4-32dd78abafa0",
+      "source": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "target": "7d03ae09-3c94-5109-bfd5-ab074699c643",
+      "type": "EXPERIENCES",
+      "phase_index": 11,
+      "description": "进入世界"
+    },
+    {
+      "uuid": "dea05ac6-def6-527b-9fbe-7c5bc9fdb627",
+      "source": "7d03ae09-3c94-5109-bfd5-ab074699c643",
+      "target": "6fb6e424-8968-5d41-9729-c2a35b656209",
+      "type": "TerminatedBy",
+      "phase_index": 11,
+      "cause": "world_ready"
+    }
+  ],
+  "stats": {
+    "node_count": 138,
+    "edge_count": 194,
+    "by_group": {
+      "dimension": 6,
+      "phase": 31,
+      "identity": 1,
+      "caregiver": 3,
+      "progression": 12,
+      "capability_milestone": 33,
+      "event": 34,
+      "trait": 8,
+      "need": 5,
+      "narrative": 5
+    },
+    "degree_top_8": [
+      {
+        "raw_id": "baby_this",
+        "total": 82,
+        "in": 27,
+        "out": 55
+      },
+      {
+        "raw_id": "caregiver_mother",
+        "total": 13,
+        "in": 4,
+        "out": 9
+      },
+      {
+        "raw_id": "caregiver_father",
+        "total": 8,
+        "in": 1,
+        "out": 7
+      },
+      {
+        "raw_id": "phase:social:cooperative",
+        "total": 6,
+        "in": 5,
+        "out": 1
+      },
+      {
+        "raw_id": "dimension:social",
+        "total": 6,
+        "in": 6,
+        "out": 0
+      },
+      {
+        "raw_id": "dimension:language",
+        "total": 6,
+        "in": 6,
+        "out": 0
+      },
+      {
+        "raw_id": "caregiver_grandmother",
+        "total": 5,
+        "in": 2,
+        "out": 3
+      },
+      {
+        "raw_id": "dimension:cognitive",
+        "total": 5,
+        "in": 5,
+        "out": 0
+      }
+    ],
+    "multi_edges_count": 6,
+    "multi_edges_max": 9
+  }
+}

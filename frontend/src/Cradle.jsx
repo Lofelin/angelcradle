@@ -5,19 +5,23 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 import { useState, useEffect, useLayoutEffect, useRef, useReducer, useCallback, memo } from 'react'
-import { useMatch, useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useMatch, useNavigate, useSearchParams } from 'react-router-dom'
 import { translateKey } from './i18n'
+import CITY_ZH from './data/cityZh'
+import COUNTRY_ZH from './data/countryZh'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
 import ConsolePanel from '@/components/ConsolePanel'
 import LifeGraph from '@/components/LifeGraph'
+import { useCradleGraph } from '@/hooks/useCradleGraph'
+import { fetchAllPages } from '@/utils/fetchAllPages'
 import ChatPanel from '@/components/ChatPanel'
 import GroupChatPanel from '@/components/GroupChatPanel'
 import { createConversation } from './hooks/useConversation'
 import { cn } from '@/lib/utils'
-import { MessageCircle, Users, ChevronDown, Send, Hand, Bell } from 'lucide-react'
+import { MessageCircle, Users, ChevronDown, Send, Hand, Bell, Maximize2, Minimize2, LogIn, Loader2 } from 'lucide-react'
 
 const API = 'http://localhost:8000'
 
@@ -73,11 +77,52 @@ const _setPortrait = (id, v) => {
   try { localStorage.setItem('cradle:portraitCache', JSON.stringify(toSave)) } catch {}
 }
 
-// 宝宝网格卡片
-const BabyCard = memo(function BabyCard({ baby, isZh, tk, navigate, setReadiness, getGrowthStatus }) {
-  // 只信任 'loaded' 缓存，其余都重新加载
+// 2 字母 ISO 码 → 国旗 emoji（Regional Indicator Symbols，A=U+1F1E6）
+const countryFlag = (code) => {
+  if (!code || code.length !== 2) return ''
+  const A = 0x1f1e6
+  const [a, b] = code.toUpperCase()
+  return String.fromCodePoint(A + (a.charCodeAt(0) - 65), A + (b.charCodeAt(0) - 65))
+}
+
+// 宝宝网格卡片（水平布局：左头像 + 右内容，右上角"放入摇篮"按钮，底部进度标签）
+/**
+ * 骨架卡片：initialLoaded=false 时占位用。
+ * 布局/尺寸严格对齐 BabyCard（size-20 头像 + 右侧 meta/name/born/badge + 右上角按钮位），
+ * 保证"骨架 → 真卡"切换时无布局跳动。只用灰块 + animate-pulse，不依赖任何业务数据。
+ */
+const BabyCardSkeleton = memo(function BabyCardSkeleton() {
+  return (
+    <div
+      aria-busy="true"
+      className="relative flex gap-4 p-4 rounded-xl border border-border bg-white animate-pulse"
+    >
+      {/* 左：头像占位（方形圆角，与 size-20 头像同尺寸）*/}
+      <div className="size-20 shrink-0 rounded-lg bg-neutral-200/80" />
+
+      {/* 右：内容占位 */}
+      <div className="flex-1 min-w-0 flex flex-col gap-2 pr-10">
+        {/* country · sex meta 行 */}
+        <div className="h-3 w-24 rounded bg-neutral-200/70" />
+        {/* 名字 */}
+        <div className="h-4 w-36 rounded bg-neutral-200/80" />
+        {/* bornTs */}
+        <div className="h-3 w-28 rounded bg-neutral-200/60" />
+        {/* 底部状态徽标 */}
+        <div className="mt-1.5 h-5 w-20 rounded-full bg-neutral-200/70" />
+      </div>
+
+      {/* 右上按钮占位 */}
+      <div className="absolute top-3 right-3 size-7 rounded-md bg-neutral-200/70" />
+    </div>
+  )
+})
+
+
+const BabyCard = memo(function BabyCard({ baby, isZh, tk, navigate, setReadiness, getGrowthStatus, onAdmit }) {
   const cached = _portraitCache[baby.id] === 'loaded' ? 'loaded' : undefined
   const [imgState, setImgState] = useState(cached || 'loading')
+  const [admitting, setAdmitting] = useState(false)
   const gs = baby.inCradle ? getGrowthStatus(baby.cradleInfo) : null
   const ageDays = baby.cradleInfo?.age_days ?? 0
   const imgSrc = portraitUrl(baby.id)
@@ -85,59 +130,124 @@ const BabyCard = memo(function BabyCard({ baby, isZh, tk, navigate, setReadiness
   const onLoad = useCallback(() => { _setPortrait(baby.id, 'loaded'); setImgState('loaded') }, [baby.id])
   const onError = useCallback(() => { _setPortrait(baby.id, 'failed'); setImgState('failed') }, [baby.id])
 
+  const displayName = baby.cradleInfo?.name || tk(baby.species)
+  // 人类用 男性/女性，其他物种保留 雄性/雌性（Male/Female 英文无需区分）
+  const sexLabel = (isZh && baby.species === 'human')
+    ? (baby.sex === 'male' ? '男性' : baby.sex === 'female' ? '女性' : tk(baby.sex))
+    : tk(baby.sex)
+  const countryName = (isZh && baby.birthplace?.code && COUNTRY_ZH[baby.birthplace.code])
+    || baby.birthplace?.name
+  const rawCityName = baby.birthplace?.city || null
+  // isZh 时优先查 CITY_ZH 译名，查不到 fallback 英文（与 COUNTRY_ZH 同策略）
+  const cityName = isZh && rawCityName ? (CITY_ZH[rawCityName] || rawCityName) : rawCityName
+  const placeLabel = cityName
+    ? (isZh ? `${cityName}，${countryName || ''}`.replace(/，$/, '') : `${cityName}, ${countryName || ''}`.replace(/, $/, ''))
+    : countryName
+  const countryFlagEmoji = countryFlag(baby.birthplace?.code)
+  const phaseLabel = baby.inCradle
+    ? `${isZh ? '阶段' : 'P'} ${(baby.cradleInfo?.current_phase || 0) + 1}/${PHASES_DATA.length}${ageDays > 0 ? (isZh ? ` · ${ageDays}天` : ` · D${ageDays}`) : ''}`
+    : null
+  const bornTs = baby.born_at
+    ? (() => { const d = new Date(baby.born_at); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}` })()
+    : null
+
+  const canOpen = !!baby.inCradle
+  const openDetail = () => {
+    if (!canOpen) return
+    navigate(`/cradle/${baby.id}`)
+    setReadiness(null)
+  }
+  const handleAdmit = async (e) => {
+    e.stopPropagation()
+    if (admitting) return
+    setAdmitting(true)
+    try { await onAdmit?.(baby.id) } finally { setAdmitting(false) }
+  }
+
   return (
-    <button
+    <div
+      role={canOpen ? "button" : undefined}
+      tabIndex={canOpen ? 0 : -1}
+      onClick={openDetail}
+      onKeyDown={canOpen ? ((e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail() } }) : undefined}
       className={cn(
-        "relative aspect-square flex flex-col items-center justify-end p-2 rounded-lg border border-border overflow-hidden transition-all duration-200",
-        "hover:border-primary/50 hover:shadow-md hover:scale-[1.02] cursor-pointer",
-        imgState === 'loaded' && "has-portrait",
-        imgState !== 'loaded' && "no-portrait",
+        "relative flex gap-4 p-4 rounded-xl border border-border bg-white transition-all duration-200",
+        "hover:border-primary/40 hover:shadow-md",
+        canOpen ? "cursor-pointer" : "cursor-default"
       )}
-      onClick={() => { navigate(`/cradle/${baby.id}`); setReadiness(null) }}
     >
-      {/* 背景头像 + 模糊 */}
-      {imgState !== 'failed' && (
-        <div className="absolute inset-0">
+      {/* 左：头像（方形圆角，类似插件 icon）*/}
+      <div className="relative size-20 shrink-0 rounded-lg overflow-hidden bg-gradient-to-b from-neutral-100 to-neutral-200">
+        {imgState !== 'failed' && (
           <img src={imgSrc} alt="" className="w-full h-full object-cover" onLoad={onLoad} onError={onError} />
-          {imgState === 'loaded' && (
-            <div className="absolute inset-0 backdrop-blur-[2px] bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
-          )}
-        </div>
-      )}
-      {/* 生长状态指示点 */}
-      {gs && (
-        <span
-          className={cn(
-            "absolute top-1.5 right-1.5 w-2 h-2 rounded-full",
-            gs === 'active' ? 'dot-lifeline' : 'bg-yellow-500',
-          )}
-          title={gs === 'active' ? (isZh ? '正在生长' : 'Growing') : (isZh ? '生长可能停滞' : 'May be stalled')}
-        />
-      )}
-      {/* 底部文字层 */}
-      <div className="relative z-10 text-center min-w-0 w-full flex flex-col gap-1 baby-card-text">
-        <div className="font-bold text-xs capitalize truncate baby-card-name">{baby.cradleInfo?.name || tk(baby.species)}</div>
-        <div className="text-[10px] capitalize truncate baby-card-sub">
-          {[baby.birthplace?.name, tk(baby.sex)].filter(Boolean).join(' · ')}
-        </div>
-        {baby.inCradle && (
-          <div className="flex flex-col items-center gap-0.5 mt-0.5">
-            <span className="text-[10px] px-1.5 py-0 rounded-full baby-card-badge">
-              {baby.cradleInfo ? `${isZh ? '阶段' : 'P'} ${(baby.cradleInfo.current_phase || 0) + 1}/${PHASES_DATA.length}` : (isZh ? '已入篮' : 'In Cradle')}
-              {ageDays > 0 && <span className="ml-0.5 baby-card-badge-dim">· {isZh ? `${ageDays}天` : `D${ageDays}`}</span>}
-            </span>
-            {gs === 'stale' && (
-              <span className="text-[10px] text-yellow-400">{isZh ? '停滞' : 'Stalled'}</span>
-            )}
-          </div>
         )}
-        {baby.born_at && (
-          <div className="text-[9px] truncate mt-0.5 baby-card-dim">
-            {(() => { const d = new Date(baby.born_at); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}` })()}
-          </div>
+        {gs && (
+          <span
+            className={cn(
+              "absolute bottom-1 right-1 w-2 h-2 rounded-full ring-2 ring-white",
+              gs === 'active' ? 'dot-lifeline' : 'bg-yellow-500'
+            )}
+            title={gs === 'active' ? (isZh ? '正在生长' : 'Growing') : (isZh ? '生长可能停滞' : 'May be stalled')}
+          />
         )}
       </div>
-    </button>
+
+      {/* 右：内容 */}
+      <div className="flex-1 min-w-0 flex flex-col gap-1">
+        <div className="text-xs text-muted-foreground truncate capitalize flex items-center gap-1.5">
+          {countryFlagEmoji && <span className="text-sm leading-none">{countryFlagEmoji}</span>}
+          {placeLabel ? <span className="truncate">{placeLabel}</span> : <span>—</span>}
+        </div>
+        <div className="text-base font-semibold capitalize leading-tight break-words">{displayName}</div>
+        {(sexLabel || bornTs) && (
+          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80 truncate">
+            {sexLabel && <span className="capitalize">{sexLabel}</span>}
+            {sexLabel && bornTs && <span className="opacity-50">·</span>}
+            {bornTs && <span>{bornTs}</span>}
+          </div>
+        )}
+        {/* 底部：进度标签（左） + 已入篮徽标 / 放入摇篮按钮（右），同一水平行且统一右对齐 */}
+        <div className="flex items-center justify-between gap-2 mt-1.5">
+          {phaseLabel ? (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium tabular-nums whitespace-nowrap bg-primary/10 text-primary">
+              {phaseLabel}
+              {gs === 'stale' && (
+                <span className="text-yellow-600 ml-0.5">· {isZh ? '停滞' : 'Stalled'}</span>
+              )}
+            </span>
+          ) : admitting ? (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary/10 text-primary whitespace-nowrap">
+              <Loader2 className="size-3 animate-spin" />
+              {isZh ? '入篮中' : 'Admitting'}
+            </span>
+          ) : (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-muted text-muted-foreground">
+              {isZh ? '待入篮' : 'Not admitted'}
+            </span>
+          )}
+          {baby.inCradle ? (
+            <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-emerald-600 whitespace-nowrap">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              {isZh ? '已入篮' : 'In Cradle'}
+            </span>
+          ) : onAdmit ? (
+            <button
+              type="button"
+              onClick={handleAdmit}
+              disabled={admitting}
+              title={isZh ? '放入摇篮' : 'Admit to Cradle'}
+              aria-label={isZh ? '放入摇篮' : 'Admit to Cradle'}
+              className="ml-auto inline-flex items-center justify-center size-6 rounded-md bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800 border border-neutral-200 cursor-pointer transition-colors disabled:opacity-60 disabled:cursor-wait"
+            >
+              {admitting
+                ? <Loader2 className="size-3.5 animate-spin" />
+                : <LogIn className="size-3.5" strokeWidth={2} />}
+            </button>
+          ) : null}
+        </div>
+      </div>
+
+    </div>
   )
 })
 
@@ -151,6 +261,9 @@ const PHASES_DATA = [
   { name: 'language_explosion', age: '18-24个月', desc_zh: '双词短语出现，假装游戏，认出镜中的自己', desc_en: 'Two-word phrases emerge, pretend play appears, recognizes self in mirror.' },
   { name: 'why_phase', age: '2-3岁', desc_zh: '完整句子，无穷的"为什么"，频繁的情绪风暴', desc_en: 'Full sentences, endless "why" questions, frequent emotional storms.' },
   { name: 'social_budding', age: '3-4岁', desc_zh: '意识到同龄人，角色扮演游戏，道德感萌芽', desc_en: 'Becomes aware of peers, role-play games, moral sense sprouts.' },
+  { name: 'rule_understanding', age: '4-5岁', desc_zh: '理解规则存在并开始测试边界，知道"应该"但不总是服从', desc_en: 'Understands rules exist and begins testing boundaries. Knows "should" but doesn\'t always comply.' },
+  { name: 'abstract_beginning', age: '5-6岁', desc_zh: '出现类比思维，理解时间（昨天/明天），能做简单假设推理', desc_en: 'Begins analogical thinking, understands time (yesterday/tomorrow), can do simple hypothetical reasoning.' },
+  { name: 'independence', age: '6-7岁', desc_zh: '"我自己来"，有自己的观点能据理力争，准备进入世界', desc_en: '"I\'ll do it myself." Has own opinions, can argue back, ready to enter the world.' },
 ]
 const PHASE_NAMES = PHASES_DATA.map(p => p.name)
 
@@ -433,7 +546,7 @@ function cradleReducer(state, action) {
   }
 }
 
-export default function Cradle({ lang, graphState, graphDispatch }) {
+export default function Cradle({ lang, graphState, graphDispatch, graphFullscreen = false, workbenchFullscreen = false, onToggleGraphFullscreen }) {
   const tk = (v) => translateKey(v, lang)
   const isZh = lang === 'zh'
 
@@ -441,37 +554,73 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   const selectedId = cradleMatch?.params?.babyId
   const navigate = useNavigate()
 
-  // 摇篮生命图谱：切换宝宝初始加载 + SSE 事件驱动的节流刷新
+  // 摇篮生命图谱（v3 business-as-graph）：
+  //   - useCradleGraph 作为权威图数据源，承载 SSE graph_delta 增量合并
+  //   - 老 graphState (App.jsx) 保留只用于 LifeGraph 的 UI 控制（filter/showLabels/highlight）
+  //   - 初次加载 fetch GET /baby/{id}/cradle-graph → loadSnapshot；404 则保持空
+  const cradleGraph = useCradleGraph()
+  // 解构出 hook 内的稳定函数 (useCallback([])，引用永不变)
+  // 注意：不要依赖 cradleGraph 整个 object——它每次 render 都是新字面量，
+  // 会让下游 useCallback/useEffect 无限重建，把 SSE 连接打爆成死循环。
+  const { loadSnapshot: cradleLoadSnapshot, reset: cradleReset } = cradleGraph
   const cradleGraphFetchTimerRef = useRef(null)
   const fetchCradleGraph = useCallback((babyId) => {
-    if (!babyId || !graphDispatch) return
-    fetch(`${API}/cradle/${babyId}/graph`)
+    if (!babyId) return
+    fetch(`${API}/baby/${babyId}/cradle-graph`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
-        if (data?.nodes?.length > 0 || data?.links?.length > 0) {
-          graphDispatch({ type: 'LOAD_GRAPH', payload: data })
+        if (data && Array.isArray(data.nodes) && Array.isArray(data.edges)) {
+          cradleLoadSnapshot(data)
+          // 写入 localStorage 供下次刷新时乐观预填，消除 fetch 窗口空帧闪烁
+          try { localStorage.setItem(`cradle:graph:${babyId}`, JSON.stringify({ nodes: data.nodes, edges: data.edges })) }
+          catch { /* 容忍 localStorage 超额 */ }
         }
       })
-      .catch(() => { /* ignore */ })
-  }, [graphDispatch])
+      .catch(() => { /* 404/offline: 保持空图，后续 SSE 增量填充 */ })
+  }, [cradleLoadSnapshot])
   const scheduleCradleGraphFetch = useCallback(() => {
     if (!selectedId) return
     if (cradleGraphFetchTimerRef.current) clearTimeout(cradleGraphFetchTimerRef.current)
     cradleGraphFetchTimerRef.current = setTimeout(() => fetchCradleGraph(selectedId), 300)
   }, [selectedId, fetchCradleGraph])
 
-  // 切换宝宝时立即加载一次；先清空以避免残留的子宫图谱短暂可见
+  // 切换宝宝时处理图谱：
+  //   首次 mount（刷新）→ 不清空，走 localStorage 乐观预填 + fetch，消除"等待图谱数据"占位闪
+  //   真切换 baby      → 先清空老图避免残留
+  const prevBabyIdForGraphRef = useRef(selectedId)
   useEffect(() => {
     if (!selectedId) return
-    graphDispatch?.({ type: 'CLEAR_GRAPH' })
+    const prev = prevBabyIdForGraphRef.current
+    const isRealSwitch = prev != null && prev !== selectedId
+    prevBabyIdForGraphRef.current = selectedId
+    if (isRealSwitch) {
+      cradleReset()
+      graphDispatch?.({ type: 'CLEAR_GRAPH' })
+    } else {
+      // 首次/刷新：有 localStorage 缓存的快照则立即预填，减小 fetch 窗口空帧闪烁
+      try {
+        const cached = localStorage.getItem(`cradle:graph:${selectedId}`)
+        if (cached) {
+          const parsed = JSON.parse(cached)
+          if (parsed && Array.isArray(parsed.nodes) && Array.isArray(parsed.edges)
+              && parsed.nodes.length > 0) {
+            cradleLoadSnapshot(parsed)
+          }
+        }
+      } catch { /* ignore */ }
+    }
     fetchCradleGraph(selectedId)
-  }, [selectedId, fetchCradleGraph, graphDispatch])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId])
   const [searchParams, setSearchParams] = useSearchParams()
 
 
-  const [birthBabies, setBirthBabies] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('cradle:birthBabies') || '[]') } catch { return [] }
-  })
+  // 摇篮婴儿网络卡片分页（UI 分页，每页 100 张）
+  const BIRTH_PAGE_SIZE = 100
+  const [birthBabies, setBirthBabies] = useState([])
+  const [birthPage, setBirthPage] = useState(1)
+  const [birthTotal, setBirthTotal] = useState(0)
+  const [birthTotalPages, setBirthTotalPages] = useState(0)
   const [cradleBabies, setCradleBabies] = useState(() => {
     try { return JSON.parse(localStorage.getItem('cradle:cradleBabies') || '[]') } catch { return [] }
   })
@@ -495,7 +644,8 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   const [admitting, setAdmitting] = useState(false)
   const [portraitVer, setPortraitVer] = useState(0)  // cache-busting: admitted 后递增
   // 有 localStorage 缓存时跳过加载态，避免刷新闪烁
-  const [initialLoaded, setInitialLoaded] = useState(() => birthBabies.length > 0 || cradleBabies.length > 0)
+  // birthBabies 改为 UI 分页后不再整体缓存，初始加载态只看 cradleBabies 缓存
+  const [initialLoaded, setInitialLoaded] = useState(() => cradleBabies.length > 0)
   const [readiness, _setReadiness] = useState(() => {
     if (!selectedId) return null
     try { return JSON.parse(localStorage.getItem(`cradle:readiness:${selectedId}`)) } catch { return null }
@@ -555,6 +705,7 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   }, [hasTickOrNeed])
   const logRef = useRef(null)
   const currentPhaseRef = useRef(null)
+  const [consoleFullscreen, setConsoleFullscreen] = useState(false)
   const logRefCb = useCallback((node) => {
     logRef.current = node
     if (node) node.scrollTop = node.scrollHeight
@@ -587,32 +738,78 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   }, [babyStatus?.current_phase?.index, lifeCompleted])
 
   // ── 数据加载 ──
-  const loadBabies = useCallback(() => {
+  // 摇篮婴儿网络卡片 UI 分页：/babies 只拉当前页（100/页），不在前端聚合。
+  // /cradle/babies 用于 isInCradle 判断 + 群聊选择列表（跨页需要），仍 fetchAllPages
+  //   聚合全部页（已入篮的婴儿规模远小于已出生的，成本可接受）。
+  const loadBabies = useCallback((pageArg) => {
+    const page = Math.max(1, Number(pageArg) || 1)
     Promise.all([
-      fetch(`${API}/babies`).then(r => r.json()).catch(() => ({ babies: [] })),
-      fetch(`${API}/cradle/babies`).then(r => r.json()).catch(() => ({ babies: [] })),
-    ]).then(([birth, cradle]) => {
-      const birthList = birth.babies || []
-      const cradleList = cradle.babies || []
-      // 只在数据实际变化时更新，避免新引用触发全量重渲染导致闪烁
+      fetch(`${API}/babies?page=${page}&page_size=${BIRTH_PAGE_SIZE}`)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null),
+      fetchAllPages(`${API}/cradle/babies`),
+    ]).then(([birthResp, cradleList]) => {
+      const birthList = (birthResp && birthResp.babies) || []
+      const total = Number(birthResp && birthResp.total) || 0
+      const totalPages = Number(birthResp && birthResp.total_pages) || 0
       const birthJson = JSON.stringify(birthList)
       const cradleJson = JSON.stringify(cradleList)
       setBirthBabies(prev => JSON.stringify(prev) === birthJson ? prev : birthList)
+      setBirthTotal(total)
+      setBirthTotalPages(totalPages)
       setCradleBabies(prev => JSON.stringify(prev) === cradleJson ? prev : cradleList)
       setInitialLoaded(true)
+      // 越界保护：删除最后一页时自动回退
+      if (totalPages > 0 && page > totalPages) {
+        setBirthPage(totalPages)
+      }
       try {
-        localStorage.setItem('cradle:birthBabies', birthJson)
         localStorage.setItem('cradle:cradleBabies', cradleJson)
       } catch { /* quota or disabled */ }
     })
   }, [])
 
-  useEffect(() => { loadBabies() }, [loadBabies])
+  // 切页 / mount 时按当前页刷新
+  useEffect(() => { loadBabies(birthPage) }, [loadBabies, birthPage])
+
+  // 切换到摇篮 tab 时刷新宝宝列表。
+  // Cradle 组件被父层"常驻挂载"（App.jsx 用 CSS hidden 控制可见性，不 unmount），
+  // 所以 mount effect 只会在页面首次加载时跑一次；从 /womb 切回 /cradle
+  // 时不会再触发 loadBabies，导致列表陈旧。改为监听 location.pathname 进入 /cradle*，
+  // 每次进入都刷新一次。首次 mount 时若已在 /cradle，与上面 mount effect 并发一次冗余
+  // loadBabies，是可接受的代价（两次同地址 fetch，对结果无影响）。
+  const location = useLocation()
+  const onCradleTab = location.pathname.startsWith('/cradle')
+  useEffect(() => {
+    if (onCradleTab) loadBabies(birthPage)
+  }, [onCradleTab, loadBabies, birthPage])
 
   // 返回列表页时刷新婴儿数据（scheduler 可能已在后台推进天数/阶段）
   useEffect(() => {
-    if (!selectedId && initialLoaded) loadBabies()
+    if (!selectedId && initialLoaded) loadBabies(birthPage)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId])
+
+  // 列表页下每 60s 自动刷新摇篮网络卡片，保持 age_days / phase / In Cradle 等
+  // 状态新鲜（详情页由 lifeline SSE 实时更新，这里不重叠）。
+  // 仅在 !selectedId 且页面可见时周期拉取；切走 tab / 进详情页立即停。
+  useEffect(() => {
+    if (selectedId) return
+    const PERIOD_MS = 60_000
+    const tick = () => {
+      if (document.visibilityState === 'visible') loadBabies(birthPage)
+    }
+    const timer = setInterval(tick, PERIOD_MS)
+    // 从隐藏回到可见时立刻补一次，让切回 tab 看到最新
+    const onVis = () => {
+      if (document.visibilityState === 'visible') loadBabies(birthPage)
+    }
+    document.addEventListener('visibilitychange', onVis)
+    return () => {
+      clearInterval(timer)
+      document.removeEventListener('visibilitychange', onVis)
+    }
+  }, [selectedId, loadBabies, birthPage])
 
   // 记住最后访问的宝宝，便于从其他 tab 切回时恢复
   useEffect(() => {
@@ -643,6 +840,12 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   const justAdmittedRef = useRef(false)
   const prevSelectedIdRef = useRef(selectedId)
 
+  // selectedId 是否已入篮——派生成布尔而非依赖整个 cradleBabies 数组。
+  // 原因：SSE 日志处理每次都 setCradleBabies(prev => prev.map(...))，数组 identity
+  // 每条日志都会换，一旦被 effect 当依赖就会对每条日志触发 status/history/readiness
+  // 三连发，直接把后端打爆。布尔只在入/离篮瞬间翻转，彻底切断这个抖动链。
+  const selectedInCradle = cradleBabies.some(b => b.baby_id === selectedId)
+
   useEffect(() => {
     // API 首次加载完成前不运行（避免 localStorage 缓存触发无用 RESET + 闪烁）
     if (!initialLoaded) return
@@ -657,13 +860,12 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
       dispatch({ type: 'RESET' })
     }
     const savedMode = sessionStorage.getItem(`chatMode:${selectedId}`)
-    setChatMode((savedMode === 'single' || savedMode === 'group') ? savedMode : false)
+    setChatMode((savedMode === 'single' || savedMode === 'group') ? savedMode : 'single')
     setReadiness(null)
     setTouchActions(null)
 
     if (!selectedId) { setBabyStatus(null); return }
-    const inCradle = cradleBabies.some(b => b.baby_id === selectedId)
-    if (!inCradle) {
+    if (!selectedInCradle) {
       // 来自 Womb 的自动跳转：旧 cradleBabies 列表还没包含新入摇篮的宝宝，主动刷新一次
       const shouldAdmit = searchParams.get('autoAdmit') === 'true' || searchParams.get('autoGrow') === 'true'
       if (shouldAdmit) loadBabies()
@@ -693,7 +895,7 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
         .catch(() => {})
       // 历史事件由 lifeline SSE 回放（after_seq 游标），无需额外拉取 /events
       // admit 刚完成时也跳过，日志已在 state.logs 中
-  }, [selectedId, cradleBabies, initialLoaded, loadStatus, loadBabies, setSearchParams])
+  }, [selectedId, selectedInCradle, initialLoaded, loadStatus, loadBabies, searchParams])
 
   // ── 自驱动生命：阶段推进由后端 scheduler 驱动 ──
   // 前端只通过 heartbeat/stream 接收事件，不需要主动触发 grow/stream。
@@ -704,37 +906,39 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   const admitBaby = (babyId) => {
     setAdmitting(true)
 
-    const source = new EventSource(`${API}/cradle/admit/stream?baby_id=${encodeURIComponent(babyId)}`)
-    source.onmessage = (e) => {
-      try {
-        const data = JSON.parse(e.data)
-        // 推进 lastSeq，避免随后 lifeline?after_seq=0 重放 admit 事件造成控制台重复
-        if (data.seq) {
-          localStorage.setItem(`lastSeq_${babyId}`, String(data.seq))
-        }
-        dispatch({ type: 'SSE', data, ts: getTime() })
+    return new Promise((resolve) => {
+      const source = new EventSource(`${API}/cradle/admit/stream?baby_id=${encodeURIComponent(babyId)}`)
+      const finish = (ok) => {
+        source.close()
+        setAdmitting(false)
+        resolve(ok)
+      }
+      source.onmessage = (e) => {
+        try {
+          const data = JSON.parse(e.data)
+          // 推进 lastSeq，避免随后 lifeline?after_seq=0 重放 admit 事件造成控制台重复
+          if (data.seq) {
+            localStorage.setItem(`lastSeq_${babyId}`, String(data.seq))
+          }
+          dispatch({ type: 'SSE', data, ts: getTime() })
 
-        if (data.event === 'admitted') {
-          source.close()
-          setAdmitting(false)
-          // 标记刚完成 admit，跳过下次 effect 的 RESET
-          justAdmittedRef.current = true
-          // 刷新头像（入摇篮后可能重新生成了国家匹配头像）
-          _setPortrait(babyId, undefined)
-          setPortraitVer(v => v + 1)
-          // 刷新列表 + 状态，lifeline SSE 会在 isCurrentInCradle 变化后自动连接
-          loadBabies()
-          loadStatus(babyId)
-        } else if (data.event === 'error') {
-          source.close()
-          setAdmitting(false)
-        }
-      } catch { /* ignore */ }
-    }
-    source.onerror = () => {
-      source.close()
-      setAdmitting(false)
-    }
+          if (data.event === 'admitted') {
+            // 标记刚完成 admit，跳过下次 effect 的 RESET
+            justAdmittedRef.current = true
+            // 刷新头像（入摇篮后可能重新生成了国家匹配头像）
+            _setPortrait(babyId, undefined)
+            setPortraitVer(v => v + 1)
+            // 刷新列表 + 状态，lifeline SSE 会在 isCurrentInCradle 变化后自动连接
+            loadBabies()
+            loadStatus(babyId)
+            finish(true)
+          } else if (data.event === 'error') {
+            finish(false)
+          }
+        } catch { /* ignore */ }
+      }
+      source.onerror = () => finish(false)
+    })
   }
 
   // 从子宫跳转来 / URL 带 autoAdmit：自动触发 admit
@@ -746,6 +950,17 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
     if (!inCradle && !admitting) {
       admitBaby(selectedId)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId, searchParams])
+
+  // 外部（如孕育页 To Cradle 按钮）已完成 admit 后跳转过来：
+  // 刷新本组件的 cradleBabies / babyStatus，避免本地 state 陈旧导致仍显示"未入篮"。
+  useEffect(() => {
+    if (searchParams.get('justAdmitted') !== '1' || !selectedId) return
+    setSearchParams({}, { replace: true })
+    justAdmittedRef.current = true
+    loadBabies()
+    loadStatus(selectedId)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, searchParams])
 
@@ -770,11 +985,11 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
 
   const [chatMode, setChatMode] = useState(() => {
     try {
-      if (!selectedId) return false
+      if (!selectedId) return 'single'
       const saved = sessionStorage.getItem(`chatMode:${selectedId}`)
       if (saved === 'single' || saved === 'group') return saved
-      return false
-    } catch { return false }
+      return 'single'
+    } catch { return 'single' }
   })
   const [chatTargetOpen, setChatTargetOpen] = useState(false) // 多宝宝下拉
   const [groupConvId, setGroupConvId] = useState(() => {
@@ -866,24 +1081,70 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
 
   // 生命线 SSE：通过 lifeline 端点接收所有事件（日志读取器模式）
   // 前端带 after_seq 游标连接，断连重连从断点继续
-  const isCurrentInCradle = initialLoaded && cradleBabies.some(b => b.baby_id === selectedId)
+  // selectedInCradle 已在上方声明（effect 复用）；此处叠加 initialLoaded 保持旧语义
+  const isCurrentInCradle = initialLoaded && selectedInCradle
   useEffect(() => {
     if (!selectedId || !isCurrentInCradle) return
 
     let source = null
     let closed = false
     let reconnectTimer = null
+    let everOpened = false
+
+    // 被删除的宝宝 / 后端返回 404 时不要无脑 3 秒重连——EventSource 不暴露 HTTP status，
+    // 用"从未握手成功即 onerror" 作为 permanent failure 探针：
+    //   - 首次失败且从未 onopen → 主动 fetch 探活 /cradle/{id}/status
+    //   - 404 → 判定宝宝已消失，清掉 lastSeq + lastBabyId，刷新 cradleBabies，停止重连
+    //   - 其它 → 走 3s 重连（兼容真网络抖动）
+    const handlePermanentFailure = () => {
+      closed = true
+      try {
+        localStorage.removeItem(`lastSeq_${selectedId}`)
+        // 清掉陈旧的 lastBabyId，避免下次刷新又自动选回这个已删宝宝
+        if (localStorage.getItem('cradle:lastBabyId') === selectedId) {
+          localStorage.removeItem('cradle:lastBabyId')
+        }
+      } catch { /* ignore */ }
+      // 刷新 babies 列表，把陈旧 cradleBabies 拉空 → selectedInCradle 翻 false
+      loadBabies()
+    }
 
     // 手动管理重连：每次重连从最新 lastSeq 构建 URL，避免重复回放
-    const connect = () => {
+    const connect = async () => {
       if (closed) return
+      // 首次 connect 前做一次预检——即使 onerror/everOpened 逻辑意外失守，
+      // 也能在开 SSE 前拦下已死的 baby，避免 EventSource 打无意义 404。
+      if (!everOpened) {
+        try {
+          const r = await fetch(`${API}/cradle/${selectedId}/status`)
+          if (r.status === 404) {
+            handlePermanentFailure()
+            return
+          }
+        } catch { /* 预检失败不阻塞，继续尝试 SSE（可能是网络抖动） */ }
+        if (closed) return
+      }
       const seq = parseInt(localStorage.getItem(`lastSeq_${selectedId}`) || '0', 10)
       source = new EventSource(`${API}/cradle/${selectedId}/lifeline?after_seq=${seq}`)
-      source.onopen = () => dispatch({ type: 'LIFELINE_CONNECTED' })
+      source.onopen = () => {
+        everOpened = true
+        dispatch({ type: 'LIFELINE_CONNECTED' })
+      }
       source.onmessage = handleMessage
-      source.onerror = () => {
+      source.onerror = async () => {
         dispatch({ type: 'LIFELINE_DISCONNECTED' })
         source.close()
+        if (closed) return
+        // 从未握手成功 → 可能是 404；探活确认
+        if (!everOpened) {
+          try {
+            const r = await fetch(`${API}/cradle/${selectedId}/status`)
+            if (r.status === 404) {
+              handlePermanentFailure()
+              return
+            }
+          } catch { /* 网络错误，走重连 */ }
+        }
         reconnectTimer = setTimeout(connect, 3000)
       }
     }
@@ -895,6 +1156,10 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
         // 收到任何 SSE 事件 → 后端在活跃，刷新 last_active_ts 避免误判停滞
         // 只更新 babyStatus，不动 cradleBabies（cradleBabies 是 effect 依赖，改它会触发 loadStatus 用旧值覆盖）
         setBabyStatus(prev => prev ? { ...prev, last_active_ts: Date.now() / 1000 } : prev)
+
+        // 摇篮图谱增量：若事件携带 graph_delta 字段（v3 business-as-graph），
+        // 合并到 cradleGraph 本地状态。无该字段则静默跳过（hook 内部判断）。
+        cradleGraph.applyEvent(data)
 
         // 更新游标（所有带 seq 的事件）
         if (data.seq) {
@@ -932,7 +1197,17 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
           dispatch({ type: 'DAY_SUMMARY', data })
           if (data.age_days_end != null) {
             setBabyStatus(prev => prev ? { ...prev, age_days: data.age_days_end } : prev)
-            setCradleBabies(prev => prev.map(b => b.baby_id === selectedId ? { ...b, age_days: data.age_days_end } : b))
+            setCradleBabies(prev => {
+              let changed = false
+              const next = prev.map(b => {
+                if (b.baby_id === selectedId && b.age_days !== data.age_days_end) {
+                  changed = true
+                  return { ...b, age_days: data.age_days_end }
+                }
+                return b
+              })
+              return changed ? next : prev
+            })
           }
         }
         // 阶段推进事件
@@ -956,7 +1231,17 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
             if (data.event === 'phase_start') {
               next = { ...next, current_phase: { index: data.phase_index, name: data.phase_name, display: data.phase_display }, pending_criticals: [] }
               if (data.expression_mode) next = { ...next, expression_mode: data.expression_mode }
-              setCradleBabies(prev => prev.map(b => b.baby_id === selectedId ? { ...b, current_phase: data.phase_index } : b))
+              setCradleBabies(prev => {
+                let changed = false
+                const nextList = prev.map(b => {
+                  if (b.baby_id === selectedId && b.current_phase !== data.phase_index) {
+                    changed = true
+                    return { ...b, current_phase: data.phase_index }
+                  }
+                  return b
+                })
+                return changed ? nextList : prev
+              })
             } else if (data.event === 'capabilities_unlocked' && data.capabilities) {
               const existing = new Set(next.capabilities || [])
               next = { ...next, capabilities: [...(next.capabilities || []), ...data.capabilities.filter(c => !existing.has(c))] }
@@ -1009,6 +1294,10 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
       if (source) source.close()
       dispatch({ type: 'LIFELINE_DISCONNECTED' })
     }
+  // cradleGraph / loadStatus / setBabyStatus / loadEvents 这些依赖**刻意不加入**：
+  // 它们每次 rerender 都是新引用，加进去会导致 SSE 反复断开重连。
+  // cradleGraph.applyEvent 经 useCallback 稳定，实际闭包不会 stale。
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, isCurrentInCradle, scheduleCradleGraphFetch])
 
   const checkReadiness = async () => {
@@ -1056,40 +1345,111 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   }
 
   // ── 婴儿列表 ──
+  // 设计：header（Select a baby to nurture）**常驻渲染**，不被 Loading/空态分支替换，
+  //       内部根据 initialLoaded / allBabies.length 切换卡片区内容。
+  //       这样静态文字的 DOM 节点在刷新过程中保持存在，不会因 "Loading → 有数据" 的
+  //       state 切换而被重建，消除视觉闪烁。
+  // UI 分页（每页 100 张）：birthPage 为当前页，birthTotalPages 为总页数。
+  //   birthBabies 即当前页的原始列表（后端已分页，前端不再聚合）；
+  //   本页内 .filter(alive) 后可能少于 100（死产不展示，但计入 total），属预期行为。
   const renderBabyList = () => {
-    if (!initialLoaded) {
-      return (
-        <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
-          <span className="animate-pulse">{isZh ? '加载中...' : 'Loading...'}</span>
-        </div>
-      )
-    }
-
-    const allBabies = birthBabies.map(b => ({
+    const pageBabies = initialLoaded ? birthBabies.map(b => ({
       id: b.id, species: b.species, sex: b.sex, alive: b.alive,
       birthplace: b.birthplace, born_at: b.born_at,
       inCradle: isInCradle(b.id),
       cradleInfo: cradleBabies.find(c => c.baby_id === b.id),
-    })).filter(b => b.alive)
+    })).filter(b => b.alive) : []
 
-    if (allBabies.length === 0) {
-      return (
+    let body
+    if (!initialLoaded) {
+      // 骨架屏：占位 BIRTH_PAGE_SIZE 张，与真卡 grid 布局完全一致
+      const skeletonCount = BIRTH_PAGE_SIZE
+      body = (
+        <div
+          className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          {Array.from({ length: skeletonCount }, (_, i) => (
+            <BabyCardSkeleton key={`skeleton-${i}`} />
+          ))}
+        </div>
+      )
+    } else if (birthTotal === 0) {
+      body = (
         <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
           {isZh ? '还没有婴儿出生。请先前往子宫进行孕育。' : 'No babies born yet. Go to Womb to conceive first.'}
         </div>
       )
+    } else {
+      body = (
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {pageBabies.map(baby => (
+            <BabyCard key={baby.id} baby={baby} isZh={isZh} tk={tk} navigate={navigate} setReadiness={setReadiness} getGrowthStatus={getGrowthStatus} onAdmit={admitBaby} />
+          ))}
+        </div>
+      )
+    }
+
+    // 分页控件：仅在 total_pages > 1 时显示
+    const showPager = initialLoaded && birthTotalPages > 1
+    const canPrev = birthPage > 1
+    const canNext = birthPage < birthTotalPages
+    const goto = (p) => {
+      const clamped = Math.max(1, Math.min(birthTotalPages || 1, Number(p) || 1))
+      if (clamped !== birthPage) setBirthPage(clamped)
     }
 
     return (
-      <div className="flex flex-col p-6">
-        <div className="text-sm text-muted-foreground mb-3">
-          {isZh ? '选择一个婴儿进行养育' : 'Select a baby to nurture'}
+      <div className="flex flex-col flex-1 p-6">
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-sm text-muted-foreground">
+            {isZh ? '选择一个婴儿进行养育' : 'Select a baby to nurture'}
+          </div>
+          {initialLoaded && birthTotal > 0 && (
+            <div className="text-xs text-muted-foreground">
+              {isZh
+                ? `共 ${birthTotal} 位婴儿 · 第 ${birthPage}/${birthTotalPages || 1} 页`
+                : `${birthTotal} babies · Page ${birthPage}/${birthTotalPages || 1}`}
+            </div>
+          )}
         </div>
-        <div className="grid gap-3 grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
-          {allBabies.map(baby => (
-            <BabyCard key={baby.id} baby={baby} isZh={isZh} tk={tk} navigate={navigate} setReadiness={setReadiness} getGrowthStatus={getGrowthStatus} />
-          ))}
-        </div>
+        {body}
+        {showPager && (
+          <div className="flex items-center justify-center gap-2 mt-4 pt-3 border-t">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!canPrev}
+              onClick={() => goto(birthPage - 1)}
+            >
+              {isZh ? '上一页' : 'Prev'}
+            </Button>
+            <Input
+              type="number"
+              min={1}
+              max={birthTotalPages}
+              value={birthPage}
+              onChange={(e) => {
+                const v = Number(e.target.value)
+                if (!Number.isNaN(v) && v >= 1 && v <= birthTotalPages) setBirthPage(v)
+              }}
+              className="h-8 w-20 text-center"
+              aria-label={isZh ? '跳转到页码' : 'Jump to page'}
+            />
+            <span className="text-xs text-muted-foreground">
+              / {birthTotalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!canNext}
+              onClick={() => goto(birthPage + 1)}
+            >
+              {isZh ? '下一页' : 'Next'}
+            </Button>
+          </div>
+        )}
       </div>
     )
   }
@@ -2252,7 +2612,7 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
   if (!selectedId) {
     return (
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 overflow-y-auto flex flex-col">{renderBabyList()}</div>
+        <div className="flex-1 overflow-y-auto flex flex-col" data-scroll-root="true">{renderBabyList()}</div>
       </div>
     )
   }
@@ -2348,17 +2708,19 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
 
   return (
     <div className="flex flex-1 overflow-hidden">
-      {/* 左面板：力导向因果图谱 */}
-      <div className="w-[45%] shrink-0 bg-background border-r border-border flex flex-col">
+      {/* 左面板：力导向因果图谱
+          graph→撑满；workbench→折叠 w-0（保留过渡动画）；split→50% */}
+      <div className={cn(
+        "bg-background flex flex-col shrink-0 overflow-hidden transition-all duration-300",
+        graphFullscreen
+          ? "w-full border-r-0"
+          : workbenchFullscreen
+          ? "w-0 border-r-0"
+          : "w-1/2 border-r border-border"
+      )}>
         {/* 宝宝信息头 */}
         <div className="shrink-0 p-3 border-b border-border">
           <div className="flex items-center gap-3 px-2">
-            <button
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-              onClick={() => { try { localStorage.removeItem('cradle:lastBabyId') } catch { /* ignore */ } navigate('/cradle'); setBabyStatus(null); setReadiness(null) }}
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-            </button>
             <div className="relative">
               <Avatar><AvatarImage src={portraitUrl(selectedId, portraitVer)} /><AvatarFallback className={cn("text-[9px] font-mono tracking-tighter font-semibold", avatarPalette(selectedId).bg, avatarPalette(selectedId).text)}>{shortId(selectedId)}</AvatarFallback></Avatar>
               {state.lifelineActive && (
@@ -2427,14 +2789,18 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
         {/* 图谱区域 */}
         <div className="flex-1 min-h-0">
           {graphState ? (
+            // v3 cradleGraph 作为图数据权威源；graphState 保留为 UI 控制
+            // （filter / showLabels / highlight）。cradleGraph 空时 fallback 到
+            // graphState.nodes/edges（主要服务历史宝宝 + 老 lifegraph 数据兼容期）。
             <LifeGraph
-              nodes={graphState.nodes}
-              edges={graphState.edges}
+              nodes={cradleGraph.nodes.length > 0 ? cradleGraph.nodes : graphState.nodes}
+              edges={cradleGraph.edges.length > 0 ? cradleGraph.edges : graphState.edges}
               filter={graphState.filter}
               showLabels={graphState.showLabels}
               highlight={graphState.highlight}
               stage="cradle"
               dispatch={graphDispatch}
+              fullscreen={graphFullscreen}
             />
           ) : (
             <div className="flex-1 overflow-y-auto flex flex-col">
@@ -2444,8 +2810,16 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
         </div>
       </div>
 
-      {/* 右面板 */}
-      <div className="flex-1 flex flex-col gap-3 p-5 relative">
+      {/* 右面板
+          graph→w-0（折叠）；workbench→w-full；split→50%（和左面板对称）*/}
+      <div className={cn(
+        "flex flex-col gap-3 p-5 relative shrink-0 overflow-hidden transition-all duration-300",
+        graphFullscreen
+          ? "w-0"
+          : workbenchFullscreen
+          ? "w-full"
+          : "w-1/2"
+      )}>
 
         {/* 交互工具栏：只要宝宝已入篮或初始数据未就绪就立即渲染，避免 babyStatus 异步到达时的闪烁 */}
         {(isInCradle(selectedId) || !initialLoaded) ? (
@@ -2623,8 +2997,8 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
         {/* ── 对话面板 + 控制台布局 ── */}
         {chatMode ? (
           <>
-            {/* 对话面板 (4/5) */}
-            {chatMode === 'single' && (
+            {/* 对话面板 (4/5)：全屏时隐藏 */}
+            {!consoleFullscreen && chatMode === 'single' && (
               <ChatPanel
                 babyId={selectedId}
                 babyStatus={babyStatus}
@@ -2634,7 +3008,7 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
                 tk={tk}
               />
             )}
-            {chatMode === 'group' && groupConvId && (
+            {!consoleFullscreen && chatMode === 'group' && groupConvId && (
               <GroupChatPanel
                 convId={groupConvId}
                 isZh={isZh}
@@ -2642,11 +3016,23 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
               />
             )}
 
-            {/* 控制台 (1/5) */}
+            {/* 控制台 (非全屏 1/5，全屏独占) */}
             <ConsolePanel
               ref={logRefCb}
-              className="flex-[1] min-h-[120px]"
+              className={cn("-ml-5 -mb-5", consoleFullscreen ? "flex-1" : "h-[30%] min-h-[160px]")}
               header={consoleHeader}
+              headerRight={
+                <button
+                  type="button"
+                  onClick={() => setConsoleFullscreen(v => !v)}
+                  className="flex items-center justify-center w-6 h-6 rounded text-[#999] hover:text-white hover:bg-white/10 transition-colors"
+                  title={consoleFullscreen
+                    ? (isZh ? '缩小' : 'Minimize')
+                    : (isZh ? '全屏' : 'Fullscreen')}
+                >
+                  {consoleFullscreen ? <Minimize2 className="size-3.5" /> : <Maximize2 className="size-3.5" />}
+                </button>
+              }
             >
               {state.logs.length === 0 && (
                 <div className="log-system">
@@ -2675,12 +3061,27 @@ export default function Cradle({ lang, graphState, graphDispatch }) {
             </ConsolePanel>
           </>
         ) : (
-          /* ── 无对话时：控制台全屏 ── */
+          /* ── 无对话时：控制台独占全屏；右上角按钮效果等同"与宝宝互动"（打开对话分屏） ── */
           <ConsolePanel
             ref={logRefCb}
-            className="flex-1"
+            className="flex-1 -ml-5 -mb-5"
             headerHeight={38}
             header={consoleHeader}
+            headerRight={
+              <button
+                type="button"
+                onClick={() => {
+                  // 等同于点"与宝宝互动"按钮：打开 single 对话面板，控制台自动缩为分屏
+                  setChatMode('single')
+                  setChatTargetOpen(false)
+                  setConsoleFullscreen(false)
+                }}
+                className="flex items-center justify-center w-6 h-6 rounded text-[#999] hover:text-white hover:bg-white/10 transition-colors"
+                title={isZh ? '退出全屏 · 打开对话' : 'Exit fullscreen · open chat'}
+              >
+                <Minimize2 className="size-3.5" />
+              </button>
+            }
           >
             {state.logs.length === 0 && (
               <div className="log-system" style={{ color: '#34d399b3' }}>

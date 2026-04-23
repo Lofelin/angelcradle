@@ -4,18 +4,25 @@
  * [POS]: 应用入口视图，消费 SSE 流驱动孕育模拟
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
-import { useState, useEffect, useRef, useReducer, useCallback } from 'react'
+import { useState, useEffect, useRef, useReducer, useCallback, memo } from 'react'
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import messages, { translateKey } from './i18n'
+import CITY_ZH from './data/cityZh'
+import COUNTRY_ZH from './data/countryZh'
 import { Button } from '@/components/ui/button'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Select as SelectPrimitive } from 'radix-ui'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
-import { ArrowLeftRight, Maximize2, Minimize2, Scale, Ruler, Droplet, Activity, Heart, Wind, ChevronDown, Dna, Gauge } from 'lucide-react'
+import { ArrowLeftRight, Maximize2, Minimize2, Scale, Ruler, Droplet, Activity, Heart, Wind, ChevronDown, Dna, Gauge, LayoutDashboard, Baby, Globe, Loader2 } from 'lucide-react'
 import ConsolePanel from '@/components/ConsolePanel'
+import WorldMap from '@/components/WorldMap'
 import LifeGraph from '@/components/LifeGraph'
 import { graphReducer, GRAPH_INITIAL, useCausalGraph } from '@/hooks/useCausalGraph'
+import { useWombGraph } from '@/hooks/useWombGraph'
 import Cradle from './Cradle'
 
 const API = 'http://localhost:8000'
@@ -167,6 +174,46 @@ function wombReducer(state, action) {
 
 const INIT_STATE = { logs: [], stageProgress: {}, maternalProgress: {}, currentStage: '', statusText: '', babyState: null, environment: null, parentGenomes: null, vitals: null, running: false, startedAt: null, elapsed: null, stageTimings: {} }
 
+// 模块级单例：保证 time-scale 与后端同步每个页面会话只执行一次。
+// App 组件可能因路由切换/HMR/StrictMode 多次 mount——不做这个 latch，
+// 每次 mount 都会发一次 PATCH 导致风暴（见 backend 日志 "turbo → turbo" 刷屏）。
+let _timeScaleSynced = false
+
+// 批量出生列表项：用 shadcn/ui 的 Card + Avatar 组件化
+// memo 避免 SSE 每来一只 baby 导致全量 N 个 item 重渲染
+const BatchBabyListItem = memo(function BatchBabyListItem({ baby, selected, lang, title, onClick }) {
+  const loc = baby.birthplace?.city
+    ? `${baby.birthplace.city}, ${baby.birthplace.name}`
+    : (baby.birthplace?.name || '')
+  return (
+    <Card
+      size="sm"
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } }}
+      title={title}
+      className={cn(
+        "flex-row items-center gap-3 px-3 py-2.5 cursor-pointer transition-colors select-none",
+        selected
+          ? "bg-primary/10 ring-primary"
+          : "hover:bg-muted/60",
+      )}
+    >
+      <Avatar size="sm" className="shrink-0">
+        <AvatarFallback className="text-sm">
+          {baby.sex === 'male' ? '\u{1F466}' : '\u{1F467}'}
+        </AvatarFallback>
+      </Avatar>
+      <span className="font-heading font-semibold tabular-nums shrink-0 text-foreground">
+        {baby.id.slice(-8)}
+      </span>
+      {loc && <span className="text-muted-foreground shrink-0 truncate max-w-[45%]">{loc}</span>}
+      <span className="flex-1 min-w-0 truncate text-muted-foreground">{baby.first_cry}</span>
+    </Card>
+  )
+})
+
 function App() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -185,40 +232,105 @@ function App() {
   const [selectedOffspring, setSelectedOffspring] = useState('random')
   const [blueprint, setBlueprint] = useState(EMPTY_BLUEPRINT)
   const [blueprintReady, setBlueprintReady] = useState(false)
+  // 孕育模式：single（SSE 单个）/ batch（SSE 批量）
+  const [conceiveMode, setConceiveMode] = useState('single')
+  const [batchCount, setBatchCount] = useState(10)
+  const [batchConcurrency, setBatchConcurrency] = useState(4)
+  const [batchRunning, setBatchRunning] = useState(false)
+  const [batchResult, setBatchResult] = useState(null)
+  // 批量实时进度：{done, total, conceived, miscarriages, failed, elapsed_sec}
+  const [batchProgress, setBatchProgress] = useState(null)
+  // 最近 5 只 baby 滚动展示
+  const [batchRecentBabies, setBatchRecentBabies] = useState([])
+  // 批量 SSE 日志：供控制台展示（上限 2000 条防内存泄漏）
+  const [batchLogs, setBatchLogs] = useState([])
+  // 选中的 baby（点击左侧列表，在右下显示详情）
+  const [batchSelectedBaby, setBatchSelectedBaby] = useState(null)
+  // 完整 baby 数据（懒加载，从 /baby/{id} fetch gestation_log 用于渲染阶段卡）
+  const [batchSelectedFull, setBatchSelectedFull] = useState(null)
+  const [batchSelectedLoading, setBatchSelectedLoading] = useState(false)
+  // 按需缓存：点过的 baby full data 存在这里，再次切回时秒开（上限 100 条）
+  const batchFullCacheRef = useRef(new Map())
+  // 进入养育按钮：admit 请求 loading 态
+  const [batchAdmitLoading, setBatchAdmitLoading] = useState(false)
+  // 批量页面用户是否手动选过（手动选后不再自动跟随最新）
+  const batchUserPickedRef = useRef(false)
+  // 批量页面阶段卡展开的 tag（类似单个孕育的 expandedTag）
+  const [batchExpandedTag, setBatchExpandedTag] = useState(null)
+  const batchEventSourceRef = useRef(null)
+  const batchConsoleRef = useRef(null)
   const [state, dispatch] = useReducer(wombReducer, INIT_STATE)
   const [graphState, graphDispatch] = useReducer(graphReducer, GRAPH_INITIAL)
   const graphStateRef = useRef(graphState)
   graphStateRef.current = graphState
   const causalGraph = useCausalGraph(graphState, graphDispatch)
+  // 子宫实时图谱: 从 SSE graph_delta 事件增量构建
+  const wombGraph = useWombGraph()
   const consoleRef = useRef(null)
   const leftPanelRef = useRef(null)
   const stageCardsRef = useRef(null)
   const [expandedTag, setExpandedTag] = useState(null)
   const [consoleFullscreen, setConsoleFullscreen] = useState(false)
-  const [graphFullscreen, setGraphFullscreen] = useState(false)
   const [showGeneticPopover, setShowGeneticPopover] = useState(false)
+  const [viewMode, setViewMode] = useState('split')
+  // 布局态由 viewMode 单向派生：'graph' → 左图谱全屏；'workbench' → 右工作区全屏；'split' → 双栏。
+  const graphFullscreen = viewMode === 'graph'
+  const workbenchFullscreen = viewMode === 'workbench'
+  const toggleGraphFullscreen = () => setViewMode(v => v === 'graph' ? 'split' : 'graph')
+  const [headerScrolled, setHeaderScrolled] = useState(false)
+  // 二级页面（如 /cradle/:babyId）：顶部导航永久显示下方边框，不依赖滚动
+  const isSecondaryPage = !!location.pathname.split('/')[2]
+  const contentScrollRef = useRef(null)
+  const [admittingToCradle, setAdmittingToCradle] = useState(false)
 
   const t = messages[lang]
+
+  // 捕获右侧内容区内"主内容滚动容器"的滚动事件（scroll 不冒泡，用 capture 捕获）
+  // 仅当被滚动元素标记了 data-scroll-root="true" 才触发阴影切换，避免聊天框、
+  // 控制台、子面板等内部滚动都误触发（如宝宝详情页只有 chat 滚动时不该出阴影）。
+  useEffect(() => {
+    const el = contentScrollRef.current
+    if (!el) return
+    const onScroll = (e) => {
+      if (e.target?.dataset?.scrollRoot !== 'true') return
+      const top = e.target.scrollTop ?? 0
+      setHeaderScrolled(top > 2)
+    }
+    el.addEventListener('scroll', onScroll, true)
+    return () => el.removeEventListener('scroll', onScroll, true)
+  }, [])
+
+  // 路由切换时重置 headerScrolled：
+  // 短页面不触发 scroll 事件，state 会保留上一页的 true 值，导致"一级页面"也带着上一页的阴影。
+  useEffect(() => { setHeaderScrolled(false) }, [location.pathname])
 
   useEffect(() => {
     fetch(`${API}/species`)
       .then(r => r.json())
       .then(data => setSpeciesList(data.species))
       .catch(() => setSpeciesList(['human', 'dog', 'cat']))
-    // 速率同步：localStorage 优先，服务器重启后自动恢复用户偏好
+    // 速率同步：localStorage 优先，服务器重启后自动恢复用户偏好。
+    // 先 GET 拿服务端当前值；值已对齐则零成本 return，值不一致再 PATCH——
+    // 避免每次 remount 都盲发 PATCH。_timeScaleSynced 守门单页会话只跑一次。
+    if (_timeScaleSynced) return
+    _timeScaleSynced = true
     const savedTs = localStorage.getItem('timeScale')
-    if (savedTs && ['slow', 'normal', 'fast', 'turbo'].includes(savedTs)) {
-      fetch(`${API}/system/time-scale`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ time_scale: savedTs }),
-      }).then(r => r.ok && setTimeScale(savedTs)).catch(() => {})
-    } else {
-      fetch(`${API}/system/time-scale`)
-        .then(r => r.json())
-        .then(data => { localStorage.setItem('timeScale', data.time_scale); setTimeScale(data.time_scale) })
-        .catch(() => {})
-    }
+    const isValid = savedTs && ['slow', 'normal', 'fast', 'turbo'].includes(savedTs)
+    fetch(`${API}/system/time-scale`)
+      .then(r => r.json())
+      .then(data => {
+        const serverTs = data.time_scale
+        if (isValid && savedTs !== serverTs) {
+          return fetch(`${API}/system/time-scale`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ time_scale: savedTs }),
+          }).then(r => r.ok && setTimeScale(savedTs))
+        }
+        localStorage.setItem('timeScale', serverTs)
+        setTimeScale(serverTs)
+      })
+      .catch(() => { _timeScaleSynced = false /* 网络失败允许下次重试 */ })
   }, [])
 
   useEffect(() => {
@@ -243,6 +355,99 @@ function App() {
     }
   }, [state.logs.length])
 
+  // 批量控制台自动滚底：新日志追加时保持最新可见
+  useEffect(() => {
+    if (batchConsoleRef.current) {
+      batchConsoleRef.current.scrollTop = batchConsoleRef.current.scrollHeight
+    }
+  }, [batchLogs.length])
+
+  // 批量出生列表自动滚底：新 baby 追加到末尾，滚到底展示最新
+  // ScrollArea 是 radix 封装，真正的滚动容器是 [data-slot="scroll-area-viewport"]，
+  // 通过容器 id 向下定位到 viewport
+  useEffect(() => {
+    const root = document.getElementById('batch-baby-scroll')
+    if (!root) return
+    const viewport = root.querySelector('[data-slot="scroll-area-viewport"]')
+    if (viewport) viewport.scrollTop = viewport.scrollHeight
+  }, [batchRecentBabies.length])
+
+  // 列表点击 handler 工厂：返回带 baby 捕获的稳定引用，配合 memo 减少重渲染
+  const handleBatchItemClick = useCallback((baby) => () => {
+    batchUserPickedRef.current = true
+    setBatchSelectedBaby(baby)
+  }, [])
+
+  // 进入养育：先请求 /cradle/admit 落库到摇篮系统，成功后再跳转
+  const handleBatchAdmit = useCallback(async (babyId) => {
+    if (!babyId || batchAdmitLoading) return
+    setBatchAdmitLoading(true)
+    try {
+      const resp = await fetch(`${API}/cradle/admit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ baby_id: babyId }),
+      })
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+      await resp.json().catch(() => null)  // consume body but don't block on parse errors
+      navigate(`/cradle/${babyId}`)
+    } catch (e) {
+      console.error('[admit] failed:', e)
+      // 失败依然跳转（admit 幂等；若后端真有问题，摇篮页会再报错兜底）
+      navigate(`/cradle/${babyId}`)
+    } finally {
+      setBatchAdmitLoading(false)
+    }
+  }, [batchAdmitLoading, navigate])
+
+  // 批量：首次出现第一只 baby 时自动选中，之后不再自动跟随（避免持续切换导致卡顿）
+  useEffect(() => {
+    if (batchUserPickedRef.current) return
+    if (batchSelectedBaby) return  // 已选中则不再自动切
+    if (batchRecentBabies.length === 0) return
+    setBatchSelectedBaby(batchRecentBabies[0])
+  }, [batchRecentBabies, batchSelectedBaby])
+
+  // 选中变化时懒加载 full baby data（含 gestation_log），命中缓存秒开
+  useEffect(() => {
+    const id = batchSelectedBaby?.id
+    if (!id) {
+      setBatchSelectedFull(null)
+      return
+    }
+    if (batchSelectedFull?.id === id) return
+    setBatchExpandedTag(null)
+    // 命中缓存：立即填充，无需 fetch
+    const cached = batchFullCacheRef.current.get(id)
+    if (cached) {
+      setBatchSelectedFull(cached)
+      setBatchSelectedLoading(false)
+      return
+    }
+    // 未命中：fetch 后写入缓存（LRU 上限 100 条，超限移除最早）
+    setBatchSelectedLoading(true)
+    setBatchSelectedFull(null)
+    let cancelled = false
+    fetch(`${API}/baby/${encodeURIComponent(id)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (cancelled) return
+        if (data) {
+          const cache = batchFullCacheRef.current
+          cache.set(id, data)
+          // 简易 LRU：先进先出裁剪到 100
+          if (cache.size > 100) {
+            const firstKey = cache.keys().next().value
+            cache.delete(firstKey)
+          }
+        }
+        setBatchSelectedFull(data || null)
+      })
+      .catch(() => { if (!cancelled) setBatchSelectedFull(null) })
+      .finally(() => { if (!cancelled) setBatchSelectedLoading(false) })
+    return () => { cancelled = true }
+  }, [batchSelectedBaby?.id, batchSelectedFull?.id])
+
   // 子宫图谱节流 fetch：关键事件后从后端 lifegraph 拉取最新图谱
   const wombGraphBabyIdRef = useRef(null)
   const wombGraphFetchTimerRef = useRef(null)
@@ -252,15 +457,17 @@ function App() {
     if (window.location.pathname.startsWith('/cradle')) return
     const babyId = wombGraphBabyIdRef.current
     if (!babyId) return
-    fetch(`${API}/baby/${babyId}/causal-graph`)
+    // 拉取后端已落库的 womb_graph 快照 (archive/{id}/womb_graph.json)
+    // 历史孕育的图谱在此恢复; 正在孕育的由 SSE graph_delta 事件增量构建
+    fetch(`${API}/baby/${babyId}/womb-graph`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
-        if (data?.nodes?.length > 0 || data?.links?.length > 0) {
-          graphDispatch({ type: 'LOAD_GRAPH', payload: data })
+        if (data?.nodes?.length > 0) {
+          wombGraph.loadSnapshot(data)
         }
       })
       .catch(() => { /* ignore */ })
-  }, [graphDispatch])
+  }, [wombGraph])
 
   const scheduleWombGraphFetch = useCallback(() => {
     if (wombGraphFetchTimerRef.current) clearTimeout(wombGraphFetchTimerRef.current)
@@ -285,6 +492,9 @@ function App() {
         }
         dispatch({ type: 'SSE_EVENT', data, ts: getTime(), t, lang })
 
+        // 子宫实时图谱：消费 graph_delta 事件增量合并
+        wombGraph.applyEvent(data)
+
         // 子宫图谱：从 SSE 事件抓 baby_id，关键事件后节流 fetch 后端 lifegraph
         if (data.baby_id && !wombGraphBabyIdRef.current) {
           wombGraphBabyIdRef.current = data.baby_id  // 取第一个 baby（多胎暂只展示首个）
@@ -305,6 +515,7 @@ function App() {
   const conceive = useCallback(() => {
     dispatch({ type: 'RESET' })
     graphDispatch({ type: 'CLEAR_GRAPH' })
+    wombGraph.reset()  // 清空实时图谱, 每次新孕育从零开始生长
     wombGraphBabyIdRef.current = null  // 重置子宫图谱 baby 标识
     const params = new URLSearchParams({ species, lang })
     if (selectedSex !== 'random') params.set('sex', selectedSex)
@@ -317,6 +528,151 @@ function App() {
 
     attachSessionStream(`${API}/conceive/stream?${params}`)
   }, [species, lang, selectedSex, selectedPhenotype, selectedNutrition, selectedStress, selectedToxin, selectedAge, selectedOffspring, attachSessionStream])
+
+  // 批量孕育：GET /conceive/batch/stream，通过 EventSource 订阅实时进度
+  const batchConceive = useCallback(() => {
+    if (batchRunning) return
+    // 关掉上一个连接（如果有残留）
+    if (batchEventSourceRef.current) {
+      try { batchEventSourceRef.current.close() } catch { /* ignore */ }
+      batchEventSourceRef.current = null
+    }
+    setBatchRunning(true)
+    setBatchResult(null)
+    setBatchProgress({ done: 0, total: batchCount, conceived: 0, miscarriages: 0, failed: 0, elapsed_sec: 0 })
+    setBatchRecentBabies([])
+    setBatchLogs([])
+    setBatchSelectedBaby(null)
+    setBatchSelectedFull(null)
+    setBatchExpandedTag(null)
+    batchUserPickedRef.current = false  // 复位：新批次重新自动跟随最新
+    batchFullCacheRef.current.clear()   // 清缓存：不同批次的 baby id 可能重复（虽然 UUID 不会，但 id 语义边界换了）
+    // 跳转到批量孕育中页面（二级路由）
+    navigate('/womb/batch')
+
+    // 自动选引擎：大批量（> 2000）用进程绕 GIL；小批量用线程启动快
+    const autoEngine = batchCount > 2000 ? 'process' : 'thread'
+    const params = new URLSearchParams({
+      species, lang,
+      count: String(batchCount),
+      concurrency: String(batchConcurrency),
+      mode: autoEngine,
+    })
+    if (selectedNutrition !== 'random') params.set('nutrition', selectedNutrition)
+    if (selectedStress !== 'random') params.set('stress', selectedStress)
+    if (selectedToxin !== 'random') params.set('toxin_exposure', selectedToxin)
+    if (selectedAge !== 'random') params.set('maternal_age_factor', selectedAge)
+
+    const source = new EventSource(`${API}/conceive/batch/stream?${params}`)
+    batchEventSourceRef.current = source
+
+    const cleanup = () => {
+      try { source.close() } catch { /* ignore */ }
+      batchEventSourceRef.current = null
+      setBatchRunning(false)
+    }
+
+    // 事件 → 日志项的格式化器（控制台展示用）
+    const appendLog = (entry) => {
+      setBatchLogs(prev => {
+        const next = [...prev, { ts: Date.now(), ...entry }]
+        return next.length > 2000 ? next.slice(-2000) : next
+      })
+    }
+
+    source.onmessage = (evt) => {
+      try {
+        const data = JSON.parse(evt.data)
+        switch (data.event) {
+          case 'start':
+            setBatchProgress(p => ({ ...(p || {}), done: 0, total: data.total, conceived: 0, miscarriages: 0, failed: 0, elapsed_sec: 0 }))
+            appendLog({
+              kind: 'system',
+              text: `${lang === 'zh' ? '批量启动' : 'Batch started'}: total=${data.total}, concurrency=${data.concurrency}, mode=${data.mode}`,
+            })
+            break
+          case 'progress':
+            setBatchProgress({
+              done: data.done, total: data.total,
+              conceived: data.conceived, miscarriages: data.miscarriages,
+              failed: data.failed, elapsed_sec: data.elapsed_sec,
+            })
+            appendLog({
+              kind: 'progress',
+              text: `${lang === 'zh' ? '进度' : 'progress'}: ${data.done}/${data.total} · ${lang === 'zh' ? '成功' : 'ok'}=${data.conceived} · ${lang === 'zh' ? '流产' : 'mis'}=${data.miscarriages} · ${lang === 'zh' ? '失败' : 'fail'}=${data.failed} · ${data.elapsed_sec}s`,
+            })
+            break
+          case 'baby':
+            if (data.baby) {
+              // 由下到上：新 baby 追加到末尾，容器自动滚到底展示最新
+              setBatchRecentBabies(prev => {
+                const next = [...prev, data.baby]
+                return next.length > 1000 ? next.slice(-1000) : next
+              })
+              const b = data.baby
+              const loc = b.birthplace?.city ? `${b.birthplace.city}, ${b.birthplace.name}` : (b.birthplace?.name || '')
+              appendLog({
+                kind: 'baby',
+                text: `${lang === 'zh' ? '出生' : 'born'} [${data.done}/${data.total}] ${b.sex === 'male' ? '\u{1F466}' : '\u{1F467}'} ${b.id.slice(-8)} ${loc ? '· ' + loc : ''} · ${b.first_cry}`,
+              })
+            }
+            setBatchProgress(p => p ? { ...p, done: data.done, conceived: (p.conceived || 0) + 1 } : p)
+            break
+          case 'miscarriage':
+            setBatchProgress(p => p ? { ...p, done: data.done, miscarriages: (p.miscarriages || 0) + 1 } : p)
+            appendLog({
+              kind: 'miscarriage',
+              text: `${lang === 'zh' ? '流产' : 'miscarriage'} [${data.done}/${data.total}]`,
+            })
+            break
+          case 'baby_failed':
+            setBatchProgress(p => p ? { ...p, done: data.done, failed: (p.failed || 0) + 1 } : p)
+            appendLog({
+              kind: 'error',
+              text: `${lang === 'zh' ? '失败' : 'failed'} [${data.done}/${data.total}]: ${data.error || 'unknown'}`,
+            })
+            break
+          case 'complete':
+            setBatchResult({
+              conceived: data.conceived,
+              miscarriages: data.miscarriages,
+              failed: data.failed,
+              elapsed_sec: data.elapsed_sec,
+              throughput_per_sec: data.throughput_per_sec,
+            })
+            appendLog({
+              kind: 'complete',
+              text: `${lang === 'zh' ? '批量完成' : 'Batch complete'}: ${lang === 'zh' ? '成功' : 'ok'}=${data.conceived} · ${lang === 'zh' ? '流产' : 'mis'}=${data.miscarriages} · ${lang === 'zh' ? '失败' : 'fail'}=${data.failed} · ${data.elapsed_sec}s · ${data.throughput_per_sec}${t.batch_per_sec}`,
+            })
+            cleanup()
+            break
+          default:
+            break
+        }
+      } catch { /* ignore malformed events */ }
+    }
+    source.onerror = () => {
+      if (source.readyState === EventSource.CLOSED) {
+        setBatchRunning(false)
+        batchEventSourceRef.current = null
+      } else {
+        appendLog({ kind: 'error', text: lang === 'zh' ? '连接中断' : 'Connection lost' })
+        setBatchResult({
+          conceived: 0, miscarriages: 0, failed: batchCount,
+          elapsed_sec: 0, throughput_per_sec: 0,
+          error: 'Connection lost',
+        })
+        cleanup()
+      }
+    }
+  }, [batchRunning, species, lang, batchCount, batchConcurrency, selectedNutrition, selectedStress, selectedToxin, selectedAge, navigate])
+
+  // 组件卸载时清理 EventSource
+  useEffect(() => () => {
+    if (batchEventSourceRef.current) {
+      try { batchEventSourceRef.current.close() } catch { /* ignore */ }
+    }
+  }, [])
 
   // 刷新后恢复进行中的孕育：读 localStorage → 探针 /sessions/{id} → 订阅同一 session 回放事件。
   // 仅在组件挂载时执行一次；失效会话会被清理。
@@ -370,11 +726,19 @@ function App() {
   }, [isConceiving, babyState, environment, state.vitals, stageProgress])
 
   // 阶段卡片自动滚底（running 变化时按钮出现/消失，需要再滚一次）
+  // 多时间点重试：rAF + 150ms + 400ms，兼容重入时 animate-in / 异步布局导致的 scrollHeight 晚到
   useEffect(() => {
-    if (isConceiving && stageCardsRef.current) {
-      requestAnimationFrame(() => {
-        stageCardsRef.current?.scrollTo({ top: stageCardsRef.current.scrollHeight, behavior: 'smooth' })
-      })
+    if (!isConceiving) return
+    const el = stageCardsRef.current
+    if (!el) return
+    const toBottom = () => el.scrollTo({ top: el.scrollHeight, behavior: 'auto' })
+    const raf = requestAnimationFrame(toBottom)
+    const t1 = setTimeout(toBottom, 150)
+    const t2 = setTimeout(toBottom, 400)
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(t1)
+      clearTimeout(t2)
     }
   }, [isConceiving, stageProgress, maternalProgress, running])
 
@@ -450,7 +814,13 @@ function App() {
           <div key={i} className="log-env">
             <span className="time">{time}</span>
             <span className="tag">{t.birthplace_label}</span>
-            {t.birthplace_info(bp.name, bp.code, bp.coordinates.lat, bp.coordinates.lng)}
+            {t.birthplace_info(
+              lang === 'zh' && bp.code && COUNTRY_ZH[bp.code] ? COUNTRY_ZH[bp.code] : bp.name,
+              bp.code,
+              bp.coordinates.lat,
+              bp.coordinates.lng,
+              lang === 'zh' && bp.city ? (CITY_ZH[bp.city] || bp.city) : bp.city,
+            )}
             {` [${t.birthplace_method[data.method] || data.method}]`}
           </div>
         )
@@ -720,6 +1090,7 @@ function App() {
     { name: 'birth', en: 'Birth', zh: '出生', desc_en: 'Final maturation, immune transfer & preparation for extrauterine life', desc_zh: '最终成熟，免疫转移与子宫外生存准备' },
   ]
 
+  // 左侧面板：系统就绪 + 发育流程；批量模式下叠加进度条 / 实时 baby 列表 / 完成摘要
   const renderBlueprint = () => (
     <div className="flex flex-col gap-6 px-1">
       {/* 系统就绪 */}
@@ -744,51 +1115,65 @@ function App() {
           ))}
         </div>
       </div>
+
     </div>
   )
 
   // ── 右侧参数面板 (孕育前) ──
-  const renderParams = () => (
+  const renderParams = () => {
+    const isBatch = conceiveMode === 'batch'
+    return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto border border-border p-5 flex flex-col gap-6">
-        {/* 区域 01 — 基因蓝图 */}
+        {/* 模式选择（顶部） */}
         <div>
-          <div className="text-[11px] text-muted-foreground tracking-wider mb-3">01 / {t.blueprint}</div>
-          <div className="rounded-lg bg-muted/50 p-4 flex flex-col gap-4">
-            <div>
-              <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{t.sex}</div>
-              <ToggleGroup type="single" variant="outline" value={selectedSex} onValueChange={(v) => { if (v) setSelectedSex(v) }} className="w-full">
-                {['random', 'male', 'female'].map(v => (
-                  <ToggleGroupItem key={v} value={v} className="flex-1 capitalize">
-                    {v === 'random' ? t.sex_random : v === 'male' ? t.sex_male : t.sex_female}
-                  </ToggleGroupItem>
-                ))}
-              </ToggleGroup>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="text-[11px] text-muted-foreground tracking-wider mb-3">{lang === 'zh' ? '模式' : 'Mode'}</div>
+          <ToggleGroup type="single" variant="outline" value={conceiveMode} onValueChange={(v) => { if (v) setConceiveMode(v) }} className="w-full">
+            <ToggleGroupItem value="single" className="flex-1">{t.mode_single}</ToggleGroupItem>
+            <ToggleGroupItem value="batch" className="flex-1">{t.mode_batch}</ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
+        {/* 区域 01 — 基因蓝图（批量模式不显示；批量每个 baby 随机化 sex/phenotype/offspring） */}
+        {!isBatch && (
+          <div>
+            <div className="text-[11px] text-muted-foreground tracking-wider mb-3">01 / {t.blueprint}</div>
+            <div className="rounded-lg bg-muted/50 p-4 flex flex-col gap-4">
               <div>
-                <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{tk(blueprint.phenotype_key)}</div>
-                <Select value={selectedPhenotype} onValueChange={setSelectedPhenotype}>
-                  <SelectTrigger className="w-full capitalize"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="random">{t.phenotype_random}</SelectItem>
-                    {blueprint.phenotypes.map(p => <SelectItem key={p} value={p}>{tk(p)}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{t.sex}</div>
+                <ToggleGroup type="single" variant="outline" value={selectedSex} onValueChange={(v) => { if (v) setSelectedSex(v) }} className="w-full">
+                  {['random', 'male', 'female'].map(v => (
+                    <ToggleGroupItem key={v} value={v} className="flex-1 capitalize">
+                      {v === 'random' ? t.sex_random : v === 'male' ? t.sex_male : t.sex_female}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
               </div>
-              <div>
-                <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{t.offspring_label}</div>
-                <Select value={selectedOffspring} onValueChange={setSelectedOffspring}>
-                  <SelectTrigger className="w-full capitalize"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="random">{t.sex_random}</SelectItem>
-                    {[1,2,3,4,5,6].map(v => <SelectItem key={v} value={String(v)}>{v}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{tk(blueprint.phenotype_key)}</div>
+                  <Select value={selectedPhenotype} onValueChange={setSelectedPhenotype}>
+                    <SelectTrigger className="w-full capitalize"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="random">{t.phenotype_random}</SelectItem>
+                      {blueprint.phenotypes.map(p => <SelectItem key={p} value={p}>{tk(p)}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <div className="font-heading font-semibold text-foreground mb-2 text-sm capitalize">{t.offspring_label}</div>
+                  <Select value={selectedOffspring} onValueChange={setSelectedOffspring}>
+                    <SelectTrigger className="w-full capitalize"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="random">{t.sex_random}</SelectItem>
+                      {[1,2,3,4,5,6].map(v => <SelectItem key={v} value={String(v)}>{v}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* 分隔线 */}
         <div className="flex items-center gap-3">
@@ -799,7 +1184,7 @@ function App() {
 
         {/* 区域 02 — 母体环境 */}
         <div>
-          <div className="text-[11px] text-muted-foreground tracking-wider mb-3">02 / {t.env_conditions}</div>
+          <div className="text-[11px] text-muted-foreground tracking-wider mb-3">{isBatch ? '01' : '02'} / {t.env_conditions}</div>
           <div className="rounded-lg bg-muted/50 p-4 flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -847,17 +1232,52 @@ function App() {
             </div>
           </div>
         </div>
+
+        {/* 批量配置区（仅批量模式） */}
+        {isBatch && (
+          <div>
+            <div className="text-[11px] text-muted-foreground tracking-wider mb-3">02 / {t.mode_batch}</div>
+            <div className="rounded-lg bg-muted/50 p-4 flex flex-col gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="font-heading font-semibold text-foreground mb-2 text-sm">{t.batch_count}</div>
+                  <input
+                    type="number" min={1} max={10000} step={10}
+                    value={batchCount}
+                    onChange={(e) => setBatchCount(Math.max(1, Math.min(10000, Number(e.target.value) || 1)))}
+                    className="w-full h-9 px-3 rounded-md bg-background border border-input text-sm tabular-nums"
+                  />
+                </div>
+                <div>
+                  <div className="font-heading font-semibold text-foreground mb-2 text-sm">{t.batch_concurrency}</div>
+                  <Select value={String(batchConcurrency)} onValueChange={(v) => setBatchConcurrency(Number(v))}>
+                    <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {[1,2,4,8,16].map(v => <SelectItem key={v} value={String(v)}>{v}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 孕育按钮 */}
         <button
-          className="w-full flex items-center justify-between px-5 py-3.5 text-base font-heading font-semibold text-primary bg-rose-50 border border-border hover:bg-rose-100 transition-colors cursor-pointer mt-auto"
-          onClick={conceive}
+          className={cn(
+            "w-full flex items-center justify-between px-5 py-3.5 text-base font-heading font-semibold text-primary bg-rose-50 border border-border transition-colors mt-auto",
+            (isBatch && batchRunning) ? "opacity-60 cursor-not-allowed" : "hover:bg-rose-100 cursor-pointer",
+          )}
+          onClick={isBatch ? batchConceive : conceive}
+          disabled={isBatch && batchRunning}
         >
-          {t.conceive}
+          {isBatch ? (batchRunning ? t.batch_running : t.batch_conceive) : t.conceive}
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </button>
       </div>
     </div>
-  )
+    )
+  }
 
   // ── 发育监视器 (孕育后) ──
   // 遗传特征卡片内容（inline 与 popover 共用）
@@ -1363,15 +1783,45 @@ function App() {
               <Button
                 size="lg"
                 className="flex-1"
+                disabled={admittingToCradle}
                 onClick={() => {
                   const babyId = babyState.id
-                  // 跳转到摇篮详情页
-                  navigate(`/cradle/${babyId}?autoAdmit=true`)
-                  // 清空子宫孕育状态——否则用户返回子宫页会永远卡在"孕育完成"画面
-                  dispatch({ type: 'CLEAR_PROGRESS' })
+                  if (admittingToCradle) return
+                  setAdmittingToCradle(true)
+                  // 直接在当前页完成 admit：不跳转，等 SSE 'admitted' 后再 navigate。
+                  // lastSeq 持久化是为了避免 Cradle 挂载后 lifeline?after_seq=0 重放 admit 事件。
+                  const source = new EventSource(`${API}/cradle/admit/stream?baby_id=${encodeURIComponent(babyId)}`)
+                  const finish = (ok) => {
+                    source.close()
+                    setAdmittingToCradle(false)
+                    if (ok) {
+                      dispatch({ type: 'CLEAR_PROGRESS' })
+                      // justAdmitted=1 通知 Cradle 刷新 cradleBabies / babyStatus，
+                      // 避免本地 state 陈旧导致详情页仍显示"未入篮"。
+                      navigate(`/cradle/${babyId}?justAdmitted=1`)
+                    }
+                  }
+                  source.onmessage = (e) => {
+                    try {
+                      const data = JSON.parse(e.data)
+                      if (data.seq) {
+                        localStorage.setItem(`lastSeq_${babyId}`, String(data.seq))
+                      }
+                      if (data.event === 'admitted') finish(true)
+                      else if (data.event === 'error') finish(false)
+                    } catch { /* ignore */ }
+                  }
+                  source.onerror = () => finish(false)
                 }}
               >
-                {lang === 'zh' ? '放入摇篮' : 'To Cradle'} →
+                {admittingToCradle ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin mr-2" />
+                    {lang === 'zh' ? '放入中...' : 'Admitting...'}
+                  </>
+                ) : (
+                  <>{lang === 'zh' ? '放入摇篮' : 'To Cradle'} →</>
+                )}
               </Button>
             )}
             <Button size="lg" variant="outline" onClick={() => dispatch({ type: 'CLEAR_PROGRESS' })}>
@@ -1442,7 +1892,7 @@ function App() {
 
   // ── 孕育前单页布局 ──
   const renderPreConceive = () => (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto" data-scroll-root="true">
       <div className="max-w-5xl mx-auto px-8 min-h-full flex items-center gap-8">
         {/* 左列 — 固定内容，立即显示 */}
         <div className="w-1/2">
@@ -1459,27 +1909,36 @@ function App() {
   // ── 孕育中分屏布局 ──
   const renderConceiving = () => (
     <div className="flex flex-1 overflow-hidden">
-      {/* 左面板：力导向因果图谱 */}
+      {/* 左面板：力导向因果图谱
+          graph→w-full；workbench→w-0（折叠但保留过渡动画）；split→w-1/2 */}
       <div className={cn(
-        "left-panel bg-background flex flex-col shrink-0 transition-all duration-300",
-        graphFullscreen ? "w-full" : "w-1/2 border-r border-border"
+        "left-panel bg-background flex flex-col shrink-0 overflow-hidden transition-all duration-300",
+        graphFullscreen
+          ? "w-full border-r-0"
+          : workbenchFullscreen
+          ? "w-0 border-r-0"
+          : "w-1/2 border-r border-border"
       )}>
         <LifeGraph
-          nodes={graphState.nodes}
-          edges={graphState.edges}
+          nodes={wombGraph.nodes.length ? wombGraph.nodes : graphState.nodes}
+          edges={wombGraph.edges.length ? wombGraph.edges : graphState.edges}
           filter={graphState.filter}
           showLabels={graphState.showLabels}
           highlight={graphState.highlight}
           stage="womb"
           dispatch={graphDispatch}
           fullscreen={graphFullscreen}
-          onToggleFullscreen={() => setGraphFullscreen(f => !f)}
         />
       </div>
-      {/* 右面板：阶段卡片 + 控制台 */}
+      {/* 右面板：阶段卡片 + 控制台
+          graph→w-0（折叠）；workbench→w-full；split→w-1/2（和左面板对称）*/}
       <div className={cn(
-        "flex-1 flex flex-col overflow-hidden relative transition-all duration-300",
-        graphFullscreen && "hidden"
+        "flex flex-col overflow-hidden relative shrink-0 transition-all duration-300",
+        graphFullscreen
+          ? "w-0"
+          : workbenchFullscreen
+          ? "w-full"
+          : "w-1/2"
       )}>
         {/* 阶段卡片 */}
         <div className={cn(
@@ -1492,8 +1951,8 @@ function App() {
         <div className={cn(
           "overflow-hidden",
           consoleFullscreen
-            ? "flex-1 p-2"
-            : "border-t border-border p-2 shrink-0"
+            ? "flex-1 pt-2 pr-2"
+            : "border-t border-border pt-2 pr-2 shrink-0"
         )}
         style={consoleFullscreen ? undefined : { height: '30%', minHeight: '160px' }}
         >
@@ -1505,6 +1964,367 @@ function App() {
     </div>
   )
 
+  // 批量 SSE 控制台：复用 ConsolePanel 组件 + 统一日志渲染
+  const renderBatchConsole = () => {
+    const logCount = batchLogs.length
+    const babyCount = batchLogs.filter(l => l.kind === 'baby').length
+    const errorCount = batchLogs.filter(l => l.kind === 'error').length
+    return (
+      <ConsolePanel
+        ref={batchConsoleRef}
+        className="h-full"
+        header={
+          <div className="flex items-center gap-2.5 text-[11px]">
+            <span className="text-[#666]">Events {logCount}</span>
+            <span className="w-px h-3 bg-[#444]" />
+            <span className={cn(
+              "font-medium",
+              errorCount > 0 ? "text-[#FF5F57]" :
+              batchRunning ? "text-emerald-400" :
+              "text-primary",
+            )}>
+              {lang === 'zh' ? 'SSE 事件流' : 'SSE Stream'}
+            </span>
+            <span className="w-px h-3 bg-[#444]" />
+            <div className="flex items-center gap-[5px]">
+              <span className={cn(
+                "w-1.5 h-1.5 rounded-full",
+                errorCount > 0 ? "bg-[#FF5F57]" :
+                !batchRunning && batchResult ? "bg-[#28C840]" :
+                batchRunning ? "step-dot-running" :
+                "bg-[#555]",
+              )} />
+              <span className="text-[#666] text-[11px]">
+                {!batchRunning && batchResult
+                  ? t.batch_done
+                  : batchRunning
+                    ? t.batch_running
+                    : t.step_idle}
+              </span>
+            </div>
+            {babyCount > 0 && <>
+              <span className="w-px h-3 bg-[#444]" />
+              <span className="text-[#555]">{babyCount} births</span>
+            </>}
+          </div>
+        }
+      >
+        {logCount === 0 && (
+          <div className="log-system"><span className="blink-dot" />{lang === 'zh' ? '等待批量孕育事件...' : 'Waiting for batch events...'}</div>
+        )}
+        {batchLogs.map((entry, i) => {
+          const clsMap = {
+            system: 'log-system',
+            progress: 'log-system text-[#888]',
+            baby: 'text-emerald-400',
+            miscarriage: 'text-[#FFBD2E]',
+            error: 'text-[#FF5F57]',
+            complete: 'text-primary',
+          }
+          const cls = clsMap[entry.kind] || 'text-[#aaa]'
+          const time = new Date(entry.ts).toTimeString().slice(0, 8)
+          return (
+            <div key={i} className={cn('text-[11px] font-mono leading-relaxed', cls)}>
+              <span className="text-[#555] mr-2">{time}</span>
+              {entry.text}
+            </div>
+          )
+        })}
+      </ConsolePanel>
+    )
+  }
+
+  // 批量孕育页面：左 = 实时出生列表，右 = 进度卡片 + 控制台
+  const renderBatchConceiving = () => {
+    const pct = batchProgress && batchProgress.total > 0 ? (batchProgress.done / batchProgress.total) * 100 : 0
+    const throughput = batchProgress && batchProgress.elapsed_sec > 0
+      ? (batchProgress.conceived / batchProgress.elapsed_sec).toFixed(1) : '0'
+    return (
+      <div className="flex flex-1 overflow-hidden">
+        {/* 左分屏：最新出生滚动列表 */}
+        <div className="w-1/2 min-w-0 flex flex-col overflow-hidden bg-background border-r border-border">
+          <div className="px-6 pt-6 pb-3 flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-[11px] text-muted-foreground tracking-wider mb-1">
+                {lang === 'zh' ? '最新出生' : 'Latest Arrivals'}
+              </div>
+              <div className="text-sm text-muted-foreground/70">
+                {batchRecentBabies.length}{lang === 'zh' ? ' 位婴儿已出生' : ' babies born'}
+              </div>
+            </div>
+            {/* 右上角指标：成功/流产/失败 + 用时/吞吐（进行中显示实时值，完成后显示终值） */}
+            {batchProgress && (
+              <div className="flex items-start gap-5 shrink-0 pt-0.5">
+                <div className="text-right">
+                  <div className="text-[10px] text-muted-foreground tracking-wider mb-0.5">{t.batch_conceived}</div>
+                  <div className="font-heading text-base font-semibold tabular-nums text-emerald-600">{batchProgress.conceived}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] text-muted-foreground tracking-wider mb-0.5">{t.batch_miscarriages}</div>
+                  <div className="font-heading text-base font-semibold tabular-nums">{batchProgress.miscarriages}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] text-muted-foreground tracking-wider mb-0.5">{t.batch_failed}</div>
+                  <div className="font-heading text-base font-semibold tabular-nums">{batchProgress.failed}</div>
+                </div>
+                <div className="w-px h-10 bg-border self-center" />
+                <div className="text-right">
+                  <div className="text-[10px] text-muted-foreground tracking-wider mb-0.5">{t.batch_elapsed}</div>
+                  <div className="font-heading text-base font-semibold tabular-nums">
+                    {(batchResult?.elapsed_sec ?? batchProgress.elapsed_sec)}{t.batch_sec}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] text-muted-foreground tracking-wider mb-0.5">{t.batch_throughput}</div>
+                  <div className="font-heading text-base font-semibold tabular-nums">
+                    {batchResult?.throughput_per_sec ?? throughput}<span className="text-xs text-muted-foreground ml-0.5">{t.batch_per_sec}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* 进度条：左分屏 header 与列表之间 */}
+          {batchProgress && (
+            <div className="px-6 pb-3 shrink-0 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className={cn(
+                    "inline-block w-2 h-2 rounded-full",
+                    batchRunning ? "step-dot-running animate-pulse" : "bg-[#28C840]",
+                  )} />
+                  <span className="text-xs font-medium">
+                    {batchRunning ? t.batch_running : t.batch_done}
+                  </span>
+                </div>
+                <span className="text-xs font-heading tabular-nums text-muted-foreground">
+                  {batchProgress.done}/{batchProgress.total}
+                </span>
+              </div>
+              <div className="h-2 bg-muted/60 rounded overflow-hidden">
+                <div
+                  className="h-full bg-primary transition-all duration-300"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
+          )}
+          <ScrollArea
+            id="batch-baby-scroll"
+            className={cn(
+              "flex-1 min-h-0 w-full",
+              // Radix viewport 内部自动包一层 <div>（非 block 默认），强制 w-full + block 约束其宽度
+              "[&_[data-slot=scroll-area-viewport]>div]:!block [&_[data-slot=scroll-area-viewport]>div]:!w-full",
+            )}
+          >
+            <div className="px-6 pt-2 pb-6 w-full min-w-0">
+              {batchRecentBabies.length === 0 && (
+                <div className="text-sm text-muted-foreground/60 italic mt-6">
+                  {lang === 'zh' ? '等待第一个婴儿出生...' : 'Waiting for first arrival...'}
+                </div>
+              )}
+              <div className="flex flex-col gap-2 w-full min-w-0">
+                {batchRecentBabies.map((b) => (
+                  <BatchBabyListItem
+                    key={b.id}
+                    baby={b}
+                    selected={batchSelectedBaby?.id === b.id}
+                    lang={lang}
+                    title={lang === 'zh' ? '点击查看详情' : 'Click to view details'}
+                    onClick={handleBatchItemClick(b)}
+                  />
+                ))}
+              </div>
+            </div>
+          </ScrollArea>
+        </div>
+
+        {/* 右分屏：上半=详情卡片，下半=控制台 */}
+        <div className="w-1/2 min-w-0 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-8 pt-6 pb-8 gap-6 flex flex-col min-h-0">
+          {/* 批量失败错误提示（只在连接中断等明确失败时显示一行） */}
+          {batchResult?.error && !batchRunning && (
+            <div className="text-xs text-destructive">{batchResult.error}</div>
+          )}
+          {/* 婴儿详情：采用单个孕育"阶段卡"样式，展示 7 阶段 gestation_log */}
+          {batchSelectedBaby && (
+            <div className="flex flex-col gap-4">
+              {/* 概要行：头像 + 性别 + 出生地 + 进入养育按钮 */}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center shrink-0 text-2xl">
+                  {batchSelectedBaby.sex === 'male' ? '\u{1F466}' : '\u{1F467}'}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-heading text-base font-semibold">
+                      {batchSelectedBaby.sex === 'male' ? (lang === 'zh' ? '男性' : 'Male') : (lang === 'zh' ? '女性' : 'Female')}
+                    </span>
+                    <span className={cn(
+                      "text-[10px] px-2 py-0.5 rounded-full font-medium tracking-wider",
+                      batchSelectedBaby.alive
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-muted text-muted-foreground border border-border",
+                    )}>
+                      {batchSelectedBaby.alive ? (lang === 'zh' ? '存活' : 'ALIVE') : (lang === 'zh' ? '未存活' : 'LOST')}
+                    </span>
+                    {batchSelectedBaby.birthplace?.city && (
+                      <span className="text-xs text-muted-foreground truncate">
+                        · {batchSelectedBaby.birthplace.city}, {batchSelectedBaby.birthplace.name}
+                      </span>
+                    )}
+                  </div>
+                  <div className="font-mono text-[11px] text-muted-foreground/80 tabular-nums truncate mt-0.5">
+                    {batchSelectedBaby.id}
+                  </div>
+                </div>
+                <button
+                  disabled={batchAdmitLoading}
+                  className={cn(
+                    "px-3 py-2 text-xs font-heading font-semibold text-primary bg-rose-50 border border-border transition-colors whitespace-nowrap flex items-center gap-1.5",
+                    batchAdmitLoading ? "opacity-60 cursor-not-allowed" : "hover:bg-rose-100",
+                  )}
+                  onClick={() => handleBatchAdmit(batchSelectedBaby.id)}
+                >
+                  {batchAdmitLoading
+                    ? (lang === 'zh' ? '接收中...' : 'Admitting...')
+                    : (lang === 'zh' ? '进入养育' : 'Raise in Cradle')}
+                  {batchAdmitLoading
+                    ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    : <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>}
+                </button>
+              </div>
+
+              {/* 7 个阶段卡：复用单个孕育样式，数据来自 gestation_log */}
+              {batchSelectedLoading && (
+                <div className="rounded-lg ring-1 ring-foreground/10 bg-card p-5 text-xs text-muted-foreground">
+                  {lang === 'zh' ? '加载孕育数据...' : 'Loading gestation data...'}
+                </div>
+              )}
+              {!batchSelectedLoading && batchSelectedFull?.gestation_log?.slice().reverse().map((entry, reversedIdx) => {
+                const total = batchSelectedFull.gestation_log.length
+                const i = total - 1 - reversedIdx  // 真实索引（从 0 开始）
+                const stageName = entry.stage
+                const isBirthStage = i === total - 1
+                const response = entry.response
+                const entries = response && typeof response === 'object'
+                  ? Object.entries(response).filter(([k]) => !k.startsWith('_') && k !== 'budget_enforced' && k !== 'budget_remaining' && k !== 'gestation_log' && k !== 'total_gestation_days')
+                  : []
+                const tagId = `${stageName}:${i}`
+                const explicitTag = batchExpandedTag?.startsWith(tagId + '|') ? batchExpandedTag.slice(tagId.length + 1) : null
+                const defaultTag = isBirthStage && entries.some(([k]) => k === 'first_cry') ? 'first_cry' : (entries.length > 0 ? entries[0][0] : null)
+                const tagKey = explicitTag ?? defaultTag
+                const val = tagKey && response ? response[tagKey] : null
+                return (
+                  <div key={`${stageName}-${i}`} className="rounded-lg ring-1 ring-foreground/10 bg-card overflow-hidden flex flex-col">
+                    {/* 标题行 */}
+                    <div className="shrink-0 flex items-center justify-between px-5 pt-4 pb-2">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-2xl font-heading font-bold text-primary/70">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="text-base font-heading font-semibold capitalize">{tk(stageName.replace(/_/g, ' '))}</span>
+                      </div>
+                      <span className={cn("text-[10px] font-mono font-semibold tracking-wider px-2.5 py-1 rounded", isBirthStage ? "bg-emerald-500 text-white" : "bg-primary text-primary-foreground")}>
+                        {lang === 'zh' ? '完成' : 'COMPLETE'}
+                      </span>
+                    </div>
+                    {/* 描述 */}
+                    <div className="shrink-0 text-xs text-muted-foreground px-5 pb-3">
+                      {entry.duration_days}{t.days} · {lang === 'zh' ? '孕育日' : 'Gestation Day'} {entry.gestation_day}
+                    </div>
+                    {/* 标签 + 展开区域 */}
+                    {entries.length > 0 && (
+                      <div className="border-t border-border px-5 py-4">
+                        <div className="flex flex-wrap gap-1.5 mb-1">
+                          {entries.map(([k]) => (
+                            <button
+                              key={k}
+                              onClick={() => setBatchExpandedTag(batchExpandedTag === `${tagId}|${k}` ? null : `${tagId}|${k}`)}
+                              className={cn(
+                                "px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide transition-colors cursor-pointer capitalize",
+                                tagKey === k
+                                  ? (isBirthStage ? "bg-emerald-500 text-white" : "bg-primary text-primary-foreground")
+                                  : "bg-muted text-muted-foreground hover:bg-muted-foreground/10",
+                              )}
+                            >
+                              {tk(k.replace(/_/g, ' '))}
+                            </button>
+                          ))}
+                        </div>
+                        {tagKey && (
+                          <div className="mt-3 rounded-lg border border-border bg-muted/30 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200">
+                            {!isBirthStage && (
+                              <div className="flex items-center justify-between px-4 py-2 border-b border-border">
+                                <div className="flex items-center gap-2">
+                                  <span className="px-1.5 py-0.5 rounded bg-primary text-primary-foreground text-[9px] font-mono font-semibold uppercase">
+                                    {typeof val === 'object' ? (Array.isArray(val) ? 'array' : 'object') : typeof val}
+                                  </span>
+                                  <span className="font-heading font-semibold text-sm capitalize">{tk(tagKey.replace(/_/g, ' '))}</span>
+                                </div>
+                              </div>
+                            )}
+                            <div className={cn("px-4 py-3 text-xs leading-relaxed whitespace-pre-wrap break-words", isBirthStage && "italic text-emerald-600")}>
+                              {typeof val === 'object' && val !== null ? (
+                                Array.isArray(val) ? (
+                                  <div className="flex flex-col gap-2">
+                                    {val.map((item, j) => (
+                                      item && typeof item === 'object' ? (
+                                        <div key={j} className="rounded-md border border-border/60 bg-background/40 px-3 py-2 flex flex-col gap-1">
+                                          {Object.entries(item).map(([ik, iv]) => (
+                                            <div key={ik} className="flex gap-2 text-xs">
+                                              <span className="font-mono font-semibold shrink-0 capitalize text-foreground/80">{tk(ik.replace(/_/g, ' '))}</span>
+                                              <span className="text-muted-foreground break-words min-w-0">{
+                                                iv == null ? '—'
+                                                : typeof iv === 'object' ? JSON.stringify(iv)
+                                                : typeof iv === 'number' ? (Number.isInteger(iv) ? iv : iv.toFixed(2))
+                                                : String(iv)
+                                              }</span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      ) : (
+                                        <div key={j} className="flex gap-2">
+                                          <span className="text-muted-foreground shrink-0">•</span>
+                                          <span>{String(item)}</span>
+                                        </div>
+                                      )
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col gap-1.5">
+                                    {Object.entries(val).map(([k2, v2]) => (
+                                      <div key={k2} className="flex gap-3 py-1 border-b border-dashed border-border last:border-0">
+                                        <span className="font-mono font-semibold shrink-0 capitalize">{tk(k2.replace(/_/g, ' '))}</span>
+                                        <span className="text-muted-foreground">{typeof v2 === 'number' ? (Number.isInteger(v2) ? v2 : v2.toFixed(2)) : String(v2)}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )
+                              ) : (
+                                <span>{val == null ? '—' : String(val)}</span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          </div>
+          {/* 下半：SSE 控制台 —— 高度规则对齐单个孕育控制台（30% / minHeight 160px） */}
+          <div
+            className="overflow-hidden border-t border-border pt-2 pr-2 shrink-0"
+            style={{ height: '30%', minHeight: '160px' }}
+          >
+            <div className="h-full flex flex-col">
+              {renderBatchConsole()}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const renderWomb = () => isConceiving ? renderConceiving() : renderPreConceive()
 
   const renderPlaceholder = (name) => (
@@ -1515,97 +2335,216 @@ function App() {
     </div>
   )
 
-  return (
-    <div className="flex flex-col h-screen">
-      {/* 顶部导航 */}
-      <div className="h-16 bg-card border-b border-border flex items-center px-6 shrink-0 relative">
-        <img src="/logo.svg" alt={t.title} className="h-[50px] mr-auto" />
-        <div className="flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
-          {['womb', 'cradle', 'world'].map((key, i) => (
-            <span key={key} className="contents">
-              {i > 0 && <span className="w-[3px] h-[3px] bg-border rounded-full mx-2" />}
-              <button
-                className={cn(
-                  "bg-transparent border-none text-muted-foreground text-xs py-2 px-5 cursor-pointer transition-all duration-200 relative font-[inherit]",
-                  "hover:text-foreground",
-                  tab === key && "text-primary after:content-[''] after:absolute after:bottom-0 after:left-[20%] after:right-[20%] after:h-0.5 after:bg-primary after:rounded-[1px]"
-                )}
-                onClick={() => {
-                  if (key === 'cradle') {
-                    const last = localStorage.getItem('cradle:lastBabyId')
-                    navigate(last ? `/cradle/${last}` : '/cradle')
-                  } else {
-                    navigate(`/${key}`)
-                  }
-                }}
-              >
-                {t.tabs[key]}
-              </button>
-            </span>
-          ))}
-        </div>
-        <div className="ml-auto flex items-center gap-1.5">
-          {/* 全局速率选择器 */}
-          <div className="flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1 h-7">
-            <Gauge className="size-3 text-muted-foreground" />
-            {[
-              { value: 'slow', label: '1x', hint: lang === 'zh' ? '~60h' : '~60h' },
-              { value: 'normal', label: '7x', hint: lang === 'zh' ? '~8h' : '~8h' },
-              { value: 'fast', label: '30x', hint: lang === 'zh' ? '~2h' : '~2h' },
-              { value: 'turbo', label: 'T', hint: lang === 'zh' ? '~10min' : '~10min' },
-            ].map(opt => (
-              <button
-                key={opt.value}
-                title={lang === 'zh' ? `全程约 ${opt.hint}` : `Full run ≈ ${opt.hint}`}
-                className={cn(
-                  "flex flex-col items-center px-2 py-0.5 rounded text-[10px] font-medium transition-colors leading-tight",
-                  timeScale === opt.value
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-                onClick={async () => {
-                  try {
-                    const r = await fetch(`${API}/system/time-scale`, {
-                      method: 'PATCH',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ time_scale: opt.value }),
-                    })
-                    if (r.ok) { localStorage.setItem('timeScale', opt.value); setTimeScale(opt.value) }
-                  } catch { /* ignore */ }
-                }}
-              >
-                <span>{opt.label}</span>
-                <span className="text-[8px] opacity-60">{opt.hint}</span>
-              </button>
-            ))}
+  // 左侧侧边栏导航项 —— 顺序即视觉顺序（上→下）
+  const SIDEBAR_ITEMS = [
+    { key: 'workbench', icon: LayoutDashboard, path: '/workbench' },
+    { key: 'womb', icon: Dna, path: '/womb' },
+    { key: 'cradle', icon: Baby, path: null },
+    { key: 'world', icon: Globe, path: '/world' },
+  ]
+
+  const TIME_SCALE_OPTS = [
+    { value: 'slow', label: '1x', hint: '~60h' },
+    { value: 'normal', label: '7x', hint: '~8h' },
+    { value: 'fast', label: '30x', hint: '~2h' },
+    { value: 'turbo', label: 'T', hint: '~10min' },
+  ]
+
+  const renderSidebar = () => (
+    <aside className="w-16 shrink-0 bg-card border-r border-border flex flex-col py-3 gap-3">
+      {/* 导航项 —— 工作台后插入分隔线 */}
+      {SIDEBAR_ITEMS.map(({ key, icon: Icon, path }, idx) => {
+        const active = tab === key
+        return (
+          <div key={key} className="contents">
+            <button
+              onClick={() => {
+                if (key === 'cradle') {
+                  const last = localStorage.getItem('cradle:lastBabyId')
+                  navigate(last ? `/cradle/${last}` : '/cradle')
+                } else {
+                  navigate(path)
+                }
+              }}
+              className={cn(
+                "relative mx-1.5 flex flex-col items-center gap-0.5 py-2 rounded-md text-[10px] transition-colors cursor-pointer bg-transparent border-none font-[inherit]",
+                active
+                  ? "text-primary bg-primary/10 before:content-[''] before:absolute before:left-0 before:top-2 before:bottom-2 before:w-0.5 before:bg-primary before:rounded-r"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
+            >
+              <Icon className="size-[18px]" strokeWidth={active ? 2.25 : 1.75} />
+              <span>{t.tabs[key]}</span>
+            </button>
+            {idx === 0 && <div className="mx-3 my-5 border-t border-border" />}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-7 px-2.5 text-xs gap-1.5"
-            onClick={() => { const next = lang === 'en' ? 'zh' : 'en'; localStorage.setItem('lang', next); setLang(next) }}
-          >
-            EN/中
-            <ArrowLeftRight className="size-3" />
-          </Button>
-          <a href="https://github.com/Lofelin/angelcradle" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="sm" className="h-7 px-2.5 text-xs gap-1.5">
-              <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
-              GitHub
-            </Button>
-          </a>
-        </div>
+        )
+      })}
+      {/* 底部：速率选择器（贴合侧边栏图标栈样式，用 Radix 原语保证点击可触发）*/}
+      <div className="mt-auto pb-1 flex justify-center">
+        <SelectPrimitive.Root
+          value={timeScale}
+          onValueChange={async (value) => {
+            if (value === timeScale) return  // 选了同值直接跳过，避免无谓 PATCH
+            try {
+              const r = await fetch(`${API}/system/time-scale`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ time_scale: value }),
+              })
+              if (r.ok) { localStorage.setItem('timeScale', value); setTimeScale(value) }
+            } catch { /* ignore */ }
+          }}
+        >
+          <SelectPrimitive.Trigger asChild>
+            <button
+              type="button"
+              aria-label={lang === 'zh' ? '速率' : 'Speed'}
+              className={cn(
+                "relative flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md bg-transparent border-none cursor-pointer transition-colors font-[inherit]",
+                "outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0",
+                "text-muted-foreground hover:text-foreground hover:bg-muted",
+                "data-[state=open]:text-primary data-[state=open]:bg-primary/10",
+                "data-[state=open]:before:content-[''] data-[state=open]:before:absolute data-[state=open]:before:left-0 data-[state=open]:before:top-2 data-[state=open]:before:bottom-2 data-[state=open]:before:w-0.5 data-[state=open]:before:bg-primary data-[state=open]:before:rounded-r"
+              )}
+            >
+              <Gauge className="size-[18px]" strokeWidth={1.75} />
+              <span className="text-[10px] font-medium leading-none tabular-nums">
+                {TIME_SCALE_OPTS.find(o => o.value === timeScale)?.label}
+              </span>
+            </button>
+          </SelectPrimitive.Trigger>
+          <SelectContent position="popper" side="right" align="end" sideOffset={8}>
+            {TIME_SCALE_OPTS.map(opt => (
+              <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                <span className="font-medium mr-1.5 tabular-nums">{opt.label}</span>
+                <span className="text-muted-foreground text-[10px]">{opt.hint}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </SelectPrimitive.Root>
       </div>
-      <Routes>
-        <Route path="/womb" element={renderWomb()} />
-        <Route path="/cradle" element={null} />
-        <Route path="/cradle/:babyId" element={null} />
-        <Route path="/world" element={renderPlaceholder(t.tabs.world)} />
-        <Route path="*" element={<Navigate to="/womb" replace />} />
-      </Routes>
-      {/* Cradle 常驻挂载，避免 tab 切换时丢失内部状态/SSE/滚动位置 */}
-      <div className={cn("flex-1 min-h-0", tab === 'cradle' ? 'flex flex-col' : 'hidden')}>
-        <Cradle lang={lang} graphState={graphState} graphDispatch={graphDispatch} />
+    </aside>
+  )
+
+  return (
+    <div className="flex h-screen">
+      {/* 左侧侧边栏（全高，覆盖原顶部导航位置）*/}
+      {renderSidebar()}
+      {/* 右侧内容区 */}
+      <div ref={contentScrollRef} className={cn(
+        "flex flex-col flex-1 min-w-0 overflow-hidden",
+        tab === 'world' ? "relative bg-transparent" : "bg-[#FDFDFB]"
+      )}>
+        {/* 顶部导航栏 —— 左：当前页图标+标题；中：视图切换 tag；右：语言 + GitHub
+            world 模块下：absolute 浮于地图之上（父级 relative 约束定位范围，保证不影响侧边栏）+ 透明背景 + 永不阴影 */}
+        <header
+          className={cn(
+            "h-14 shrink-0 flex items-center justify-between px-6 transition-[box-shadow,border-color] duration-200",
+            tab === 'world'
+              ? "absolute inset-x-0 top-0 z-20 bg-transparent border-b border-transparent shadow-none"
+              : cn(
+                  "relative border-b z-10 bg-[#FDFDFB]",
+                  (headerScrolled || isSecondaryPage)
+                    ? "border-border/60 shadow-[0_2px_6px_rgba(0,0,0,0.06)]"
+                    : "border-transparent shadow-none",
+                )
+          )}
+        >
+          <div className="flex items-center gap-2 text-foreground text-sm font-medium">
+            {(() => {
+              const current = SIDEBAR_ITEMS.find(it => it.key === tab)
+              if (!current) return null
+              const CurrentIcon = current.icon
+              // 宝宝详情页：breadcrumb [摇篮] > [完整 babyId]
+              const babyId = tab === 'cradle' ? location.pathname.split('/')[2] : null
+              if (babyId) {
+                return (
+                  <>
+                    <CurrentIcon className="size-4 text-muted-foreground" strokeWidth={1.75} />
+                    <button
+                      type="button"
+                      onClick={() => { try { localStorage.removeItem('cradle:lastBabyId') } catch { /* ignore */ } navigate('/cradle') }}
+                      className="bg-transparent border-none cursor-pointer font-[inherit] text-inherit p-0 hover:text-primary transition-colors"
+                    >
+                      {t.tabs[current.key]}
+                    </button>
+                    <ChevronDown className="size-3 -rotate-90 text-muted-foreground/60" />
+                    <span className="font-mono text-xs text-foreground">{babyId}</span>
+                  </>
+                )
+              }
+              return (
+                <>
+                  <CurrentIcon className="size-4 text-muted-foreground" strokeWidth={1.75} />
+                  <span>{t.tabs[current.key]}</span>
+                </>
+              )
+            })()}
+          </div>
+          {/* 中间视图切换：图谱 / 双栏 / 工作台（仅在孕育中、宝宝详情页显示）*/}
+          {((tab === 'womb' && isConceiving) || (tab === 'cradle' && !!location.pathname.split('/')[2])) && (
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 bg-[#F5F5F5] rounded-md p-1">
+              {[
+                { value: 'graph', label: lang === 'zh' ? '图谱' : 'Graph' },
+                { value: 'split', label: lang === 'zh' ? '双栏' : 'Split' },
+                { value: 'workbench', label: lang === 'zh' ? '工作台' : 'Workbench' },
+              ].map(opt => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setViewMode(opt.value)}
+                  className={cn(
+                    "border-none px-4 py-1.5 text-xs font-semibold rounded cursor-pointer transition-colors font-[inherit] min-w-[88px] text-center",
+                    viewMode === opt.value
+                      ? "bg-white text-black shadow-[0_2px_4px_rgba(0,0,0,0.05)]"
+                      : "bg-transparent text-[#666] hover:text-black"
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="flex items-center gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7 px-2.5 text-xs gap-1.5 bg-white hover:bg-white"
+              onClick={() => { const next = lang === 'en' ? 'zh' : 'en'; localStorage.setItem('lang', next); setLang(next) }}
+            >
+              <span className="flex items-baseline leading-none">
+                <span className={cn(lang === 'en' ? "text-primary font-semibold text-[13px]" : "text-muted-foreground text-[10px]")}>EN</span>
+                <span className="text-muted-foreground/60 text-[10px] mx-px">/</span>
+                <span className={cn(lang === 'zh' ? "text-primary font-semibold text-[13px]" : "text-muted-foreground text-[10px]")}>中</span>
+              </span>
+              <ArrowLeftRight className="size-3" />
+            </Button>
+            <a href="https://github.com/Lofelin/angelcradle" target="_blank" rel="noopener noreferrer">
+              <Button size="sm" className="h-7 px-2.5 text-xs gap-1.5 bg-black text-white hover:bg-neutral-800 border-none">
+                <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
+                GitHub
+              </Button>
+            </a>
+          </div>
+        </header>
+        <Routes>
+          <Route path="/workbench" element={renderPlaceholder(t.tabs.workbench)} />
+          <Route path="/womb" element={renderWomb()} />
+          <Route path="/womb/batch" element={renderBatchConceiving()} />
+          <Route path="/cradle" element={null} />
+          <Route path="/cradle/:babyId" element={null} />
+          <Route path="/world" element={
+            <div className="flex flex-1 overflow-hidden">
+              <WorldMap lang={lang} />
+            </div>
+          } />
+          <Route path="*" element={<Navigate to="/womb" replace />} />
+        </Routes>
+        {/* Cradle 常驻挂载，避免 tab 切换时丢失内部状态/SSE/滚动位置 */}
+        <div className={cn("flex-1 min-h-0", tab === 'cradle' ? 'flex flex-col' : 'hidden')}>
+          <Cradle lang={lang} graphState={graphState} graphDispatch={graphDispatch} graphFullscreen={graphFullscreen} workbenchFullscreen={workbenchFullscreen} onToggleGraphFullscreen={toggleGraphFullscreen} />
+        </div>
       </div>
     </div>
   )

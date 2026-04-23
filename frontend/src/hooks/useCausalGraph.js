@@ -13,7 +13,7 @@ export const GRAPH_INITIAL = {
   nodes: new Map(),       // id -> Node
   edges: [],              // Edge[]
   filter: null,           // null = 全部, Set<group> = 过滤
-  showLabels: false,      // 边标签开关，默认关闭（参考 MiroFish 风格）
+  showLabels: false,      // 边标签开关，默认关闭（避免密集图的文字噪音）
   highlight: null,        // null | { nodes: Set, edges: Set }
 }
 

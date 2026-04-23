@@ -564,7 +564,7 @@ def _build_group_system_prompt(
 
 ## Your Identity
 - Name: {state.name or '(unnamed)'}
-- Age: {state.age_days} days ({phase.age_range})
+- Age: {state.age_days} days ({phase.age_range(state.lang)})
 - Phase: {phase.display_name} — {phase.description}
 
 ## Expression Mode (STRICTLY ENFORCED)

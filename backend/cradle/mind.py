@@ -26,6 +26,11 @@ from memory import build_memory_prompt_block, is_v2_enabled, recall
 logger = logging.getLogger(__name__)
 
 
+def _lang_name(lang: str) -> str:
+    """把 BabyState.lang 映射为 LLM prompt 里可读的语种名。"""
+    return "Simplified Chinese (中文简体)" if lang == "zh" else "English"
+
+
 # ============================================================
 # 表达模式后验证：校验 LLM 输出是否符合当前 expression_mode
 # ============================================================
@@ -385,7 +390,7 @@ The voice profile above defines HOW this specific child talks. Two children with
 
 ## The Child
 - Name: {state.name or '(unnamed)'}
-- Age: {state.age_days} days ({phase.age_range})
+- Age: {state.age_days} days ({phase.age_range(state.lang)})
 - Phase: {phase.display_name} — {phase.description}
 
 ## Expression Mode (STRICTLY ENFORCED)
@@ -578,7 +583,7 @@ def narrate_phase_events(
 
 ## The Infant
 - Name: {state.name or '(还没有名字)'}
-- Age: {state.age_days} days ({phase.age_range})
+- Age: {state.age_days} days ({phase.age_range(state.lang)})
 - Phase: {phase.display_name} — {phase.description}
 - Expression: {expr_mode['description']}
 - Expression format: {expr_mode['format']}
@@ -785,7 +790,7 @@ Generate a simulated {state.species} infant's reaction to a significant developm
 
 ## Infant Profile
 - Name: {state.name or '(unnamed)'}
-- Age: {state.age_days} days ({phase.age_range})
+- Age: {state.age_days} days ({phase.age_range(state.lang)})
 - Phase: {phase.display_name} — {phase.description}
 - Expression: {expr_mode['description']}
 - Expression format: {expr_mode['format']}
@@ -921,7 +926,7 @@ def generate_phase_summary(state: BabyState) -> dict:
 
     prompt = f"""You are writing a developmental summary for a {state.species} infant completing a growth phase.
 
-## Phase: {phase.display_name} ({phase.age_range})
+## Phase: {phase.display_name} ({phase.age_range(state.lang)})
 {phase.description}
 
 ## Infant: {state.name or '(unnamed)'}, {state.age_days} days old
@@ -1069,6 +1074,8 @@ def generate_heartbeat_evaluation(
 
     # Few-shot：从场景库抽 3-5 条当前 phase 的真实场景注入 prompt
     # 让 LLM 看到 phase 应有的表达风格，降低违规率
+    # 按 state.lang 取对应语种字段：phase_04+ 主字段含中文对白，英文模式下
+    # 若直接用 s.expression / s.intent 会泄漏中文 → LLM 模仿输出中文。
     few_shot_block = ""
     try:
         from scenes import pick_scene, load_scenes_for_phase
@@ -1078,10 +1085,11 @@ def generate_heartbeat_evaluation(
             sample = _rnd.sample(phase_scenes, min(4, len(phase_scenes)))
             shots = []
             for s in sample:
+                loc = s.localized(state.lang)
                 shots.append(
-                    f"- Trigger: {s.trigger} | Context: {s.context}\n"
-                    f"  Expression: {s.expression}\n"
-                    f"  Intent: {s.intent}"
+                    f"- Trigger: {s.trigger} | Context: {loc['context']}\n"
+                    f"  Expression: {loc['expression']}\n"
+                    f"  Intent: {loc['intent']}"
                 )
             few_shot_block = (
                 "\n## Example Scenes for This Phase (few-shot — follow this style)\n"
@@ -1114,8 +1122,8 @@ want to reach out to (or actively avoid) their caregiver RIGHT NOW?
    Format: {expression_constraints.get('format', '')}
 6. ANTI-AI RULES: No literary language, no self-analysis, no metaphors.
    Real children, messy and immediate.
-7. If YES, expression must be SHORT: under 30 English words.
-8. ALWAYS respond in English. All expressions, hints, and output must be in English.
+7. If YES, expression must be SHORT: under 30 words (or equivalent length in target language).
+8. LANGUAGE: Output every user-visible string (expression.vocalization/facial/body/signal, parent_hint) in {_lang_name(state.lang)}. The JSON keys themselves stay English. Do NOT mix languages.
 {few_shot_block}
 {behavior_space.to_prompt_section()}
 
@@ -1189,9 +1197,9 @@ Format: {expression_constraints.get('format', '')}
 - Stress level: {provider.get_stress_state(state).stress_level:.1f}
 
 ## Rules
-1. Under 25 English words.
+1. Under 25 words (or equivalent length in target language).
 2. ANTI-AI: no literary language. Real child reactions.
-3. ALWAYS respond in English.
+3. LANGUAGE: the "reaction" string must be in {_lang_name(state.lang)}. JSON keys remain English. Do NOT mix languages.
 
 Output JSON:
 {{

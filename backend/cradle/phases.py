@@ -21,13 +21,18 @@ class Phase:
     index: int
     name: str                       # 阶段代号
     display_name: str               # 中文名
-    age_range: str                  # 人类等效年龄
+    age_range_zh: str               # 人类等效年龄（中文）
+    age_range_en: str               # 人类等效年龄（英文）
     age_days: tuple[int, int]       # (起始天, 结束天)
     description: str                # 阶段描述
     capabilities: list[str]         # 此阶段解锁的能力
     expression_mode: str            # 表达形式代号
     vulnerability: str              # 脆弱窗口描述
     sensory_focus: list[str]        # 此阶段最活跃的感官通道
+
+    def age_range(self, lang: str = "en") -> str:
+        """按 lang 返回本地化 age_range 字符串。未知 lang 降级英文。"""
+        return self.age_range_zh if lang == "zh" else self.age_range_en
 
 
 # 表达形式：婴儿在每个阶段如何"说话"
@@ -90,7 +95,8 @@ PHASES: list[Phase] = [
         index=0,
         name="neonatal",
         display_name="Neonatal",
-        age_range="0-1个月",
+        age_range_zh="0-1个月",
+        age_range_en="0-1 month",
         age_days=(0, 30),
         description="Only reflexes, can only cry, completely dependent on caregiver. The world is a blur of sensations.",
         capabilities=["startle_reflex", "sucking_reflex", "crying", "sleep_wake_cycle"],
@@ -102,7 +108,8 @@ PHASES: list[Phase] = [
         index=1,
         name="sensory_awakening",
         display_name="Sensory Awakening",
-        age_range="1-3个月",
+        age_range_zh="1-3个月",
+        age_range_en="1-3 months",
         age_days=(30, 90),
         description="Begins tracking sounds and light, social smile appears. The world starts to have direction.",
         capabilities=["social_smile", "visual_tracking", "sound_localization", "head_control"],
@@ -114,7 +121,8 @@ PHASES: list[Phase] = [
         index=2,
         name="body_discovery",
         display_name="Body Discovery",
-        age_range="3-6个月",
+        age_range_zh="3-6个月",
+        age_range_en="3-6 months",
         age_days=(90, 180),
         description="Discovers own hands, can grasp objects, learns to roll over. The body is the first tool.",
         capabilities=["grasping", "rolling", "hand_discovery", "laugh", "reach_for_objects"],
@@ -126,7 +134,8 @@ PHASES: list[Phase] = [
         index=3,
         name="object_permanence",
         display_name="Object Permanence",
-        age_range="6-9个月",
+        age_range_zh="6-9个月",
+        age_range_en="6-9 months",
         age_days=(180, 270),
         description="Understands objects still exist after disappearing. Begins stranger anxiety. The world has memory.",
         capabilities=["object_permanence", "stranger_anxiety", "sitting", "babbling_syllables"],
@@ -138,7 +147,8 @@ PHASES: list[Phase] = [
         index=4,
         name="locomotion",
         display_name="Locomotion",
-        age_range="9-12个月",
+        age_range_zh="9-12个月",
+        age_range_en="9-12 months",
         age_days=(270, 365),
         description="Crawls to explore the world, points at objects to request attention. First meaningful words emerge — 'mama', 'dada', simple nouns.",
         capabilities=["crawling", "pointing", "intentional_action", "simple_cause_effect", "first_words"],
@@ -150,7 +160,8 @@ PHASES: list[Phase] = [
         index=5,
         name="first_word",
         display_name="First Word",
-        age_range="12-18个月",
+        age_range_zh="12-18个月",
+        age_range_en="12-18 months",
         age_days=(365, 540),
         description="Vocabulary grows to 10-50 words. Begins using tools and walking. Words combine with gestures for richer communication.",
         capabilities=["tool_use", "walking", "imitation", "word_combination"],
@@ -162,7 +173,8 @@ PHASES: list[Phase] = [
         index=6,
         name="language_explosion",
         display_name="Language Explosion",
-        age_range="18-24个月",
+        age_range_zh="18-24个月",
+        age_range_en="18-24 months",
         age_days=(540, 730),
         description="Two-word phrases emerge, pretend play appears, recognizes self in mirror.",
         capabilities=["two_word_sentences", "pretend_play", "self_recognition", "running"],
@@ -174,7 +186,8 @@ PHASES: list[Phase] = [
         index=7,
         name="why_phase",
         display_name="Why Phase",
-        age_range="2-3岁",
+        age_range_zh="2-3岁",
+        age_range_en="2-3 years",
         age_days=(730, 1095),
         description="Full sentences, endless 'why' questions, frequent emotional storms. The world needs explanation.",
         capabilities=["full_sentences", "why_questions", "emotional_storms", "basic_counting"],
@@ -186,7 +199,8 @@ PHASES: list[Phase] = [
         index=8,
         name="social_budding",
         display_name="Social Budding",
-        age_range="3-4岁",
+        age_range_zh="3-4岁",
+        age_range_en="3-4 years",
         age_days=(1095, 1460),
         description="Becomes aware of peers, role-play games, moral sense sprouts.",
         capabilities=["peer_awareness", "role_play", "moral_sense", "sharing_concept"],
@@ -198,7 +212,8 @@ PHASES: list[Phase] = [
         index=9,
         name="rule_understanding",
         display_name="Rule Understanding",
-        age_range="4-5岁",
+        age_range_zh="4-5岁",
+        age_range_en="4-5 years",
         age_days=(1460, 1825),
         description="Understands rules exist and begins testing boundaries. Knows 'should' but doesn't always comply.",
         capabilities=["rule_following", "boundary_testing", "negotiation", "basic_empathy"],
@@ -210,7 +225,8 @@ PHASES: list[Phase] = [
         index=10,
         name="abstract_beginning",
         display_name="Abstract Beginning",
-        age_range="5-6岁",
+        age_range_zh="5-6岁",
+        age_range_en="5-6 years",
         age_days=(1825, 2190),
         description="Begins analogical thinking, understands time (yesterday/tomorrow), can do simple hypothetical reasoning.",
         capabilities=["analogy", "time_concept", "hypothetical_thinking", "reading_readiness"],
@@ -222,7 +238,8 @@ PHASES: list[Phase] = [
         index=11,
         name="independence",
         display_name="Independence",
-        age_range="6-7岁",
+        age_range_zh="6-7岁",
+        age_range_en="6-7 years",
         age_days=(2190, 2555),
         description="'I'll do it myself.' Has own opinions, can argue back, ready to enter the world.",
         capabilities=["independent_opinion", "self_advocacy", "complex_emotion", "future_planning"],

@@ -27,10 +27,12 @@ def get_time_scale() -> str:
 
 
 def set_time_scale(ts: str) -> None:
-    """设置全局速率。影响所有模块（子宫/摇篮/世界）。"""
+    """设置全局速率。影响所有模块（子宫/摇篮/世界）。值相同时 no-op，不打日志。"""
     global _system_time_scale
     if ts not in VALID_TIME_SCALES:
         raise ValueError(f"Invalid time_scale: {ts}. Must be one of {VALID_TIME_SCALES}")
+    if ts == _system_time_scale:
+        return
     old = _system_time_scale
     _system_time_scale = ts
     logger.info("全局速率切换: %s → %s", old, ts)

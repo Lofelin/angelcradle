@@ -2,8 +2,8 @@
 摇篮 API 端点。
 
 [INPUT]: 依赖 cradle/ 模块、scheduler.py（调度器单例）
-[OUTPUT]: FastAPI 路由（含 touch-actions、lifeline SSE 日志读取器、interact 代理、heartbeat/stream 重定向、cradle-graph 发育图谱、portrait 肖像同步生成）
-[POS]: API 层，暴露摇篮功能给前端；lifeline 从 events.jsonl 读取事件流（会话/互动/主动需求事件已迁至 /conversations）；portrait 端点支持未入摇篮宝宝（从 birth.json 同步生成）
+[OUTPUT]: FastAPI 路由（含 touch-actions、lifeline SSE 日志读取器（含 graph_delta 透传）、interact 代理、heartbeat/stream 重定向、cradle-graph 发育图谱快照端点、portrait 肖像同步生成）；GET /cradle/babies 支持 page/page_size 分页（默认 100/页，page_size 上限 100），返回 babies + page/page_size/total/total_pages/has_more
+[POS]: API 层，暴露摇篮功能给前端；lifeline 从 events.jsonl 读取事件流（会话/互动/主动需求事件已迁至 /conversations）；cradle-graph 新端点 GET /baby/{id}/cradle-graph 由 baby_router 暴露；portrait 端点支持未入摇篮宝宝（从 birth.json 同步生成）
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 """
 
@@ -12,7 +12,7 @@ import json
 import time
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 
@@ -31,7 +31,8 @@ _SSE_HEADERS = {
 _PACE_DELAY = 0.05
 
 from cradle import (
-    admit, admit_stream, load_state, list_cradle_babies,
+    admit, admit_stream, load_state, list_cradle_babies, list_cradle_babies_page,
+    CRADLE_BABIES_PAGE_SIZE_MAX,
     check_world_readiness, simulate_phase, simulate_phase_stream,
     resolve_critical_event, complete_phase, grow_stream, PHASES,
     append_event, load_events,
@@ -50,6 +51,11 @@ _LIFELINE_BLOCKLIST = {
 }
 
 router = APIRouter(prefix="/cradle")
+
+# /baby/{baby_id}/* 规范命名空间的路由（与 /cradle 同层挂载）。
+# 目前只有 cradle-graph 新端点挂在这里；未来 baby 生命周期其他规范化端点
+# （如 /baby/{id}/womb-graph，已由 api/conceive.py 自行挂 /baby 前缀）可一并归位。
+baby_router = APIRouter()
 
 
 # ============================================================
@@ -206,9 +212,33 @@ async def admit_baby_stream(baby_id: str):
 
 
 @router.get("/babies")
-def list_babies():
-    """列出摇篮中所有婴儿。"""
-    return {"babies": list_cradle_babies()}
+def list_babies(page: int = 1, page_size: int = 100):
+    """列出摇篮中婴儿（分页，默认每页 100）。
+
+    参数：
+    - page: 页码，从 1 开始（<1 夹紧到 1）
+    - page_size: 每页条数，上限 CRADLE_BABIES_PAGE_SIZE_MAX=100
+
+    响应：
+    {
+      "babies": [...],
+      "page": int, "page_size": int,
+      "total": int, "total_pages": int,
+      "has_more": bool
+    }
+    """
+    babies, total = list_cradle_babies_page(page=page, page_size=page_size)
+    eff_page_size = max(1, min(CRADLE_BABIES_PAGE_SIZE_MAX, int(page_size)))
+    eff_page = max(1, int(page))
+    total_pages = (total + eff_page_size - 1) // eff_page_size if total > 0 else 0
+    return {
+        "babies": babies,
+        "page": eff_page,
+        "page_size": eff_page_size,
+        "total": total,
+        "total_pages": total_pages,
+        "has_more": eff_page < total_pages,
+    }
 
 
 @router.get("/{baby_id}/status")
@@ -246,9 +276,12 @@ def get_status(baby_id: str):
             "index": phase.index,
             "name": phase.name,
             "display_name": phase.display_name,
-            "age_range": phase.age_range,
+            "age_range": phase.age_range(state.lang),
+            "age_range_zh": phase.age_range_zh,
+            "age_range_en": phase.age_range_en,
             "description": phase.description,
         },
+        "lang": state.lang,
         "age_days": state.age_days,
         "expression_mode": state.expression_mode,
         "capabilities": state.capabilities,
@@ -379,7 +412,7 @@ async def intervene(baby_id: str, req: InterveneRequest):
         save_state(state)
 
         # 持久化介入事件到日志（与 critical_event 配对）
-        append_event(baby_id, {
+        _evt = {
             "event": "intervention",
             "event_name": req.event_name,
             "parent_action": req.parent_action,
@@ -388,7 +421,64 @@ async def intervene(baby_id: str, req: InterveneRequest):
             "emotional_valence": result.get("emotional_valence", ""),
             "phase": state.current_phase,
             "age_days": state.age_days,
-        })
+        }
+
+        # 摇篮图谱：critical 决议 → critical 节点 + RESOLVES + 新 trait（若 reaction 产出）
+        try:
+            from scheduler import graph_hooks
+            from cradle import graph_emit as ge
+            phase_idx = state.current_phase
+            # 用 event_name + phase_idx 作为 critical 节点 seq（幂等）
+            critical_raw = f"critical:{phase_idx}:{req.event_name}"
+            nodes = [ge.node_critical(
+                phase_idx, req.event_name,
+                reason=req.event_name, status="resolved",
+            )]
+            edges = [
+                ge.edge_experiences(critical_raw, phase_idx,
+                                    description=f"{req.event_name} critical"),
+                ge.edge_resolves(
+                    req.caregiver_id, critical_raw, phase_idx,
+                    action=req.parent_action,
+                    description=result.get("reaction", "")[:120],
+                ),
+            ]
+            # 首次 caregiver（若 state.caregivers 有此 id 但之前未 emit）——
+            # node_caregiver 幂等，重复 add 即覆盖
+            cg = (state.caregivers or {}).get(req.caregiver_id)
+            if cg is not None:
+                role = graph_hooks._map_caregiver_role(getattr(cg, "role", ""))
+                nodes.append(ge.node_caregiver(
+                    req.caregiver_id, role,
+                    display_name=getattr(cg, "display_name", None),
+                ))
+            # 命名仪式：edge_named_by
+            if req.event_name == "naming_ceremony" and req.parent_input:
+                edges.append(ge.edge_named_by(
+                    req.caregiver_id, req.parent_input,
+                ))
+            # 新 preference / fear / comfort（节点 + ACQUIRES）
+            for kind, key in (("preference", "new_preference"),
+                              ("fear", "new_fear"),
+                              ("comfort", "new_comfort")):
+                tag = result.get(key)
+                if not tag:
+                    continue
+                if kind == "preference":
+                    nodes.append(ge.node_preference(tag, acquired_at_phase=phase_idx))
+                elif kind == "fear":
+                    nodes.append(ge.node_fear(tag, acquired_at_phase=phase_idx))
+                else:
+                    nodes.append(ge.node_comfort(tag, acquired_at_phase=phase_idx))
+                edges.append(ge.edge_acquires(kind, tag, phase_idx,
+                                              source_event_ref=critical_raw))
+            delta = ge.delta_add(nodes=nodes, edges=edges)
+            graph_hooks.apply_and_attach(baby_id, delta, _evt)
+        except Exception:
+            import logging
+            logging.getLogger(__name__).exception("intervention graph_delta failed")
+
+        append_event(baby_id, _evt)
 
         return result
     except Exception as e:
@@ -455,7 +545,9 @@ def complete(baby_id: str):
                 "index": next_phase.index,
                 "name": next_phase.name,
                 "display_name": next_phase.display_name,
-                "age_range": next_phase.age_range,
+                "age_range": next_phase.age_range(state.lang),
+                "age_range_zh": next_phase.age_range_zh,
+                "age_range_en": next_phase.age_range_en,
             } if next_phase else None,
             "total_phases": len(PHASES),
         }
@@ -535,12 +627,17 @@ async def lifeline(baby_id: str, after_seq: int = 0):
     Phase 1 (回放): 读 events.jsonl 中 seq > after_seq 的事件，50ms/条
     Phase 2 (实时): await notify → 读最新事件 → 即时推送
     每 2s 无事件 → sim_tick (时钟心跳)
+
+    **baby 不存在时返回 204 而非 404**：WHATWG HTML 规范规定 EventSource 收到
+    204 必须永久 fail connection 并停止重连；返回 404 浏览器会按 retry interval
+    无限重试。陈旧 tab / 缓存 JS / localStorage 残留的已删 baby_id 都靠这条
+    末端防御兜底——无论前端如何，浏览器到 204 就会安静下来。
     """
     from cradle.state import load_events_after, get_notify
 
     state = load_state(baby_id)
     if state is None:
-        raise HTTPException(404, f"Baby '{baby_id}' not found in cradle")
+        return Response(status_code=204)
 
     # 自动注册：如果婴儿已 admitted 但调度器未启动，补注册
     from scheduler import scheduler
@@ -635,10 +732,19 @@ def get_events(baby_id: str):
 
 @router.get("/{baby_id}/graph")
 def get_cradle_graph(baby_id: str):
-    """摇篮生命图谱（力导向格式）。
+    """[DEPRECATED] 摇篮生命图谱旧端点。
 
-    [STUB] lifegraph 引擎已删除待重构。端点保留以兼容前端；返回空图谱。
+    v3-business-as-graph 上线后推荐改用 GET /baby/{id}/cradle-graph。
+    本端点向后兼容，行为：
+      - 有 v3 cradle_graph.json 落库 → 返回该快照（含 nodes/edges）
+      - 否则 → 返回空 stub（便于老前端静默过渡）
     """
+    from api import registry
+
+    snap = registry.load_cradle_graph(baby_id)
+    if snap is not None:
+        return snap
+
     return {
         "id": baby_id,
         "schema_version": "1.0",
@@ -647,6 +753,52 @@ def get_cradle_graph(baby_id: str):
         "nodes": [],
         "links": [],
     }
+
+
+@baby_router.get("/baby/{baby_id}/cradle-graph")
+def get_cradle_graph_v3(baby_id: str):
+    """获取摇篮成长图谱快照（v3-business-as-graph schema）。
+
+    查找顺序：
+      1. 进程内累积状态（baby 正在 active session 中且已 emit 过 delta）
+      2. archive/{id}/cradle_graph.json（已落库的终局或阶段快照）
+      3. 都没有 → 404
+
+    返回 body：
+      {baby_id, species, sex, schema, status, saved_at, phases_completed,
+       center_anchor, role, nodes[], edges[], stats}
+    """
+    from api import registry
+    from cradle import graph_session
+
+    # Live 状态优先——正在跑的 session 最新
+    live = graph_session.get_state(baby_id)
+    if live.get("nodes") or live.get("edges"):
+        state = load_state(baby_id)
+        species = getattr(state.identity, "species", "human") if state and getattr(state, "identity", None) else "human"
+        # BabyState 没有顶级 sex，真值在 state.phenotype["sex"]（cradle/__init__.py:139）
+        sex = "unknown"
+        if state is not None:
+            phenotype = getattr(state, "phenotype", None)
+            if isinstance(phenotype, dict) and phenotype.get("sex"):
+                sex = phenotype["sex"]
+        phases_completed = getattr(state, "current_phase", 0) if state else 0
+        status = "alive"
+        # 进入世界后 state.current_phase 可能仍为 11，但 graph_session 已落库后续 session 不再 live
+        if state and bool(getattr(state, "world_ready", False)):
+            status = "world_ready"
+        return graph_session.snapshot_for_endpoint(
+            baby_id,
+            species=species, sex=sex, status=status,
+            phases_completed=phases_completed,
+        )
+
+    # Fallback: 已落库的快照
+    snap = registry.load_cradle_graph(baby_id)
+    if snap is not None:
+        return snap
+
+    raise HTTPException(404, f"Cradle graph not found for baby '{baby_id}'")
 
 
 @router.get("/{baby_id}/readiness")

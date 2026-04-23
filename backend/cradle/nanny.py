@@ -670,7 +670,7 @@ def simulate_phase_stream(state: BabyState):
                 phase_index=phase_index,
                 phase_name=phase.name,
                 phase_display=phase.display_name,
-                age_range=phase.age_range,
+                age_range=phase.age_range(state.lang),
             ),
         }
         return
@@ -679,7 +679,7 @@ def simulate_phase_stream(state: BabyState):
         phase_index=phase_index,
         phase_name=phase.name,
         phase_display=phase.display_name,
-        age_range=phase.age_range,
+        age_range=phase.age_range(state.lang),
     )
 
     # 阶段开始
@@ -691,7 +691,9 @@ def simulate_phase_stream(state: BabyState):
         "phase_index": phase.index,
         "phase_name": phase.name,
         "phase_display": phase.display_name,
-        "age_range": phase.age_range,
+        "age_range": phase.age_range(state.lang),
+        "age_range_zh": phase.age_range_zh,
+        "age_range_en": phase.age_range_en,
         "description": phase.description,
         "expression_mode": phase.expression_mode,
     }

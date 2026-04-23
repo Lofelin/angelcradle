@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils'
  */
 const ConsolePanel = forwardRef(({ header, headerRight, children, footer, className, headerHeight = 32 }, ref) => (
   <div className={cn(
-    "flex flex-col bg-[#1C1C1C] rounded-xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.3),0_0_0_0.5px_rgba(255,255,255,0.08)_inset]",
+    "flex flex-col bg-[#1C1C1C] overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.3),0_0_0_0.5px_rgba(255,255,255,0.08)_inset]",
     className,
   )}>
     {/* 顶栏 */}

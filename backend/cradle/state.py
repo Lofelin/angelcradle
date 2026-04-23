@@ -428,6 +428,7 @@ class BabyState:
     baby_id: str = ""
     species: str = "human"
     name: str = ""                      # 由父母命名，初始为空
+    lang: str = "en"                    # 运行时语言 "zh" | "en"，创建后锁定，下游 LLM 生成按此切换
 
     # 出生地（从 Baby 数据复制，用于文化相关行为如命名）
     birthplace: dict = field(default_factory=dict)  # {name, code, region, ...}
@@ -517,6 +518,7 @@ class BabyState:
             "baby_id": self.baby_id,
             "species": self.species,
             "name": self.name,
+            "lang": self.lang,
             "identity": self.identity.to_dict(),
             "current_phase": self.current_phase,
             "age_days": self.age_days,
@@ -574,11 +576,20 @@ class BabyState:
                 interaction_count=pp.get("interaction_count", 0),
                 intervention_log=pp.get("intervention_log", []),
             )
+        # 兜底：老 archive 既无 caregivers 又无 parent_profile（admit 初始化缺陷
+        # 2026-04-23 前残留），补一个默认 primary_parent，让图谱 emit 路径不崩。
+        if not caregivers:
+            caregivers["primary_parent"] = CaregiverProfile()
+
+        attachment_per_caregiver = dict(d.get("attachment_per_caregiver", {}))
+        for cid in caregivers:
+            attachment_per_caregiver.setdefault(cid, "forming")
 
         return cls(
             baby_id=d.get("baby_id", ""),
             species=d.get("species", "human"),
             name=d.get("name", ""),
+            lang=d.get("lang", "en"),
             identity=Identity.from_dict(d.get("identity", {})),
             current_phase=d.get("current_phase", 0),
             age_days=d.get("age_days", 0),
@@ -591,7 +602,7 @@ class BabyState:
             memories=[Memory.from_dict(m) for m in d.get("memories", [])],
             milestones=[Milestone.from_dict(m) for m in d.get("milestones", [])],
             caregivers=caregivers,
-            attachment_per_caregiver=d.get("attachment_per_caregiver", {}),
+            attachment_per_caregiver=attachment_per_caregiver,
             stress=StressState.from_dict(d.get("stress", {})),
             nutrition_sleep=NutritionSleepState.from_dict(d.get("nutrition_sleep", {})),
             emotional=EmotionalState.from_dict(d.get("emotional", {})),
@@ -800,8 +811,33 @@ def load_events_after(baby_id: str, after_seq: int) -> list[dict]:
     return events
 
 
+def _summarize_baby_state(data: dict) -> dict:
+    """从 state.json 原文中抽取摇篮卡片需要的摘要字段。"""
+    ph = data.get("physical", {})
+    stress = data.get("stress", {})
+    return {
+        "baby_id": data["baby_id"],
+        "name": data.get("name", ""),
+        "species": data["species"],
+        "current_phase": data["current_phase"],
+        "age_days": data["age_days"],
+        "expression_mode": data["expression_mode"],
+        "milestones_count": len(data.get("milestones", [])),
+        "memories_count": len(data.get("memories", [])),
+        "height_cm": ph.get("height_cm", 50.0),
+        "weight_kg": ph.get("weight_kg", 3.3),
+        "stress_level": stress.get("stress_level", 0.0),
+        "caregivers_count": len(data.get("caregivers", {})),
+        "sim_time": data.get("sim_time", 0.0),
+        "last_active_ts": data.get("last_active_ts", 0.0),
+        "time_scale": data.get("time_scale", "normal"),
+        # 世界地图消费：出生地含国家 + 经纬度
+        "birthplace": data.get("birthplace", {}),
+    }
+
+
 def list_cradle_babies() -> list[dict]:
-    """列出摇篮中所有婴儿的摘要。"""
+    """列出摇篮中所有婴儿的摘要（全量，仅启动自检消费）。"""
     if not ARCHIVE_DIR.is_dir():
         return []
     babies = []
@@ -809,23 +845,42 @@ def list_cradle_babies() -> list[dict]:
         state_path = d / "state.json"
         if state_path.is_file():
             data = json.loads(state_path.read_text(encoding="utf-8"))
-            ph = data.get("physical", {})
-            stress = data.get("stress", {})
-            babies.append({
-                "baby_id": data["baby_id"],
-                "name": data.get("name", ""),
-                "species": data["species"],
-                "current_phase": data["current_phase"],
-                "age_days": data["age_days"],
-                "expression_mode": data["expression_mode"],
-                "milestones_count": len(data.get("milestones", [])),
-                "memories_count": len(data.get("memories", [])),
-                "height_cm": ph.get("height_cm", 50.0),
-                "weight_kg": ph.get("weight_kg", 3.3),
-                "stress_level": stress.get("stress_level", 0.0),
-                "caregivers_count": len(data.get("caregivers", {})),
-                "sim_time": data.get("sim_time", 0.0),
-                "last_active_ts": data.get("last_active_ts", 0.0),
-                "time_scale": data.get("time_scale", "normal"),
-            })
+            babies.append(_summarize_baby_state(data))
     return babies
+
+
+# 分页端点（/cradle/babies）的页大小硬上限——防止客户端传大数造成 O(N) 全量解析。
+CRADLE_BABIES_PAGE_SIZE_MAX = 100
+
+
+def list_cradle_babies_page(page: int = 1, page_size: int = 100) -> tuple[list[dict], int]:
+    """分页列出摇篮中婴儿的摘要。
+
+    返回 (page_babies, total)。按 archive 目录名字典序排序。
+    仅解析落在当前页窗口内的 state.json，total 用目录 stat 统计，避免
+    O(N) 的 JSON 解析开销（N 可达数千）。
+
+    page 从 1 起；page < 1 夹紧到 1。page_size 夹紧到 [1, CRADLE_BABIES_PAGE_SIZE_MAX]。
+    超出最后一页返回空 babies，total 仍为实际总数。
+    """
+    page = max(1, int(page))
+    page_size = max(1, min(CRADLE_BABIES_PAGE_SIZE_MAX, int(page_size)))
+
+    if not ARCHIVE_DIR.is_dir():
+        return [], 0
+
+    baby_dirs = [
+        d for d in sorted(ARCHIVE_DIR.iterdir())
+        if (d / "state.json").is_file()
+    ]
+    total = len(baby_dirs)
+
+    start = (page - 1) * page_size
+    end = start + page_size
+    window = baby_dirs[start:end]
+
+    babies = []
+    for d in window:
+        data = json.loads((d / "state.json").read_text(encoding="utf-8"))
+        babies.append(_summarize_baby_state(data))
+    return babies, total

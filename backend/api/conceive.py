@@ -18,6 +18,7 @@ from womb.nutrients import get_overall_nutrient_risk_effects
 from womb.teratogen import get_overall_teratogen_risk
 from womb.heredity import ParentGenome, random_genome, crossover, genotype_to_phenotype
 from womb.epigenetics import generate_methylation_profile, apply_epigenetic_modification
+from womb import graph_story
 from womb.birthplace import resolve_birthplace, get_race_weights
 from . import registry
 from . import conception_sessions
@@ -32,18 +33,351 @@ def _validate_species(species: str):
 
 
 @router.post("/conceive")
-def do_conceive(species: str, model: Optional[str] = None, birthplace: Optional[str] = None):
+def do_conceive(
+    species: str,
+    model: Optional[str] = None,
+    birthplace: Optional[str] = None,
+    lang: Optional[str] = None,
+):
     """Conceive — synchronous. Returns ConceptionResult."""
     _validate_species(species)
+    if lang is not None and lang not in ("zh", "en"):
+        raise HTTPException(422, f"Invalid lang '{lang}', must be 'zh' or 'en'")
 
     try:
-        result = conceive(species=species, model=model, birthplace=birthplace)
+        result = conceive(species=species, model=model, birthplace=birthplace, lang=lang or "en")
         # Save each baby
         for baby in result.babies:
             registry.save(baby.to_dict(include_log=True))
         return result.to_dict()
     except Exception as e:
         raise HTTPException(500, f"Conception failed: {e}")
+
+
+def _batch_worker_init():
+    """进程池 worker 初始化：锁定 turbo 时间档（零 LLM 路径）。"""
+    import config as _cfg
+    _cfg.set_time_scale("turbo")
+
+
+def _batch_conceive_one(args: tuple) -> dict:
+    """Top-level worker function（picklable for ProcessPoolExecutor）。
+
+    args = (species, birthplace, lang, nutrition, stress, toxin, age)
+    返回简化的 dict（baby 信息 + 状态），避免 pickle 大对象。
+    落库也在 worker 内完成，主进程只汇总。
+    """
+    species, birthplace, lang, nutrition, stress, toxin, age = args
+    from womb import conceive as _conceive
+    from . import registry as _registry
+    try:
+        r = _conceive(
+            species=species, birthplace=birthplace, lang=lang,
+            nutrition=nutrition, stress=stress,
+            toxin_exposure=toxin, maternal_age_factor=age,
+        )
+        saved = []
+        for baby in r.babies:
+            _registry.save(baby.to_dict(include_log=True))
+            saved.append({
+                "id": baby.id, "species": baby.species, "sex": baby.sex,
+                "alive": baby.alive, "first_cry": baby.first_cry[:120],
+                "birthplace": baby.birthplace,
+            })
+        return {
+            "ok": True,
+            "miscarriage": r.miscarriage,
+            "babies": saved,
+        }
+    except Exception as e:
+        return {"ok": False, "error": f"{type(e).__name__}: {e}"}
+
+
+@router.post("/conceive/batch")
+def do_conceive_batch(
+    species: str,
+    count: int,
+    concurrency: int = 8,
+    mode: str = "thread",
+    birthplace: Optional[str] = None,
+    lang: Optional[str] = None,
+    # 母体环境参数（与单个孕育的 /conceive/stream 对齐）
+    nutrition: Optional[str] = None,
+    stress: Optional[str] = None,
+    toxin_exposure: Optional[str] = None,
+    maternal_age_factor: Optional[str] = None,
+):
+    """批量孕育端点。
+
+    turbo 模式下每 baby 零 LLM（纯模板库），适合大规模数据生成。
+    - count: 目标 baby 数（1-10000）
+    - concurrency: 并发数（1-32），建议 4-8
+    - mode:
+        - "thread"（默认）：ThreadPoolExecutor，启动快、GIL 饱和约 7 baby/s。
+          小批量（< 500）首选。
+        - "process"：ProcessPoolExecutor + forkserver。绕过 GIL。
+          macOS 甜点 concurrency=8 约 9-10 baby/s；Linux 原生 fork 可达 30+ baby/s。
+          大批量（> 1000）且部署在 Linux 时推荐。
+
+    返回每只 baby 的 id + 存活状态，full data 走 GET /baby/{id}。
+    """
+    _validate_species(species)
+    if count < 1 or count > 10000:
+        raise HTTPException(422, f"count must be in [1, 10000], got {count}")
+    if concurrency < 1 or concurrency > 32:
+        raise HTTPException(422, f"concurrency must be in [1, 32], got {concurrency}")
+    if mode not in ("thread", "process"):
+        raise HTTPException(422, f"mode must be 'thread' or 'process', got '{mode}'")
+    if lang is not None and lang not in ("zh", "en"):
+        raise HTTPException(422, f"Invalid lang '{lang}', must be 'zh' or 'en'")
+
+    import time as _time
+    t0 = _time.time()
+    results = {
+        "total": count, "mode": mode, "concurrency": concurrency,
+        "conceived": 0, "babies": [], "miscarriages": 0, "failed": 0,
+    }
+
+    effective_lang = lang or "en"
+    args_list = [
+        (species, birthplace, effective_lang,
+         nutrition, stress, toxin_exposure, maternal_age_factor)
+        for _ in range(count)
+    ]
+
+    if mode == "process":
+        # 进程池：绕过 GIL。forkserver 让 worker 从洁净中间进程 fork，既跳过 spawn 的
+        # 每 worker ~2s 重复 import 开销，又避免父进程中 openai/httpx 后台线程在
+        # fork 时的死锁崩溃问题。fallback 顺序：forkserver → spawn。
+        import multiprocessing as _mp
+        from concurrent.futures import ProcessPoolExecutor, as_completed
+        try:
+            ctx = _mp.get_context("forkserver")
+        except (ValueError, RuntimeError):
+            ctx = None
+        with ProcessPoolExecutor(
+            max_workers=concurrency, initializer=_batch_worker_init,
+            mp_context=ctx,
+        ) as ex:
+            futures = [ex.submit(_batch_conceive_one, a) for a in args_list]
+            for fut in as_completed(futures):
+                r = fut.result()
+                if not r["ok"]:
+                    results["failed"] += 1
+                    continue
+                if r["miscarriage"]:
+                    results["miscarriages"] += 1
+                    continue
+                for b in r["babies"]:
+                    results["babies"].append(b)
+                    results["conceived"] += 1
+    else:
+        # 线程池：启动快，适合小批量或 I/O bound
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        def _one():
+            try:
+                r = conceive(
+                    species=species, birthplace=birthplace, lang=effective_lang,
+                    nutrition=nutrition, stress=stress,
+                    toxin_exposure=toxin_exposure, maternal_age_factor=maternal_age_factor,
+                )
+                for baby in r.babies:
+                    registry.save(baby.to_dict(include_log=True))
+                return r
+            except Exception as e:
+                return e
+
+        with ThreadPoolExecutor(max_workers=concurrency) as ex:
+            futures = [ex.submit(_one) for _ in range(count)]
+            for fut in as_completed(futures):
+                r = fut.result()
+                if isinstance(r, Exception):
+                    results["failed"] += 1
+                    continue
+                if r.miscarriage:
+                    results["miscarriages"] += 1
+                    continue
+                for baby in r.babies:
+                    results["babies"].append({
+                        "id": baby.id, "species": baby.species, "sex": baby.sex,
+                        "alive": baby.alive, "first_cry": baby.first_cry[:120],
+                        "birthplace": baby.birthplace,
+                    })
+                    results["conceived"] += 1
+
+    results["elapsed_sec"] = round(_time.time() - t0, 2)
+    results["throughput_per_sec"] = round(results["conceived"] / max(results["elapsed_sec"], 0.01), 2)
+    return results
+
+
+@router.get("/conceive/batch/stream")
+async def do_conceive_batch_stream(
+    species: str,
+    count: int,
+    concurrency: int = 8,
+    mode: str = "thread",
+    birthplace: Optional[str] = None,
+    lang: Optional[str] = None,
+    nutrition: Optional[str] = None,
+    stress: Optional[str] = None,
+    toxin_exposure: Optional[str] = None,
+    maternal_age_factor: Optional[str] = None,
+):
+    """批量孕育 SSE 实时进度流。
+
+    每只 baby 完成即推 `baby` 事件；定期推 `progress` 汇总；全部完成推 `complete`。
+    参数与 POST /conceive/batch 对齐。GET 方法是为了符合 EventSource 规范。
+    """
+    _validate_species(species)
+    if count < 1 or count > 10000:
+        raise HTTPException(422, f"count must be in [1, 10000], got {count}")
+    if concurrency < 1 or concurrency > 32:
+        raise HTTPException(422, f"concurrency must be in [1, 32], got {concurrency}")
+    if mode not in ("thread", "process"):
+        raise HTTPException(422, f"mode must be 'thread' or 'process', got '{mode}'")
+    if lang is not None and lang not in ("zh", "en"):
+        raise HTTPException(422, f"Invalid lang '{lang}', must be 'zh' or 'en'")
+
+    effective_lang = lang or "en"
+    env_args = (nutrition, stress, toxin_exposure, maternal_age_factor)
+
+    async def _generator():
+        import time as _time
+        t0 = _time.time()
+        yield _sse({
+            "event": "start", "total": count,
+            "concurrency": concurrency, "mode": mode,
+        })
+
+        done = 0
+        conceived = 0
+        miscarriages = 0
+        failed = 0
+        loop = asyncio.get_event_loop()
+        # 用 asyncio.Queue 让 worker 把每条结果推过来，主协程 async 消费
+        queue: asyncio.Queue = asyncio.Queue()
+
+        def _produce():
+            """跑批：每完成一只往 queue 塞一条，结束塞 None。"""
+            from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
+            args_list = [
+                (species, birthplace, effective_lang, *env_args)
+                for _ in range(count)
+            ]
+
+            if mode == "process":
+                import multiprocessing as _mp
+                try:
+                    ctx = _mp.get_context("forkserver")
+                except (ValueError, RuntimeError):
+                    ctx = None
+                Pool = lambda: ProcessPoolExecutor(
+                    max_workers=concurrency, initializer=_batch_worker_init,
+                    mp_context=ctx,
+                )
+                with Pool() as ex:
+                    futures = [ex.submit(_batch_conceive_one, a) for a in args_list]
+                    for fut in as_completed(futures):
+                        try:
+                            r = fut.result()
+                        except Exception as e:
+                            r = {"ok": False, "error": str(e)}
+                        loop.call_soon_threadsafe(queue.put_nowait, r)
+            else:
+                def _one():
+                    try:
+                        r = conceive(
+                            species=species, birthplace=birthplace, lang=effective_lang,
+                            nutrition=nutrition, stress=stress,
+                            toxin_exposure=toxin_exposure, maternal_age_factor=maternal_age_factor,
+                        )
+                        saved = []
+                        for baby in r.babies:
+                            registry.save(baby.to_dict(include_log=True))
+                            saved.append({
+                                "id": baby.id, "species": baby.species, "sex": baby.sex,
+                                "alive": baby.alive, "first_cry": baby.first_cry[:120],
+                                "birthplace": baby.birthplace,
+                            })
+                        return {"ok": True, "miscarriage": r.miscarriage, "babies": saved}
+                    except Exception as e:
+                        return {"ok": False, "error": f"{type(e).__name__}: {e}"}
+
+                with ThreadPoolExecutor(max_workers=concurrency) as ex:
+                    futures = [ex.submit(_one) for _ in range(count)]
+                    for fut in as_completed(futures):
+                        try:
+                            r = fut.result()
+                        except Exception as e:
+                            r = {"ok": False, "error": str(e)}
+                        loop.call_soon_threadsafe(queue.put_nowait, r)
+
+            loop.call_soon_threadsafe(queue.put_nowait, None)  # sentinel
+
+        # 后台线程跑生产者（绕开 GIL：_produce 自己内部用 ProcessPool/ThreadPool）
+        producer = asyncio.create_task(asyncio.to_thread(_produce))
+
+        last_progress_ts = t0
+        while True:
+            try:
+                item = await asyncio.wait_for(queue.get(), timeout=2.0)
+            except asyncio.TimeoutError:
+                # 心跳：让前端知道连接还活着
+                yield _sse({
+                    "event": "progress", "done": done, "total": count,
+                    "conceived": conceived, "miscarriages": miscarriages,
+                    "failed": failed, "elapsed_sec": round(_time.time() - t0, 2),
+                })
+                last_progress_ts = _time.time()
+                continue
+
+            if item is None:
+                break  # sentinel: 所有 worker 完成
+
+            done += 1
+            if not item.get("ok"):
+                failed += 1
+                yield _sse({
+                    "event": "baby_failed",
+                    "error": item.get("error", "unknown"), "done": done, "total": count,
+                })
+            elif item.get("miscarriage"):
+                miscarriages += 1
+                yield _sse({
+                    "event": "miscarriage", "done": done, "total": count,
+                })
+            else:
+                for b in item.get("babies", []):
+                    conceived += 1
+                    yield _sse({
+                        "event": "baby", "done": done, "total": count,
+                        "baby": b,
+                    })
+
+            # 按节流推 progress（每 0.5s 或每 10 只）
+            now = _time.time()
+            if (now - last_progress_ts) > 0.5 or done % 10 == 0:
+                yield _sse({
+                    "event": "progress", "done": done, "total": count,
+                    "conceived": conceived, "miscarriages": miscarriages,
+                    "failed": failed, "elapsed_sec": round(now - t0, 2),
+                })
+                last_progress_ts = now
+
+        await producer  # 确保后台线程清理完
+        elapsed = round(_time.time() - t0, 2)
+        yield _sse({
+            "event": "complete",
+            "total": count, "done": done,
+            "conceived": conceived, "miscarriages": miscarriages, "failed": failed,
+            "elapsed_sec": elapsed,
+            "throughput_per_sec": round(conceived / max(elapsed, 0.01), 2),
+        })
+
+    return StreamingResponse(
+        _generator(), media_type="text/event-stream", headers=_SSE_HEADERS,
+    )
 
 
 @router.get("/conceive/sessions/{session_id}")
@@ -78,6 +412,8 @@ async def do_conceive_stream(
     mother_genome: Optional[str] = None,
     # 出生地（ISO code 或国家名）
     birthplace: Optional[str] = None,
+    # 运行时语言：baby 出生即锁定，下游 LLM 生成按此切换 ("zh" | "en")
+    lang: Optional[str] = None,
 ):
     """
     孕育 SSE 流。
@@ -92,6 +428,10 @@ async def do_conceive_stream(
         if not species:
             raise HTTPException(400, "species is required for a new conception session")
         _validate_species(species)
+
+        # 非法 lang 值拒绝：422（Literal 语义手工实现，保持 GET query 风格）
+        if lang is not None and lang not in ("zh", "en"):
+            raise HTTPException(422, f"Invalid lang '{lang}', must be 'zh' or 'en'")
 
         provider = os.environ.get("LLM_PROVIDER", "deepseek")
         params = {
@@ -112,6 +452,7 @@ async def do_conceive_stream(
             "father_genome": father_genome,
             "mother_genome": mother_genome,
             "birthplace": birthplace,
+            "lang": lang or "en",
         }
         session = conception_sessions.create(params)
         session.task = asyncio.create_task(asyncio.to_thread(_run_session_in_thread, session, provider))
@@ -165,10 +506,11 @@ def _run_conception(params: dict, provider: str):
     father_genome = params.get("father_genome")
     mother_genome = params.get("mother_genome")
     birthplace = params.get("birthplace")
+    lang = params.get("lang", "en")
 
     # 0. Birthplace
     bp = resolve_birthplace(species, birthplace)
-    bp_summary = {"name": bp["name"], "code": bp["code"], "coordinates": bp["coordinates"]} if bp else None
+    bp_summary = {"name": bp["name"], "code": bp["code"], "city": bp.get("city"), "coordinates": bp["coordinates"]} if bp else None
     race_wts = get_race_weights(bp)
     yield {
         "event": "birthplace",
@@ -271,6 +613,78 @@ def _run_conception(params: dict, provider: str):
         }
         yield fate_event
 
+        # 后端图谱累积状态：用于 birth 时落库到 archive/{baby_id}/womb_graph.json
+        _graph_state = {"nodes": {}, "edges": {}}
+
+        def _apply_delta(delta: dict):
+            """把 delta 合并到后端累积的图状态（add/update/remove 幂等）"""
+            if not delta:
+                return
+            for n in delta.get("add_nodes", []) or []:
+                if n and n.get("id"):
+                    _graph_state["nodes"][n["id"]] = n
+            for e in delta.get("add_edges", []) or []:
+                if e and e.get("uuid"):
+                    _graph_state["edges"][e["uuid"]] = e
+            for patch in delta.get("update_nodes", []) or []:
+                nid = patch.get("id")
+                cur = _graph_state["nodes"].get(nid)
+                if not cur:
+                    continue
+                nm = dict(cur.get("metadata") or {})
+                for k, v in (patch.get("metadata") or {}).items():
+                    if k == "track_append" and isinstance(v, dict):
+                        tr = list(nm.get("track") or [])
+                        tr.append(v)
+                        nm["track"] = tr
+                    else:
+                        nm[k] = v
+                merged = dict(cur)
+                merged.update(patch)
+                merged["metadata"] = nm
+                _graph_state["nodes"][nid] = merged
+            for patch in delta.get("update_edges", []) or []:
+                uid = patch.get("uuid")
+                cur = _graph_state["edges"].get(uid)
+                if cur:
+                    cur = dict(cur)
+                    cur.update(patch)
+                    _graph_state["edges"][uid] = cur
+            for nid in delta.get("remove_nodes", []) or []:
+                _graph_state["nodes"].pop(nid, None)
+                # 级联删相邻边
+                for u in list(_graph_state["edges"].keys()):
+                    e = _graph_state["edges"][u]
+                    if e.get("source") == nid or e.get("target") == nid:
+                        _graph_state["edges"].pop(u, None)
+            for u in delta.get("remove_edges", []) or []:
+                _graph_state["edges"].pop(u, None)
+
+        # 图谱初始化 delta（身份层 + 预播放全部 continuant 节点）
+        try:
+            bp_dict = env.get("birthplace") or {}
+            init_delta = graph_story.build_init_delta(
+                baby_id=baby_id, species=species, sex=baby_sex,
+                birthplace_code=bp_dict.get("code") if isinstance(bp_dict, dict) else None,
+                birthplace_name=bp_dict.get("name") if isinstance(bp_dict, dict) else None,
+                birthplace_meta=bp_dict if isinstance(bp_dict, dict) else None,
+                father_genome={"side": "father"},
+                mother_genome={"side": "mother"},
+                methylation_meta={"kind": "epigenetics"},
+            )
+            _apply_delta(init_delta)
+            yield {
+                "event": "graph_delta", "index": idx, "baby_id": baby_id,
+                "phase": "init", "graph_delta": init_delta,
+            }
+        except Exception as gerr:
+            import traceback as _tb
+            print(f"[graph_delta init] build failed: {gerr}\n{_tb.format_exc()}")
+            yield {
+                "event": "graph_delta", "index": idx, "baby_id": baby_id,
+                "phase": "init", "graph_delta": {}, "error": str(gerr),
+            }
+
         # Seven-stage development
         gestation_log = []
         development_failed = False
@@ -324,9 +738,28 @@ def _run_conception(params: dict, provider: str):
                     alive=not is_stillborn,
                     parent_genomes=parent_genomes_snapshot,
                     birthplace=bp_summary or {},
+                    lang=lang,
                 )
                 registry.save(baby.to_dict(include_log=True))
                 babies.append(baby)
+
+                # 图谱落库：archive/{baby_id}/womb_graph.json
+                try:
+                    registry.save_womb_graph(baby_id, {
+                        "baby_id": baby_id,
+                        "species": species,
+                        "sex": baby_sex,
+                        "born_at": baby.born_at,
+                        "nodes": list(_graph_state["nodes"].values()),
+                        "edges": list(_graph_state["edges"].values()),
+                        "stats": {
+                            "node_count": len(_graph_state["nodes"]),
+                            "edge_count": len(_graph_state["edges"]),
+                        },
+                    })
+                except Exception as serr:
+                    import traceback as _tb2
+                    print(f"[womb_graph save] failed for {baby_id}: {serr}\n{_tb2.format_exc()}")
 
                 born_event = {
                     "event": "born",
@@ -336,9 +769,28 @@ def _run_conception(params: dict, provider: str):
                 }
                 yield born_event
             else:
+                # 透传 stage 事件; 同时把 graph_delta 应用到后端累积状态
+                if event.get("status") == "graph_delta" and event.get("graph_delta"):
+                    _apply_delta(event["graph_delta"])
                 yield {"event": "stage", "index": idx, "baby_id": baby_id, **event}
 
         if development_failed:
+            # 流产/发育失败也落库图谱快照，便于前端事后查看"失败的生命树"
+            try:
+                registry.save_womb_graph(baby_id, {
+                    "baby_id": baby_id,
+                    "species": species,
+                    "sex": baby_sex,
+                    "status": "failed",
+                    "nodes": list(_graph_state["nodes"].values()),
+                    "edges": list(_graph_state["edges"].values()),
+                    "stats": {
+                        "node_count": len(_graph_state["nodes"]),
+                        "edge_count": len(_graph_state["edges"]),
+                    },
+                })
+            except Exception:
+                pass
             yield {"event": "offspring_lost", "index": idx, "cause": "development_failure"}
 
     yield {
@@ -451,8 +903,33 @@ def get_blueprint(species: str):
 
 
 @router.get("/babies")
-def list_babies():
-    return {"babies": registry.list_all()}
+def list_babies(page: int = 1, page_size: int = 100):
+    """列出已出生婴儿（分页，默认每页 100）。
+
+    参数：
+    - page: 页码，从 1 开始（<1 夹紧到 1）
+    - page_size: 每页条数，上限 BIRTH_BABIES_PAGE_SIZE_MAX=100
+
+    响应：
+    {
+      "babies": [...],
+      "page": int, "page_size": int,
+      "total": int, "total_pages": int,
+      "has_more": bool
+    }
+    """
+    babies, total = registry.list_all_page(page=page, page_size=page_size)
+    eff_page_size = max(1, min(registry.BIRTH_BABIES_PAGE_SIZE_MAX, int(page_size)))
+    eff_page = max(1, int(page))
+    total_pages = (total + eff_page_size - 1) // eff_page_size if total > 0 else 0
+    return {
+        "babies": babies,
+        "page": eff_page,
+        "page_size": eff_page_size,
+        "total": total,
+        "total_pages": total_pages,
+        "has_more": eff_page < total_pages,
+    }
 
 
 @router.get("/baby/{baby_id}")
@@ -485,3 +962,16 @@ def get_causal_graph(baby_id: str):
         "nodes": [],
         "links": [],
     }
+
+
+@router.get("/baby/{baby_id}/womb-graph")
+def get_womb_graph(baby_id: str):
+    """获取婴儿的孕育图谱快照（实时 SSE 流的最终落库产物）。
+
+    返回 {baby_id, species, sex, born_at, nodes, edges, stats}。
+    前端可直接把 nodes/edges 传给 LifeGraph 组件渲染。
+    """
+    data = registry.load_womb_graph(baby_id)
+    if not data:
+        raise HTTPException(404, f"Womb graph not found for baby '{baby_id}'")
+    return data

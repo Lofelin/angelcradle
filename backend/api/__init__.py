@@ -27,7 +27,7 @@ from .conceive import router as conceive_router
 from .species import router as species_router
 from .health import router as health_router
 from .translate import router as translate_router
-from .cradle import router as cradle_router
+from .cradle import router as cradle_router, baby_router as cradle_baby_router
 from .conversations import router as conversations_router
 from .system import router as system_router
 
@@ -99,6 +99,7 @@ def create_app() -> FastAPI:
     app.include_router(conceive_router)
     app.include_router(translate_router)
     app.include_router(cradle_router)
+    app.include_router(cradle_baby_router)
     app.include_router(conversations_router)
     app.include_router(system_router)
     return app

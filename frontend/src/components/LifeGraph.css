@@ -1,4 +1,4 @@
-/* LifeGraph — 完整复刻 MiroFish/GraphPanel.vue 的视觉。lg- 前缀避免全局污染 */
+/* LifeGraph — 力导向图谱视觉样式。lg- 前缀避免全局污染 */
 
 .lg-panel {
   position: relative;
@@ -420,4 +420,21 @@
 .lg-loop-item-content {
   padding: 12px;
   border-top: 1px solid #EAEAEA;
+}
+
+.lg-labels-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.lg-label-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid #D0D0D0;
+  border-radius: 999px;
+  font-size: 11px;
+  color: #555;
+  background: #F5F5F5;
 }

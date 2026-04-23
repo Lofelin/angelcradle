@@ -1,6 +1,6 @@
 /**
  * [INPUT]: nodes (Map<id,node> | array), edges (array), fullscreen, onToggleFullscreen
- * [OUTPUT]: 力导向关系图（D3 SVG）—— 视觉沿用 MiroFish/GraphPanel.vue
+ * [OUTPUT]: 力导向关系图（D3 SVG）
  * [POS]: 三页面（子宫/摇篮/世界）共用
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  *
@@ -10,7 +10,7 @@
  *   边：  #C0C0C0 1.5px，高亮 #3498db 3px，自环圆弧，多边均匀曲率
  *   力：  charge -400, link 150+(cnt-1)*50, collide 50, center
  *
- * 2026-04-20 流式重构（脱离 MiroFish 一次性渲染模式）：
+ * 2026-04-20 流式重构（SSE 增量渲染，取代一次性全量重建）：
  *   · mount 只建一次 svg/simulation，拒绝 svg.selectAll('*').remove() 循环重建
  *   · 数据更新走 D3 join（enter/update/exit），新节点预置中心附近位置
  *   · 长持有 simNode 对象，x/y/vx/vy/fx/fy 跨批次保留，避免冷启动抖动
@@ -30,7 +30,7 @@ import * as d3 from 'd3'
 import { Maximize2, Minimize2 } from 'lucide-react'
 import './LifeGraph.css'
 
-// ── MiroFish 调色板 ─────────────────────────────────────
+// ── 节点配色板 ──────────────────────────────────────────
 const PALETTE = [
   '#FF6B35', '#004E89', '#7B2D8E', '#1A936F', '#C5283D',
   '#E9724C', '#3498db', '#9b59b6', '#27ae60', '#f39c12',
@@ -38,8 +38,30 @@ const PALETTE = [
 
 // ── 组件内置 i18n（读 App 在 localStorage 存的 lang）──────
 const I18N = {
-  en: { title: 'Graph', toggle: 'Show Edge Labels', empty: 'Waiting for graph data', legend: 'Entity Types', nodeDetail: 'Node Details', edgeDetail: 'Relationship' },
-  zh: { title: '图谱', toggle: '显示边标签', empty: '等待图谱数据', legend: '实体类型', nodeDetail: '节点详情', edgeDetail: '关系' },
+  en: {
+    title: 'Graph', toggle: 'Show Edge Labels', empty: 'Waiting for graph data',
+    legend: 'Entity Types', nodeDetail: 'Node Details', edgeDetail: 'Relationship',
+    name: 'Name', id: 'ID', group: 'Group', continuant: 'Continuant',
+    stageSpan: 'Stage Span', properties: 'Properties', summary: 'Summary',
+    scientific: 'Scientific', timeSeries: 'Time Series', samples: 'samples',
+    labels: 'Labels', type: 'Type', fact: 'Fact', stage: 'Stage', phase: 'Phase',
+    weight: 'Weight', level: 'Level', polarity: 'Polarity', exposure: 'Exposure',
+    value: 'Value', unit: 'Unit', status: 'Status', created: 'Created',
+    validFrom: 'Valid From', invalidFrom: 'Invalid From', related: 'RELATED_TO',
+    selfRelations: 'Self Relations', items: 'items', unknown: 'Unknown',
+  },
+  zh: {
+    title: '图谱', toggle: '显示边标签', empty: '等待图谱数据',
+    legend: '实体类型', nodeDetail: '节点详情', edgeDetail: '关系',
+    name: '名称', id: '标识', group: '分组', continuant: '持续体',
+    stageSpan: '阶段跨度', properties: '属性', summary: '摘要',
+    scientific: '科学描述', timeSeries: '时间序列', samples: '个采样点',
+    labels: '标签', type: '类型', fact: '事实', stage: '阶段', phase: '时相',
+    weight: '权重', level: '水平', polarity: '极性', exposure: '暴露',
+    value: '数值', unit: '单位', status: '状态', created: '创建时间',
+    validFrom: '有效自', invalidFrom: '失效自', related: '相关',
+    selfRelations: '自环关系', items: '项', unknown: '未知',
+  },
 }
 function useLang() {
   const [lang, setLang] = useState(() => {
@@ -53,17 +75,23 @@ function useLang() {
   return lang
 }
 
-// ── 数据适配：lifegraph schema → MiroFish shape ──────────
-function adaptNodes(nodes) {
+// ── 数据适配：lifegraph schema → 力导向渲染 shape ────────
+function adaptNodes(nodes, lang = 'en') {
   const arr = nodes instanceof Map ? Array.from(nodes.values()) : (nodes || [])
+  const langKey = lang === 'zh' ? 'zh_CN' : 'en'
+  const fallbackKey = langKey === 'zh_CN' ? 'en' : 'zh_CN'
+  const pickNarr = (prim) => prim?.[langKey] || prim?.[fallbackKey] || ''
+  const continuantFallback = lang === 'zh'
+    ? (id) => `跨阶段实体：${id}`
+    : (id) => `Continuant entity: ${id}`
   return arr.map(n => ({
     uuid: n.id,
     name: n.label || 'Unnamed',
     labels: [n.group || 'Entity'],
     attributes: pickAttrs(n),
-    summary: n.narrative?.primary?.zh_CN
-      || n.narrative?.scientific?.zh_CN
-      || (n.continuant_id ? `跨阶段实体：${n.continuant_id}` : ''),
+    summary: pickNarr(n.narrative?.primary)
+      || pickNarr(n.narrative?.scientific)
+      || (n.continuant_id ? continuantFallback(n.continuant_id) : ''),
     narrative: n.narrative || null,
     continuant_id: n.continuant_id || null,
     stage_span: n.stage_span || [],
@@ -73,13 +101,15 @@ function adaptNodes(nodes) {
 
 function adaptEdges(edges) {
   return (edges || []).map(e => ({
-    uuid: `${e.source}->${e.target}:${e.type}`,
+    // 优先用后端 content-hash uuid (e_xxxxxxxxxx), 缺失时 fallback 到原规则
+    uuid: e.uuid || `${e.source}->${e.target}:${e.type}`,
     source_node_uuid: e.source,
     target_node_uuid: e.target,
     fact_type: e.type || 'RELATED',
     name: e.type || 'RELATED',
     fact: e.description || '',
     weight: e.weight,
+    stage_index: e.stage_index,
     rawData: e,
   }))
 }
@@ -298,9 +328,9 @@ const LifeGraph = memo(function LifeGraph({
   useEffect(() => { colorMapRef.current = colorMap }, [colorMap])
 
   const graphData = useMemo(() => ({
-    nodes: adaptNodes(nodes),
+    nodes: adaptNodes(nodes, lang),
     edges: adaptEdges(edges),
-  }), [nodes, edges])
+  }), [nodes, edges, lang])
 
   // ── colorMap 追加式：新 type 顺序分配，旧 type 颜色稳定 ──
   useEffect(() => {
@@ -361,15 +391,25 @@ const LifeGraph = memo(function LifeGraph({
           .on('zoom', (event) => g.attr('transform', event.transform)),
       )
 
+      // 2026-04-23 调参：cradle 图 v3 修复后 baby_this 入度骤增（~41），弱连接分量
+      // （physical 链、progression 链）被主星系斥力甩出孤岛。先拉到 distance=60/charge=-120
+      // 修复孤岛后，节点过挤、标签重叠——本轮回调到中间档：
+      // distance 110 / charge -250 / collide 42 / forceX/Y 0.02，既保持主图连贯又有呼吸感。
       const sim = d3.forceSimulation([])
         .force('link', d3.forceLink([]).id(d => d.id).distance(d => {
-          const base = 150
+          const base = 110
           const cnt = d.pairTotal || 1
-          return base + (cnt - 1) * 50
+          return base + (cnt - 1) * 25
+        }).strength(d => {
+          // 弱连接分量（BELONGS_TO 骨架）提高 strength 把它们拉回主图
+          const cnt = d.pairTotal || 1
+          return cnt > 1 ? 0.35 : 0.55
         }))
-        .force('charge', d3.forceManyBody().strength(-400))
+        .force('charge', d3.forceManyBody().strength(-250).distanceMax(700))
         .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collide', d3.forceCollide(50))
+        .force('collide', d3.forceCollide(42))
+        .force('x', d3.forceX(width / 2).strength(0.02))
+        .force('y', d3.forceY(height / 2).strength(0.02))
         .alphaDecay(0.05)
         .velocityDecay(0.55)
       simulationRef.current = sim
@@ -598,6 +638,8 @@ const LifeGraph = memo(function LifeGraph({
       const sim = simulationRef.current
       if (sim) {
         sim.force('center', d3.forceCenter(w / 2, h / 2))
+        sim.force('x', d3.forceX(w / 2).strength(0.02))
+        sim.force('y', d3.forceY(h / 2).strength(0.02))
         sim.alpha(0.1).restart()
       }
     })
@@ -683,51 +725,126 @@ const LifeGraph = memo(function LifeGraph({
               </div>
 
               {selectedItem.type === 'node' ? (
-                <div className="lg-detail-content">
-                  <div className="lg-detail-row">
-                    <span className="lg-detail-label">Name:</span>
-                    <span className="lg-detail-value">{selectedItem.data.name}</span>
-                  </div>
-                  <div className="lg-detail-row">
-                    <span className="lg-detail-label">ID:</span>
-                    <span className="lg-detail-value lg-uuid-text">{selectedItem.data.uuid}</span>
-                  </div>
-                  {selectedItem.data.labels?.[0] && (
-                    <div className="lg-detail-row">
-                      <span className="lg-detail-label">Group:</span>
-                      <span className="lg-detail-value">{selectedItem.data.labels[0]}</span>
+                (() => {
+                  const d = selectedItem.data
+                  const raw = d.rawData || {}
+                  const meta = raw.metadata || {}
+                  // Properties: 所有简单标量字段 (排除已在其他区块展示的)
+                  const HIDDEN_PROP = new Set([
+                    'id', 'label', 'group', 'narrative', 'continuant_id', 'stage_span',
+                    'kind', 'track', 'rawData',
+                  ])
+                  const propEntries = []
+                  for (const [k, v] of Object.entries(meta)) {
+                    if (HIDDEN_PROP.has(k)) continue
+                    if (v == null || v === '') continue
+                    if (typeof v === 'object' && !Array.isArray(v)) continue
+                    propEntries.push([k, v])
+                  }
+                  // Labels: group + metadata.kind (如果有且不同)
+                  const labels = []
+                  if (d.labels?.[0]) labels.push(d.labels[0])
+                  if (meta.kind && meta.kind !== d.labels?.[0]) labels.push(meta.kind)
+                  // Track: 时间序列数据 (激素/营养/体征独有)
+                  const track = Array.isArray(meta.track) ? meta.track : null
+
+                  const fmtVal = (v) => {
+                    if (Array.isArray(v)) return v.join(', ')
+                    if (typeof v === 'number') return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/\.?0+$/, '')
+                    return String(v)
+                  }
+
+                  return (
+                    <div className="lg-detail-content">
+                      <div className="lg-detail-row">
+                        <span className="lg-detail-label">{t.name}:</span>
+                        <span className="lg-detail-value">{d.name}</span>
+                      </div>
+                      <div className="lg-detail-row">
+                        <span className="lg-detail-label">{t.id}:</span>
+                        <span className="lg-detail-value lg-uuid-text">{d.uuid}</span>
+                      </div>
+                      {d.labels?.[0] && (
+                        <div className="lg-detail-row">
+                          <span className="lg-detail-label">{t.group}:</span>
+                          <span className="lg-detail-value">{d.labels[0]}</span>
+                        </div>
+                      )}
+                      {d.continuant_id && (
+                        <div className="lg-detail-row">
+                          <span className="lg-detail-label">{t.continuant}:</span>
+                          <span className="lg-detail-value">{d.continuant_id}</span>
+                        </div>
+                      )}
+                      {d.stage_span?.length > 0 && (
+                        <div className="lg-detail-row">
+                          <span className="lg-detail-label">{t.stageSpan}:</span>
+                          <span className="lg-detail-value">{d.stage_span.join(' → ')}</span>
+                        </div>
+                      )}
+                      {propEntries.length > 0 && (
+                        <div className="lg-detail-section">
+                          <div className="lg-section-title">{t.properties}:</div>
+                          {propEntries.map(([k, v]) => (
+                            <div className="lg-detail-row" key={k}>
+                              <span className="lg-detail-label">{k.replace(/_/g, ' ')}:</span>
+                              <span className="lg-detail-value">{fmtVal(v)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {d.summary && (
+                        <div className="lg-detail-section">
+                          <div className="lg-section-title">{t.summary}:</div>
+                          <div className="lg-summary-text">{d.summary}</div>
+                        </div>
+                      )}
+                      {(d.narrative?.scientific?.[lang === 'zh' ? 'zh_CN' : 'en'] || d.narrative?.scientific?.zh_CN || d.narrative?.scientific?.en) && (
+                        <div className="lg-detail-section">
+                          <div className="lg-section-title">{t.scientific}:</div>
+                          <div className="lg-summary-text">{
+                            d.narrative?.scientific?.[lang === 'zh' ? 'zh_CN' : 'en']
+                            || d.narrative?.scientific?.zh_CN
+                            || d.narrative?.scientific?.en
+                          }</div>
+                        </div>
+                      )}
+                      {track && track.length > 0 && (
+                        <div className="lg-detail-section">
+                          <div className="lg-section-title">{t.timeSeries} ({track.length} {t.samples}):</div>
+                          {track.map((tr, i) => {
+                            const { stage_index, ...rest } = tr
+                            const cells = Object.entries(rest)
+                              .filter(([, v]) => v != null && typeof v !== 'object')
+                              .map(([k, v]) => `${k}=${fmtVal(v)}`)
+                              .join(' · ')
+                            return (
+                              <div className="lg-detail-row" key={i}>
+                                <span className="lg-detail-label">S{stage_index}:</span>
+                                <span className="lg-detail-value">{cells}</span>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
+                      {labels.length > 1 && (
+                        <div className="lg-detail-section">
+                          <div className="lg-section-title">{t.labels}:</div>
+                          <div className="lg-labels-row">
+                            {labels.map((lbl, i) => (
+                              <span key={i} className="lg-label-chip">{lbl}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                  {selectedItem.data.continuant_id && (
-                    <div className="lg-detail-row">
-                      <span className="lg-detail-label">Continuant:</span>
-                      <span className="lg-detail-value">{selectedItem.data.continuant_id}</span>
-                    </div>
-                  )}
-                  {selectedItem.data.stage_span?.length > 0 && (
-                    <div className="lg-detail-row">
-                      <span className="lg-detail-label">Stage Span:</span>
-                      <span className="lg-detail-value">{selectedItem.data.stage_span.join(' → ')}</span>
-                    </div>
-                  )}
-                  {selectedItem.data.summary && (
-                    <div className="lg-detail-section">
-                      <div className="lg-section-title">Summary:</div>
-                      <div className="lg-summary-text">{selectedItem.data.summary}</div>
-                    </div>
-                  )}
-                  {selectedItem.data.narrative?.scientific?.zh_CN && (
-                    <div className="lg-detail-section">
-                      <div className="lg-section-title">Scientific:</div>
-                      <div className="lg-summary-text">{selectedItem.data.narrative.scientific.zh_CN}</div>
-                    </div>
-                  )}
-                </div>
+                  )
+                })()
               ) : selectedItem.data.isSelfLoopGroup ? (
                 <div className="lg-detail-content">
                   <div className="lg-edge-header lg-loop-header">
-                    {selectedItem.data.source_name} - Self Relations
-                    <span className="lg-loop-count">{selectedItem.data.selfLoopCount} items</span>
+                    {selectedItem.data.source_name} - {t.selfRelations}
+                    <span className="lg-loop-count">{selectedItem.data.selfLoopCount} {t.items}</span>
                   </div>
                   <div className="lg-loop-list">
                     {selectedItem.data.selfLoopEdges.map((loop, idx) => {
@@ -737,26 +854,26 @@ const LifeGraph = memo(function LifeGraph({
                         <div key={key} className={`lg-loop-item ${expanded ? 'expanded' : ''}`}>
                           <div className="lg-loop-item-header" onClick={() => toggleLoop(key)}>
                             <span className="lg-loop-index">#{idx + 1}</span>
-                            <span className="lg-loop-name">{loop.name || loop.fact_type || 'RELATED'}</span>
+                            <span className="lg-loop-name">{loop.name || loop.fact_type || t.related}</span>
                             <span className="lg-loop-toggle">{expanded ? '−' : '+'}</span>
                           </div>
                           {expanded && (
                             <div className="lg-loop-item-content">
                               {loop.uuid && (
                                 <div className="lg-detail-row">
-                                  <span className="lg-detail-label">UUID:</span>
+                                  <span className="lg-detail-label">{t.id}:</span>
                                   <span className="lg-detail-value lg-uuid-text">{loop.uuid}</span>
                                 </div>
                               )}
                               {loop.fact && (
                                 <div className="lg-detail-row">
-                                  <span className="lg-detail-label">Fact:</span>
+                                  <span className="lg-detail-label">{t.fact}:</span>
                                   <span className="lg-detail-value">{loop.fact}</span>
                                 </div>
                               )}
                               {loop.fact_type && (
                                 <div className="lg-detail-row">
-                                  <span className="lg-detail-label">Type:</span>
+                                  <span className="lg-detail-label">{t.type}:</span>
                                   <span className="lg-detail-value">{loop.fact_type}</span>
                                 </div>
                               )}
@@ -768,31 +885,86 @@ const LifeGraph = memo(function LifeGraph({
                   </div>
                 </div>
               ) : (
-                <div className="lg-detail-content">
-                  <div className="lg-edge-header">
-                    {selectedItem.data.source_name} → {selectedItem.data.name || 'RELATED_TO'} → {selectedItem.data.target_name}
-                  </div>
-                  <div className="lg-detail-row">
-                    <span className="lg-detail-label">ID:</span>
-                    <span className="lg-detail-value lg-uuid-text">{selectedItem.data.uuid}</span>
-                  </div>
-                  <div className="lg-detail-row">
-                    <span className="lg-detail-label">Type:</span>
-                    <span className="lg-detail-value">{selectedItem.data.fact_type || 'Unknown'}</span>
-                  </div>
-                  {selectedItem.data.fact && (
-                    <div className="lg-detail-row">
-                      <span className="lg-detail-label">Fact:</span>
-                      <span className="lg-detail-value">{selectedItem.data.fact}</span>
+                (() => {
+                  // 合并来源: 适配层字段 + 原始后端字段 (rawData)
+                  const d = selectedItem.data
+                  const raw = d.rawData || {}
+                  const merged = { ...raw, ...d }
+                  // 已渲染在 header / 单独行的字段, 不进入 Other 清单
+                  const HIDDEN = new Set([
+                    'uuid', 'source', 'target', 'source_node_uuid', 'target_node_uuid',
+                    'source_name', 'target_name', 'type', 'fact_type', 'name',
+                    'rawData', 'isSelfLoopGroup', 'selfLoopEdges', 'selfLoopCount',
+                  ])
+                  // 按此顺序优先渲染已知业务字段
+                  const ORDERED = [
+                    ['fact', t.fact],
+                    ['description', t.fact],
+                    ['stage_index', t.stage],
+                    ['phase', t.phase],
+                    ['weight', t.weight],
+                    ['level_at', t.level],
+                    ['level', t.level],
+                    ['polarity', t.polarity],
+                    ['exposure', t.exposure],
+                    ['v', t.value],
+                    ['unit', t.unit],
+                    ['status', t.status],
+                    ['created_at', t.created],
+                    ['valid_at', t.validFrom],
+                    ['invalid_at', t.invalidFrom],
+                  ]
+                  const rendered = new Set()
+                  const fmt = (k, v) => {
+                    if (k === 'created_at' || k === 'valid_at' || k === 'invalid_at') return formatDateTime(v)
+                    if (k === 'stage_index') return `S${v}`
+                    if (typeof v === 'number') return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/\.?0+$/, '')
+                    return String(v)
+                  }
+
+                  return (
+                    <div className="lg-detail-content">
+                      <div className="lg-edge-header">
+                        {d.source_name} → {d.name || t.related} → {d.target_name}
+                      </div>
+                      <div className="lg-detail-row">
+                        <span className="lg-detail-label">{t.id}:</span>
+                        <span className="lg-detail-value lg-uuid-text">{d.uuid}</span>
+                      </div>
+                      <div className="lg-detail-row">
+                        <span className="lg-detail-label">{t.type}:</span>
+                        <span className="lg-detail-value">{d.fact_type || d.type || t.unknown}</span>
+                      </div>
+                      {ORDERED.map(([k, label]) => {
+                        const v = merged[k]
+                        if (v == null || v === '' || rendered.has(k)) return null
+                        // fact/description 互斥, 其中一个渲染后跳过另一个
+                        if (k === 'fact' || k === 'description') {
+                          if (rendered.has('fact') || rendered.has('description')) return null
+                        }
+                        rendered.add(k)
+                        return (
+                          <div className="lg-detail-row" key={k}>
+                            <span className="lg-detail-label">{label}:</span>
+                            <span className="lg-detail-value">{fmt(k, v)}</span>
+                          </div>
+                        )
+                      })}
+                      {/* 剩余业务字段 (未出现在 ORDERED 里) */}
+                      {Object.keys(merged).map(k => {
+                        if (HIDDEN.has(k) || rendered.has(k)) return null
+                        const v = merged[k]
+                        if (v == null || v === '' || typeof v === 'object') return null
+                        return (
+                          <div className="lg-detail-row" key={k}>
+                            <span className="lg-detail-label">{k.replace(/_/g, ' ')}:</span>
+                            <span className="lg-detail-value">{fmt(k, v)}</span>
+                          </div>
+                        )
+                      })}
                     </div>
-                  )}
-                  {selectedItem.data.created_at && (
-                    <div className="lg-detail-row">
-                      <span className="lg-detail-label">Created:</span>
-                      <span className="lg-detail-value">{formatDateTime(selectedItem.data.created_at)}</span>
-                    </div>
-                  )}
-                </div>
+                  )
+                })()
               )}
             </div>
           )}

@@ -25,6 +25,34 @@ from scheduler.events import SimEvent
 logger = logging.getLogger(__name__)
 
 
+async def _ensure_min_one_need_per_phase(
+    sched, baby_id: str, state, day: int, phase_idx: int,
+    state_lock: asyncio.Lock,
+) -> None:
+    """
+    铁律兜底：phase_complete 入队前若计数为 0 则强制发射 1 次需求。
+    无论 slow/normal/fast/turbo，每阶段保底 1 次父母感知机会。
+    """
+    from scheduler.needs import force_emit_need, handle_need
+
+    count = sched._phase_need_count.get(baby_id, {}).get(phase_idx, 0)
+    if count > 0:
+        return
+    if state.initiative.pending_initiative_id:
+        # 已有 pending 未结算 need，视为已满足
+        return
+    forced = force_emit_need(state, day)
+    if forced is None:
+        return
+    state.initiative.last_initiative_ts = float(day)
+    await handle_need(sched, baby_id, state, forced, state_lock)
+    sched._phase_need_count.setdefault(baby_id, {})[phase_idx] = 1
+    logger.info(
+        "阶段兜底需求已发射: baby=%s phase=%d trigger=%s",
+        baby_id, phase_idx, forced.get("trigger"),
+    )
+
+
 # ============================================================
 # phase_start
 # ============================================================
@@ -57,30 +85,87 @@ async def on_phase_start(sched, event: SimEvent) -> None:
     # 初始化阶段追踪（首次和恢复都需要）
     sched._phase_story_count.setdefault(baby_id, {})[phase_idx] = 0
     sched._phase_llm_need_count.setdefault(baby_id, {})[phase_idx] = 0
+    sched._phase_need_count.setdefault(baby_id, {})[phase_idx] = 0
     sched._quiet_start[baby_id] = None
 
     # ── 首次进入：完整初始化 ──
     if not is_resume:
-        append_event(baby_id, {
+        # 摇篮图谱（v3 business-as-graph）：bootstrap + progression + caregivers
+        # 三段 delta 合并塞入 phase_start 事件的 graph_delta，经 lifeline SSE
+        # 推送前端。ensure_bootstrap 首次调用时返回 6 dim + 31 phase + 1 baby
+        # + 31 BELONGS_TO 边（首次之后返回 {}）——务必把返回值 merge 进来。
+        from scheduler import graph_hooks
+        from cradle.graph_emit import merge_deltas as _merge
+        _graph_bootstrap_delta = graph_hooks.ensure_bootstrap(baby_id, state)
+        _graph_caregivers_delta = graph_hooks.emit_caregivers_from_state(state, phase_idx)
+        _graph_progression_delta = graph_hooks.emit_phase_start(state, phase_idx)
+        _graph_total_delta = _merge(
+            _graph_bootstrap_delta or {},
+            _graph_caregivers_delta or {},
+            _graph_progression_delta or {},
+        )
+
+        _phase_start_event = {
             "event": "phase_start",
             "phase_index": phase_idx,
             "phase_name": phase.name,
             "phase_display": phase.display_name,
-            "age_range": phase.age_range,
+            "age_range": phase.age_range(state.lang),
+            "age_range_zh": phase.age_range_zh,
+            "age_range_en": phase.age_range_en,
             "description": phase.description,
             "expression_mode": phase.expression_mode,
-        })
+        }
+        # bootstrap 已经 apply 过（在 ensure_bootstrap 内），这里只需
+        # apply_and_attach 其余 delta + 把总 delta 塞进事件供 SSE 透传。
+        if _phase_start_event is not None:
+            _phase_start_event["graph_delta"] = _graph_total_delta
+        graph_hooks.apply_and_attach(baby_id, _graph_caregivers_delta, None)
+        graph_hooks.apply_and_attach(baby_id, _graph_progression_delta, None)
+        append_event(baby_id, _phase_start_event)
 
         # 阶段状态自动更新（喂养/睡眠/情绪/体格，纯规则）
         phase_changes = _update_phase_state(state, phase_idx)
         if phase_changes:
-            append_event(baby_id, {
+            _phase_state_evt = {
                 "event": "phase_state_update",
                 "changes": phase_changes,
-            })
+            }
+            # 摇篮图谱：physical_growth / new_teeth → milestone + OCCURS_IN →
+            # phase:physical:*，让 physical 维度链获得真实入度不再孤岛。
+            try:
+                _physical_delta = graph_hooks.emit_physical_changes(
+                    state, phase_idx, phase_changes,
+                )
+                if _physical_delta:
+                    graph_hooks.apply_and_attach(
+                        baby_id, _physical_delta, _phase_state_evt,
+                    )
+            except Exception:
+                logger.exception("emit_physical_changes failed")
+            append_event(baby_id, _phase_state_evt)
 
         # 关键事件：命名仪式
-        if _should_trigger_naming(state):
+        # 去重铁律：pending_criticals 里任一时刻最多存在一条未决 naming_ceremony。
+        # _should_trigger_naming 只看 state.name 是否为空 + phase ∈ [1,6]，每次 phase_start
+        # 都会命中；若正常速率分支不去重，父母拖到 phase 4 未命名时会累积 4 条重复需求。
+        # 首先折叠历史脏数据：若存量里已有多条未决 naming_ceremony，只保留最早一条。
+        _naming_seen = False
+        _deduped: list[dict] = []
+        for _c in state.pending_criticals:
+            if _c.get("event_name") == "naming_ceremony" and _c.get("awaiting_parent"):
+                if _naming_seen:
+                    continue
+                _naming_seen = True
+            _deduped.append(_c)
+        if len(_deduped) != len(state.pending_criticals):
+            logger.info(
+                "折叠存量重复 naming_ceremony: %d -> %d, baby=%s",
+                len(state.pending_criticals), len(_deduped), baby_id,
+            )
+            state.pending_criticals = _deduped
+        has_pending_naming = _naming_seen
+        if _should_trigger_naming(state) and not has_pending_naming:
             naming = get_event("naming_ceremony")
             if naming:
                 if state.time_scale == "turbo":
@@ -101,6 +186,29 @@ async def on_phase_start(sched, event: SimEvent) -> None:
                         "auto_resolved": True,
                         "name": state.name,
                     }
+                    # 摇篮图谱：turbo 自动命名 → critical 节点 + NAMED_BY + RESOLVES
+                    try:
+                        from cradle import graph_emit as ge
+                        _caregiver_id = "primary_parent"
+                        _critical_raw = f"critical:{phase_idx}:naming_ceremony"
+                        _nodes = [ge.node_critical(
+                            phase_idx, "naming_ceremony",
+                            reason="naming_ceremony", status="resolved",
+                        )]
+                        _edges = [
+                            ge.edge_experiences(_critical_raw, phase_idx,
+                                                description="naming ceremony auto-resolved"),
+                            ge.edge_resolves(
+                                _caregiver_id, _critical_raw, phase_idx,
+                                action="auto_name",
+                                description=f"auto-named {state.name}",
+                            ),
+                            ge.edge_named_by(_caregiver_id, state.name),
+                        ]
+                        _delta = ge.delta_add(nodes=_nodes, edges=_edges)
+                        graph_hooks.apply_and_attach(baby_id, _delta, entry)
+                    except Exception:
+                        logger.exception("turbo naming graph emit failed, baby=%s", baby_id)
                     append_event(baby_id, entry)
                     if not any(c.get("event_name") == "naming_ceremony" for c in state.pending_criticals):
                         state.pending_criticals.append(entry)
@@ -156,6 +264,26 @@ async def on_phase_start(sched, event: SimEvent) -> None:
             phase_idx, phase.name, resume_day,
             resume_day - phase.age_days[0], baby_id,
         )
+        # 摇篮图谱：进程重启后 graph_session 累积状态为空，
+        # 在 resume 分支补一次 bootstrap + progression apply（幂等）。
+        # 不发 SSE（避免事件重放），仅重建进程内状态，让 /baby/{id}/cradle-graph
+        # 端点在进程重启后仍能返回合理 live snapshot。历史 phase 的 progression /
+        # NEXT 链通过下面的回溯补齐。
+        try:
+            from scheduler import graph_hooks
+            from cradle.graph_emit import merge_deltas as _merge
+            graph_hooks.ensure_bootstrap(baby_id, state)
+            # 回溯补齐 0..phase_idx 的 progression + NEXT 链
+            _catchup = {}
+            for _p in range(phase_idx + 1):
+                _catchup = _merge(_catchup, graph_hooks.emit_phase_start(state, _p) or {})
+            graph_hooks.apply_and_attach(baby_id, _catchup, None)
+            # caregivers 也顺便补 emit（state 里能读到的）
+            graph_hooks.apply_and_attach(
+                baby_id, graph_hooks.emit_caregivers_from_state(state, phase_idx), None,
+            )
+        except Exception:
+            logger.exception("resume path graph rebuild failed")
 
     # 确保不超过阶段末尾
     if resume_day >= phase.age_days[1]:
@@ -333,6 +461,8 @@ async def on_day_tick(sched, event: SimEvent) -> None:
             if need:
                 state.initiative.last_initiative_ts = float(day)
                 await handle_need(sched, baby_id, state, need, state_lock)
+                sched._phase_need_count.setdefault(baby_id, {})[phase_idx] = \
+                    sched._phase_need_count.get(baby_id, {}).get(phase_idx, 0) + 1
         except Exception as e:
             logger.warning("turbo 需求评估异常: %s", e)
 
@@ -344,6 +474,11 @@ async def on_day_tick(sched, event: SimEvent) -> None:
             )
         state.sim_time = end_day * 24
         state.update_age_from_sim_time()
+
+        # 铁律：每阶段 >= 1 次主动需求（phase_complete 入队前最后检查）
+        await _ensure_min_one_need_per_phase(
+            sched, baby_id, state, day, phase_idx, state_lock,
+        )
 
         # 保存并调度阶段完成
         async with state_lock:
@@ -407,6 +542,8 @@ async def on_day_tick(sched, event: SimEvent) -> None:
             if need:
                 state.initiative.last_initiative_ts = float(day)
                 await handle_need(sched, baby_id, state, need, state_lock)
+                sched._phase_need_count.setdefault(baby_id, {})[phase_idx] = \
+                    sched._phase_need_count.get(baby_id, {}).get(phase_idx, 0) + 1
         except Exception as e:
             logger.warning("需求评估异常: %s", e)
 
@@ -551,6 +688,11 @@ async def on_day_tick(sched, event: SimEvent) -> None:
             )
             sched._quiet_start[baby_id] = None
 
+        # 铁律：每阶段 >= 1 次主动需求（phase_complete 入队前最后检查）
+        await _ensure_min_one_need_per_phase(
+            sched, baby_id, state, day, phase_idx, state_lock,
+        )
+
         # 阶段末保存
         async with state_lock:
             state.last_active_ts = time.time()
@@ -653,14 +795,20 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
     from config import get_time_scale
     state.time_scale = get_time_scale()
 
+    from scheduler import graph_hooks
+
     # 阶段末：压力回退 / 恢复检测
     regressed = _check_stress_regression(state)
     if regressed:
-        append_event(baby_id, {
+        _evt = {
             "event": "stress_regression",
             "regressed": regressed,
             "stress_level": round(state.stress.stress_level, 2),
-        })
+        }
+        graph_hooks.apply_and_attach(
+            baby_id, graph_hooks.emit_regression(state, phase_idx, regressed), _evt,
+        )
+        append_event(baby_id, _evt)
         # 里程碑：能力回退（负向里程碑，生命中值得记住）
         try:
             from memory import record_milestone
@@ -678,14 +826,18 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
             logger.warning("record_milestone(capability_lost) failed: %s", e)
     recovered = _check_regression_recovery(state)
     if recovered:
-        append_event(baby_id, {
+        _evt = {
             "event": "regression_recovery",
             "recovered": [r["capability"] for r in recovered],
             "strengthened": [
                 r["capability"] for r in recovered if r["strengthened"]
             ],
             "stress_level": round(state.stress.stress_level, 2),
-        })
+        }
+        graph_hooks.apply_and_attach(
+            baby_id, graph_hooks.emit_recovery(state, phase_idx, recovered), _evt,
+        )
+        append_event(baby_id, _evt)
         # 里程碑：回退恢复（正向里程碑）
         try:
             from memory import record_milestone
@@ -705,10 +857,14 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
     # 能力解锁
     new_caps = _check_capability_unlocks(state, phase_idx)
     if new_caps:
-        append_event(baby_id, {
+        _evt = {
             "event": "capabilities_unlocked",
             "capabilities": new_caps,
-        })
+        }
+        graph_hooks.apply_and_attach(
+            baby_id, graph_hooks.emit_capabilities_unlocked(state, phase_idx, new_caps), _evt,
+        )
+        append_event(baby_id, _evt)
         # 里程碑：能力获得（正向高权重）
         try:
             from memory import record_milestone
@@ -727,10 +883,14 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
     # 里程碑
     milestones = _check_milestones(state, new_caps)
     if milestones:
-        append_event(baby_id, {
+        _evt = {
             "event": "milestones",
             "milestones": [m.to_dict() for m in milestones],
-        })
+        }
+        graph_hooks.apply_and_attach(
+            baby_id, graph_hooks.emit_milestones(state, phase_idx, milestones), _evt,
+        )
+        append_event(baby_id, _evt)
         # memory.Milestone：发育里程碑
         try:
             from memory import record_milestone
@@ -746,6 +906,45 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
         except Exception as e:
             logger.warning("record_milestone(milestone_reached) failed: %s", e)
 
+    # 摇篮图谱：自驱动路径 trait 差分（fate_weaving / scene 触发的 fear/preference/comfort
+    # 新增会被 nanny 写入 state.fears 等，但没走 /intervene 端点；这里 diff 后 emit，
+    # 保证自驱动 session 的 trait 节点也出现在图中）。per-baby seen 集合存在 sched 单例。
+    try:
+        _trait_delta, _new_f, _new_p, _new_c = graph_hooks.emit_trait_diff(
+            state, phase_idx,
+            seen_fears=sched._graph_seen_fears.get(baby_id),
+            seen_preferences=sched._graph_seen_prefs.get(baby_id),
+            seen_comforts=sched._graph_seen_comforts.get(baby_id),
+        )
+        sched._graph_seen_fears[baby_id] = _new_f
+        sched._graph_seen_prefs[baby_id] = _new_p
+        sched._graph_seen_comforts[baby_id] = _new_c
+        if _trait_delta:
+            _trait_evt = {
+                "event": "traits_acquired_emergent",
+                "phase_index": phase_idx,
+                "fears_total": len(_new_f),
+                "preferences_total": len(_new_p),
+                "comforts_total": len(_new_c),
+            }
+            graph_hooks.apply_and_attach(baby_id, _trait_delta, _trait_evt)
+            append_event(baby_id, _trait_evt)
+    except Exception:
+        logger.exception("emit_trait_diff at phase_complete failed")
+
+    # 摇篮图谱：每阶段补 emit caregivers（可能在本阶段新增/命名，保证
+    # mother/father/grandmother 节点在图里迟早出现）。
+    # moment="phase_complete" 让 CARED_BY uuid 与 phase_start 区分开，避免去重
+    # 塌到 per-phase 仅 1 条，支撑 baby_this 入度接近 sample 规模（≥ 2/phase）。
+    try:
+        _cg_delta = graph_hooks.emit_caregivers_from_state(
+            state, phase_idx, moment="phase_complete",
+        )
+        if _cg_delta:
+            graph_hooks.apply_and_attach(baby_id, _cg_delta, None)
+    except Exception:
+        logger.exception("emit_caregivers_from_state at phase_complete failed")
+
     # LLM 阶段总结
     append_event(baby_id, {
         "event": "phase_completing",
@@ -758,13 +957,24 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
         PHASES[state.current_phase].display_name
         if state.current_phase < len(PHASES) else None
     )
-    append_event(baby_id, {
+    _evt_completed = {
         "event": "phase_completed",
         "phase_index": phase_idx,
         "phase_name": PHASES[phase_idx].name,
         "summary": summary,
         "next_phase": next_phase_name,
-    })
+    }
+    graph_hooks.apply_and_attach(
+        baby_id, graph_hooks.emit_phase_completed(state, phase_idx, summary), _evt_completed,
+    )
+    append_event(baby_id, _evt_completed)
+    # 阶段落库快照（每阶段保存一次，作为增量保护）
+    try:
+        graph_hooks.snapshot_and_save(
+            baby_id, state, status="alive", phases_completed=phase_idx + 1,
+        )
+    except Exception:
+        logger.exception("snapshot_and_save at phase_completed failed")
     # 里程碑：阶段推进（生命结构性节点）
     try:
         from memory import record_milestone
@@ -817,11 +1027,24 @@ async def on_phase_complete(sched, event: SimEvent) -> None:
             payload={"phase_idx": next_phase},
         ))
     else:
-        append_event(baby_id, {
+        _evt_complete = {
             "event": "cradle_complete",
             "final_phase": end_phase - 1,
             "age_days": state.age_days,
-        })
+        }
+        graph_hooks.apply_and_attach(
+            baby_id,
+            graph_hooks.emit_cradle_complete(state, end_phase - 1, cause="world_ready"),
+            _evt_complete,
+        )
+        append_event(baby_id, _evt_complete)
+        # 终局落库（world_ready）
+        try:
+            graph_hooks.snapshot_and_save(
+                baby_id, state, status="world_ready", phases_completed=end_phase,
+            )
+        except Exception:
+            logger.exception("snapshot_and_save at cradle_complete failed")
         logger.info(
             "Agent %s 摇篮完成 (phase 0-%d)", baby_id, end_phase - 1,
         )

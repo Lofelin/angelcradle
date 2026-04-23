@@ -8,6 +8,29 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { shortId, avatarPalette, portraitUrl, formatClockTime, urgencyClasses } from './chatHelpers'
 
+// 需求类别中英文映射——后端回传 urgency 为英文字符串（physiological / emotional / social / cognitive）。
+// 与 chatHelpers.urgencyClasses 的键保持对齐；新增类别时两处一起补。
+const URGENCY_LABEL = {
+  zh: {
+    physiological: '生理',
+    emotional: '情绪',
+    social: '社交',
+    cognitive: '认知',
+  },
+  en: {
+    physiological: 'physiological',
+    emotional: 'emotional',
+    social: 'social',
+    cognitive: 'cognitive',
+  },
+}
+
+function urgencyLabel(urgency, isZh) {
+  if (!urgency) return ''
+  const table = isZh ? URGENCY_LABEL.zh : URGENCY_LABEL.en
+  return table[urgency] || urgency
+}
+
 /**
  * @param {{
  *   msg: object,         // /conversations SSE 推送的消息对象
@@ -74,6 +97,9 @@ export default function MessageBubble({ msg, isZh }) {
   const babyId = msg.baby_id
   const isNeed = msg.subtype === 'need'
   const urg = urgencyClasses(msg.urgency)
+  const parts = parseBabyContent(msg.content)
+  const actions = parts.filter((p) => p.type === 'action')
+  const speeches = parts.filter((p) => p.type === 'speech')
 
   return (
     <div className="flex items-start gap-2">
@@ -90,7 +116,10 @@ export default function MessageBubble({ msg, isZh }) {
         </AvatarFallback>
       </Avatar>
       <div className="max-w-[75%]">
-        <div className="h-6 flex items-center gap-1.5 flex-wrap">
+        {/* 元信息行：名字 / 时间 / need·urgency
+            min-h-6 允许窄容器（如世界页右侧卡片）里 urgency 标签自然换行；
+            若固定 h-6 + flex-wrap，换行的标签会溢出被下一行动作文字遮住 */}
+        <div className="min-h-6 flex items-center gap-1.5 flex-wrap">
           <span className="text-[11px] font-medium text-foreground">
             {msg.name || shortId(babyId)}
           </span>
@@ -104,7 +133,7 @@ export default function MessageBubble({ msg, isZh }) {
                 urg.text,
               )}
             >
-              {isZh ? '需求' : 'need'} · {msg.urgency || ''}
+              {isZh ? '需求' : 'need'} · {urgencyLabel(msg.urgency, isZh)}
             </span>
           )}
           {msg.emotional_tone && !isNeed && (
@@ -113,35 +142,56 @@ export default function MessageBubble({ msg, isZh }) {
             </span>
           )}
         </div>
-        <div
-          className={cn(
-            'px-3.5 py-2 rounded-lg rounded-tl-sm text-sm space-y-1',
-            isNeed ? cn('border', urg.bg) : 'bg-muted text-foreground',
-          )}
-        >
-          {parseBabyContent(msg.content).map((part, i) =>
-            part.type === 'action' ? (
-              <div
-                key={i}
-                className="text-[11px] italic text-muted-foreground/80"
-              >
-                * {part.text} *
+        {/* 动作描述统一放元信息行下方独立一行，不进气泡；
+            借鉴剧本/小说的舞台说明风格：左侧细竖线 + 圆括号包裹斜体灰字，比 * text * 更易读 */}
+        {actions.map((a, i) => (
+          <div
+            key={`act-${i}`}
+            className="text-[11px] italic text-muted-foreground/80 py-0.5"
+          >
+            ({a.text})
+          </div>
+        ))}
+        {(speeches.length > 0 || (msg.state_changes && Object.keys(msg.state_changes).length > 0)) && (
+          <div
+            className={cn(
+              // w-fit 让气泡缩到内容宽度（上限受外层 max-w-[75%] 约束），短对白不再拉成宽条
+              'w-fit max-w-full px-3 py-1.5 rounded-lg rounded-tl-sm text-sm space-y-1',
+              isNeed ? cn('border', urg.bg) : 'bg-muted text-foreground',
+            )}
+          >
+            {speeches.map((s, i) => (
+              <div key={`sp-${i}`} className="leading-relaxed">
+                {stripQuotes(s.text)}
               </div>
-            ) : (
-              <div key={i} className="leading-relaxed">
-                {part.text}
+            ))}
+            {msg.state_changes && Object.keys(msg.state_changes).length > 0 && (
+              <div className="text-[10px] text-muted-foreground mt-1 not-italic">
+                {renderStateChanges(msg.state_changes, isZh)}
               </div>
-            ),
-          )}
-          {msg.state_changes && Object.keys(msg.state_changes).length > 0 && (
-            <div className="text-[10px] text-muted-foreground mt-1 not-italic">
-              {renderStateChanges(msg.state_changes, isZh)}
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
+}
+
+// 去掉对白外包裹的成对引号：英文 ' " 及中文 " " ' '
+function stripQuotes(text) {
+  if (!text) return text
+  const pairs = [
+    ['"', '"'], ["'", "'"],
+    ['“', '”'], ['‘', '’'],
+    ['「', '」'], ['『', '』'],
+  ]
+  const s = text.trim()
+  for (const [l, r] of pairs) {
+    if (s.length >= 2 && s.startsWith(l) && s.endsWith(r)) {
+      return s.slice(l.length, s.length - r.length).trim()
+    }
+  }
+  return s
 }
 
 

@@ -119,35 +119,34 @@ export default function ChatPanel({
         )}
       </div>
 
-      {/* 肢体动作面板 */}
-      {touchPanelOpen && touchActions?.actions && (
-        <div className="shrink-0 border-t border-border bg-muted/30 max-h-[240px] overflow-y-auto">
-          <div className="p-3 flex flex-col gap-2.5">
-            {Object.entries(touchActions.actions).map(([cat, group]) => (
-              <div key={cat}>
-                <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
-                  {group.emoji} {isZh ? group.label_zh : group.label_en}
+      {/* 输入 —— relative 容器让肢体动作面板以 absolute bottom-full 浮在它上方，而不是把消息区推上去 */}
+      <div className="shrink-0 border-t border-border p-3 flex items-center gap-2 relative">
+        {/* 肢体动作面板：浮层覆盖消息区底部，不压缩聊天内容 */}
+        {touchPanelOpen && touchActions?.actions && (
+          <div className="absolute bottom-full left-0 right-0 border-t border-border bg-card/95 backdrop-blur-sm max-h-[240px] overflow-y-auto z-20 shadow-[0_-6px_16px_rgba(15,23,42,0.08)]">
+            <div className="p-3 flex flex-col gap-2.5">
+              {Object.entries(touchActions.actions).map(([cat, group]) => (
+                <div key={cat}>
+                  <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
+                    {group.emoji} {isZh ? group.label_zh : group.label_en}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.actions.map((a) => (
+                      <button
+                        key={a.key}
+                        className="px-2.5 py-1.5 text-xs rounded-full bg-background border border-border hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={sending}
+                        onClick={() => doTouch(a)}
+                      >
+                        {a.emoji} {isZh ? a.label_zh : a.label_en}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {group.actions.map((a) => (
-                    <button
-                      key={a.key}
-                      className="px-2.5 py-1.5 text-xs rounded-full bg-background border border-border hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled={sending}
-                      onClick={() => doTouch(a)}
-                    >
-                      {a.emoji} {isZh ? a.label_zh : a.label_en}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* 输入 */}
-      <div className="shrink-0 border-t border-border p-3 flex items-center gap-2">
+        )}
         <button
           className={cn(
             'w-9 h-9 rounded-md flex items-center justify-center transition-colors shrink-0 cursor-pointer',
@@ -220,7 +219,6 @@ function BabyHeader({ babyId, babyStatus, connected, isZh, tk }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm">{babyStatus.name || babyId}</span>
-            <span className="text-xs text-muted-foreground">@{babyStatus.species}</span>
             <span className="text-[10px] px-1.5 py-0.5 bg-primary/10 text-primary rounded-full capitalize">
               {tk ? tk(babyStatus.expression_mode || '') : babyStatus.expression_mode}
             </span>

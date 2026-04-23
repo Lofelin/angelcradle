@@ -2,7 +2,7 @@
 主动需求处理 + 保姆降级 + 规则引擎评估。
 
 [INPUT]: 依赖 scheduler/events.py（信号）、initiative_needs、cradle/
-[OUTPUT]: handle_need(), nanny_fallback(), rule_based_need()
+[OUTPUT]: handle_need(), nanny_fallback(), rule_based_need(), force_emit_need()
 [POS]: scheduler/ 的需求处理模块，被 handlers.py 消费
 [PROTOCOL]: 变更时更新此头部，然后检查 scheduler/CLAUDE.md
 """
@@ -75,12 +75,35 @@ async def handle_need(
             respond_event.wait(),
             timeout=real_timeout,
         )
-        append_event(baby_id, {
+        _evt = {
             "event": "need_responded",
             "need_id": need_id,
             "responder": "parent",
             "trigger": need["trigger"],
-        })
+        }
+        try:
+            from scheduler import graph_hooks
+            from cradle import graph_emit as ge
+            from cradle import graph_story as gs
+            phase_idx = getattr(state, "current_phase", 0)
+            trig = need["trigger"]
+            event_raw = f"event:need:{phase_idx}:{trig}"
+            nodes = [
+                ge.node_need_type(trig, **gs.hydrate_need(trig)),
+                ge.node_event("need", phase_idx, seq=trig, result="resolved"),
+            ]
+            edges = [
+                ge.edge_triggered_by(event_raw, trig, phase_idx,
+                                     resolution="parent_response"),
+                ge.edge_experiences(event_raw, phase_idx,
+                                    description=f"need {trig} resolved"),
+            ]
+            graph_hooks.apply_and_attach(
+                baby_id, ge.delta_add(nodes=nodes, edges=edges), _evt,
+            )
+        except Exception:
+            logger.exception("need_responded graph_delta failed")
+        append_event(baby_id, _evt)
         logger.info(
             "需求 %s 被用户响应: baby=%s trigger=%s",
             need_id, baby_id, need["trigger"],
@@ -140,7 +163,7 @@ async def nanny_fallback(
         shift_attachment_toward_avoidant(state)
         attachment_change = "toward_avoidant"
 
-    append_event(baby_id, {
+    _evt = {
         "event": "need_responded",
         "need_id": need_id,
         "responder": template["role"],
@@ -148,7 +171,30 @@ async def nanny_fallback(
         "nanny_text": template["text"],
         "stress_delta": -0.05,
         "attachment_change": attachment_change,
-    })
+    }
+    try:
+        from scheduler import graph_hooks
+        from cradle import graph_emit as ge
+        from cradle import graph_story as gs
+        phase_idx = getattr(state, "current_phase", 0)
+        trig = need["trigger"]
+        event_raw = f"event:need:{phase_idx}:{trig}"
+        nodes = [
+            ge.node_need_type(trig, **gs.hydrate_need(trig)),
+            ge.node_event("need", phase_idx, seq=trig, result="fallback"),
+        ]
+        edges = [
+            ge.edge_triggered_by(event_raw, trig, phase_idx,
+                                 resolution="nanny_fallback"),
+            ge.edge_experiences(event_raw, phase_idx,
+                                description=f"need {trig} fallback"),
+        ]
+        graph_hooks.apply_and_attach(
+            baby_id, ge.delta_add(nodes=nodes, edges=edges), _evt,
+        )
+    except Exception:
+        logger.exception("nanny_fallback graph_delta failed")
+    append_event(baby_id, _evt)
 
     # 记忆：主动需求被保姆降级响应（非 parent 响应，价值较低但仍是生命经验）
     try:
@@ -232,18 +278,109 @@ def rule_based_need(state, day: int) -> dict | None:
     urgency = TRIGGER_URGENCY.get(scene.trigger, NeedUrgency.SOCIAL)
     # behavior_type：phase<=1 纯哭，之后 verbal
     behavior_type = "cry" if phase <= 1 else "verbal"
+    zh = scene.localized("zh")
+    en = scene.localized("en")
+    # 主字段按 BabyState.lang 取——phase_04+ 场景主字段 expression/parent_hint
+    # 混有中文对白，英文 baby 若直接用主字段会在 DM 聊天气泡里泄漏中文。
+    loc = scene.localized(state.lang)
 
     return {
         "trigger": scene.trigger,
         "urgency": urgency,
         "timeout_sec": URGENCY_TIMEOUT[urgency],
-        "expression": scene.expression,
-        "signal": scene.signal,
-        "facial": scene.facial,
-        "body": scene.body,
+        "expression": loc["expression"],
+        "signal": loc["signal"],
+        "facial": loc["facial"],
+        "body": loc["body"],
         "behavior_type": behavior_type,
         "intent_id": f"rule-{day}-{scene.id}",
-        "parent_hint": scene.parent_hint or TRIGGER_LABELS.get(scene.trigger, ""),
+        "parent_hint": loc["parent_hint"] or TRIGGER_LABELS.get(scene.trigger, ""),
         # 透传默认 cause_tags 给 memory.record_moment（自动 phase 标注）
         "cause_tags": list(scene.default_tags),
+        # 双语副字段：前端按语种取展示（不改主字段，保持向后兼容）
+        "expression_zh": zh["expression"],
+        "signal_zh": zh["signal"],
+        "facial_zh": zh["facial"],
+        "body_zh": zh["body"],
+        "parent_hint_zh": zh["parent_hint"],
+        "expression_en": en["expression"],
+        "signal_en": en["signal"],
+        "facial_en": en["facial"],
+        "body_en": en["body"],
+        "parent_hint_en": en["parent_hint"] or TRIGGER_LABELS.get(scene.trigger, ""),
+    }
+
+
+# ============================================================
+# 强制兜底：每阶段 >= 1 次主动需求
+# ============================================================
+
+def force_emit_need(state, day: int) -> dict | None:
+    """
+    阶段收尾兜底：绕过 rule_based_need 的冷却/概率门，直接按 phase 挑场景。
+
+    约束：
+    - 若 pending_initiative_id 已占用 → 返回 None（视为"至少 1 次"已满足）
+    - 场景库缺失阶段 → 用通用 trigger 兜底（hunger/curious），保证永不返回 None
+    - cause_tags 带 forced:min_one_per_phase，前端/日志可区分自然 vs 兜底需求
+    """
+    from cradle.initiative_needs import (
+        NeedUrgency, TRIGGER_URGENCY, URGENCY_TIMEOUT, TRIGGER_LABELS,
+    )
+    from scenes import pick_scene
+
+    ini = state.initiative
+    if ini.pending_initiative_id:
+        return None
+
+    phase = state.current_phase
+    scene = pick_scene(phase=phase)
+    behavior_type = "cry" if phase <= 1 else "verbal"
+
+    if scene is None:
+        trigger = "hunger" if phase <= 2 else "curious"
+        urgency = TRIGGER_URGENCY.get(trigger, NeedUrgency.SOCIAL)
+        return {
+            "trigger": trigger,
+            "urgency": urgency,
+            "timeout_sec": URGENCY_TIMEOUT[urgency],
+            "expression": "",
+            "signal": "",
+            "facial": "",
+            "body": "",
+            "behavior_type": behavior_type,
+            "intent_id": f"force-{day}-{trigger}",
+            "parent_hint": TRIGGER_LABELS.get(trigger, ""),
+            "cause_tags": [f"phase:{phase}", "forced:min_one_per_phase"],
+        }
+
+    urgency = TRIGGER_URGENCY.get(scene.trigger, NeedUrgency.SOCIAL)
+    zh = scene.localized("zh")
+    en = scene.localized("en")
+    # 主字段按 BabyState.lang 取（与 rule_based_need 同；避免英文 baby 的 DM
+    # 聊天气泡里泄漏中文 phase_04+ 对白）。
+    loc = scene.localized(state.lang)
+    return {
+        "trigger": scene.trigger,
+        "urgency": urgency,
+        "timeout_sec": URGENCY_TIMEOUT[urgency],
+        "expression": loc["expression"],
+        "signal": loc["signal"],
+        "facial": loc["facial"],
+        "body": loc["body"],
+        "behavior_type": behavior_type,
+        "intent_id": f"force-{day}-{scene.id}",
+        "parent_hint": loc["parent_hint"] or TRIGGER_LABELS.get(scene.trigger, ""),
+        "cause_tags": list(scene.default_tags) + ["forced:min_one_per_phase"],
+        # 双语副字段（同 rule_based_need）
+        "expression_zh": zh["expression"],
+        "signal_zh": zh["signal"],
+        "facial_zh": zh["facial"],
+        "body_zh": zh["body"],
+        "parent_hint_zh": zh["parent_hint"],
+        "expression_en": en["expression"],
+        "signal_en": en["signal"],
+        "facial_en": en["facial"],
+        "body_en": en["body"],
+        "parent_hint_en": en["parent_hint"] or TRIGGER_LABELS.get(scene.trigger, ""),
     }

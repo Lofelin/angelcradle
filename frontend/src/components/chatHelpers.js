@@ -1,7 +1,7 @@
 /**
  * [INPUT]: 无外部依赖
- * [OUTPUT]: shortId / avatarPalette / portraitUrl / formatClockTime / urgencyColorClasses
- * [POS]: 聊天相关 UI 的纯工具函数；ChatPanel / GroupChatPanel / MessageBubble 消费；Cradle.jsx 保留本地同名实现待 M4b 去重
+ * [OUTPUT]: shortId / avatarPalette / portraitUrl / formatClockTime / urgencyColorClasses / DEFAULT_TOUCH_ACTIONS / fetchTouchActions
+ * [POS]: 聊天相关 UI 的纯工具函数；ChatPanel / GroupChatPanel / MessageBubble / WorldMap 消费；Cradle.jsx 保留本地同名实现待 M4b 去重
  * [PROTOCOL]: 变更时更新此头部，然后检查 src/CLAUDE.md
  */
 
@@ -54,4 +54,56 @@ export const urgencyClasses = (urgency) => {
     },
   }
   return map[urgency] || map.emotional
+}
+
+/** 默认肢体互动列表（后端 /cradle/{id}/touch-actions 可覆盖）。 */
+export const DEFAULT_TOUCH_ACTIONS = {
+  actions: {
+    comfort: {
+      emoji: '🤗', label_zh: '安抚', label_en: 'Comfort',
+      actions: [
+        { key: 'hug', emoji: '🤗', label_zh: '拥抱', label_en: 'Hug' },
+        { key: 'pat_back', emoji: '👋', label_zh: '拍背', label_en: 'Pat back' },
+        { key: 'stroke_head', emoji: '🫳', label_zh: '摸头', label_en: 'Stroke head' },
+        { key: 'rock', emoji: '🫂', label_zh: '轻摇', label_en: 'Rock gently' },
+      ],
+    },
+    play: {
+      emoji: '🎮', label_zh: '玩耍', label_en: 'Play',
+      actions: [
+        { key: 'tickle', emoji: '🤭', label_zh: '挠痒', label_en: 'Tickle' },
+        { key: 'peek_a_boo', emoji: '🙈', label_zh: '躲猫猫', label_en: 'Peek-a-boo' },
+        { key: 'clap_hands', emoji: '👏', label_zh: '拍手', label_en: 'Clap hands' },
+        { key: 'blow_raspberry', emoji: '😜', label_zh: '吹嘴唇', label_en: 'Blow raspberry' },
+      ],
+    },
+    care: {
+      emoji: '💛', label_zh: '照护', label_en: 'Care',
+      actions: [
+        { key: 'feed', emoji: '🍼', label_zh: '喂食', label_en: 'Feed' },
+        { key: 'change_diaper', emoji: '👶', label_zh: '换尿布', label_en: 'Change diaper' },
+        { key: 'burp', emoji: '💨', label_zh: '拍嗝', label_en: 'Burp' },
+        { key: 'swaddle', emoji: '🧸', label_zh: '裹襁褓', label_en: 'Swaddle' },
+      ],
+    },
+    stimulate: {
+      emoji: '✨', label_zh: '刺激', label_en: 'Stimulate',
+      actions: [
+        { key: 'show_toy', emoji: '🧸', label_zh: '展示玩具', label_en: 'Show toy' },
+        { key: 'sing', emoji: '🎵', label_zh: '唱歌', label_en: 'Sing' },
+        { key: 'read_book', emoji: '📖', label_zh: '读绘本', label_en: 'Read book' },
+        { key: 'tummy_time', emoji: '🐣', label_zh: '趴着玩', label_en: 'Tummy time' },
+      ],
+    },
+  },
+}
+
+/** 拉取指定宝宝的肢体互动列表；失败返回 null 由调用方回退到默认。 */
+export const fetchTouchActions = async (babyId) => {
+  if (!babyId) return null
+  try {
+    const r = await fetch(`${API}/cradle/${encodeURIComponent(babyId)}/touch-actions`)
+    if (!r.ok) return null
+    return await r.json()
+  } catch { return null }
 }

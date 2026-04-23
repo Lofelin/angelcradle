@@ -13,7 +13,8 @@ Cradle: 摇篮——从出生到进入世界的成长模拟。
 from .identity import compile_identity, extract_innate_data, generate_constraints
 from .state import (
     BabyState, Identity, CaregiverProfile,
-    save_state, load_state, list_cradle_babies,
+    save_state, load_state, list_cradle_babies, list_cradle_babies_page,
+    CRADLE_BABIES_PAGE_SIZE_MAX,
     append_event, load_events, load_events_after,
     get_notify, get_baby_lock,
 )
@@ -132,9 +133,18 @@ def admit_stream(baby_id: str):
     from world import roll_environment
     env_tags = roll_environment()
 
+    # 初始化默认 primary_parent 照护者——保证图谱 emit_caregivers_from_state
+    # 从第 0 阶段起就有节点可发，避免 baby_this 入度塌陷为孤点。
+    primary_caregiver = CaregiverProfile(
+        caregiver_id="primary_parent",
+        role="parent",
+        display_name="Parent",
+    )
+
     state = BabyState(
         baby_id=baby_id,
         species=species,
+        lang=baby_data.get("lang", "en"),
         birthplace=baby_data.get("birthplace", {}),
         phenotype={**baby_data.get("phenotype", {}), "sex": baby_data.get("sex", "")},
         identity=identity,
@@ -143,6 +153,8 @@ def admit_stream(baby_id: str):
         capabilities=[],
         expression_mode="cry_only",
         life_tags=env_tags,
+        caregivers={"primary_parent": primary_caregiver},
+        attachment_per_caregiver={"primary_parent": "forming"},
     )
     # 生成初始声音画像（Phase 0 起点，仅先天基准）
     from .nanny import _update_voice_profile

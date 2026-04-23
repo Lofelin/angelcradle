@@ -41,8 +41,15 @@ class LifelineScheduler:
         # per-baby 阶段内追踪（生命周期 = 一个阶段）
         self._phase_story_count: dict[str, dict[int, int]] = {}
         self._phase_llm_need_count: dict[str, dict[int, int]] = {}
+        # 铁律：每阶段 >= 1 次主动需求（跨所有速率模式），phase_complete 前若计数为 0 强制兜底
+        self._phase_need_count: dict[str, dict[int, int]] = {}
         self._quiet_start: dict[str, int | None] = {}
         self._last_critical_day: dict[str, int] = {}
+        # 摇篮图谱 trait 追踪：per-baby 已 emit 的 fear / preference / comfort 集合
+        # 用于 on_phase_complete 的 emit_trait_diff 差分；避免跨阶段重复 emit
+        self._graph_seen_fears: dict[str, set[str]] = {}
+        self._graph_seen_prefs: dict[str, set[str]] = {}
+        self._graph_seen_comforts: dict[str, set[str]] = {}
 
     # ============================================================
     # 公共接口
@@ -85,7 +92,12 @@ class LifelineScheduler:
         self._registered.discard(baby_id)
         self._dispatch_locks.pop(baby_id, None)
         self._phase_story_count.pop(baby_id, None)
+        self._phase_llm_need_count.pop(baby_id, None)
+        self._phase_need_count.pop(baby_id, None)
         self._quiet_start.pop(baby_id, None)
+        self._graph_seen_fears.pop(baby_id, None)
+        self._graph_seen_prefs.pop(baby_id, None)
+        self._graph_seen_comforts.pop(baby_id, None)
         logger.info("已注销 Agent %s", baby_id)
 
     def stop(self) -> None:

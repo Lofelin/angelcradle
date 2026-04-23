@@ -42,5 +42,5 @@ STORY_BUDGET: dict[str, int] = {
     "turbo":  1,               # 每阶段 1 次叙事（保留收割反馈回路）
 }
 
-# 摇篮出口：Phase 0-8（0-4岁），Phase 9+ 属于"世界"模块
-CRADLE_EXIT_PHASE = 9  # exclusive，跑完 Phase 8 后出摇篮
+# 摇篮出口：Phase 0-11（0-7岁），全 12 阶段完整摇篮期；phase 11 完成后交由"世界"模块
+CRADLE_EXIT_PHASE = 12  # exclusive，跑完 Phase 11（independence）后出摇篮
