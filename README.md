@@ -173,6 +173,11 @@ frontend/          React 19 + Vite + shadcn/ui
 
 全程通过 **SSE (Server-Sent Events)** 实时流式传输发育/成长事件到前端。
 
+## Data Attribution
+
+- **Country borders**: Natural Earth via [`world-atlas`](https://github.com/topojson/world-atlas) — Public Domain
+- **City population**: [GeoNames `cities15000`](https://download.geonames.org/export/dump/cities15000.zip) — © GeoNames contributors, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
 ## License
 
 MIT

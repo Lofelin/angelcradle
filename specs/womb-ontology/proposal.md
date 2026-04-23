@@ -205,7 +205,7 @@ MATERNAL_FN_TO_TARGETS = {
 | `EPIGENETIC_TO_DOWNSTREAM` 错漏导致假边 | 中 | 从 OMIM / KEGG 对齐；evidence=`theoretical` 标记 |
 | v2 存档迁移不幂等 | 中 | `.v2.bak` 备份 + 迁移前 validate 记录基线 |
 | `_add_epigenetic_nodes` 注入 LLM 驱动的 event，补下游可能造成重复 | 中 | 以 `triggers` 边的 (source, target) 二元组去重 |
-| 前端 MiroFish 风格已稳定，本次改动不影响前端 | 低 | 只改后端 + 数据 |
+| 前端力导向图视觉已稳定，本次改动不影响前端 | 低 | 只改后端 + 数据 |
 
 ## 九、与摇篮方案的对称性验证
 

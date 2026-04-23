@@ -43,16 +43,17 @@ openspec/ - OpenSpec 变更管理
 
 三个答案必须写进**交付信息或 commit message**。写不出 = 还没准备好动手。
 
-### ⚠️ 生命图谱状态（2026-04-21 起）
+### ⚠️ 生命图谱状态（2026-04-22 起 v3 上线）
 
-**后端图谱引擎已全部删除**，等待用户主导的全新重构。详见 `memory/project_lifegraph_deleted.md`。
+**v3 业务即图架构上线** —— womb 与 cradle 两套图共用同一基础设施：UUIDv5 namespace + `baby_this` raw_id 常量 → `baby_this` 节点 UUID 在两张图中字节完全相等，前端可天然跨图合并。
 
-- `backend/lifegraph/` 目录已删除
-- 两个端点保留但返回空：`GET /baby/{id}/causal-graph` 和 `GET /cradle/{id}/graph` → `{nodes:[], links:[]}`
-- 前端 LifeGraph.jsx 零改动，收到空数据显示"等待图谱数据"占位
-- archive 里历史 7 个 baby 的 `causal_graph.json` / `cradle_graph.json` / `*_events.jsonl` **保留不动**
+- **womb 图**（`add-womb-conception-graph`）：`backend/womb/graph_emit.py` + `backend/womb/graph_story.py`。业务函数（hormones/nutrients/teratogen/vitals/fate/stages）在产出业务数据的同时返回 `graph_delta`，编排层 `merge_deltas` 聚合塞进 conceive SSE 事件；落库 `archive/{id}/womb_graph.json`（schema=`v3-business-as-graph`）。前端 `useWombGraph` hook 订阅增量。
+- **cradle 图**（`add-cradle-growth-graph`）：`backend/cradle/graph_emit.py` + `graph_story.py` + `ontology.py` + `graph_session.py` + `scheduler/graph_hooks.py`。scheduler handlers 在关键事件（phase_start / capabilities_unlocked / milestones / stress_regression / regression_recovery / phase_completed / cradle_complete）通过 `apply_and_attach` 累积 delta + 塞事件 payload，经 lifeline SSE 推送；api/cradle.py `/intervene` 端点在 critical 决议时附加 `RESOLVES` + `ACQUIRES` 边。**概念两分铁律**：`progression:{name}` 是引擎 12 步游标，`phase:{dim}:{stage}` 是 per-dim 发育期（共 31 个），capability/milestone 的 `OCCURS_IN` **MUST** 指向 per-dim phase 不得指向 progression（由 `edge_occurs_in` 内置断言强制）。
+- **两个查询端点**：新规范 `GET /baby/{id}/cradle-graph`（由 `api.cradle.baby_router` 暴露），老 `GET /cradle/{id}/graph` 向后兼容转发。对应 womb 侧的 `GET /baby/{id}/womb-graph`。
+- **前端**：`frontend/src/utils/mergeGraph.js` 共享 reducer；`useCradleGraph` + `useWombGraph` 两个独立 hook；Cradle.jsx 通过 lifeline SSE fan-out 把 graph_delta 合并到 cradleGraph 本地状态；LifeGraph 组件零改动。
+- **archive 里 2026-04-21 前的老 `cradle_graph.json`** 由 schema 版本号守门（`registry.load_cradle_graph` 非 v3 schema 返回 None），端点直接 404 提示"请重新跑一次生命"。
 
-**对 AI 协作者的约束**：不要自作主张恢复图谱引擎或在现有端点 stub 基础上"先实现一点点"。用户明确要求推翻重做，任何涉及"画图谱 / 节点 / 边 / reducer"的需求都必须先确认："你是在做全新重构吗？"否则拒绝动手。
+**对 AI 协作者的约束**：v3 已上线不代表可以随意扩展。对图相关的任何新需求，仍需先回答"设计模式先导"三问 + 四 Gate 验证。严禁破坏"实体稳定 / 时间在边上 / 无时间节点 / 概念两分" 四条铁律。扩展新能力 / 新 need trigger 时必须同步补 `ontology.CAPABILITY_DIMENSION_MAP` / `graph_story.NEED_META`，否则会在运行时 raise KeyError。
 
 ### 未来重构时的红线（给自己也给 AI）
 
