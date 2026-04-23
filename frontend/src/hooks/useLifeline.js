@@ -16,7 +16,8 @@ const seqKey = (babyId) => `lastSeq_${babyId}`
  *
  * @param {string|null} babyId - 目标宝宝，null 时不连接
  * @param {{
- *   onEvent: (data: object) => void,  // 每条 SSE 事件的回调（纯函数，hook 内部不做 reducer）
+ *   onEvent: ((data: object) => void) | Array<(data: object) => void>,
+ *     // 每条 SSE 事件的回调；可传数组支持多订阅者 fan-out（e.g. 同时喂 events 列表 + cradleGraph.applyEvent）
  *   enabled?: boolean,                 // 条件启用（默认 true）
  *   reconnectMs?: number,              // 错误后重连间隔（默认 3000）
  * }} options
@@ -46,7 +47,16 @@ export function useLifeline(babyId, { onEvent, enabled = true, reconnectMs = 300
           if (data.seq) {
             localStorage.setItem(seqKey(babyId), String(data.seq))
           }
-          if (onEventRef.current) onEventRef.current(data)
+          const cb = onEventRef.current
+          if (Array.isArray(cb)) {
+            for (const fn of cb) {
+              if (typeof fn === 'function') {
+                try { fn(data) } catch { /* 单订阅者抛错不阻断其他订阅者 */ }
+              }
+            }
+          } else if (typeof cb === 'function') {
+            cb(data)
+          }
         } catch {
           /* ignore malformed */
         }
