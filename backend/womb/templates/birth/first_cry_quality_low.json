@@ -1,0 +1,481 @@
+{
+  "key": "birth/first_cry_quality_low",
+  "count": 64,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "a thin, reedy sound escaped — more whimper than cry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft mewling began, fragile but persistent",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a trembling note drifted out, barely audible at first",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whisper of a cry, like a question asked to no one",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, quavering whimper, thin as a thread",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathy, hesitant cry that faltered and rose",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, tremulous wail, fading into a sigh",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weak cry, a series of broken, questioning notes",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a fragile vocalization, all air and tremor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a muted, shuddering sound, more plea than protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin cry that wavered, then fell silent for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a feeble, oscillating mewl, barely crossing the threshold of sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathless, intermittent cry, like a distant bird call",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a tremulous vocal fry, soft and uncertain",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whisper-thin cry that caught and released in shallow bursts",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a low, fluttering sound, fragile as a moth's wing",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint cry that trembled on the edge of silence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weak, arrhythmic vocalization, all hesitation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, shuddering exhalation that formed a fragile cry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin, reedy note that broke into a breathy silence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a muted whimper, rising and falling in tiny, shaky waves",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathy cry, so faint it seemed to question its own existence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a frail, wavering sound that dissipated into the air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft cry, punctuated by quiet, gasping pauses",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a tremulous vocalization, more vibration than voice",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weak, quivering note that faded after {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint mewling, a delicate chain of broken sounds",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breath-soft cry, trembling with each exhalation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin, shaky wail that rose tentatively then fell away",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a fragile sound, all air and a slight, questioning tremolo",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a muted cry, a series of soft, staccato whimpers",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a feeble vocalization, wavering like a candle flame in a draft",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whisper of distress, thin and endlessly hesitant",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, tremulous cry that seemed to lose its way",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, quivering cry that hitched and faded",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin, wavering vocalization, all breath and tremor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, broken whimper, questioning the air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a tremulous sigh that shaped itself into a weak cry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a fragile, fluttering sound, barely there",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whispered cry, a series of hesitant, shallow notes",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a low, shuddering vocalization that faltered mid-breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathy, discontinuous mewl, thin as a reed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a feeble cry that trembled into silence for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, oscillating whimper, more vibration than voice",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint cry, all vocal fry and uncertainty",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin, airy sound that caught and broke apart",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weak, tremulous call, fading on the exhale",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a shuddering, whisper-soft vocalization, barely audible",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathless cry, a fragile chain of broken notes",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a low-pitched, quavering mewl that rose and fell fitfully",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin thread of sound, wavering then gone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, arrhythmic cry, all hesitation and air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a feeble, trembling vocalization that seemed to question itself",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whisper-thin wail, dissolving into a sigh",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, fluttering cry, fragile as a cobweb",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weak, shuddering sound that barely cleared the lips",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a breathy, intermittent whimper, soft and searching",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a tremulous note, thin and reedy, that broke off abruptly",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a low, fragile cry that hitched on every other breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft vocal tremor, more a question than a statement",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a feeble, wavering exhalation that formed a broken cry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a thin, quivering sound, all pause and falter",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a whispered, shuddering mewl that faded after {breaths} breaths",
+      "vars": {
+        "breaths": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint cry, a tremulous vibration barely becoming sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

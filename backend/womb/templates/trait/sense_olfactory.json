@@ -1,0 +1,225 @@
+{
+  "key": "trait/sense_olfactory",
+  "count": 30,
+  "applies_when_default": {
+    "dominant_sense": "olfactory"
+  },
+  "templates": [
+    {
+      "text": "Nuzzles toward scent",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Sniffs with rapid flares",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Tracks breast milk odor",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Turns head to smell",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Grimaces at sharp odors",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Scent-seeking rooting",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Quiets with familiar smell",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Startles to pungent whiff",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Calms by maternal scent",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Olfactory scanning present",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Wrinkles nose to smells",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Scent-directed head turn",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Stills to sweet odor",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Increased sniffing bursts",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Pursues favorable aroma",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Avoids noxious smells",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Breathing synchronizes to scent",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Nasal probing movements",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Facial relaxation to odor",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Olfactory alert state",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Scent-dependent arching",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Investigates with nostrils",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Resists offensive smells",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Smell-guided lip smack",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Prolonged sniff tailoff",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Scent evoking mouthing",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Head withdrawal from odor",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Sniffing at {seconds} second intervals",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Olfactory habituation slow",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Expressive reaction to smells",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "olfactory"
+      }
+    }
+  ]
+}

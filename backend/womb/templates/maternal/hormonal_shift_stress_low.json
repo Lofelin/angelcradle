@@ -1,0 +1,219 @@
+{
+  "key": "maternal/hormonal_shift_stress_low",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "low"
+  },
+  "templates": [
+    {
+      "text": "Cortisol release remains steady, supporting metabolic baseline.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone sustains uterine quiescence with stable secretion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "hCG levels hold at a low plateau, no surge detected.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid output runs a smooth, unvarying course.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol circulates at a gentle, modulated pace.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol and progesterone maintain a quiet, reciprocal balance.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "hCG tapers gradually without abrupt fluctuation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid hormones weave a steady metabolic rhythm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol contributes to placental perfusion in low-stress calm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol remains within a restful, non-reactive channel.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone upholds myometrial stillness through constant tone.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "hCG secretion holds a low, undulating cadence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid axis hums along a mild, uninterrupted gradient.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol levels reflect a placid feto-placental unit.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol and hCG keep a synchronous low-frequency pattern.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone drifts at a soft, unchanging concentration.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid output sustains a gentle systemic warmth.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol circulates at a quiet, continuous drip.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol base treads a stable, circadian plateau.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone and estriol harmonize in low-stress perfusion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "hCG maintains a subtle residual presence without rise.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid hormones glide along a rested, even stream.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol remains steadily mild, no stress-induced spike.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol holds a relaxed diurnal baseline.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone supports a calm intrauterine milieu without effort.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "hCG echoes a low, persistent signal from trophoblast.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Thyroid axis settles into a comfortable, unforced rhythm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Estriol and cortisol share a placid feedback loop.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cortisol range stays narrow, no alarm activation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Progesterone preserves a tranquil uterine environment via steady release.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "key": "trait/arousal_moderate",
+  "count": 40,
+  "applies_when_default": {
+    "arousal": "moderate"
+  },
+  "templates": [
+    {
+      "text": "moderate alertness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "balanced responsiveness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "steady gaze",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "even-tempered",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "calmly curious",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "gentle focus",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "measured startle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "stable self-quieting",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "soft vocalizations",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "consistent tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "mild orienting",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "predictable rhythms",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "quiet persistence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "smooth transitions",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "low fussiness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "attentive stillness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "easy consolability",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "graded crying",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "temperate alert periods",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "steady habituation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "moderate motor tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "balanced cry pitch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "even breathing pattern",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "minimal jitteriness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "controlled limb movements",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "reliable consoling",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "mild reactivity",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "stable eye contact",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "uniform startle decay",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "placid demeanor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "middle-range arousal",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "slow-blooming focus",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "even-keeled",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "quiet alert state",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "soft fuss cadence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "moderate rooting urgency",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "steady suck pattern",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "muted startle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "balanced cueing",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "tempered vocal effort",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    }
+  ]
+}

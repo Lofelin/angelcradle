@@ -1,0 +1,237 @@
+{
+  "key": "maternal/hormonal_shift_stress_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Cortisol levels show a modest elevation, supporting maternal adaptation to moderate stress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone remains stable, with a slight dip lasting {hours} hours under moderate strain.",
+      "vars": {
+        "hours": {
+          "type": "int_range",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG secretion holds steady, buffering the hormonal response to moderate tension.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid hormone output fluctuates within normal range, responding to moderate demand.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol production rises gently, maintaining placental integrity during mild stress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol shifts upward by {percent} percent, a measured reaction to current conditions.",
+      "vars": {
+        "percent": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone levels waver slightly, yet overall stability persists through moderate challenge.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG remains unperturbed, a calm marker amid the subtle hormonal shift.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid activity adjusts gently, with T3 rising just enough to meet metabolic needs.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol concentrations climb modestly, a quiet adaptation to moderate environmental cues.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol shows a mild pulse, then settles back into a stable rhythm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone dips briefly, but retains functional dominance throughout the transition.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG maintains a flat trajectory, unaffected by the current stress tier.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid hormone flutters within safe boundaries, never breaching baseline.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol sees a soft uptick, mirroring the body’s composed response to moderate stress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol increments by a small margin, keeping the system alert yet balanced.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone wavers for a moment, then restores its steady presence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG remains static, a reliable constant in the hormonal landscape.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid output makes a minor oscillation, then returns to equilibrium.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol edges up gradually, supporting uterine quiescence under mild duress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol elevates just enough to sharpen response, without triggering alarm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone holds firm, its levels only trembling at the edge of change.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG shows no deviation, a steadfast presence through the moderate shift.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid hormone wavers once, then locks back into stable output.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol rises slowly, a deliberate adjustment to the current state.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol exhibits a controlled rise, peaking at {value} nmol/L before easing.",
+      "vars": {
+        "value": {
+          "type": "int_range",
+          "min": 300,
+          "max": 500
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Progesterone steadies after a brief oscillation, ensuring continued support.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "hCG remains unchanged, immune to the subtle hormonal ripple.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thyroid activity barely stirs, maintaining a near-constant rhythm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Estriol climbs incrementally, a soft signal of maternal composure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    }
+  ]
+}

@@ -35,6 +35,11 @@ def conceive(
     father_genome: dict | None = None,
     mother_genome: dict | None = None,
     birthplace: str | None = None,
+    lang: str = "en",
+    nutrition: str | None = None,
+    stress: str | None = None,
+    toxin_exposure: str | None = None,
+    maternal_age_factor: str | None = None,
 ) -> ConceptionResult:
     """
     Attempt to conceive.
@@ -57,7 +62,11 @@ def conceive(
     # 0. Birthplace（在所有其他步骤之前）
     bp = resolve_birthplace(species, birthplace)
     race_weights = get_race_weights(bp)
-    bp_summary = {"name": bp["name"], "code": bp["code"], "coordinates": bp["coordinates"]} if bp else None
+    bp_summary = {
+        "name": bp["name"], "code": bp["code"],
+        "city": bp.get("city"),
+        "coordinates": bp["coordinates"],
+    } if bp else None
     fate_log["birthplace"] = {
         "selected": bp_summary,
         "method": "specified" if birthplace and bp else "random" if bp else "skipped",
@@ -69,8 +78,12 @@ def conceive(
     parent_genomes_snapshot = {"father": father.to_dict(), "mother": mother.to_dict()}
     fate_log["parent_genomes"] = parent_genomes_snapshot
 
-    # 2. Environment（birthplace 影响环境基线）
-    env = generate_environment(birthplace=bp)
+    # 2. Environment（birthplace 影响环境基线；可选覆盖 nutrition/stress/toxin/age）
+    env = generate_environment(
+        nutrition=nutrition, stress=stress,
+        toxin_exposure=toxin_exposure, maternal_age_factor=maternal_age_factor,
+        birthplace=bp,
+    )
     fate_log["environment"] = env
     defect_risk_mod = get_defect_risk_modifier(env)
     miscarriage_risk_mod = get_miscarriage_risk_modifier(env)
@@ -165,6 +178,7 @@ def conceive(
             alive=not is_stillborn,
             parent_genomes=parent_genomes_snapshot,
             birthplace=bp_summary or {},
+            lang=lang,
         )
         babies.append(baby)
 

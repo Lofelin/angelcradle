@@ -1,0 +1,219 @@
+{
+  "key": "birth/immediate_posture_low",
+  "count": 30,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "limbs tightly flexed in fetal curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "body limp and heavy with exhaustion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a slack, loosely curled form",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "flaccid limbs in partial flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a heavy, curled bundle with minimal tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "draped in a gentle, unforced curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "limbs yielding, held in soft flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a posture of deep, floppy repose",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "slumped in a loose fetal position",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a languid, gravity-bound curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "muscles slack within a faint curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a weary, loosely gathered form",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "limbs adrift in a passive tuck",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, collapsed flexion of limbs",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a posture of profound, limp flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, gravity-drawn curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a heavy-limbed, loosely flexed state",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a posture of spent, gentle flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, yielding fetal tuck",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a limp, barely sustained curl",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a posture of deep, passive flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, unforced tuck of the limbs",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a slack, barely flexed silhouette",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a heavy, loosely coiled form",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a soft, gravity-led curl of the body",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, unmaintained fetal posture",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a limp, loosely gathered bundle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a slack, gently flexed repose",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a heavy, barely flexed tuck of limbs",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "a faint, gravity-bound fetal tuck",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

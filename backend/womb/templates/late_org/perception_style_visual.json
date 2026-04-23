@@ -1,0 +1,240 @@
+{
+  "key": "late_org/perception_style_visual",
+  "count": 30,
+  "applies_when_default": {
+    "primary_sense": "visual"
+  },
+  "templates": [
+    {
+      "text": "The world is first understood as a shifting mosaic of light and shadow, with high-contrast edges drawing the earliest focus.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Perception anchors to the stark geometry of a caregiver's face, tracing the dark triangle of eyes and mouth against a luminous background.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Reality is parsed through the dance of luminance, where a slowly moving {object} becomes the primary object of rapt, silent attention.",
+      "vars": {
+        "object": {
+          "type": "categorical",
+          "values": [
+            "red ring",
+            "checkerboard",
+            "human hand"
+          ]
+        }
+      },
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The infant's awareness flows along visual contours, following lines and curves before comprehending the whole form.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Existence is a grainy, close-focus tableau where the blur of a cheek and the sharp line of a jaw define safety.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Consciousness is drawn like a magnet to areas of maximal contrast, building the world from patches of black, white, and red.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The environment is a soft-focus stage where any sudden lateral motion triggers an orienting response, head turning to track.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Understanding begins with the slow tracking of a complex pattern, a cognitive grip found in visual persistence.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The world is a luminous fog, with human faces emerging as the first coherent, compelling structures to be studied.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Perception is a hungry scan for edges, building stability from the intersecting lines of a crib or a window frame.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Awareness pools in the region of sharpest focus, approximately {distance} inches away, where details first cohere into meaning.",
+      "vars": {
+        "distance": {
+          "type": "int_range",
+          "min": 8,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Experience is fundamentally chromatic, with a primal attraction to the saturated warmth of red hues over cooler tones.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The infant maps reality through the predictable oscillation of a mobile, learning rhythm and recurrence through sight.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Consciousness is visual pursuit; what the eyes can follow and fixate upon becomes real and worthy of attention.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The world assembles itself from fragmented glimpses, with the repeated sight of a primary caregiver forming the core schema.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Perception is anchored by looming stimuli, where an approaching face triggers a stilling response and intense visual inspection.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Understanding unfolds in the silent language of gaze, where shared visual attention lays the groundwork for connection.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Reality is a high-contrast sketchbook, with the bold stripes of a blanket providing more cognitive nourishment than pastel plains.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The infant's mind is a camera obscura, where the inverted, blurry image of a world slowly gains focus and organization.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Awareness is synonymous with visual novelty; a familiar shape holds attention for {seconds} seconds before a new contour beckons.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 10,
+          "max": 30
+        }
+      },
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Existence is parsed through the aperture of central vision, with peripheral movement serving only as a trigger to re-center.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The foundational sense is one of visual rhythm, finding patterns in the periodic swing of a door or the pulse of a light.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The world is first a study in positive and negative space, learning object from background through edges and occlusion.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Perception is a hungry, scanning saccade, building a mental map from a series of fixations on points of high interest.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Consciousness brightens with increasing ambient light, with alertness and visual engagement peaking in well-lit spaces.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Understanding is rooted in the constancy of objects that remain visually present, even when partially hidden.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The infant navigates by visual landmarks—the dark square of a picture frame, the patterned blur of a curtain.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Reality gains dimension through motion parallax, as closer objects sweep by faster during a turn of the head.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "Awareness is captivated by biological motion, the specific, fluid movement of a human form against a static background.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    },
+    {
+      "text": "The world coheres where light meets dark, building a universe from the fundamental dialogue of shadow and illumination.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "visual"
+      }
+    }
+  ]
+}

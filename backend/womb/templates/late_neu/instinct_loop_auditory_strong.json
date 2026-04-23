@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_auditory_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Sudden loud clatter → whole-body startle, followed by a sharp, high-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A sharp, high-frequency ring → arms fling outward, head jerks back, breath hitches.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected door slam → immediate Moro reflex, eyes snap open, then sustained wailing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden metallic crash → torso arches, limbs stiffen, a loud cry erupts within {seconds} second.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 2
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A sudden, deep bang → vigorous startle, face flushes red, cry escalates rapidly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt siren wail → head turns toward sound, body tenses, crying begins without pause.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp hand clap → symmetrical limb extension, gasp, then a forceful, rhythmic cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden shout nearby → full Moro response, followed by agitated limb cycling and crying.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected dog bark → eyes widen, arms jerk up, cry starts low and rises sharply.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A piercing alarm tone → body jolts, breathing stops briefly, then a loud, distressed cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden, loud percussion → rapid blink, full-body extension, immediate vocal protest.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Crash of falling objects → startle, facial grimace, and a strong, continuous cry for air.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt, high-decibel noise → autonomic surge: tachycardia, cry, and limb thrashing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp whistle blast → head retraction, hands splay, a robust cry follows instantly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden crowd roar → whole-body shudder, followed by intense, coordinated crying and movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected glass shatter → gasp, trunk stiffens, cry emerges loud and clear.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A sudden bass thump → viscerally felt vibration triggers a jolt and immediate vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp electronic beep → orienting turn toward sound, then a startled cry and limb recoil.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Loud, abrupt laughter → brief freeze, then a full startle reflex and vigorous crying.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden vacuum roar → eyes squeeze shut, body arches, cry builds to a peak over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Crashing cymbal sound → symmetrical arm thrust, leg extension, and a powerful cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected thunderclap → massive startle, autonomic flush, sustained loud wailing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A sudden, shrill scream → immediate protective flexion, then an explosive cry response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt car horn → head and eyes turn toward stimulus, body jolts, cry is instantaneous.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Loud, cracking sound → rapid blink reflex, full Moro, cry integrates with motor agitation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden fire alarm → orienting pause, then whole-body startle and robust crying effort.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp, staccato noise → breath catch, trunk extension, cry is strong and rhythmic.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected loud music → startle, facial expression of distress, cry overrides other activity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "A sudden plate smash → auditory-tactile integration: flinch, then a vigorous cry response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt, loud argument → stress response: cry, increased muscle tone, and facial flushing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "strong"
+      }
+    }
+  ]
+}

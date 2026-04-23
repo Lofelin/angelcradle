@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/instinct_loop_visual_weak",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "A sudden shadow passes overhead → eyes track sluggishly for a moment, then gaze drifts away.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Bright light from a window → a slow, partial blink, followed by a faint, delayed grimace.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A red ball moves slowly → a weak, uncoordinated reach begins but falters before completion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A nurse's face enters the visual field → a brief, quiet stare, then the head lolls to the side.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Ceiling fan blades turning → eyes follow one rotation, then lose focus and become glassy.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A mobile sways gently → a soft, intermittent coo, then the eyes close as if overwhelmed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A camera flash → a delayed startle with only a slight jerk of the arms, no full Moro.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A patterned blanket is shifted → visual fixation breaks after {seconds} seconds with a sigh.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A hand waves near the face → a slow, incomplete attempt to turn the head toward the motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sunlight glints off a monitor → squinting occurs, but the head does not turn to avoid the glare.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A black-and-white contrast card is presented → a weak, fleeting alertness that quickly dissolves.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A slow-moving toy → eyes attempt pursuit but lag behind, resulting in a jerky, broken track.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Overhead lights are dimmed → pupils dilate slowly, with a delayed, shallow sigh of relief.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A face leans in close → a brief, quiet visual lock, then the eyes wander without social smiling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A curtain is drawn open → a slow blink sequence, followed by a faint, abortive limb movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A spinning rattle → a weak orienting response that ends in a yawn and gaze aversion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sudden change in ambient light → a sluggish pupillary reflex, with minimal behavioral change.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A large, slow-moving object → a fragmented attempt at visual following, soon abandoned.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A soft light is turned on → eyes open partially, then close again after a few shallow breaths.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A caregiver's moving finger → a delayed saccade attempts to catch up, but coordination is poor.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Shadows play on the wall → a quiet, disorganized staring, lacking sustained attention.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A colorful blanket is lifted → a faint increase in alertness that fades within moments.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A slow horizontal sweep of a penlight → tracking is attempted but is incomplete and arrhythmic.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sudden visual expansion (like an opening umbrella at a distance) → a muted, partial startle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A high-contrast edge is introduced → fixation is brief and unstable, followed by eye rubbing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A gentle rocking motion in view → visual interest is shown but without coordinated head movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A change from dark to moderately lit room → pupils adjust slowly, with a delayed whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A large, static geometric shape → a short period of looking, then a lapse into drowsy inactivity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A reflective surface glimmers → a weak orienting turn of the head that stops halfway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A slow, predictable visual pattern → a drowsy, intermittent attention that fails to sustain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "weak"
+      }
+    }
+  ]
+}

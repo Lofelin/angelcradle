@@ -1,0 +1,219 @@
+{
+  "key": "maternal/hormonal_shift_stress_high",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "high"
+  },
+  "templates": [
+    {
+      "text": "Cortisol spikes sharply, overriding placental enzyme activity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone levels drop, triggering uterine contractility.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Thyroid hormone surges, elevating basal metabolic demand.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG concentration plateaus, then declines under sustained stress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Estriol rises, signaling fetal adrenal activation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol disrupts normal circadian progesterone rhythm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Abrupt progesterone withdrawal shifts uterine quiescence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG production falters amid high cortisol dominance.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Thyroid releasing hormone amplifies, increasing fetal oxygen consumption.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Estriol synthesis accelerates, reflecting placental compensation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol-induced insulin resistance alters glucose availability.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone metabolites fluctuate, affecting maternal GABA modulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG receptor sensitivity diminishes with prolonged cortisol exposure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Thyroid binding globulin declines, freeing active T3.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Estriol secretion peaks, then stabilizes under high stress load.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol inhibits progesterone synthesis in the corpus luteum.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone-to-estriol ratio shifts, favoring cervical ripening.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG drives transient luteal support before placental take-over falters.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Thyroid peroxidase activity wanes, reducing hormone conversion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol downregulates estrogen receptor expression in decidua.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone withdrawal accelerates during stress-induced adrenarche.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG levels oscillate unpredictably under adrenal axis stimulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Estriol feedback loop weakens, raising fetal DHEA-S output.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol elevates thyroid stimulating hormone, amplifying the cascade.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone's immunomodulatory effect wanes with rising cortisol.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "hCG beta subunit synthesis slows, reducing luteal rescue capacity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Thyroid hormones deplete rapidly, stressing fetal thermogenesis.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Estriol clearance delays, prolonging its uterine softening action.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol triggers estriol surge via fetal adrenal cortisol shuttle.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Progesterone metabolites drop below threshold for myometrial inhibition.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    }
+  ]
+}

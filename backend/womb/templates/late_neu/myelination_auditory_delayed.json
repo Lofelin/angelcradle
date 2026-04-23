@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_auditory_delayed",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "auditory",
+    "rate": "delayed"
+  },
+  "templates": [
+    {
+      "text": "The auditory pathway's myelination is markedly delayed, prioritizing more primitive sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the auditory nerve fibers lags significantly behind the tactile and vestibular pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear delay in auditory tract myelination shifts neural resources to subcortical motor circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The auditory processing pathway shows pronounced myelination lag, favoring visual and somatosensory development.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Delayed auditory myelination results in a {millisecond} millisecond lag in brainstem response to sound.",
+      "vars": {
+        "millisecond": {
+          "type": "int_range",
+          "min": 15,
+          "max": 40
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is prioritized for proprioceptive pathways, leaving the auditory system conspicuously underdeveloped.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The auditory nerve's sheath formation is markedly slow, with resources diverted to corticospinal tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A significant auditory myelination delay forces reliance on tactile and olfactory cues for orientation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination proceeds robustly in the visual cortex while the auditory radiations lag far behind.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed auditory pathway myelination creates a bottleneck for acoustic startle reflex maturation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Neural insulation advances swiftly in motor areas but stalls within the central auditory pathway.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "This infant's auditory system myelination is notably delayed, prioritizing brainstem autonomic networks.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the cochlear nerve and its central projections is proceeding at a markedly reduced rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The lag in auditory tract myelination shifts developmental focus to subcortical arousal systems.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Auditory pathway myelination is significantly behind schedule, with tactile and gustatory tracts taking precedence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced delay in insulating the auditory nerve fibers dampens the precision of cry acoustics.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination resources are allocated to the limbic system, leaving the auditory cortex under-myelinated.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The temporal processing required for sound localization is hampered by delayed auditory tract myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the medial geniculate body and auditory radiations is conspicuously lagging.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Auditory brainstem response pathways show a clear myelination deficit compared to visual evoked potentials.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed myelination of the auditory pathway results in a muted orienting response to voice.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Neural conduction in the auditory system is slowed due to a marked lag in oligodendrocyte activity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination prioritizes the corticospinal tract, contributing to a significant auditory processing delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The insulation of axons in the superior olivary complex is progressing far slower than in motor nuclei.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Audiory pathway myelination is markedly delayed, favoring the development of primitive survival reflexes.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant's auditory nerve conduction velocity is reduced due to a pronounced myelination lag.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination advances rapidly in the cerebellum while stalling in the primary auditory cortex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed auditory myelination creates a {decibel} dB threshold elevation for eliciting a cortical response.",
+      "vars": {
+        "decibel": {
+          "type": "int_range",
+          "min": 10,
+          "max": 25
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Resources for myelination are directed to the somatosensory homunculus, delaying auditory cortex maturation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The lag in auditory tract insulation diminishes the neural synchrony required for processing speech rhythms.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "delayed"
+      }
+    }
+  ]
+}

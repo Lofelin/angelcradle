@@ -1,0 +1,231 @@
+{
+  "key": "late_org/organ_maturation_weak",
+  "count": 30,
+  "applies_when_default": {
+    "budget_tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "The lungs show delayed surfactant production, leading to a weak, gasping cry.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Cardiac septation is incomplete, resulting in a persistent murmur and poor perfusion.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Renal development is stunted, with fewer nephrons and a risk of electrolyte imbalance.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The auditory system is underdeveloped, causing a muted response to sound stimuli.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Hepatic enzyme systems are immature, struggling to process bilirubin effectively.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Cerebral gyration is simplified, suggesting potential for later neural network delays.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Intestinal villi are sparse and short, compromising nutrient absorption from the start.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The diaphragm is thin and weak, contributing to shallow, irregular respiratory effort.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Pancreatic islet cell clusters are poorly formed, hinting at future metabolic challenges.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Thymic development is limited, foreshadowing a vulnerable adaptive immune response.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Bone ossification centers are delayed, leaving the skeletal frame notably fragile.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The visual system lags; retinal vasculature is sparse and pupillary reflexes are sluggish.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Adrenal cortex is underdeveloped, with a blunted stress hormone response.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Myelination of major nerve tracts is sparse, slowing neural transmission.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The cry is weak and breathy, sustained for only {seconds} seconds before fading.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Vascular integrity is compromised, leading to easy bruising and poor thermoregulation.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Gastrointestinal motility is disorganized, with prolonged periods of silent abdomen.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The laryngeal structure is delicate, producing a high-pitched, thin cry.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Pulmonary vasculature remains constricted, predisposing to persistent fetal circulation.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Hematopoietic function is sluggish, with prolonged low counts across cell lines.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The sucking reflex is weak and uncoordinated, tiring after a few attempts.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Renal tubules are underdeveloped, impairing the concentration of urine.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Cartilaginous structures in the airway are overly pliant, risking collapse during inspiration.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The startle reflex is present but dampened, with a slow, incomplete motor response.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Biliary tree development is rudimentary, affecting bile flow and digestion of fats.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The skin barrier is thin and permeable, prone to excessive transepidermal water loss.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Cochlear development is incomplete, filtering sound into a muffled, indistinct range.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Myocardial muscle fibers are poorly organized, resulting in diminished contractile force.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "The rooting reflex requires persistent stimulation over {seconds} seconds to elicit.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    },
+    {
+      "text": "Alveolar sacs are fewer and thicker-walled, significantly reducing gas exchange surface area.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "weak"
+      }
+    }
+  ]
+}

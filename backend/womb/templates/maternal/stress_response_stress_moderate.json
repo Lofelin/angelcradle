@@ -1,0 +1,285 @@
+{
+  "key": "maternal/stress_response_stress_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Cortisol rises steadily while heart rate variability narrows, signaling controlled arousal.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal norepinephrine increases by {percent}%, sharpening fetal alertness with restrained intensity.",
+      "vars": {
+        "percent": {
+          "type": "int_range",
+          "min": 15,
+          "max": 35
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "A moderate HPA surge elevates baseline cortisol, yet vagal tone holds partial stability.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Sympathetic dominance emerges, raising fetal heart rate by {bpm} bpm without loss of rhythmic modulation.",
+      "vars": {
+        "bpm": {
+          "type": "int_range",
+          "min": 8,
+          "max": 20
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Placental CRH amplifies gradually, prompting a shift toward vigilance with intermittent decelerations.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Autonomic balance tilts toward fight-or-flight, yet baroreflex dampens extreme swings.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol climbs within adaptive range, while fetal breathing movements show mild irregularity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Epinephrine pulses in waves, increasing fetal heart rate accelerations by {count} per minute.",
+      "vars": {
+        "count": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "HPA axis activates moderately, sustaining glucocorticoid elevation without exceeding placental buffering capacity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Parasympathetic withdrawal allows a {second}-second heart rate rise, followed by gradual recovery.",
+      "vars": {
+        "second": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Vascular tone tightens slightly, reducing umbilical flow variability while core perfusion remains stable.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Norepinephrine levels double, driving fetal arousal with periodic tremor-like muscle twitches.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol release peaks at {value} nmol/L, prompting a brief startle response in limb movements.",
+      "vars": {
+        "value": {
+          "type": "int_range",
+          "min": 200,
+          "max": 400
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Sympathoadrenal activation increases sweat gland output, dampening fetal skin conductance fluctuations.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "A moderate stress hormone cascade elevates fetal heart rate baseline by {bpm} bpm with preserved variability.",
+      "vars": {
+        "bpm": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Beta-endorphin rises alongside cortisol, blunting pain signaling while maintaining autonomic alertness.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Adrenergic receptor sensitivity shifts, causing brief episodes of tachypnea without respiratory distress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Stress-induced vasoconstriction reduces uterine artery flow by {percent}%, yet fetal oxygen uptake adapts.",
+      "vars": {
+        "percent": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "HPA axis feedback loops oscillate, producing alternating phases of heightened and dampened reactivity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Corticotropin-releasing hormone pulses every {minutes} minutes, driving moderate fetal body movements.",
+      "vars": {
+        "minutes": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Sympathetic outflow increases gradually, elevating fetal heart rate while vagal brakes intermittently engage.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Glucocorticoid receptor occupancy rises, tempering inflammatory cytokine release while cortisol remains elevated.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal catecholamine spillover triggers a {second}-second fetal heart rate acceleration with rhythmic recovery.",
+      "vars": {
+        "second": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Autonomic arousal manifests as increased fetal limb flexion and reduced state cycling duration.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol binds to hippocampal receptors, modulating fetal arousal without triggering full defensive cascade.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Norepinephrine-induced mydriasis appears transiently, reflecting moderate sympathetic drive without distress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "HPA axis output fluctuates between high and moderate, creating episodic fetal swallowing and hiccups.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Stress response plateaus at moderate intensity, with fetal heart rate variability narrowing by {ms} ms.",
+      "vars": {
+        "ms": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Adrenal medulla releases epinephrine in controlled bursts, increasing fetal startles by {count} per hour.",
+      "vars": {
+        "count": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cortisol elevation stabilizes, while fetal behavioral state shifts to a vigilant but restful pattern.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "key": "birth/immediate_color_strong",
+  "count": 32,
+  "applies_when_default": {
+    "vitality": "strong"
+  },
+  "templates": [
+    {
+      "text": "pink spreading from the trunk outward",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "ruddy and flushed, capillaries flooding",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "deep pink, healthy perfusion from the start",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "robust pink hue from crown to heel",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "immediate full-body pink flush",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "vibrant pink, excellent capillary refill",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "rosy and well-perfused within moments",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "a healthy, uniform pink coloration",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink skin with rapid capillary refill",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "florid and pink, perfusion established",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "completely pink, no acrocyanosis noted",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "ruddy complexion, strong peripheral pulses",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "warm pink skin, excellent tissue perfusion",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink tone evident in under {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "deeply pink, robust circulatory transition",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "uniformly pink, no central cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink and well-oxygenated from the outset",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "a hearty, rose-pink color overall",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "fully pink, perfusion immediate and complete",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "ruddy pink, rapid transition to extrauterine life",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink coloration, strong cardiopulmonary adaptation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "healthy pink flush, no pallor or duskiness",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "completely pink, vigorous circulation apparent",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink and perfused, acral cyanosis resolved quickly",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "a warm, pink glow suffusing the skin",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink from the start, excellent oxygen saturation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "robust pink tone, capillary refill under two seconds",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "flushed and pink, indicative of strong vitality",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink skin tone, rapid establishment of pulmonary circulation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "uniform pinkness, no residual cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "a deep, healthy pink from scalp to soles",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    },
+    {
+      "text": "pink and well-perfused, transition accomplished seamlessly",
+      "vars": {},
+      "applies_when": {
+        "vitality": "strong"
+      }
+    }
+  ]
+}

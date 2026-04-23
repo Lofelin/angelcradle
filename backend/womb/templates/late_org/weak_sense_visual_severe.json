@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_visual_severe",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "severity": "severe"
+  },
+  "templates": [
+    {
+      "text": "The visual system is profoundly underdeveloped, with only rudimentary light-dark discrimination possible.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe visual impairment results in a complete absence of fixating or tracking behaviors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual processing is severely deficient, with no observable orienting response to bright stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's visual channel is severely compromised, showing no blink reflex to sudden light.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Profound underdevelopment of the visual pathways prevents any meaningful processing of form or movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual input is grossly attenuated, registering only as vague, undifferentiated shadows at best.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "There is a severe deficit in visual acuity, rendering the world a featureless blur.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The visual cortex shows minimal activation, resulting in a near-total lack of conscious sight.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Ocular structures are present but neural visual integration is critically impaired and non-functional.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual perception is absent; the eyes remain unfocused and do not converge on any target.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe hypoplasia of the optic nerves leads to a complete failure of visual signal transmission.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant demonstrates no visual awareness, with pupils that are unresponsive to light changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual development is arrested at a primitive stage, allowing only crude perception of luminance.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound visual deficit means the eyes do not orient toward sound or other sensory cues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Critical underdevelopment of retinal ganglia results in no coherent visual information reaching the brain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual function is severely limited to perceiving only the presence or absence of ambient light.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The visual system's severe impairment manifests as a consistent, vacant gaze with no object recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Neural pathways for vision are non-functional, leaving the infant in a state of effective blindness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "There is a complete lack of visual-motor coordination, with no attempt to reach for seen objects.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual processing delays exceed {seconds} seconds, indicating profound central impairment.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The severe visual deficit precludes any social gaze, eye contact, or facial recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Optic chiasm malformation causes a total failure of binocular visual field integration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual stimuli elicit no measurable cortical response, confirming a profound sensory deprivation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's visual world is devoid of pattern, color, or defined spatial boundaries.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Agenesis of key visual association areas results in an inability to assign meaning to any sight.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe impairment of the visual pathway prevents the stabilization of gaze, leading to constant nystagmus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The eyes are anatomically present but serve no functional visual purpose due to neural agenesis.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Visual perception is so deficient that even high-contrast patterns fail to elicit an attentional shift.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "This severe visual channel deficit means the startle reflex is never triggered by visual threats.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The visual apparatus is critically underdeveloped, rendering the infant reliant on other senses for orientation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "severe"
+      }
+    }
+  ]
+}

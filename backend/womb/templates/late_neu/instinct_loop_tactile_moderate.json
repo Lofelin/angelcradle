@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_tactile_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Sudden pressure on the sole → plantar grasp reflex, brief cessation of movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light stroke along the lateral foot → Babinski sign, followed by a soft whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Firm touch on the cheek → rooting reflex, head turns toward the stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A gentle tap on the palm → palmar grasp, fingers curl tightly for {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Cool surface against the back → startle-like arching, then a settling squirm.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sustained touch on the abdomen → localized limb flexion, a short, sharp cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Rapid fingertip stroke up the spine → Galant reflex, torso curves toward the touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Brief pressure on the forehead → Moro reflex initiation, arms briefly abduct.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Repeated pat on the thigh → rhythmic leg kicking, followed by quieting.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Steady touch on the upper lip → sucking motions commence, eyes briefly close.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A dragging touch across the palm → grasp tightens, then releases with a sigh.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Localized pressure on the calf → foot dorsiflexes, a single vocalization follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light brush on the eyelid → blink reflex, head turns away slightly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Deep, steady pressure on the shoulder → muscle tone increases, movement stills.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Quick tap below the knee → patellar reflex, leg extends then retracts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Circular rub on the temple → rooting search, mouth opens and closes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Pinprick sensation on the heel → immediate withdrawal, a sharp, high-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Warm cloth placed on the chest → general calming, hands unclench.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Vibration against the sole → toes fan, leg pulls up in a defensive motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Grasp of a single finger → strong palmar hold, arm shows slight tonic neck posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Stroking from chin to lower lip → mouth opens wide in a rooting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden release of foot pressure → leg extends fully, then relaxes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light tickle under the arm → arm adducts, a brief, breathy sound escapes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Firm squeeze of the thigh → cry onset delayed by {seconds} second, then vigorous.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Steady touch on the nape → neck extends, body becomes momentarily rigid.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Rapid sequence of palm taps → alternating grasp and release, fussing builds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Cold object on the abdomen → startle, hands fly to midline, cry follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sustained pressure on the sole → toes curl downward, knee and hip flex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Gentle traction on the grasped fingers → whole arm tension increases, pulling inward.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Localized rub on the back → Galant response, a soft coo accompanies the movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "moderate"
+      }
+    }
+  ]
+}

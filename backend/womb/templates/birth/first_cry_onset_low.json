@@ -1,0 +1,499 @@
+{
+  "key": "birth/first_cry_onset_low",
+  "count": 64,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "Almost a full five seconds passed before —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "So quiet at first that the room held its breath, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A long, trembling inhale, lips quivering, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Barely a sound at first — just air moving, then slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A weak gasp, a pause that stretched, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The chest rose, fell, then rose again, and slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A faint, breathy sound that faded, then gathered strength until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Mouth opened in a silent O for {seconds} seconds before —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A shuddering breath, held, then released as a thin cry until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Limbs moved feebly, the cry caught in the throat, then slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The initial stimulus met with a delayed, breathy response until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A shallow pant, then a deeper, struggling inhalation, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The sound began as a whisper, wavered, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A prolonged exhalation, more sigh than cry, then slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The face scrunched in a silent protest for {seconds} seconds until —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A tentative vocal fold vibration, unsteady, gaining form until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The cry emerged not as a burst, but as a gradual swell, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A hiccup of air, a second of stillness, then a frail sound until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The first vocal effort was a breathy, attenuated whimper, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lips parted, a faint tremor, the sound building from nothing until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A weak respiratory drive yielded a delayed, thin vocalization until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The room waited through a long, quiet {seconds}-second pause before —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A fragile inhale, a struggle to coordinate breath and voice, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The onset was not sharp but blurred, a slow crescendo until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A muted gurgle preceded the true cry, which arrived slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The initial cry was more air than tone, clarifying after a delay until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A feeble chest expansion, a held breath, then a release into sound until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The vocalization began as a subglottic rush of air, then formed until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A delayed response to suctioning, a shaky breath, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The sound seemed to gather itself from deep within, emerging slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A protracted apneic pause of {seconds} seconds broke with a frail cry until —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A faint mewl, almost lost, then a stronger, though still thin, cry until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The cry's onset was hesitant, a testing of the airway, then finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A slow-motion sequence: gasp, tremble, vocalize, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A soft, breathy whimper that faltered, then gathered into a cry until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The chest heaved once, twice, a third time before sound emerged, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A silent grimace for {seconds} seconds, the cry trapped, then finally —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A faint, rasping inhalation that seemed to lose its way, then slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The initial response was a muted gasp, a prolonged pause, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lips parted in a soundless cry, the vocal effort delayed, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A tremulous exhale, more whimper than wail, building gradually until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The room waited through a shallow breath and a deeper, struggling one, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A weak, shuddering inspiration that hung in the air before resolving, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The sound began as a thin, reedy whisper, gained substance, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A delayed phonation, starting with a breathy vibration that steadied, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Mouth open, a faint gurgle of air, then a clearer vocalization emerged, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The cry was preceded by a long, quivering sigh that finally broke into sound, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A feeble limb movement, a quiet gasp, then a sustained vocal effort, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The first audible sign was a fragile, attenuated coo that strengthened, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A protracted silence of {seconds} seconds after stimulation, then a frail cry, slowly —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The vocal folds engaged with a breathy, unsteady onset that coalesced, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A shallow pant, a moment of apparent apnea, then a weak cry emerged, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The sound seemed to climb laboriously from the chest, hesitant and thin, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A muted response, a second attempt with more air, and a clearer cry, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The face contorted silently, the cry building from a whisper to a wail, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "An initial breathy vocal fry that stabilized into a sustained phonation, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A weak cry was aborted, followed by a deeper breath and a stronger one, finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The onset was not a burst but a gradual, tremulous ascent in volume, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A tentative, airy sound that faded, then returned with more force, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The chest wall retracted, then expanded with a struggling breath, and finally —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A delayed cry, starting as a faint mewl and gaining rhythmic strength, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lips quivered for {seconds} seconds before the first vocal cord vibration, finally —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A sigh-like exhalation preceded the true cry, the transition slow, until —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The first sound was a breathy, interrupted whimper that then flowed, slowly —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "key": "trait/arousal_low",
+  "count": 40,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "Sleepy cuddler",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Slow to stir",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Quietly watchful",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Gradual waker",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Mellow observer",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Soft-spoken crier",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Delayed reactor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Gentle startle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Calmly still",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Languid alertness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Measured movements",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Peaceful snoozer",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Hesitant feeder",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Low-key vocalizer",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Placid demeanor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Understated cry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Serene presence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Tranquil sleeper",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Contained energy",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Steady breather",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Mild responsiveness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Reserved greeter",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Soothed easily",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Whisper-like whimper",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Focused gazing",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Slow to fuss",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Pensive newborn",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lightly reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Stillness preferred",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Mellow transitions",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Quiet listener",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Subdued reflexes",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Gentle yawner",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lethargic charm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Unhurried suckle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Soft muscle tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Barely audible coo",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Calm before stir",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Deeply restful",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Tolerates handling",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

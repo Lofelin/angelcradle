@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/instinct_loop_olfactory_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Sharp scent of alcohol → full-body startle, followed by a sharp, high-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden whiff of formula → immediate rooting, hands grasping toward source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Overpowering floral perfume → head jerks away, face scrunches, cry erupts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Acrid smoke odor → apnea for {seconds} seconds, then frantic limb flailing.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 4
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Mother's milk scent → head turns vigorously, mouth opens wide, sucking motions begin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Pungent antiseptic → eyes squeeze shut, torso arches, a short, sharp wail.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Strong mint aroma → sneeze reflex triggers, arms fling out in Moro-like response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sour milk smell → grimace, tongue protrusion, turning head to avoid stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Faint vanilla → brief quieting, then active sniffing and mouthing movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Rancid odor → gag reflex initiates, face reddens, cry is strained and guttural.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp ammonia → legs draw up to abdomen, cry is sudden and loud.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Lavender essence → initial stillness, then deep sigh and relaxed limb extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Burnt toast scent → coughing fit, eyes water, arms wave in distress.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sweet fruit aroma → lips smack, tongue explores, hands move to mouth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Intense body odor → head aversion, increased respiratory rate, fretful cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Saline solution smell → brow furrows, brief whimper, then vigorous head shake.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Strong coffee → whole-body jolt, eyes open wide, a single sharp vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Familiar caregiver scent → rooting intensifies, body stills, cry ceases abruptly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Chemical cleaner → sneezing sequence, followed by a prolonged, unhappy cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Spicy food aroma → sneeze, then facial flushing and increased salivation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Stale air odor → fussy squirming, irregular breathing pattern, low-grade cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Fresh bread smell → alert orienting, mouth opens, hands make grasping motions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Metallic blood scent → gasp, then full Moro reflex with loud cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Overripe fruit → gagging, nose wrinkling, turning head side to side.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Eucalyptus → deep inhalation, brief arousal, then a shudder and sigh.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sour citrus → eyes blink rapidly, tongue thrusts out, cry is short and sharp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Musty odor → sneeze, then general increased motor activity and fussing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Warm milk vapor → immediate sucking motions, hands clench, body curls forward.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp vinegar → apnea, then explosive cry with coordinated limb extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unfamiliar cologne → startle, followed by scanning head movements and wary quiet.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "strong"
+      }
+    }
+  ]
+}

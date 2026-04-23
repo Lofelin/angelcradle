@@ -1,0 +1,225 @@
+{
+  "key": "late_neu/arousal_baseline_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "arousal": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The infant maintains a moderate level of arousal, with alert, bright-eyed periods interspersed with quiet rest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A baseline of moderate arousal is evident, characterized by smooth transitions between sleep states and active wakefulness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's cry is of moderate intensity, a clear signal that is neither weak nor overly distressed.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Motor activity shows a moderate baseline, with gentle limb movements and occasional startles that self-resolve.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Respiratory patterns are regular, supporting a state of moderate arousal without significant autonomic instability.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The baby demonstrates a moderate capacity for self-regulation, often settling after a brief, {seconds}-second fuss.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Visual tracking is present but intermittent, consistent with a moderate and sustainable alert state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A moderate arousal baseline allows for robust rooting and sucking reflexes during feeding attempts.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The infant's posture is generally relaxed with moderate muscle tone, neither flaccid nor hypertonic.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "State changes are gradual, flowing from drowsiness to a moderate alertness without abrupt shifts.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's activity level is moderate, with periods of quiet alertness lasting several minutes.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Cry acoustics reveal a fundamental frequency in the moderate range, indicating effective respiratory-phonatory coordination.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "This moderate baseline facilitates habituation to repeated gentle stimuli, a sign of neural maturity.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Skin color remains stable, and heart rate variability is within expected limits for this moderate state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The baby exhibits a moderate response to handling, becoming alert but not overwhelmed.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arousal is moderate, allowing the infant to orient briefly to a soft voice or a contrasting visual target.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Sleep-wake cycles show organization around a moderate baseline, with predictable periods of quiet sleep.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The Moro reflex is elicited with a moderate, well-modulated intensity before the infant recoils to midline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Overall behavior suggests a moderate and well-regulated nervous system, capable of engaging without overstimulation.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The infant's gaze can fix and follow slowly, a skill supported by this stable, moderate level of arousal.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Crying episodes are typically short-lived, resolving into a state of moderate alertness or drowsiness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Muscle tone in the limbs is consistently moderate, allowing for both flexion and gentle extension.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The baby demonstrates a moderate threshold for stimuli, responding to touch and sound without excessive startle.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "This moderate arousal provides an optimal backdrop for early social interaction and bonding.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Respiratory rate is steady, and occasional sighs are noted within this moderate state of vigilance.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The infant's activity is purposeful but not frantic, a hallmark of a moderate arousal baseline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "State control is good; the infant can achieve and maintain a moderate alert state for observation.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The cry has a rhythmic, moderate quality, suggesting adequate lung expansion and vocal fold adduction.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arousal levels are moderate, allowing the newborn to process environmental input without defensive withdrawal.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The baby's behavioral repertoire is richest during periods of moderate arousal, showing integrated reflexes and attention.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    }
+  ]
+}

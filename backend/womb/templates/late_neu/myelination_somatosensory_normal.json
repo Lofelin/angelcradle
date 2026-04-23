@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/myelination_somatosensory_normal",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "somatosensory",
+    "rate": "normal"
+  },
+  "templates": [
+    {
+      "text": "The somatosensory pathway is myelinating on schedule, prioritizing tactile input.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds normally along the somatosensory tract, enhancing touch perception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's somatosensory nerves are gaining their myelin sheaths at the expected pace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory myelination is a current developmental priority, proceeding typically.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin is being laid down along the somatosensory pathway as per the standard timetable.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The normal myelination of the somatosensory tract refines the baby's sense of touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory pathway myelination is active, following its typical developmental sequence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The baby's neural development prioritizes myelination of the somatosensory system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin sheaths form on the somatosensory nerves, supporting normal tactile processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The somatosensory tract is undergoing myelination, a key milestone in neural maturation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Standard myelination of the somatosensory pathway sharpens responses to physical contact.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural resources are directed toward myelinating the infant's somatosensory connections.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The myelination process favors the somatosensory pathway, proceeding at a normal rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory nerve fibers are being insulated with myelin on the expected schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Development follows the timetable, with the somatosensory tract receiving its myelin coating.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's sense of touch is being refined through normal somatosensory myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the somatosensory pathway is advancing, consistent with typical development.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The baby's brain prioritizes insulating the somatosensory nerves for efficient signaling.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory myelination proceeds, laying the groundwork for integrated tactile experience.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The normal developmental sequence includes active myelination of the somatosensory system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin deposition along the somatosensory tract enhances the fidelity of touch signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The somatosensory pathway is being myelinated, a cornerstone of typical neural maturation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Following the standard schedule, myelination focuses on the infant's somatosensory nerves.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory tract myelination is underway, optimizing tactile perception within {weeks} weeks.",
+      "vars": {
+        "weeks": {
+          "type": "int_range",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The baby's developing myelin sheaths currently favor the crucial somatosensory pathway.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal progression sees the somatosensory system receiving its insulating myelin layer.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the somatosensory connections is occurring as anticipated.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's neural timetable allocates resources to somatosensory pathway myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory nerve conduction improves as myelination advances on schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The typical developmental pattern shows prioritized myelination of the somatosensory tract.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "normal"
+      }
+    }
+  ]
+}

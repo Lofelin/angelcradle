@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_auditory_normal",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "auditory",
+    "rate": "normal"
+  },
+  "templates": [
+    {
+      "text": "The auditory pathway undergoes prioritized myelination, enabling crisp sound localization.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds normally along the auditory nerve, sharpening the newborn's acoustic startle response.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The cochlear nerve and its central auditory projections are the current focus of myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Prioritized auditory myelination refines the brainstem's processing of voice prosody and pitch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the auditory tract enhances the infant's ability to discriminate between familiar and novel sounds.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The lemniscal auditory pathway is being myelinated, supporting rapid transmission of tonal information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Focused myelination of the auditory cortex connections underlies the emerging orienting response to sound.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The eighth cranial nerve and its central auditory relays show robust, scheduled myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal progression of auditory pathway myelination sharpens the acoustic blink reflex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination prioritizes the brainstem's auditory nuclei, crucial for processing rhythmic sounds.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The geniculocortical auditory radiation is actively myelinating, building the infrastructure for complex hearing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Scheduled auditory myelination refines the infant's reaction to sounds of varying intensity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The lateral lemniscus and inferior colliculus show pronounced myelination, key for auditory spatial mapping.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the central auditory pathway reduces neural transmission latency by {milliseconds} milliseconds.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The auditory nerve's myelin sheath thickens normally, improving fidelity of sound signal conduction.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Focused myelination in the superior olivary complex enhances binaural auditory processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The scheduled myelination of thalamocortical auditory fibers supports more nuanced sound discrimination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Prioritized auditory tract myelination is evident in the newborn's organized response to a gentle rattle.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds along the tonotopic map in the auditory cortex, organizing frequency representation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The brainstem's auditory reflex arcs are myelinating, enabling swift, protective responses to loud noise.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal auditory pathway myelination underlies the infant's ability to synchronize movement to sound rhythm.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The medial geniculate body and its cortical projections show active, prioritized myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the auditory radiation fibers increases the speed and precision of sound processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The cochlear nucleus to inferior colliculus auditory segment is undergoing robust myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Scheduled auditory myelination refines the infant's head-turning response toward a source of sound.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The primary auditory cortex and its subcortical connections are the current focus of myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the auditory pathway enhances the newborn's detection of sounds as quiet as {decibels} dB.",
+      "vars": {
+        "decibels": {
+          "type": "int_range",
+          "min": 30,
+          "max": 50
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The central auditory system's myelination follows its typical schedule, supporting early vocal recognition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Prioritized myelination of the acoustic striae improves interaural time difference calculations.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal progression of myelination along the auditory tract is foundational for later language acquisition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "normal"
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_proprioceptive_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "severity": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The newborn demonstrates a moderate deficit in proprioceptive awareness, with limbs often held in awkward, floppy positions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is significantly delayed, leading to a noticeable lag in limb repositioning after movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderately underdeveloped proprioception results in a lack of coordinated limb bracing against surfaces.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's proprioceptive map is imprecise, causing frequent overshoot or undershoot during limb extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A clear proprioceptive lag of {seconds} seconds is evident when the infant attempts to bring a hand to midline.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive impairment is shown by the hands frequently drifting into the visual field unawares.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby exhibits a moderate lack of proprioceptive tone, with limbs appearing loosely disconnected from the core.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive integration is notably weak, disrupting the smoothness of the Moro reflex's recoil phase.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Limb positioning is often inaccurate due to a moderate deficit in proprioceptive spatial mapping.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's moderate proprioceptive delay manifests as a sluggish correction of an asymmetrical neck posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback for the trunk is diminished, resulting in poor maintenance of a tucked fetal position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate proprioceptive gap causes the infant to startle easily when a limb contacts an unexpected surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby's movements lack graded force, a sign of moderately underdeveloped proprioceptive calibration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive awareness in the lower limbs is particularly weak, leading to frog-like, splayed postures.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderately impaired proprioception disrupts the rhythmic alternation of legs during spontaneous kicking.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant shows a clear proprioceptive deficit, often failing to maintain a hand in a grasp for more than {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate lack of proprioceptive input makes the baby's rooting reflex appear uncoordinated and searching.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive signals from the extremities are dampened, giving movements a floating, poorly anchored quality.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's cry is accompanied by poorly modulated limb flailing due to moderate proprioceptive dysfunction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderately deficient proprioception is evident in the inconsistent force applied during palmar grasping.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback loops are underdeveloped, causing jerky corrections during spontaneous arm movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby exhibits a moderate proprioceptive lag, often staring at a moving limb as if discovering it anew.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A generalized proprioceptive softness is noted, with the infant offering little resistance to passive movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive integration for the mouth is moderately impaired, affecting the consistency of non-nutritive sucking.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's moderate proprioceptive deficit results in a failure to consistently bring both hands together.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive awareness of head position is notably weak, requiring frequent repositioning for airway patency.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Movements lack the fluidity of intact proprioception, appearing mechanical and slightly disjointed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate proprioceptive delay disrupts the smooth transition from flexion to extension in the lower limbs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's posture is loosely organized, a direct result of moderately underdeveloped proprioceptive tone.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive mapping for the shoulders is imprecise, leading to a limited and awkward range of arm movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "moderate"
+      }
+    }
+  ]
+}

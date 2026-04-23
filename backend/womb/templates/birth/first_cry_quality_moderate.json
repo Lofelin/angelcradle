@@ -1,0 +1,441 @@
+{
+  "key": "birth/first_cry_quality_moderate",
+  "count": 60,
+  "applies_when_default": {
+    "arousal": "moderate"
+  },
+  "templates": [
+    {
+      "text": "a steady cry rose, finding its rhythm breath by breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a clear, insistent cry filled the space",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a strong cry built itself up, each wave louder than the last",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a determined cry emerged, rhythmic and purposeful",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry unfolded, steady and full-throated",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry began with a clear, measured cadence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a firm, rhythmic wail established itself in the air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's cry rang out, a steady pulse of sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a mid-pitched cry, rhythmic and unwavering",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry rose in a steady, undulating pattern",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a robust cry, finding its tempo and holding it firm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's cry was a clear, rhythmic declaration",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a strong, rhythmic cry built with each breath cycle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry emerged as a steady, sonorous vibration",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic vocalization, gaining clarity and presence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's cry was a steady, insistent rhythm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a clear cry, its rhythm as steady as a heartbeat",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry began, a rhythmic and focused vocal effort",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a firm cry, its rhythmic pattern now fully established",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's cry settled into a strong, regular cadence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry, clear-toned and steadily sustained",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry unfolded with a deliberate, rhythmic force",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a steady vocalization, rhythmic and full of presence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's cry was a rhythmic, mid-volume wave",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a cry of moderate arousal, rhythmic and well-formed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry rose, a steady stream of rhythmic sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a strong, rhythmic cry filled the room for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic wail, steady in pitch and volume",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry began with a firm, rhythmic exhalation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a steady cry, its rhythm marking time with each breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's cry was a sustained, rhythmic call",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry, building steadily from the first breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry emerged, a steady and purposeful rhythm of sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry, steady as a metronome's beat",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry emerged, a clear and steady vocal stream",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a mid-range cry, its rhythm firm and unbroken",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a cry with a stable cadence, building with each breath",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's cry rang out in a clear, measured pattern",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic wail, its tempo settled and strong",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry began as a steady, focused vocalization",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a robust cry established its rhythmic presence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry unfolded in a series of steady, even waves",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a firm cry rose, marked by its consistent rhythm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's vocal effort settled into a steady cadence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry, each vocal burst matching the last",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry came as a steady, insistent acoustic signal",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a mid-pitched cry with a locomotive-like rhythm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry built, a rhythmic and purposeful declaration",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a strong cry, its rhythmic quality unmistakable",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's cry was a steady pulse of vocal energy",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic vocalization, clear and steadily maintained",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry began after {seconds} seconds, rhythmic and clear",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a cry with a stable, undulating rhythmic pattern",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's cry was a steady, focused stream of sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a rhythmic cry, its tempo unwavering and assured",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the cry emerged, a clear tone with a steady rhythm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a robust, rhythmic cry filled the immediate space",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the newborn's vocal cry was a model of rhythmic stability",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "a cry settled into a strong, predictable rhythmic cycle",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "the infant's cry rang with a steady, melodic rhythm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    }
+  ]
+}

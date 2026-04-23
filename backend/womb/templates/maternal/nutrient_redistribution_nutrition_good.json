@@ -1,0 +1,219 @@
+{
+  "key": "maternal/nutrient_redistribution_nutrition_good",
+  "count": 30,
+  "applies_when_default": {
+    "nutrition_tier": "good"
+  },
+  "templates": [
+    {
+      "text": "Folate supports rapid neural tube closure and spinal cord development.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iron enriches fetal hemoglobin, ensuring oxygen delivery to growing tissues.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iodine fuels thyroid hormone synthesis for brain architecture and myelination.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "DHA integrates into retinal membranes, sharpening early visual acuity.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Calcium deposits into long bones and regulates cardiac rhythm stability.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Glucose provides steady cerebral energy for neurogenesis and synapse formation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Amino acids assemble into enzymes and structural proteins for organ maturation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Folate and iron together prevent megaloblastic changes and optimize red cell mass.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iodine and DHA synergize for cochlear development and auditory signal clarity.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Balanced glucose maintains umbilical flow without hyperglycemic stress.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Amino acids support hepatic glycogenesis and detoxification pathways.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Calcium and phosphorus co-regulate bone density through controlled deposition.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "DHA accumulates in synaptic membranes, enhancing neurotransmitter release efficiency.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iron stores build gradually, preparing for neonatal erythropoiesis after birth.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Folate prevents neural tube defects by methylating DNA in dividing cells.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iodine crosses the placenta to mature the fetal thyroid feedback loop.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Glucose and amino acids together fuel the Krebs cycle for sustained ATP.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Calcium uptake into sarcoplasmic reticulum primes muscle contractility for breathing.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "DHA protects against oxidative stress in developing cortical neurons.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iron-dependent enzymes drive mitochondrial respiration in cardiac muscle.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Folate and iodine jointly support cochlear hair cell differentiation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Amino acids provide nitrogen for nucleotide synthesis in rapid growth phases.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Glucose is stored as glycogen in the liver for postnatal energy reserves.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Calcium and DHA cooperate to stabilize ion channels in hippocampal neurons.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iron aids catecholamine synthesis, modulating fetal heart rate variability.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Folate-derived methyl groups shape histone patterns for long-term gene regulation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Iodine deficiency is avoided, ensuring thyroxine reaches all fetal compartments.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "DHA and choline together bolster the entorhinal cortex for memory encoding.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Glucose and folate feed the pentose phosphate pathway for nucleic acid construction.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    },
+    {
+      "text": "Amino acids and iron coordinate hemoglobin assembly in erythroblast islands.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "good"
+      }
+    }
+  ]
+}

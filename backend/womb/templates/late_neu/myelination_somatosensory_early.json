@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/myelination_somatosensory_early",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "somatosensory",
+    "rate": "early"
+  },
+  "templates": [
+    {
+      "text": "The somatosensory pathway is leading the myelination race, its axons beginning to sheath for swift tactile signaling.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has commenced early along the somatosensory tract, insulating fibers for rapid touch and proprioception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Ahead of schedule, the somatosensory pathway's axons are being wrapped, prioritizing the sense of touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The neural insulation process is prioritizing the somatosensory route, sheathing its fibers for efficient sensory relay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination is evident in the somatosensory pathway, coating its tracts for quicker tactile processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The somatosensory tract is the first to undergo myelination, its fibers gaining their protective sheaths.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin sheaths are forming with priority on the somatosensory axons, enhancing touch transmission.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Leading neural development, the somatosensory pathway's myelination has begun, insulating for sensory speed.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The early myelination focus is on the somatosensory system, wrapping its long-distance communication lines.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Somatosensory nerve fibers are being selectively myelinated, a head start for tactile and pain pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing along the somatosensory corridor, sheathing axons responsible for body sensation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The insulation of the somatosensory pathway is underway, prioritizing feedback from skin and joints.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "An early burst of myelination targets the somatosensory tracts, preparing for refined tactile perception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading edge of myelination is coating the critical somatosensory nerve fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin begins to wrap the somatosensory axons, giving this sensory highway a developmental advantage.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The somatosensory pathway receives priority myelination, its sheaths forming to accelerate touch signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early neural insulation is concentrating on the somatosensory system, wrapping its projection fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has taken an early lead along the somatosensory route, insulating for immediate sensory input.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The process of myelination is first sheathing the axons of the somatosensory perception system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Somatosensory nerve tracts are the priority for early myelination, gaining their insulating layers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "A head start in myelination is given to the somatosensory pathway, crucial for environmental interaction.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The somatosensory system's axons are being myelinated ahead of others, enhancing signal fidelity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin sheaths are preferentially forming on somatosensory fibers, optimizing touch and temperature pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early-stage myelination is prominently active in the somatosensory tracts, wrapping their long axons.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading developmental focus is myelination of the somatosensory pathway for rapid sensory processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination commences with the somatosensory system, insulating its critical touch and pressure pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The somatosensory tract's early myelination provides a foundation for coordinated sensory-motor responses.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Priority for initial myelination is granted to the somatosensory axons, sheathing them for faster conduction.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin begins to coat the somatosensory nerve fibers, reducing signal delay by {milliseconds} milliseconds.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The somatosensory pathway is the first to be myelinated, its sheaths forming to support early tactile learning.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "early"
+      }
+    }
+  ]
+}

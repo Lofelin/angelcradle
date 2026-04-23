@@ -1,0 +1,256 @@
+{
+  "key": "late_org/primary_sense_tactile_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "strength": "strong"
+  },
+  "templates": [
+    {
+      "text": "A hyper-dense network of tactile receptors fires with exquisite precision, mapping every contour of the uterine wall.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural pathways for tactile sensation are so densely myelinated that the faintest brush triggers a full-body orienting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile processing is acutely specialized, with cortical maps for touch expanded far beyond typical neonatal development.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The somatosensory cortex exhibits intense, premature organization, making tactile discrimination its primary mode of perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A profound tactile hypersensitivity arises from an over-abundance of Merkel cells and Meissner's corpuscles in the skin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural circuits for light touch are so densely interconnected they pre-activate motor pathways in anticipation of contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile acuity is paramount, with thalamocortical projections for sensation forming exceptionally early and robust.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Every vibration and pressure change is registered by a hyper-developed tactile system, its neural feedback loops instantaneous.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The tactile domain dominates, with sensory ganglia showing a marked over-representation of light-touch afferent fibers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense lattice of peripheral nerves creates a tactile map of the environment with startling spatial resolution.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile perception is so refined it can distinguish textures through amniotic fluid, a feat of precocious neural wiring.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary sensory experience is tactile, driven by a cortex where somatosensory areas have expanded disproportionately.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An over-specialization in tactile processing means even gentle uterine contractions are perceived as distinct, complex waveforms.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural substrates for touch are densely packed, leading to a tactile vigilance that overrides other nascent sensory channels.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The infant's world is defined by touch, with a hyper-dense array of mechanoreceptors feeding a rapidly integrating brainstem.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile sensitivity is extreme, mediated by accelerated maturation of the dorsal column-medial lemniscus pathway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A super-abundance of synaptic connections in the somatosensory cortex makes tactile input vivid and all-consuming.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The tactile sense is preternaturally sharp, with peripheral nerve endings exhibiting decreased thresholds for activation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural circuitry for processing light touch and pressure is so dense it forms the core of the infant's perceptual identity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile hyper-awareness stems from a precocious over-development of the parietal lobe's sensory integration zones.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Every movement is felt with intense clarity due to a profuse innervation of the skin and underlying fascial layers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The tactile system is the dominant processor, its afferent pathways myelinating weeks ahead of the auditory or visual tracts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense web of tactile neurons creates a continuous, high-fidelity readout of all surface contact and internal pressure shifts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile perception is so acute it registers the mother's heartbeat as a distinct rhythmic pressure pattern on the skin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural specialization for touch is profound, with barrel cortex-like organization appearing in primary somatosensory regions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An exquisite tactile sense arises from the premature formation of complex, inhibitory-interneuron networks within sensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The world is known primarily through touch, mediated by a dense and prematurely synchronized sensorimotor feedback loop.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile receptors are so numerous and finely tuned they can detect current flow within the amniotic fluid.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A hyper-developed tactile system processes contact with such density that it leaves a lasting sensory echo for {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Tactile input triggers massive, synchronous cortical activation, indicating a sensory pathway of exceptional bandwidth and density.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "strong"
+      }
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "key": "late_neu/neural_anomalies_clean",
+  "count": 30,
+  "applies_when_default": {
+    "has_anomaly": false
+  },
+  "templates": [
+    {
+      "text": "No neurological anomalies detected.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Neural development appears typical for gestational age.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Neurological examination is unremarkable.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Normal primitive reflexes and tone.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "CNS findings are within normal limits.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "No signs of neural dysfunction observed.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Cranial nerve assessment is normal.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Motor and sensory responses are appropriate.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Neonatal behavior is consistent with typical development.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "The neurological exam reveals no abnormalities.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Alertness and responsiveness are age-appropriate.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Symmetrical movements and normal muscle tone.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "No evidence of seizure activity or abnormal movements.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Cry is robust and acoustically typical.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Sleep-wake cycles are organizing normally.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Visual and auditory tracking are present.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Posture and spontaneous activity are normal.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "No focal neurological deficits.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Arousal and self-regulation are developing typically.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "The infant exhibits a normal Moro reflex.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Rooting and sucking reflexes are strong and symmetrical.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "No signs of hypertonia or hypotonia.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "The grasp reflex is present bilaterally.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Cranial sutures and fontanelles are normal.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Behavioral state transitions are smooth.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Acoustic cry analysis shows normal parameters.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "The stepping reflex is present with support.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "No abnormal eye movements or nystagmus.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "Infant startles appropriately to sudden sound.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    },
+    {
+      "text": "All neurological milestones are met for this stage.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": false
+      }
+    }
+  ]
+}

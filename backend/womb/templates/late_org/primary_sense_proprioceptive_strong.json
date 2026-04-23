@@ -1,0 +1,256 @@
+{
+  "key": "late_org/primary_sense_proprioceptive_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "strength": "strong"
+  },
+  "templates": [
+    {
+      "text": "A hyper-dense proprioceptive map is forming, its neural circuits firing with exquisite sensitivity to the slightest shift in limb position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive acuity is extreme, with neural pathways for joint angle and muscle tension already wired with adult-like precision.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The proprioceptive cortex is a dense thicket of neurons, hyper-attuned to the body's own motion and spatial configuration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural loops for proprioception are intensely myelinated, creating a lightning-fast internal model of bodily posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback loops are so refined they can detect a muscle fiber twitch, pre-wiring for coordinated movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A profound proprioceptive sense dominates, its specialized neural network mapping every tendon stretch and joint rotation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The fetal proprioceptive system is acutely sharp, with dense thalamocortical projections dedicated to somatic sensation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive ganglia are hyper-developed, creating an internal GPS of the body with millimetric precision.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural circuits for proprioception form a dense, intricate web, granting an almost precognitive awareness of limb position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary sense is intensely proprioceptive, with specialized mechanoreceptor pathways firing at a heightened baseline rate.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive acuity is paramount, driven by a super-dense concentration of muscle spindles and their afferent nerve fibers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A hyper-vigilant proprioceptive map is laid down, its neural architecture prioritizing the constant monitoring of bodily schema.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The proprioceptive cortex exhibits exceptional dendritic arborization, fine-tuning the sense of self in space.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive pathways are the dominant neural highway, carrying a torrent of data about posture and movement with zero delay.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Specialized proprioceptive interneurons form a dense lattice, creating instantaneous feedback for motor control.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The fetal nervous system is exquisitely tuned for proprioception, with a dense thicket of sensory neurons mapping kinetic force.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive sensitivity is extraordinarily sharp, its dedicated neural circuitry firing in complex, rhythmic patterns.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense network of proprioceptive afferents provides a continuous, high-fidelity stream of data on body position and motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary sensory landscape is proprioceptive, characterized by massively interconnected neural loops for somatic awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive processing is hyper-developed, with specialized cortical columns dedicated to decoding limb velocity and acceleration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural substrates for proprioception are exceptionally dense, creating a vivid, constant internal sensation of bodily presence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The proprioceptive system is acutely specialized, its neural pathways myelinating rapidly to shave {milliseconds} off feedback loops.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 20
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dominant proprioceptive sense arises from a super-abundance of Golgi tendon organs and their high-speed neural connections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive acuity is the cornerstone, built upon a foundation of densely packed neurons in the dorsal root ganglia.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The fetal brain prioritizes proprioception, weaving a dense tapestry of sensory-motor circuits for precise kinematic awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive mapping is intensely sharp, with neural clusters firing in specific patterns for each discrete joint angle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A hyper-aware proprioceptive system is online, its neural architecture minimizing noise to maximize fidelity of somatic data.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary sensory modality is proprioceptive, driven by a dense convergence of mechanosensory inputs onto the somatosensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Proprioceptive neural circuits are laid down with extreme density, pre-configuring an innate sense of balance and limb position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An exceptionally sharp proprioceptive sense emerges from the dense, rapid-firing networks of the cerebellum and parietal lobe.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "strong"
+      }
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "key": "birth/first_cry_body_moderate",
+  "count": 63,
+  "applies_when_default": {
+    "arousal": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Legs drawn up, arms half-extended, settling into the new world.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Fingers curling and uncurling, body slowly adjusting to gravity.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Face scrunched but relaxing between cries, chest rising steadily.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Body curled inward, seeking the shape it knew, then slowly uncurling.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Limbs unfurl in a jerky sequence, the body finding its new axis against the mattress.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arms splay outward, then draw back in a reflexive hug, the torso arching gently.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A brief startle sends the arms wide, followed by a slower, more controlled recoil toward the midline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Legs pedal in the air for a moment before settling into a bent, resting posture.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The spine straightens from its curled position, limbs extending into the space of the bassinet.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Hands open and close rhythmically as the shoulders drop from a tense shrug.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Knees pull up toward the belly, then push down, testing the resistance of the swaddle.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The body gives a full-limb stretch, toes pointing and fingers spreading, before relaxing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arms lift and cross over the chest in a self-soothing motion, the head turning side to side.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A slight tremor runs through the extremities, subsiding as muscle tone establishes.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Feet push against the blanket, the hips rising slightly before settling back down.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's posture shifts from flexion to a more open, extended alignment over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Fingers brush the cheek in a rooting reflex, the arm then falling loosely to the side.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Legs perform alternating kicks, the motion gradually slowing as arousal levels out.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The torso twists slightly, one arm extending further than the other in an asymmetric tonic reflex.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Shoulders rotate inward, then outward, as if mapping the boundaries of the new body.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A gentle Moro fragment: arms abduct partially before being drawn back in by flexion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The body writhes in a slow, worm-like motion, adjusting to the feel of the sheets.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Hands rise to hover near the face, fingers flexing, then descend to rest on the abdomen.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Hips abduct, knees falling outward in a frog-leg position before returning to flexion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A series of small jerks travel down the limbs, integrating into smoother, purposeful movement.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The head lifts briefly, causing the shoulders to tense, then all sinks back into the surface.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arms move in a slow, swimming motion, the palms occasionally turning upward.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Feet dorsiflex, toes fanning, then plantarflex as the legs settle.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The body exhibits a crawling reflex, legs pushing while arms make rowing motions.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Muscle tone fluctuates visibly, from floppy to firm, before finding a moderate baseline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "One leg extends fully while the other remains bent, a common asymmetrical resting pose.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The infant's movements transition from large, jerky arcs to smaller, localized adjustments.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "After the initial cry, the body goes still for a beat, then erupts into a wave of limb extension.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Elbows and knees unlock in stages, the body surrendering to the pull of gravity.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Arms extend outward in a slow, asymmetrical reach, then fold back toward the body.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The legs, initially flexed, push downward in a gentle, alternating motion against the surface.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A full-body shudder precedes a gradual extension of the spine and limbs into a more open posture.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Hands flutter near the face before arms descend, palms turning upward in a resting position.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The head turns to one side, prompting a fencing posture that slowly dissolves into symmetry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Toes fan out and curl back in as the ankles rotate, exploring the new proprioceptive space.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Shoulders drop from a high guard, allowing the elbows to bend and settle at the infant's sides.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A brief Moro fragment—arms lifting—is aborted, transitioning into a smooth limb descent.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The body uncurls in segments: first the spine lengthens, then the legs, finally the arms.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Knees rise and fall rhythmically, the hips swiveling slightly with each movement.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Fingers splay wide in a starfish pattern before softly closing into a loose fist.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The torso arches gently off the surface for a moment, then settles with a sigh.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Limbs move in a fluid, writhing motion that gradually slows to intermittent twitches.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "One arm stretches overhead while the other remains flexed, creating a transient asymmetrical tone.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Feet press together, soles touching, as the legs adopt a frogged position before extending.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A wave of extension travels from the shoulders down to the feet, then recedes into flexion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's body rocks slightly side-to-side, limbs adjusting to counterbalance the motion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Palms open and press flat against the blanket, bearing a slight weight before relaxing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Elbows and knees unlock in a staggered sequence, each joint finding its resting angle.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A startle reflex truncates into a deliberate arm extension, fingers brushing the cheek.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The infant's body yields to gravity, limbs sinking into the mattress with a gradual release of tension.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Alternating leg movements, like gentle cycling, slow as the feet find purchase on the sheet.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Shoulders hunch and then roll back, the scapulae flattening against the bassinet surface.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The hands rise, cross at the wrists briefly, then fall apart to rest on the abdomen.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Muscle tone fluctuates visibly, moving from moderate hypertonia to a more placid state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A subtle tremor in the chin extends to the arms before being suppressed by stabilizing contractions.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The body makes small, adjusting movements, orienting toward the source of warmth and touch.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Limbs draw inward in a clasp, then slowly push outward, testing the limits of their new domain.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Hips abduct, knees bending outward, then adduct back toward the body's midline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    }
+  ]
+}

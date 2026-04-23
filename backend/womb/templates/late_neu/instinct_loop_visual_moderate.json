@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_visual_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Sudden shadow passing overhead → eyes widen, arms jerk in a brief startle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "High-contrast edge moves into view → head turns slowly, gaze locks for {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Bright light flicker → blinks rapidly, hands clench into loose fists.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Large, looming object approaches → body stills, breathing pauses momentarily.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Red object sways side-to-side → eyes track haltingly, mouth forms a small 'o'.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sharp change in ambient light level → squints, emits a soft, short vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Slowly rotating mobile → sustained visual fixation, subtle pedaling of legs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Fast, jerky motion at periphery → sharp head turn toward stimulus, then away.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Checkerboard pattern presented → alert stillness, increased blink rate.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Face-like shape comes near → eyes brighten, cooing sound follows initial stare.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light reflection dances on ceiling → quiet alertness, one arm extends toward it.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Object recedes from view → gaze lingers, then drifts, fingers uncurl.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden occlusion of a favored visual target → brief fussy cry, searching head movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Steady, moderate-intensity light source → pupils constrict, body relaxes into a calm state.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Complex geometric pattern → intense scanning with eyes, minimal limb movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Shadow grows larger rapidly → Moro reflex partially engages, followed by a whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Repetitive horizontal movement → smooth pursuit eye movements initiate, then break.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Color transition from red to blue → blinks, shows a slight orienting head tilt.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light source suddenly extinguishes → startle, then a low-pitched, grumbling cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Slow vertical oscillation → eyes track upward, sucking motions begin without object.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Visual 'ping' of a small, bright target → saccadic jump, hand moves toward midline.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Gradual brightening of the field → eyes open wider, arms stretch out slightly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Two competing visual stimuli → gaze alternates between them, brief state of arousal.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Predictable, rhythmic visual pulse → entrained limb jerks in time, then habituation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Unexpected visual texture change → scanning pauses, a single sharp exhale follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sustained eye contact from caregiver → mutual gaze held, stilling of all other movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Fade to grey after colorful display → gaze becomes unfocused, a sigh is released.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Strobing at {rate} Hz → grimace, turning away of the head to avoid stimulus.",
+      "vars": {
+        "rate": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Edge of a crib bar coming into sharp focus → reaches out clumsily, makes contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Simultaneous light and moderate sound → visual stimulus dominates, dampens acoustic startle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "moderate"
+      }
+    }
+  ]
+}

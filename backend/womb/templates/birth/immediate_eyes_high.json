@@ -1,0 +1,435 @@
+{
+  "key": "birth/immediate_eyes_high",
+  "count": 60,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "eyes wide, dark and unfocused",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "blinking rapidly, overwhelmed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-eyed, scanning the new world",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert gaze, tracking movement",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide open, pupils reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "bright-eyed, startled by the light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant stare, taking it all in",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open wide, gaze darting",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake and watchful, pupils constricting",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide, searching eyes, blinking at stimuli",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, eyes fixating on a shape",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide with newborn awareness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "startled gaze, reacting to motion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-open eyes, scanning the room",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "bright, attentive eyes, following sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open, alert to every change",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant, eyes wide and unblinking",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake, eyes taking in the light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, gaze sharp and present",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, pupils dilating then constricting",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-eyed stare, processing the brightness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open, visually engaged and reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "startled, eyes wide for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake, gaze actively scanning surroundings",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, reacting strongly to stimulus",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert and visually tracking a nearby object",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-open, bright eyes, fully conscious",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant gaze, eyes open and searching",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, blinking at the sudden light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake, with a sharp, observant stare",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, eyes wide, pupils briskly reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open, visually alert and responsive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide, alert eyes tracking a moving light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide open, startled by sudden sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant gaze, fixating on a nearby face",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "bright, reactive pupils following motion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, scanning with newborn intensity",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert and watchful, eyes wide with surprise",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-eyed stare, reacting to environmental shift",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open, gaze sharp and highly responsive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant, unblinking eyes taking in the scene",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert gaze, pupils constricting to bright light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, visually grasping the new environment",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake, eyes wide with a focused, alert expression",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "bright-eyed, visually startled by movement",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-open eyes, gaze actively exploring",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, eyes fixating intently on a high-contrast edge",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide, showing a strong blink reflex to stimulus",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant stare, eyes wide and remarkably present",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "startled by light, eyes wide and searching",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, wide-eyed gaze tracking a slow object",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes open wide, exhibiting visual alertness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "bright, attentive eyes reacting to a voice",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "wide-eyed and watchful, pupils reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert gaze, scanning from light source to shadow",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "eyes wide open, visually orienting to sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "startled, with a wide-eyed, fixed stare",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigilant, eyes wide, blinking at a bright light",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "alert, eyes wide and unfocused yet highly reactive",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "awake, with a bright, wide-eyed look of awareness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "key": "birth/immediate_color_moderate",
+  "count": 32,
+  "applies_when_default": {
+    "vitality": "moderate"
+  },
+  "templates": [
+    {
+      "text": "dusky at first, clearing with each breath",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "blotchy red and white, circulation adjusting",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis present, trunk pink, limbs dusky",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink core with cyanotic extremities",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "central pinkness, peripheral mottled blue",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "ruddy torso, hands and feet bluish",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "trunk flushed, acrocyanosis of the limbs",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink body, blue-tinged fingers and toes",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "mottled appearance, pink central, dusky distal",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis, improving over {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink centrally with peripheral cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "trunk rosy, extremities pale and blue",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "cyanosis of the extremities, core well-perfused",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "dusky limbs against a pink torso",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis, the blue receding from the limbs",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink trunk, mottled blue hands and feet",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "central redness fades to peripheral duskiness",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "limbs cyanotic, trunk a healthy pink",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink core, cyanosis at the nailbeds",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis, color normalizing from the center out",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "ruddy chest and abdomen, bluish arms and legs",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "trunk pink, distal cyanosis clearing",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "mottled blue and pink, central perfusion good",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink torso, dusky acral regions",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "cyanosis of the extremities, improving with stimulation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis, the classic newborn pattern",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink body with cyanotic nail beds and lips",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "central flush, peripheral bluish mottling",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "trunk well-colored, limbs showing transient cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "acrocyanosis, pinkness spreading to the hands",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "dusky extremities contrast with a pink chest",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    },
+    {
+      "text": "pink core, peripheral cyanosis fading now",
+      "vars": {},
+      "applies_when": {
+        "vitality": "moderate"
+      }
+    }
+  ]
+}

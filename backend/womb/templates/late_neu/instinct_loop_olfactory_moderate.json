@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/instinct_loop_olfactory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A sudden whiff of strong perfume → head turns sharply away, a brief, sharp cry erupts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "The scent of milk formula wafts near → rooting reflex initiates, lips purse and smack.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Acrid odor of antiseptic → body stiffens momentarily, followed by a soft, grunting exhale.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Faint trace of mother's skin scent → quieting, subtle nuzzling motion against the crib sheet.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Overpowering smell of alcohol swab → face scrunches, a single, high-pitched vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Earthy aroma of clean linen → breathing deepens and slows, hands relax from fists.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Pungent scent of a soiled diaper → legs draw up in a startle-like motion, a fussy whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sweet, floral note from a lotion → eyes flutter open briefly, a contented sigh follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sharp, metallic hospital smell → a brief apnea, then a rapid series of shallow breaths.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Warm, familiar scent of breast milk → active searching with mouth, hands move toward face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Stale, recycled air from a vent → a slight shudder, then a muted, grumpy coo.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sour note of spit-up on clothing → head turns to the side, tongue extends in a slight gag.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Fresh, green scent of baby soap → muscles relax visibly, a soft 'ah' sound is released.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Burnt smell from a distant heater → a full-body startle, a sharp cry lasting {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Mild, powdery scent of talc → sucking motions begin spontaneously, eyes remain closed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Rancid odor of old food → grimace deepens, a series of distressed, hiccup-like cries.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Clean, ozone smell after rain (through a window) → breathing pattern becomes more regular and even.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Overly sweet, synthetic fruit scent → a confused pause, then a brief, questioning whine.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Musky scent of a unfamiliar caregiver → slight withdrawal, arms cross in a self-soothing gesture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sharp vinegar aroma → nostrils flare, a quick, reflexive sneeze clears the airway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Faint smell of leather from a bag → eyes open wide for a moment, gaze becomes unfocused.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Warm, yeasty smell of bread (distant) → mouth opens in an 'O', gentle sucking sounds follow.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Chemical smell of new plastic toy → face turns away, a low-grade, continuous fuss begins.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Eucalyptus or mild menthol in the air → nasal flaring, a deeper, clearer inhalation occurs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sulfurous note of a hard-boiled egg → gag reflex triggers mildly, followed by a cough.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Vanilla or other comforting bakery scent → a faint smile reflex appears, limbs extend gently.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Stale tobacco smoke on clothing → agitation increases, cry becomes harsh and grating.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Salty, oceanic air (if near coast) → movements calm, a soft, rhythmic cooing starts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Pungent aroma of strong cheese → a pronounced frown, head shakes side-to-side once.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Clean, sun-dried cotton scent → the Moro reflex is inhibited, settling occurs more quickly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "moderate"
+      }
+    }
+  ]
+}

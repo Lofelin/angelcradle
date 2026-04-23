@@ -1,0 +1,225 @@
+{
+  "key": "maternal/stress_response_stress_high",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "high"
+  },
+  "templates": [
+    {
+      "text": "Maternal cortisol surge tightens uterine vasculature, delaying fetal oxygen delivery.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Catecholamine spike redirects placental flow, starving fetal periphery.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Sympathetic flood constricts spiral arteries, dropping fetal heart rate variability.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal HPA axis activates prematurely, flooding circulation with stress hormones.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Uterine muscle tension compresses intervillous spaces, reducing gas exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal hyperventilation shifts acid-base balance, stressing fetal chemoreceptors.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Adrenal medulla release narrows placental capillaries, forcing fetal bradycardia.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal blood pressure rises as maternal fight-flight diverts oxygen away.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Glucocorticoid cascade inhibits fetal growth signals, prioritizing survival over development.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Umbilical artery resistance spikes, lowering fetal oxygen saturation by {percent}%.",
+      "vars": {
+        "percent": {
+          "type": "int_range",
+          "min": 5,
+          "max": 20
+        }
+      },
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal norepinephrine shunts blood from uterus, triggering fetal hypoxic gasps.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal heart rate accelerations vanish as sympathetic tone overrides vagal brake.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Placental perfusion drops sharply, drowning fetal tissues in metabolic waste.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cortisol crosses the placenta, reprogramming fetal amygdala toward heightened alertness.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal stress hormones suppress fetal insulin production, starving neurons of glucose.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Vasoconstriction of uterine arteries stalls fetal growth trajectory within minutes.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal adrenal glands enlarge acutely, pumping out dehydroepiandrosterone into circulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Uteroplacental resistance doubles, forcing fetal left ventricle to labor against high afterload.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal cortisol levels peak, disrupting fetal sleep-wake cycling and autonomic stability.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal oxygenation index falls below threshold, activating primitive laryngeal chemoreflexes.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Beta-adrenergic activation relaxes fetal gut, increasing aspiration risk for meconium.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Placental 11β-HSD2 enzyme is overwhelmed, exposing fetal brain to maternal cortisol excess.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal heart rate decelerates into shallow U-shapes as oxygen debt accumulates.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal vasopressin release constricts spiral arterioles, starving placental villi of blood.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal sympathetic chain fires continuously, depleting catecholamine reserves before delivery.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Transplacental oxygen gradient inverts, making fetal extraction of O₂ increasingly difficult.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Amniotic adrenaline rises, coating fetal lungs and blunting surfactant production.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal baroreceptors reset upward, setting baseline blood pressure to a new high.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal inflammatory cascade floods the placenta, stiffening vessel walls and narrowing flow.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Fetal cerebral autoregulation fails as mean arterial pressure swings beyond normal range.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    }
+  ]
+}

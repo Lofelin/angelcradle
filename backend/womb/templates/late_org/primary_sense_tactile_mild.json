@@ -1,0 +1,250 @@
+{
+  "key": "late_org/primary_sense_tactile_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "strength": "mild"
+  },
+  "templates": [
+    {
+      "text": "A mild tactile dominance is present, with slightly denser neural circuits for processing touch and pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The tactile sensory channel is mildly specialized, showing enhanced neural connectivity for haptic feedback.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural pathways for tactile sensation are preferentially wired, creating a subtle bias toward touch-based exploration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A slight tactile primacy is noted, with marginally more developed cortical maps for somatosensory input.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile processing shows mild specialization, evidenced by a denser network of sensory neurons in the periphery.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The infant's sensory profile leans gently toward tactile input, with reinforced synaptic connections for texture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild tactile bias is observable, correlating with slightly more intricate thalamocortical loops for touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile perception is subtly enhanced, supported by a marginally denser arborization of mechanoreceptor pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural circuits for tactile stimuli are mildly amplified, favoring the integration of light touch and proprioception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A gentle tactile preference is evident, with a small increase in synaptic density within somatosensory regions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The tactile domain is slightly privileged, featuring a more elaborate neural architecture for processing contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild tactile specialization is seen in the slightly heightened responsivity of the dorsal column-medial lemniscus pathway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile input channels are mildly favored, demonstrating a subtle increase in cortical representation for the hands.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A low-grade tactile dominance exists, with marginally more robust connectivity from skin receptors to the cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile acuity is mildly pronounced, corresponding to a denser innervation pattern in key cutaneous regions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Sensory processing shows a slight tilt toward tactile modalities, with reinforced circuitry for light pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild tactile lead is present, indicated by a small but measurable boost in somatosensory evoked potentials.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural networks for touch are subtly prioritized, creating a faint but detectable bias for haptic information.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile sensitivity is gently heightened, supported by a marginally more complex organization of Merkel cell endings.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The infant exhibits a mild tactile inclination, with a slightly denser web of interneurons for processing gentle stroking.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A soft tactile advantage is noted, reflecting a minor amplification in the neural pathways for discriminative touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile perception holds a mild edge, due to a small increase in the myelination of afferent touch fibers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Somatosensory circuits show mild tactile specialization, with enhanced synaptic pruning for non-tactile competing inputs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint tactile primacy is detectable, linked to a denser than average distribution of Meissner's corpuscles.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile processing is mildly optimized, with a slight thickening of the relevant cortical layers in the postcentral gyrus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The sensory system has a gentle tactile lean, demonstrated by a marginally faster conduction velocity for light touch signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A low-level tactile bias is established, featuring a small but significant increase in neural branching for contact perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Tactile channels are mildly dominant, showing a subtle strengthening of connections between the skin and the sensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild tactile specialization manifests as a slightly denser clustering of neurons responsive to vibration and light pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle tactile preference is wired in, with a minor boost in the neural resources allocated for processing gentle touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "strength": "mild"
+      }
+    }
+  ]
+}

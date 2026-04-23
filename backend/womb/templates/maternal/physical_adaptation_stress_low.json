@@ -1,0 +1,219 @@
+{
+  "key": "maternal/physical_adaptation_stress_low",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "low"
+  },
+  "templates": [
+    {
+      "text": "Uterine muscles are relaxed, with oxygenated blood flowing steadily to the placenta.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cardiopulmonary function is calm, ensuring minimal maternal resistance and good perfusion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Vascular tone is low, allowing unimpeded nutrient delivery through the uterine arteries.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The uterine wall is soft and well-perfused, supporting a stable maternal-fetal exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Heart rate is steady and moderate, with peripheral vessels dilated for smooth circulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Smooth muscle relaxation in the uterus facilitates consistent blood flow to the intervillous space.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal blood pressure is normal, with uterine arteries showing low resistance and high flow.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The myocardium contracts at a restful pace, ensuring cardiac output matches placental demand.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Uterine perfusion is even and ample, with no signs of vasoconstriction or turbulence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Capillary bed in the endometrium is fully open, promoting gentle and effective gas exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Respiratory rate is calm, with oxygen saturation stable and carbon dioxide clearance efficient.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Vascular smooth muscle is relaxed throughout the pelvic plexus, supporting ideal placental bed flow.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The uterus remains supple and compliant, with myometrial activity minimal and perfusion robust.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cardiac output is evenly distributed, with no preferential shunting away from the uterine region.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Arterial resistance in the uterine circulation is low, allowing sustained diastolic flow to the placenta.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal heart rhythm is regular and unhurried, supporting a steady flux of nutrients to the fetus.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Uterine arteries are dilated, with a continuous wave of perfusion reaching the placental villi.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Systemic vascular resistance is reduced, maintaining optimal venous return without cardiac strain.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The myometrium is fully relaxed, ensuring no impingement on spiral artery flow within the decidua.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Blood volume is distributed evenly, with the uterine circuit receiving a generous share of cardiac output.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Pulmonary vasculature is open and compliant, aiding efficient oxygenation without maternal effort.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Uterine tone is negligible, with no focal contractions disrupting the steady exchange of gases.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Venous return from the lower body is unimpeded, preserving adequate preload for the maternal heart.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The placental bed is well-vascularized, with a soft, pulsatile flow pattern in the spiral arteries.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal circulation shows a state of mild vasodilation, enhancing delivery without raising pulse pressure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Cardiopulmonary coupling is tranquil, with every heartbeat steadily perfusing the endometrium.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Uterine blood flow is unimodal and stable, reflecting low sympathetic activation in the maternal system.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The pelvic vasculature is compliant, allowing a gentle reservoir of blood to surround the gestation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Resistance in the uterine arcuate arteries is low, promoting a continuous and smooth perfusion gradient.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal physiology maintains a relaxed baseline, with the uterus bathed in steady, nutrient-rich blood.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    }
+  ]
+}

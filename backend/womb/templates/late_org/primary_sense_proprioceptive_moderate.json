@@ -1,0 +1,256 @@
+{
+  "key": "late_org/primary_sense_proprioceptive_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "strength": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A moderate proprioceptive drive is evident, with dense neural circuits mapping limb position against gravity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is moderately specialized, creating a dense web of feedback loops for joint angle awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive specialization yields a densely wired network for sensing muscle stretch and tension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive pathways are of moderate strength, forming a dense cortical map of the body's spatial configuration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate, dense proprioceptive network provides constant feedback on limb position and movement velocity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive system shows moderate specialization, with dense spinal and cerebellar circuits for kinesthetic sense.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive acuity is supported by a dense interconnectivity of muscle spindle afferent pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback loops are moderately intense, creating a dense neural substrate for postural awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A dense matrix of proprioceptive neurons provides a moderate but constant stream of positional data to the CNS.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is moderately tuned, with dense circuitry dedicated to integrating joint and tendon signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive dominance manifests as a densely packed sensory homunculus for body schema.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive afferents show moderate strength, feeding into dense thalamocortical projections for limb awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate proprioceptive bias is wired through dense cerebellar circuits that monitor and adjust motor plans.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive channel is moderately active, supported by a dense network of Ia sensory fibers from muscle spindles.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive specialization is moderate, resulting in a densely interconnected sensorimotor cortex for body mapping.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive drive fuels a dense neural architecture for sensing contraction and relaxation of muscle groups.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive pathways of moderate intensity form a dense latticework for continuous unconscious positional monitoring.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A dense proprioceptive framework of moderate strength underpins the nascent sense of bodily boundaries and movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive acuity arises from a dense convergence of sensory inputs from joints, muscles, and skin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is moderately pronounced, with dense corticospinal connections facilitating integrated motor feedback.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive networks show moderate density, specializing in the real-time relay of limb position and movement trajectory.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate proprioceptive focus is evident in the dense organization of brainstem nuclei processing vestibular and somatic data.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive circuits of moderate strength are densely woven, providing a foundational map for coordinated movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive tuning creates a dense sensory landscape dedicated to the internal perception of force and effort.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The proprioceptive channel is moderately dominant, characterized by a dense array of receptors and their central projections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive integration is moderately advanced, supported by dense synaptic connections in the primary sensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A dense, moderately active proprioceptive system provides constant feedback on posture with a delay of under {delay} ms.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 20,
+          "max": 50
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate proprioceptive specialization yields a densely packed columnar organization in the somatosensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Proprioceptive afferents of moderate intensity converge densely, forming a precise internal model of limb position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate proprioceptive drive is facilitated by dense reciprocal connections between sensory and motor cortical areas.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "moderate"
+      }
+    }
+  ]
+}

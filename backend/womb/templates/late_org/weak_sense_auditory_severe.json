@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_auditory_severe",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "severity": "severe"
+  },
+  "templates": [
+    {
+      "text": "The auditory pathways are severely underdeveloped, failing to process even the loudest environmental sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe auditory channel deficiency results in a profound lack of startle response to acoustic stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Auditory processing is critically impaired, with neural signals from the cochlea failing to reach the brainstem.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's auditory system exhibits a profound deficit, showing no orienting behavior towards any sound source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe underdevelopment of the auditory nerve leads to an effective absence of functional hearing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Critical malformation of the inner ear structures renders the auditory channel non-functional.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The auditory cortex shows minimal activity, unable to interpret any incoming sound signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "There is a profound bilateral auditory deficit, with no evidence of sound localization or discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Neural transmission along the auditory pathway is severely disrupted, preventing perception of voice or noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The cochlea and auditory nerve complex are severely dysplastic, creating a complete sensory block.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Auditory input is met with a {delay}-second neural processing delay before any faint cortical registration.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound auditory agnosia is present; the brain cannot recognize any sound as meaningful.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant demonstrates no auditory blink reflex, even to sudden, high-intensity sounds exceeding {db} dB.",
+      "vars": {
+        "db": {
+          "type": "int_range",
+          "min": 90,
+          "max": 110
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe hypoplasia of the auditory brainstem nuclei critically impairs all sound processing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The auditory system is functionally isolated, with sensory input failing to integrate into higher networks.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound conductive and sensorineural auditory deficit prevents any airborne sound perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Critical failure in auditory pathway myelination results in absent acoustic evoked potentials.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's auditory threshold is profoundly elevated, perceiving only extreme low-frequency vibration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Auditory channel development arrested, leaving only rudimentary brainstem responses to intense stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe bilateral auditory neuropathy disrupts synchronization of neural firing necessary for hearing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The auditory cortex lacks the tonotopic organization required to decode frequency or pitch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Profound auditory deprivation is evident due to non-patent neural pathways from the ear.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant shows no auditory habituation, as repeated sounds never register to begin with.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A critical deficit in the auditory midbrain colliculi prevents any orienting to sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The auditory system is severely underdeveloped, with hair cell function and neural transmission both absent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Auditory processing is so severely impaired that the infant does not react to its own cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound sensorineural auditory loss stems from malformed cochlear hair cells and ganglion cells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The auditory nerve shows minimal electrophysiological activity, indicating a severe functional deficit.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Critical auditory pathway dysgenesis results in an inability to process temporal or spectral sound features.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's auditory world is silent due to a severe, bilateral disruption of the central auditory pathway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "severe"
+      }
+    }
+  ]
+}

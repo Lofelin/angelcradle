@@ -1,0 +1,219 @@
+{
+  "key": "maternal/nutrient_redistribution_nutrition_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "nutrition_tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Folate levels meet basic needs but show slight lag in intestinal absorption.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iron stores are sufficient for erythropoiesis, yet transferrin saturation dips intermittently.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iodine delivery remains adequate for thyroid output, though thyroxine conversion lags a fraction.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "DHA transfer reaches the fetal circulation, but membrane incorporation is two days delayed.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Calcium flux supports bone mineralization with occasional nocturnal declines of 0.3 mg/dL.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Glucose is stabilized for basal metabolism, but postprandial peaks are blunted by 15%.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Amino acid pool covers protein synthesis despite periodic shortage of methionine and leucine.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Folate circulation meets the threshold for neural tube closure with a 10% margin above baseline.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iron supplies are borderline for hepatic ferritin saturation during the second trimester surge.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iodine crosses the placenta at rates supporting basal T3, yet T4 reserves are reduced by one week.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "DHA incorporation into retinal membranes holds steady, with a ripple in synaptic uptake overnight.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Calcium deposition into long bones proceeds steadily, but matrix turnover is slightly slower.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Glucose from maternal circulation sustains fetal heart rate, though ketone production is transient.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Amino acid transporters are partially up-regulated, leaving tyrosine and tryptophan marginally low.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Folate from diet provides enough for nucleotide synthesis, yet serine conversion is a touch inefficient.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iron reutilization is adequate for fetal hemoglobin, but macrophage recycling lags by two days.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iodine is taken up by the thyroid acceptably, though perchlorate clearance is slower than usual.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "DHA from maternal stores covers brain accretion; still, a subtle decline appears in late gestation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Calcium absorption is adequate for growth, yet urinary losses increase slightly during stress.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Glucose tolerance is near-normal, but episodic swings of 8 mg/dL occur during maternal fasting.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Amino acid balance is maintained overall, with periodic deficits in arginine and glutamine levels.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Folate is routed to placenta preferentially, albeit with a minor shunting away from amniotic fluid.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iron is deposited in fetal liver at expected rates, yet storage duration shortens by three weeks.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iodine recycling from amniotic fluid supports thyroid binding, albeit with a 4-hour clearance delay.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "DHA uptake by fetal brain meets weekly targets, though incorporation lags during sleep cycles.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Calcium mobilization from maternal skeleton is steady, but PTH response is slightly muted.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Glucose handling by the placenta is adequate for peak demands, with borderline reserve for stress.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Amino acids are available for muscle deposition, yet transport of lysine is variably slow.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Folate-mediated methylation reactions proceed sufficiently, with a subtle dip in choline synthesis.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    },
+    {
+      "text": "Iron for cytochrome formation is present, though transferrin uptake in the heart is slightly reduced.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "moderate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_auditory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "severity": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Auditory processing is markedly delayed, with a sluggish orienting response to moderate sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The auditory system shows moderate underdevelopment, dampening the startle reflex to acoustic stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory pathways are immature, causing a {delay} second lag in turning toward a parent's voice.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate auditory deficit blunts the newborn's cry to a faint, breathy sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory reception is poor; the baby fails to consistently quiet to a soothing voice.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The auditory cortex is underdeveloped, leading to inconsistent responses to environmental noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory function is notably weak, with only the loudest claps eliciting a partial Moro reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate auditory channel deficiency mutes the perception of rhythmic, womb-like sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory processing lags, requiring sounds above {threshold} dB to trigger a reliable behavioral change.",
+      "vars": {
+        "threshold": {
+          "type": "int_range",
+          "min": 70,
+          "max": 85
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's auditory system is under-responsive, showing little head turning to nearby rattles.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory development is delayed, resulting in a flat acoustic cry with poor modulation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate auditory impairment dampens the rooting reflex typically cued by maternal voice.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory nerve conduction is slowed, blurring the distinction between speech and background noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby's auditory reactivity is subdued, with eye-widening only to sudden, sharp sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory pathways are poorly myelinated, causing inconsistent arousal from sleep by sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate auditory deficit yields a cry that lacks the robust, resonant quality of a full-term newborn.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory orienting is significantly impaired, with gaze failing to track a moving sound source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The auditory startle is blunted, often appearing as a slight jerk rather than a full limb extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory processing is inefficient, requiring prolonged sound exposure to register a change in state.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate underdevelopment of the cochlear mechanism mutes high-frequency perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's auditory response is lethargic, with delayed quieting even to continuous shushing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory habituation is slow; the baby startles repeatedly at the same sound without adapting.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A deficit in auditory channel function results in poor synchronization of cry with breathing cycles.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory thresholds are elevated, making conversational speech seem distant and indistinct.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's auditory awareness is faint, like hearing through a thick layer of fluid.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate auditory lag causes the baby to miss subtle acoustic cues that typically regulate behavior.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory feedback for self-vocalization is impaired, leading to cries that are short and poorly sustained.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The auditory system's underdevelopment manifests as a weak preference for the maternal voice over silence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Auditory processing shows a moderate delay, filtering out all but the most salient environmental sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Central auditory pathways are underdeveloped, resulting in poor integration of sound with motor responses.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "moderate"
+      }
+    }
+  ]
+}

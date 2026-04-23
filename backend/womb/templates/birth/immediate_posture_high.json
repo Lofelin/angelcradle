@@ -1,0 +1,239 @@
+{
+  "key": "birth/immediate_posture_high",
+  "count": 32,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "splayed briefly open, then curling back inward",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "arms reaching outward, legs tucked",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs flung wide, torso arching against the mattress",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "head thrown back, arms and legs in vigorous extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "full-body stretch, pushing feet against the bassinet",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "back arched, arms reaching up and out",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "legs kicking strongly, arms splayed to the sides",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "torso lifted, limbs extending in a startle-like motion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "head turning side to side, arms thrusting upward",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous bicycling motion of the legs, back off the surface",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hands open and reaching, legs stiffening in extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "body rigidly extended for {seconds} seconds before recoil",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs flailing in wide, uncoordinated arcs",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "neck hyperextended, pushing head back into the pad",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "trunk and limbs forming a taut, C-shaped arch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "shoulders hunched, arms thrust forward and out",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "legs fully extended, toes pointed, arms abducted",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "brief asymmetric tonic neck reflex, then full extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "active resistance to flexion, limbs pushing away",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "torso twisting, one arm up, the other pushing down",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "whole body stiffening in a Moro-like extension phase",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "head lifted briefly, back arched, limbs splayed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous alternating kicks, arms held high and wide",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "extensor thrust of legs, arms reaching overhead",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "body forming a tense bridge, limbs away from midline",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "active limb abduction against gravity's pull",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "sudden full-limb extension following a deep gasp",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "trunk extended, limbs held in asymmetric starfish pose",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "energetic writhing, pushing against all surfaces",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "neck and back arching, breaking contact with the bed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs held rigidly extended, trembling with effort",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "forceful extension, then a rapid, jerky recoil inward",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

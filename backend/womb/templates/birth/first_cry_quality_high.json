@@ -1,0 +1,664 @@
+{
+  "key": "birth/first_cry_quality_high",
+  "count": 91,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "a piercing, full-throated wail split the room",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a scream erupted, raw and furious, shaking with force",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like a siren — sharp, relentless, demanding",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an explosive howl tore through the silence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek of pure fury, high-pitched and unyielding",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, jagged scream that sliced through the air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, high-F0 cry that rattled the bassinet",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a sustained, angry wail with a metallic edge",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like tearing metal, sharp and indignant",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a full-lunged, piercing protest that demanded attention",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-intensity shriek, vibrating with newborn rage",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral, high-pitched howl of raw protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry sharp as a blade, furious and sustained",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing, tremulous scream that shook the room",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an incisive, high-F0 wail, relentless and angry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, glass-shattering cry that pierced the calm",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw-throated, high-pitched scream of protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like a fire alarm — sharp, loud, and urgent",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-arousal shriek, tearing through the silence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, sustained wail with a piercing vibrato",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry of pure, high-intensity outrage and need",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a sharp, angry howl that crescendoed and held",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-F0 scream, vibrating with forceful energy",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing cry, furious and unbroken for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a jagged, high-pitched wail of immediate protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry that erupted as a sharp, furious siren",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a full-force, high-pitched scream, raw and demanding",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral, piercing shriek of newborn indignation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious cry, its high F0 cutting through all other sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, sustained scream with a sharp, tearing quality",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-arousal wail, sharp as a needle and just as piercing",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an angry, high-intensity cry that shook with vibrato",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, full-volume shriek that brooked no delay",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, high-pitched cry with a serrated, tearing quality",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek like a steam whistle — sharp, sustained, and furious",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-F0 scream that vibrated with indignant force",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing wail, all sharp edges and furious vibrato",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like a high-tension wire snapping — sharp and angry",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a full-throated, glass-cutting shriek of protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-arousal scream, jagged and relentless in its pitch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious cry with a piercing, saw-toothed acoustic edge",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-intensity howl that tore at the air",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek of pure startle, high-F0 and vibrating with rage",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry sharp as a needle, sustained and furious in tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an angry, high-pitched wail with a brass-like brilliance",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral scream, its high frequency slicing through the room",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, penetrating cry that held a metallic shrillness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-arousal protest, a sustained shriek of raw fury",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like a falcon's screech — piercing, angry, and direct",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw-throated, high-F0 wail, sharp and unbroken for {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an incandescent shriek of fury, high-pitched and unwavering",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry with a furious, laser-sharp focus in its high frequency",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a scream of high arousal, its pitch a sustained blade of sound",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, tremulous wail riding a crest of high F0",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek that was all high-frequency anger and raw power",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing, full-lunged cry with a furious, sawing edge",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-intensity protest, a sharp and sustained vocal rupture",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an angry cry, its high pitch vibrating with visceral force",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw scream pitched at a furious, ear-piercing frequency",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek like rending fabric — high, sharp, and furious",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-F0 wail, a sustained expression of pure newborn outrage",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry of sharp, furious indignation at a piercing pitch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral, high-arousal scream — all sharpness and angry vibrato",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-pitched, furious shriek that vibrated with primal force",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, tearing scream that cut the air like a blade",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an angry, high-F0 cry with a sawtooth edge of protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing, full-lunged howl of indignant arrival",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a sharp, sustained wail that rang with metallic urgency",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious cry, high and jagged, a sonic flare of life",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral shriek, piercing and relentless in its demand",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw-throated, high-intensity protest that filled every corner",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an explosive, high-pitched scream that shattered the quiet",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, tremulous wail with a piercing, unwavering core",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a high-arousal howl, raw and ragged with newborn vigor",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek of pure, high-F0 rage that demanded immediate witness",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing cry, furious and clear, a clarion of protest",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-pitched scream that carried a {seconds}-second sustain",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an incandescent, angry wail with a sharp, cutting timbre",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, high-frequency cry that seemed to vibrate the air itself",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a shriek like tearing silk — sharp, loud, and utterly furious",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-intensity vocalization, a storm of sound and fury",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing, indignant howl that left no room for silence",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry of high arousal, sharp as a whistle and just as penetrating",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious, full-bodied scream with a high, glassy edge",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a visceral, high-pitched protest that tore through the moment",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a sharp, angry wail that climbed and held its furious peak",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a cry like a siren's peak — pure, high-F0, and demanding",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a raw, high-volume shriek born of immediate, furious need",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a piercing, sustained vocal burst, sharp with newborn anger",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "a furious cry with a high, ragged edge that refused to fade",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "an explosive, high-pitched declaration, raw and utterly uncompromising",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

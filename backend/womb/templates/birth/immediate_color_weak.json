@@ -1,0 +1,238 @@
+{
+  "key": "birth/immediate_color_weak",
+  "count": 31,
+  "applies_when_default": {
+    "vitality": "weak"
+  },
+  "templates": [
+    {
+      "text": "pale but warming quickly under the lamp",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale with central cyanosis, slow capillary refill",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "generalized pallor and bluish lips",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "dusky and pale, poor peripheral perfusion",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "marked central cyanosis, pale extremities",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale skin with circumoral cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "ashen with cyanotic trunk and face",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pallor dominant, cyanosis at core",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "waxy pallor, slow central pink-up",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "cyanotic and pale, sluggish color return",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "uniform pallor, bluish mucous membranes",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale with dusky central cyanosis",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "profound pallor, cyanotic nail beds",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "central cyanosis overriding pale background",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale cyanosis, delayed perfusion after {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "grayish-blue pallor, poor tissue oxygenation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale torso with cyanotic face and lips",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "dusky pallor, minimal pink blush",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "cyanosis central, pallor pervasive",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "chalky white with blue tinge centrally",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale, cyanotic, slow capillary refill >{refill_time} seconds",
+      "vars": {
+        "refill_time": {
+          "type": "int_range",
+          "min": 4,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "ashen cyanosis, poor color response",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pallid with marked central blueness",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "generalized cyanosis on a pale base",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale, mottled, with central duskiness",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "cyanotic core, pale periphery, sluggish flow",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "widespread pallor, cyanotic oral mucosa",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pale blue hue, delayed central perfusion",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "dusky and pale, minimal improvement with stimulation",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "pallor with cyanosis of lips and trunk",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    },
+    {
+      "text": "gray-cyanotic, poor skin perfusion",
+      "vars": {},
+      "applies_when": {
+        "vitality": "weak"
+      }
+    }
+  ]
+}

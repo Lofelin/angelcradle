@@ -1,0 +1,225 @@
+{
+  "key": "maternal/nutrient_redistribution_nutrition_poor",
+  "count": 30,
+  "applies_when_default": {
+    "nutrition_tier": "poor"
+  },
+  "templates": [
+    {
+      "text": "Folate and iron are diverted to the placenta, leaving minimal reserve for maternal stores.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iodine is preferentially shunted to the fetal thyroid, limiting maternal availability.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Glucose supply is tightly prioritized to placental transfer, reducing maternal energy substrates.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Calcium is allocated to fetal skeletal mineralization, with maternal serum levels declining.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "DHA is retained for neural membrane synthesis, leaving maternal tissues with reduced absorption.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Amino acids are routed to placental protein synthesis, diminishing maternal plasma reserves.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iron is sequestered for fetal hemoglobin production, curbing maternal erythrocyte turnover.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Folate remethylation cycles are suppressed in maternal liver, favoring placental transfer.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iodine uptake by maternal thyroid is downregulated, shunting tracer to the fetus.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Glucose is partitioned to fetal brain metabolism, constricting maternal glycogen storage.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Calcium efflux from maternal bone is accelerated, while placental transport remains elevated.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "DHA incorporation into maternal adipose is limited, preserving supply for fetal neurogenesis.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Amino acids are withdrawn from maternal muscle, redirected toward placental growth signals.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Folate-binding proteins in maternal serum are saturated, reducing systemic folate availability.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iron absorption is upregulated in the placenta, yet maternal ferritin levels fall.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iodine is recycled less efficiently in maternal kidneys, conserving urinary loss for fetal use.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Glucose uptake is enhanced in the placenta, lowering maternal blood glucose by {delta} mg/dL.",
+      "vars": {
+        "delta": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Calcium is mobilized from maternal bone stores, while placental transport rate remains high.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "DHA is cleared from maternal plasma rapidly, favoring fetal accretion over maternal reserves.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Amino acid transporters are upregulated in the placenta, depleting maternal circulating pools.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Folate is preferentially methylated in the placenta, limiting maternal one-carbon metabolism.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iron is redistributed from maternal bone marrow to placental transferrin receptors.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iodine organification in maternal thyroid is suppressed, enhancing fetal thyroxine production.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Glucose is directed toward anaerobic glycolysis in the placenta, reducing maternal lactate clearance.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Calcium is shunted from maternal urine reabsorption, increasing fetal ionized calcium levels.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "DHA is stored in maternal liver only after fetal needs are met, leaving a narrow margin.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Amino acids are diverted from maternal gluconeogenesis, supporting fetal protein deposition.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Folate is trapped in placental tissue as polyglutamates, lowering maternal serum folate.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iron is preferentially loaded onto fetal hemoglobin, reducing maternal transferrin saturation.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    },
+    {
+      "text": "Iodine flux across the placenta is unidirectional, conserving maternal stores only after delivery.",
+      "vars": {},
+      "applies_when": {
+        "nutrition_tier": "poor"
+      }
+    }
+  ]
+}

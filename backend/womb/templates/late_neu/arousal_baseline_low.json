@@ -1,0 +1,231 @@
+{
+  "key": "late_neu/arousal_baseline_low",
+  "count": 30,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "A low arousal baseline is evident, with a delayed, muted response to tactile stimuli.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant exhibits a low reactivity state, requiring sustained stimulation to elicit a cry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Motor responses are slow and dampened, consistent with a low-arousal neural profile.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low-threshold cry emerges only after a delay of {seconds} seconds following a vigorous heel lance.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 4,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The newborn's state is predominantly quiet alert, with a low baseline of spontaneous movement.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Arousal modulation is low; the infant soothes quickly and shows minimal startle to sudden noise.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The cry is acoustically low in peak frequency and intensity, reflecting a high arousal threshold.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Behavioral responses are muted, indicating a low-arousal baseline dominated by inhibitory circuits.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low level of fussiness is observed, even during routine handling and assessment.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant demonstrates a low arousal state, with prolonged periods of drowsy inactivity.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Motor tone is present but activity is low, with infrequent limb movements in the bassinet.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low-intensity, rhythmic cry follows stimulation, ceasing promptly when comforted.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "State transitions are slow and gradual, hallmark of a low-arousal neurological baseline.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The newborn shows a low response density, often requiring repeated stimuli for a reaction.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low-arousal profile is characterized by minimal grimacing and a placid facial expression.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant's cry has a low fundamental frequency, suggesting a high threshold for vocal protest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Arousal remains low; the infant sleeps deeply and is difficult to rouse for feeds.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Behavioral organization is centered on low arousal, with smooth, dampened limb excursions.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The baby exhibits a low excitability score, with subdued Moro and rooting reflexes.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low baseline of activity is noted, with the infant spending most time in quiet sleep states.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Response to light is present but delayed, aligning with a low-arousal neurological set point.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant's cry is brief and low in acoustic energy, consistent with high inhibitory tone.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low-arousal baseline manifests as infrequent spontaneous startles and minimal jitteriness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "State regulation favors low arousal, with the infant showing remarkable self-quieting ability.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Motor activity is purposeful but infrequent, reflecting a generally low level of arousal.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The newborn's response to sound is a slow head turn after a {seconds}-second latency.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low-intensity suck is observed during feeding, correlating with the overall low arousal state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant presents with a low behavioral arousal profile, showing placid alertness for extended periods.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Cry episodes are short-lived and low in volume, ceasing with minimal intervention.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A low level of spontaneous activity and a high sensory threshold define this infant's baseline state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

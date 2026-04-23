@@ -1,0 +1,246 @@
+{
+  "key": "birth/immediate_tone_high",
+  "count": 33,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "muscle tone strong — resists extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous tone, active movement",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hypertonic — limbs stiff and resistant",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs flexed and vigorously active",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "strong resistance to limb extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "firm tone with active recoil",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hypertonic — vigorous limb flexion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "robust tone, resists straightening",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "active flexion against extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs held firmly flexed",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous, sustained flexion posture",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "powerful recoil after {seconds} seconds of extension",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "musculature firm and resistant",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "active movement with strong tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs spring back from extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hypertonic, vigorous spontaneous motion",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "forceful flexion of all extremities",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "robust, anti-gravity limb posture",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "strong, active resistance to manipulation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous tone with immediate recoil",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "firm flexion, resists passive stretch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs held in active, flexed position",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hypertonic — vigorous resistance to extension",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "muscle tone robust and unyielding",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "active, powerful limb withdrawal",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "strong flexion, rapid return from stretch",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous, sustained muscular activity",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "firm tone with vigorous spontaneous movement",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "limbs demonstrate powerful flexion tone",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "hypertonic, resists extension vigorously",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "robust flexion, active against restraint",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "strong, immediate recoil after manipulation",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "vigorous tone, limbs maintain flexed posture",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

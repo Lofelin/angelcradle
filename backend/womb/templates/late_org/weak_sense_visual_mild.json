@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_visual_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "severity": "mild"
+  },
+  "templates": [
+    {
+      "text": "Visual tracking is inconsistent, with gaze often slipping from a moving object.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's visual fixation is brief, breaking after only {seconds} seconds of focus.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild delay in visual orientation to a nearby face is noted.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual attention is easily disrupted by minor auditory or tactile stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Pupillary response to light is present but sluggish in its constriction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's visual field seems narrowed, with peripheral stimuli often missed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual following is jerky and loses smooth pursuit over short distances.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a subtle lag in turning the head toward a novel visual target.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Contrast sensitivity appears reduced, making low-contrast patterns hard to discern.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual alertness cycles quickly, with periods of bright-eyed looking followed by rapid disengagement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's cry intensity does not modulate in response to visual cues from the caregiver.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Fixation on a human face is achieved but not sustained, drifting away prematurely.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual-motor coordination is immature, with reaching gestures poorly aligned to seen objects.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant startles to sound but shows a dampened visual orienting reflex to the same stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Acuity is developing, resulting in a fuzzy perception of fine details.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual exploration of the environment is limited to high-contrast edges within a close range.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn squints or blinks excessively under normal ambient lighting conditions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Convergence of the eyes is unsteady when attempting to focus on a near object.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A patterned visual stimulus elicits less quieting and sustained attention than expected.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The visual system is easily overwhelmed, leading to gaze aversion after brief periods of input.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tracking a red ring is initiated but falters, requiring the object to be moved very slowly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Depth perception cues are poorly integrated, affecting the accuracy of visual-guided movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant shows a preference for auditory soothing over visual engagement for regulation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual recognition of a repeatedly shown object shows minimal habituation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The corneal reflex is intact, but the blink response to a visual threat is slightly delayed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Pupils show a mild anisocoria that varies, suggesting immature neural visual pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual interest is fleeting, shifting from one target to another without deep processing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's eyes rove slowly when at rest, lacking the sharp, purposeful saccades of full-term infants.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Optokinetic nystagmus can be elicited but is irregular and unsustained.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Visual processing is inefficient, requiring longer latency to recognize a familiar face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "mild"
+      }
+    }
+  ]
+}

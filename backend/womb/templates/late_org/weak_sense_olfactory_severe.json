@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_olfactory_severe",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "severity": "severe"
+  },
+  "templates": [
+    {
+      "text": "The olfactory system is severely underdeveloped, with nasal chemoreceptors showing minimal postnatal response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory bulb hypoplasia results in a profound inability to detect or discriminate scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe olfactory deficit renders the infant unresponsive to even potent odorant stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound olfactory impairment prevents any observable rooting or orienting to maternal scent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The olfactory epithelium is markedly deficient, offering no functional sense of smell.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory nerve pathways are underdeveloped, causing a complete lack of scent perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Nasal sensory neurons are severely underpopulated, resulting in olfactory agnosia.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant demonstrates no behavioral cues to olfactory stimuli due to severe receptor dysfunction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory processing centers show minimal activity, indicating a near-absent sense of smell.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A critical deficit in olfactory transduction blocks all chemosensory signaling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn's olfactory channels are non-functional, with no startle or arousal to strong odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe olfactory deprivation is evident from the lack of feeding cues triggered by milk scent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory bulb and tract development is arrested, preventing scent recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's olfactory deficit is so severe that aversive odors fail to elicit any facial grimace.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Primary olfactory cortex shows negligible response, confirming a profound sensory void.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory receptor gene expression is critically low, rendering the sense of smell absent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Nasal chemosensation is profoundly impaired, with no observable sniffing or scent-seeking behavior.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The olfactory apparatus is underdeveloped, resulting in a complete lack of odorant detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe congenital anosmia leaves the infant without functional olfactory perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory glomeruli in the bulb are sparse and disorganized, preventing odor mapping.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn shows a delay of over {seconds} seconds in any response to intense olfactory stimuli.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory nerve projections are rudimentary, failing to transmit scent information to the brain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Critical underdevelopment of the vomeronasal organ contributes to the profound olfactory deficit.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's olfactory threshold is immeasurably high, indicating a severe sensory impairment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory mucosa is atrophic, providing no substrate for odorant binding and transduction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound lack of olfactory feedback disrupts expected neonatal feeding and bonding behaviors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory receptor cells are absent or non-functional, creating a total sensory gap for smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The cribriform plate is underdeveloped, severely restricting olfactory nerve passage.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Central olfactory integration is missing, leaving scent signals unprocessed and unrecognized.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Olfactory deficit is so complete that the infant does not differentiate between pleasant and foul odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "severe"
+      }
+    }
+  ]
+}

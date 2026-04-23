@@ -1,0 +1,288 @@
+{
+  "key": "trait/sense_visual",
+  "count": 39,
+  "applies_when_default": {
+    "dominant_sense": "visual"
+  },
+  "templates": [
+    {
+      "text": "Gaze fixates on light",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Tracks moving object with eyes",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Stares at contrast pattern",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Facial focus on caregiver",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Blinking at bright flash",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes widen to sudden movement",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual startle to loom",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Saccades to colorful toy",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Pupils constrict to light",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Sustained gaze on face",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Shifts gaze to sound source",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes follow slow target",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Stares at high-contrast edge",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Fixes on bright red object",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual alertness peaks",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes converge on near stimulus",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Blink rate increases to change",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Optokinetic nystagmus to stripes",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Gaze aversion after {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes search for motion",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Facial preference toward light",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Strabismus resolves with fixation",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual scanning of room",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes fixate on mirror image",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Blink to bright glare",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Smooth pursuit of slow arc",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Gaze anchored to vertical line",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes dart to peripheral flash",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Stares at rotating mobile",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual disengagement delayed",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes track horizontal sweep",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Pupil dilation to novel shape",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual habituation to pattern",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes widen at looming face",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Gaze preference for curved lines",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Saccades to bright dot",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Visual fixation alternates",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Eyes follow moving hand",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    },
+    {
+      "text": "Stares at blinking light",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "visual"
+      }
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "key": "late_neu/myelination_visual_normal",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "visual",
+    "rate": "normal"
+  },
+  "templates": [
+    {
+      "text": "The visual pathway is undergoing robust myelination, supporting the infant's emerging ability to track high-contrast patterns.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds normally along the visual pathway, enhancing signal transmission from the retina to the occipital cortex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The optic radiations show a normal rate of myelination, crucial for the development of visual acuity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The geniculostriate visual pathway is prioritized for myelination, facilitating the processing of form and motion.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the visual pathway is on schedule, strengthening the neural circuits for binocular vision.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The occipital cortex receives increasingly myelinated visual input, sharpening the infant's perception of edges and shapes.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal myelination of the optic nerve and tract underpins the pupillary light reflex and basic visual orientation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The dorsal visual stream, involved in spatial processing, is myelinating at the expected developmental pace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination advances along the ventral visual stream, supporting the future recognition of faces and objects.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The primary visual cortex shows a normal progression of myelination, organizing the initial map of the visual world.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's visual pathway myelinates efficiently, reducing signal latency and improving contrast sensitivity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the lateral geniculate nucleus connections proceeds normally, refining visual information before cortical processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The superior colliculus pathway, mediating reflexive visual orientation, is myelinating appropriately for this stage.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal visual pathway myelination allows for more coordinated eye movements and sustained fixation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's visual system benefits from timely myelination, which stabilizes the transmission of pattern and light information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the optic chiasm and beyond proceeds on schedule, supporting the integration of visual fields.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The parvocellular visual pathway, dedicated to fine detail and color, is undergoing normal myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The magnocellular visual pathway, responsible for motion detection, shows appropriate myelination for gestational age.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the visual association areas is progressing, laying groundwork for complex visual perception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's visual tracking improves as myelination of the cortical eye fields advances normally.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Normal myelination along the visual pathway reduces neural noise, allowing clearer perception of the caregiver's face.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The retino-geniculo-cortical visual circuit demonstrates robust and timely myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the visual pathway is a priority, enabling faster processing of looming stimuli and promoting alertness.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The development of visual evoked potentials is supported by the normal myelination schedule of the optic radiations.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's visual system shows typical myelination, which is foundational for future visuomotor coordination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds apace in the visual cortex, organizing the columnar architecture for orientation selectivity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The normal myelination of the visual pathway underlies the infant's growing preference for human faces.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The trans-synaptic myelination of visual cortical connections is occurring as expected, refining neural networks.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the visual pathway enhances the signal-to-noise ratio, making salient features in the environment more distinct.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's visual attention span lengthens as myelination of frontal eye field connections continues normally.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "normal"
+      }
+    }
+  ]
+}

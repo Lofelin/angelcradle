@@ -1,0 +1,262 @@
+{
+  "key": "late_org/primary_sense_auditory_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "strength": "mild"
+  },
+  "templates": [
+    {
+      "text": "A mild auditory dominance is noted, with neural circuits for sound processing showing slightly denser connectivity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory pathways are subtly more developed, leading to a slightly quicker orienting response to familiar voices.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural wiring shows a mild auditory bias, with a denser network for processing tonal variations and rhythmic patterns.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A slight auditory specialization is present, evidenced by enhanced neural mapping for the frequency range of human speech.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory cortex exhibits marginally denser synaptic connections, fine-tuning the processing of environmental sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild auditory preference is observable, with neural circuits for sound localization being more densely populated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a subtle auditory lead, with neural pathways for discriminating phonemes showing increased synaptic density.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory system is mildly prioritized, resulting in a slightly more robust startle reflex to sudden noises.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural development shows a gentle auditory tilt, with circuits for processing prosody and intonation being more intricate.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint auditory dominance is seen, with a denser neural matrix dedicated to filtering meaningful sounds from background noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory neural networks are slightly more elaborate, enhancing the detection of acoustic contours in human vocalizations.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild auditory bias refines the neural architecture, leading to a quicker processing loop for repetitive sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Subtle auditory specialization yields a denser synaptic web for analyzing the harmonic structure of sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory pathways demonstrate a mild advantage, with slightly enhanced connectivity for temporal sound processing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A gentle auditory focus is apparent, with neural circuits for sound memory formation showing increased density.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a mild auditory predisposition, evident in the slightly more complex neural routing for binaural cues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural organization exhibits a soft auditory prominence, with denser connections for modulating the acoustic startle response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A slight auditory lead fosters a marginally faster neural transmission time for processing vowel sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory system is mildly favored, resulting in a denser network for integrating sound with vestibular input.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint auditory specialization enhances the neural substrate for discriminating between {duration} second sound bursts.",
+      "vars": {
+        "duration": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild auditory dominance is seen in the slightly denser innervation of cochlear nucleus projection pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle auditory bias refines cortical columns, leading to a more defined tonotopic map in the primary auditory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory neural circuitry is gently amplified, showing increased synaptic density in the inferior colliculus relays.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild auditory tilt results in a slightly more robust neural response to sounds around {frequency} Hz, the range of infant-directed speech.",
+      "vars": {
+        "frequency": {
+          "type": "int_range",
+          "min": 300,
+          "max": 600
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a soft auditory lead, with marginally denser connections between the auditory cortex and limbic areas for emotional tone.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural development shows a mild auditory preference, enhancing the circuitry for detecting acoustic boundaries between syllables.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A gentle auditory focus yields a denser network for the efferent modulation of the middle ear muscles in response to sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The auditory pathways exhibit a slight primacy, with more intricate neural feedback loops for processing dynamic sound changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint auditory dominance is noted in the marginally increased myelination of the auditory nerve fibers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild auditory specialization subtly enriches the neural matrix for parsing the rhythmic cadence of language.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "mild"
+      }
+    }
+  ]
+}

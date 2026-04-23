@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_auditory_weak",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "A sudden clatter → a slow blink, a faint twitch of the fingers, then stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sharp voice nearby → a delayed, shallow gasp, the head turns {seconds} seconds later.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sustained hum → the eyes drift closed, the mouth opens slightly, but no cry emerges.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A door closing → a weak startle, the arms lift halfway then fall limp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A rhythmic tapping → a sluggish rooting motion, abandoned after one incomplete turn.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A high-pitched ring → the brows furrow briefly, the body arches in a slow, partial stretch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A muffled conversation → the eyes open to slits, a soft sigh, then a return to sleep.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sudden hiss → a delayed grimace, a single weak limb movement, then relaxation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A low rumble → a slow, incomplete Moro, the arms falling back before full extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A brief siren in the distance → a quiet whimper, a hand clenches, then releases after a long pause.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A metallic clang → the breath hitches, the legs draw up slowly, the response fades.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A whispered 'shhh' → the crying diminishes to irregular, hiccup-like breaths, not fully ceasing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A burst of laughter → a confused blink, a weak attempt to turn toward sound, movement stalls.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A repetitive beep → a faint stirring, the mouth works silently, no coordinated cry follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A crinkling paper sound → a slow head turn begins but stops midway, gaze unfocused.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A faucet dripping → the eyes flutter open, a faint sucking motion, then lapse into quiet alertness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sudden cough → a minor jerk, a delayed whimper that trails off into silence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A musical chime → a brief stilling, a slow arm lift that falters and drops.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A dog barking → a full-body twitch, a weak cry initiated but cut short after one breath.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A vacuum cleaner drone → the limbs stiffen slightly, then go flaccid over {seconds} seconds, habituating.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A book dropping → a delayed startle, the arms rise weakly and cross incompletely over the chest.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A soft lullaby → the crying rhythm breaks into irregular sobs, failing to synchronize to the melody.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A chair scraping → a slow eye opening, a faint frown, no further orienting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A phone vibration → a subtle tremble in the hands, a quiet grunt, then subsidence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A sudden 'ah!' → the body tenses minimally, a weak attempt to cry results in a breathy exhale.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A steady rain patter → the infant stills, shows a brief alert face, then gaze drifts away vacantly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A plastic bag rustle → a slow head turn toward the sound, followed by a lapse back into drowsiness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A blender whirr → a grimace forms slowly, the hands clench into loose fists, then relax.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A key jingling → a partial orienting response, the head lifts slightly then sinks back, effort spent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "A television commercial jingle → a brief widening of the eyes, a muted coo that dissolves into silence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "weak"
+      }
+    }
+  ]
+}

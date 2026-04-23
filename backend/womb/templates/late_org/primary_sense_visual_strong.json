@@ -1,0 +1,250 @@
+{
+  "key": "late_org/primary_sense_visual_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "strength": "strong"
+  },
+  "templates": [
+    {
+      "text": "A dense web of visual circuitry is already forming, primed to process high-contrast patterns with startling acuity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The visual cortex exhibits an unusually dense synaptic network, specializing in rapid detection of edge and motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural pathways for visual tracking are hyper-developed, creating a primary sensory channel of remarkable sharpness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This neonate's dominant visual sense is characterized by an exceptionally dense retinogeniculate projection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Specialized for visual processing, the occipital lobes show precocious myelination and intricate columnar organization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The visual system is acutely tuned, with a high density of ganglion cells feeding a rapidly maturing optic radiation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A sharp visual dominance emerges from the dense interconnections between the lateral geniculate nucleus and striate cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural circuits for visual orientation are densely packed, creating a primary sensory modality of extreme focus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The visual pathway is highly specialized, with a thick optic nerve and a profusion of cortical synapses for pattern recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An intense visual specialization is evident in the dense clustering of neurons within the primary visual processing areas.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This infant's strong visual channel is supported by a dense matrix of cortical columns exquisitely sensitive to contour.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The developing visual system shows a pronounced density in magnocellular pathways, primed for detecting movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A keen visual acuity is underpinned by an exceptionally dense and organized array of photoreceptor-to-cortex connections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Visual processing networks are densely woven, granting a primary sense of remarkable clarity and immediate responsiveness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The neonate's strong visual orientation stems from a precociously dense and layered organization of the extrastriate cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Specialized visual circuitry is densely packed, facilitating rapid neural firing in response to light-dark transitions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A hyper-developed visual channel is evident in the dense innervation from retina to cortical area V1.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary visual cortex displays an advanced, dense laminar structure, sharpening this dominant sensory modality.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural substrates for visual attention are densely interconnected, creating a sensory gateway of exceptional sharpness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This strong visual sense is mediated by a dense proliferation of synaptic spines on cortical pyramidal neurons.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The infant's visual dominance is rooted in a dense, high-fidelity mapping of the visual field onto the cortical surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense convergence of inputs to the visual cortex creates a primary sensory channel of intense and immediate perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Visual specialization is marked by a dense arborization of dendritic trees within the occipital lobe's layer IV.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The strong visual channel is characterized by a dense network of horizontal connections facilitating contour integration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An acutely sharp visual sense arises from the dense packing of orientation-selective cells in the primary visual cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Dense cortico-cortical visual pathways are already establishing a primary sensory mode of remarkable precision.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The neonate's visual system shows a dense concentration of GABAergic interneurons, sharpening cortical feature detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A strong visual orientation is supported by a dense and rapid retinotopic mapping within the developing brain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Visual processing is intensely focused, driven by a dense scaffold of neural circuits dedicated to spatial analysis.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This infant's primary visual channel is defined by a dense, low-latency neural architecture for processing form and contrast.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "strong"
+      }
+    }
+  ]
+}

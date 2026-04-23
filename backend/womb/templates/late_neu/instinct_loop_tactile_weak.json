@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_tactile_weak",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "A light stroke on the cheek → a faint, delayed rooting motion, then stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden air current on the face → a slow, partial grimace, no sustained cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cotton ball brushed on sole → toes curl weakly after a {delay} second pause.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Palmar touch → fingers make a feeble, incomplete grasp, then release.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Brief cold touch to abdomen → a sluggish, shallow startle with muted limbs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Gentle hair tug → a low, breathy whimper that fades within moments.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Nape stroked → head turns slightly, then drifts back, movement aborted.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Heel pressed → leg draws up slowly, extension phase is absent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Lip touched with fingertip → a weak suckle attempt, mouth falls open.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden fabric rustle near ear → eyes blink slowly, no orienting turn.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Light pressure on forehead → brows furrow faintly, expression dissolves.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Tickle under the chin → jaw quivers briefly, no coordinated avoidance.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Wipe across the brow → a sigh-like exhalation, no further motor response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Pinprick to the heel → a delayed, low-intensity jerk, cry is a thin mewl.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Hand placed in palm → fingers close limply, grip fails to sustain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cheek stroked towards mouth → head lags, turns {angle} degrees before stopping.",
+      "vars": {
+        "angle": {
+          "type": "int_range",
+          "min": 15,
+          "max": 30
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden drop of a few centimeters → arms flail weakly, Moro is fragmentary.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Rib cage lightly tapped → a shallow, sighing breath, no startle cascade.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Foot sole stroked → Babinski sign is equivocal, toes barely fan.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Nostril brushed with wisp → head turns away sluggishly, then relents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Gentle shake of the crib → eyes open wide for a moment, then glaze over.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cool metal on the back → a shiver runs through the torso, poorly localized.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Finger drawn along spine → trunk arches minimally, response is truncated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Eyelid lightly touched → blink is slow and incomplete, lid remains partly open.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Arm pulled gently → offers minimal resistance, muscle tone seems to ebb.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden pat on the diaper → a brief, quiet grunt, limbs remain flaccid.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Light scratch on the scalp → a faint frown, followed by apathetic stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Toe squeezed → the leg retracts feebly, withdrawal reflex is blunted.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cheek blown on softly → a slight pucker, sucking motion is not initiated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Palms rubbed together → hands remain passive, no reciprocal grasping effort.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "weak"
+      }
+    }
+  ]
+}

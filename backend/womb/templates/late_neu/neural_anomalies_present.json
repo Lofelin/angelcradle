@@ -1,0 +1,225 @@
+{
+  "key": "late_neu/neural_anomalies_present",
+  "count": 30,
+  "applies_when_default": {
+    "has_anomaly": true
+  },
+  "templates": [
+    {
+      "text": "Subtle asymmetry noted in the motor cortex, with slightly reduced sulcation on the left hemisphere.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Delayed myelination observed in the auditory radiations, correlating with a dampened acoustic startle response.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Focal cortical thinning in the prefrontal region, potentially impacting early self-regulation circuits.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A mild dysgenesis of the corpus callosum is present, suggesting possible interhemispheric transfer delays.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Diffuse white matter gliosis noted, which may underlie a generalized dampening of reflexive vigor.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Asymmetry in the brainstem auditory pathways, with right-sided responses lagging by {milliseconds} ms.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A small, isolated periventricular nodule is disrupting local white matter tracts for upper limb control.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The visual cortex shows delayed gyral patterning, which may affect early orienting to complex stimuli.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Pronounced thinning of the cerebellar vermis, likely contributing to subtle truncal hypotonia.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Myelination in the corticospinal tracts is patchy and uneven, particularly on the right side.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A discrete area of polymicrogyria in the temporal lobe may influence auditory processing specificity.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Reduced neuronal density in the basal ganglia, potentially modulating the intensity of spontaneous movement.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The acoustic cry reflex shows a consistent latency, hinting at a brainstem processing anomaly.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Mild ventriculomegaly with stretching of adjacent periventricular white matter pathways.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Anomalous sulcal depth in the sensorimotor strip, correlating with asymmetric palmar grasp strength.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Focal heterotopia identified near the central sulcus, disrupting typical sensorimotor mapping.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Delayed maturation of the frontal operculum, a region implicated in early social-orienting behaviors.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The auditory cortex demonstrates a blurred gray-white matter junction on neuroimaging.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A subtle schizencephaly cleft in the right parietal lobe affects somatosensory integration.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Myelination delay is most pronounced in the posterior limb of the internal capsule.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Cortical asymmetry extends to the planum temporale, a key site for phonetic discrimination.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A small arachnoid cyst over the left hemisphere is exerting mild mass effect on underlying cortex.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The acoustic startle shows a fragmented, two-phase motor pattern instead of a unified response.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Diffuse excessive high signal intensity in the white matter on T2-weighted sequences.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The corticobulbar tracts appear underdeveloped, which may moderate facial expressivity and cry vigor.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A focal area of pachygyria in the frontal lobe suggests disrupted neuronal migration timing.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The neonatal cry shows reduced harmonic complexity, consistent with subtle laryngeal control anomalies.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "Asymmetric development of the hippocampal formations, with the right side notably smaller.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "The visual evoked potential demonstrates a prolonged latency, indicating optic radiation immaturity.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    },
+    {
+      "text": "A discrete perisylvian polymicrogyria may underlie emerging oral-motor coordination differences.",
+      "vars": {},
+      "applies_when": {
+        "has_anomaly": true
+      }
+    }
+  ]
+}

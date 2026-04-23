@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/myelination_motor_delayed",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "motor",
+    "rate": "delayed"
+  },
+  "templates": [
+    {
+      "text": "Myelination is markedly delayed along the corticospinal motor pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The motor tracts show a clear lag in myelination priority compared to sensory systems.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is significant delay in the myelination of the primary motor pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the pyramidal motor tracts is proceeding at a notably slower rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced delay is observed in the myelination sequence for motor control circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The process of myelination is lagging conspicuously within the descending motor pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination priority for the motor cortex output pathways is visibly delayed.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The expected myelination of the corticospinal motor tract is significantly behind schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A marked temporal lag characterizes the myelination of key motor nerve fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the voluntary motor pathways is progressing with obvious delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a distinct myelination deficit in the pathways governing motor execution.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The development of myelin sheaths on motor neurons is proceeding at a delayed pace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is notably sluggish along the axons of the primary motor pathway.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear developmental lag is present in the myelination of efferent motor tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The myelination timeline for the motor system is demonstrably protracted.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Priority for myelination is delayed for the neural circuits controlling motor function.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the subcortical motor pathways is significantly lagging.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A delay of approximately {weeks} weeks is evident in the myelination of motor tracts.",
+      "vars": {
+        "weeks": {
+          "type": "int_range",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The insulating myelin for motor command pathways is forming with pronounced tardiness.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination shows a conspicuous delay specifically within the motor neuron axons.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The progression of myelination along the corticobulbar motor pathways is markedly slow.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A significant myelination delay is focal to the pathways for coordinated motor activity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The expected priority for motor tract myelination is not being met, indicating a delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is lagging, with the motor system showing the most pronounced slowdown.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The formation of myelin on fibers of the motor system is proceeding with obvious lag.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a delayed onset of myelination in the neural pathways dedicated to motor control.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the extrapyramidal motor tracts is developing with notable delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear asynchrony is seen, with myelination of motor pathways lagging behind other systems.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The myelination process for efferent motor signals is significantly protracted.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination along the primary motor conduction pathways is visibly delayed and incomplete.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "delayed"
+      }
+    }
+  ]
+}

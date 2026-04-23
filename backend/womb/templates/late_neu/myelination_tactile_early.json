@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_tactile_early",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "tactile",
+    "rate": "early"
+  },
+  "templates": [
+    {
+      "text": "The tactile pathway shows early myelination, leading to a swift, localized withdrawal from a cold surface.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing early along the tactile sensory pathway, sharpening the infant's response to gentle stroking.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "An early myelination priority for the tactile system refines the rooting reflex, reducing its latency to under {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The dorsal column-medial lemniscal pathway, critical for discriminative touch, is undergoing precocious myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early tactile myelination enhances the precision of the palmar grasp, making it more consistent and firm.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has begun early on the primary afferent fibers, prioritizing the transmission of light touch and pressure.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's tactile startle response is notably brisk, a sign of early myelination in the relevant spinal pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Preferential myelination of the spinothalamic tract's tactile components is refining crude touch sensation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination of the tactile pathway is evident in the rapid, organized withdrawal from a pinpoint stimulus.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading edge of myelination is sheathing the peripheral nerves that carry light touch, ahead of other modalities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination proceeds early along the pathway for discriminative touch, aiding in the localization of a gentle stroke.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant demonstrates a refined tactile orienting response, a benefit of early myelination in sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early tactile pathway myelination sharpens the contrast between a caress and a light poke, improving sensory discrimination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin is wrapping the A-beta fibers early, prioritizing the conduction of touch and vibration signals to the cortex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The swift, localized limb movement in response to a tactile stimulus indicates early myelination of the relevant reflex arc.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Precocious myelination of the posterior columns is enhancing the fidelity of tactile information reaching the brainstem.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early tactile myelination refines the Moro reflex, making the initial tactile trigger phase more distinct.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading myelination of the tactile afferent pathway reduces synaptic delay in the spinal cord's touch circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has begun early on the nerve fibers serving the glabrous skin of the palms, prioritizing grasp-related touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "An early myelination focus on the tactile system is evident in the infant's precise localization of a cotton wisp touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's consoling response to gentle tactile pressure is facilitated by early myelination of c-tactile afferents.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination of the dorsal root ganglion cells serving touch receptors accelerates signal conduction to the CNS.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The tactile component of the Babinski reflex is more clearly elicited, a subtle sign of early pathway myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing early along the medial lemniscus, prioritizing the relay of fine tactile data to the thalamus.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early tactile pathway myelination refines the infant's ability to distinguish between static touch and moving contact.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The swift conduction of tactile stimuli, with a latency of around {milliseconds} ms, points to early myelination.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 30,
+          "max": 60
+        }
+      },
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Preferential myelination of the primary somatosensory cortex's thalamic inputs is sharpening the cortical tactile map.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination of the tactile pathway underpins the organized, non-diffuse withdrawal from a localized touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading edge of myelination is insulating the fibers for light touch, enhancing signal-to-noise ratio for gentle stimuli.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early tactile myelination refines the infant's response to stroking the perioral area, sharpening the rooting reflex arc.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "early"
+      }
+    }
+  ]
+}

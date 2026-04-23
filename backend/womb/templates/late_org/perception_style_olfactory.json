@@ -1,0 +1,225 @@
+{
+  "key": "late_org/perception_style_olfactory",
+  "count": 30,
+  "applies_when_default": {
+    "primary_sense": "olfactory"
+  },
+  "templates": [
+    {
+      "text": "The world is first known as a layered map of scents, where safety is a warm, milky odor and distress a sharp, acidic tang.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Reality is parsed through a constant, subtle olfactory stream, with each new scent triggering a distinct motoric or quieting response.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Perception is a tide of aromatic information, where the mother's unique scent signature forms the primary anchor for all orientation.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Environmental changes register not as sight or sound, but as shifts in the ambient scent palette, provoking startle or stilling accordingly.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The infant navigates existence through a primary channel of smell, with familiar odors eliciting rooting and unfamiliar ones causing a {delay}-second freeze.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Consciousness dawns as a symphony of volatiles, where comfort and hunger are distinct olfactory melodies before they become feelings.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Every interaction is filtered through the nose; a calming touch is effective largely because it carries a known, soothing scent profile.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "This newborn experiences proximity and distance primarily as the intensity gradient of a caregiver's pheromonal cloud.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The world constructs itself from odor particles, with pleasant scents promoting habituation to other stimuli and harsh ones overriding them.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Awareness is an olfactory landscape, where the sharp scent of antiseptic defines 'clinic' as clearly as vision later will.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Social bonding initiates not with a face, but with the complex, comforting olfactory bouquet of the primary caregiver's skin.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Stress and solace are first and foremost chemical signals detected through the nose, dictating the infant's state of arousal.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Experience is cataloged in a library of smells, each linked to a visceral memory of satiety, discomfort, or secure holding.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The infant's reality is a fluid medium of odors, where navigation toward the breast is a guided chemotaxis more than a visual quest.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Perception anchors to the olfactory baseline of the nest; any deviation in this scent background registers as a novel event requiring assessment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "This being interprets the environment through nasal primacy, where a sudden new scent can truncate a cry mid-breath as attention shifts.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The foundational sense of place is built from the dominant scent in the air, categorizing spaces as 'home', 'strange', or 'clinical'.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Before recognizing voices, this newborn recognizes the scent-print of those voices, associating timbre with a specific olfactory signature.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The continuum from sleep to alertness is often triggered and modulated by changes in the surrounding olfactory environment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "For this infant, a person is largely their scent halo, with recognition and preference forming long before facial features are discerned.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The world is perceived as an evolving olfactory narrative, where each chapter—feeding, bathing, soothing—has its own distinct aromatic theme.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Motor responses like turning the head are often cued more reliably by the location of a target odor than by a soft sound.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Existence is a process of constant olfactory sampling, with each inhalation an update to the internal model of safety and threat.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Quiet alertness is frequently spent in deep olfactory exploration, processing the scent layers of a room with intense, still focus.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The infant's timeline is marked not by clocks but by the rhythmic arrival of key odors: milk, clean linen, a familiar caregiver's return.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Sensory integration begins with smell; a loud noise is less startling if it occurs within a cloud of a known, secure scent.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "Reality is fundamentally chemical, with emotional valence assigned based on the innate or learned pleasantness of an odorant.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The primary cognitive map is olfactory, charting distances and relationships between people and objects based on their scent emissions.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "This newborn's state regulation is deeply tied to olfactory consistency; a sudden scent vacuum can be as perturbing as a loud bang.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    },
+    {
+      "text": "The infant lives in a world defined by odor trails, where the path to comfort is literally smelled, not seen.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "olfactory"
+      }
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/myelination_tactile_normal",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "tactile",
+    "rate": "normal"
+  },
+  "templates": [
+    {
+      "text": "The tactile pathways are myelinating on schedule, prioritizing sensory input from the skin.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds normally, with the tactile sensory pathways taking precedence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural development prioritizes the myelination of tactile afferent pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The dorsal column-medial lemniscus pathway, key for tactile discrimination, is myelinating normally.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Tactile sensation pathways are the current focus of the brain's myelination schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "On the standard timeline, myelination favors the ascending tactile sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The normal myelination sequence gives priority to pathways carrying light touch and pressure.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the spinothalamic tracts for crude touch is proceeding at the expected rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The brain's wiring prioritizes insulating nerves for tactile feedback from the extremities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Somatosensory pathways for tactile perception are being myelinated according to the typical sequence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The developmental clock signals for myelination to concentrate on the tactile sensory system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural resources are allocated to myelinate the dorsal roots carrying tactile information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The standard schedule calls for the preferential myelination of tactile projection fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination advances, sheathing the axons responsible for conveying tactile stimuli to the cortex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's neural development is insulating the pathways for discriminative touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Tactile sensory neurons are receiving their myelin sheaths on the anticipated timetable.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The process of myelination is currently focused on the peripheral and central tactile circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination follows its blueprint, prioritizing the nerves that mediate the sense of touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The ascending pathways for fine tactile discrimination are being myelinated as expected.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural maturation insulates the tactile feedback loops with a delay of under {seconds} milliseconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 50
+        }
+      },
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The developmental sequence mandates myelination of the lemniscal system for touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds apace, with tactile afferents in the spinal cord being prioritized.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The brainstem and thalamic relays for tactile sensation are undergoing active myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "On the normal trajectory, the insulation of tactile sensory pathways is the current priority.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's wiring is being optimized, with myelination focused on the tactile domain.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination targets the posterior columns, crucial for conveying precise tactile information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The standard developmental program is sheathing the axons for light touch and vibration.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Tactile processing pathways are being myelinated to support the emerging sense of physical contact.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination advances normally, concentrating its efforts on the somatosensory cortex's input lines for touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The neural infrastructure for tactile exploration is being insulated according to plan.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "normal"
+      }
+    }
+  ]
+}

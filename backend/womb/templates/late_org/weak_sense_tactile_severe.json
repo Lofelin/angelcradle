@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_tactile_severe",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "severity": "severe"
+  },
+  "templates": [
+    {
+      "text": "The tactile system is profoundly underdeveloped, with minimal response to even deep pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe tactile hyposensitivity renders the skin nearly insensate to touch and temperature.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound deficit in tactile processing prevents the perception of light touch or gentle stroking.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile input is severely muted, with a delayed and blunted response to physical contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The tactile channels are grossly deficient, failing to register most forms of cutaneous stimulation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "There is a near-complete absence of functional tactile sensation across the body surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile perception is critically impaired, with no discernible reaction to non-noxious touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe tactile processing deficit results in an unresponsive, hypoesthetic state.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The neural pathways for tactile sensation are severely underdeveloped and non-functional.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile awareness is profoundly diminished, with skin contact registering as a faint, distant signal.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A gross impairment of the tactile system leaves the infant insensible to texture and gentle pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile receptors are present but their central integration is severely disrupted and ineffective.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The capacity for tactile discrimination is absent due to severe peripheral and central deficits.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile feedback is critically deficient, providing almost no information about contact or surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound tactile hyposensitivity mutes all sensation of light touch, deep pressure, and vibration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The tactile sensory apparatus is severely underdeveloped, yielding a minimal and delayed response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile sensation is grossly attenuated, with responses only to intense, prolonged stimulation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe underdevelopment of tactile pathways results in a near-total lack of cutaneous awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile input fails to generate meaningful cortical representation, leaving touch unperceived.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A critical deficit in tactile processing abolishes the perception of gentle stroking and holding.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile channels are non-functional, with a response latency of over {seconds} seconds to firm touch.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The tactile system is severely compromised, unable to distinguish between smooth and rough surfaces.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Profound tactile impairment renders the infant unaware of most environmental contact and handling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile sensation is present only at a primitive, non-localized level with severe hyposensitivity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe developmental lack of tactile integration prevents normal rooting and grasping reflexes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile perception is critically absent, with no observable startle to sudden light touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant exhibits profound tactile indifference due to severely underdeveloped sensory pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile feedback loops are grossly deficient, offering minimal proprioceptive or exteroceptive input.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound deficiency in tactile processing mutes the sensory experience of cradling and swaddling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Tactile responsiveness is severely blunted, requiring pressure exceeding {grams}g to elicit a faint reaction.",
+      "vars": {
+        "grams": {
+          "type": "int_range",
+          "min": 100,
+          "max": 300
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "severe"
+      }
+    }
+  ]
+}

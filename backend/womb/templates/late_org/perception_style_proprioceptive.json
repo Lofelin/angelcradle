@@ -1,0 +1,225 @@
+{
+  "key": "late_org/perception_style_proprioceptive",
+  "count": 30,
+  "applies_when_default": {
+    "primary_sense": "proprioceptive"
+  },
+  "templates": [
+    {
+      "text": "The world is a map of internal tensions and releases, a landscape felt through muscle tone and joint angle.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Perception is a continuous calibration of limb position against gravity, a silent dialogue with space.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Reality is defined by the resistance of a surface and the body's own weight pressing into it.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Awareness flows from the core outward, sensing the world through the body's own posture and motion.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The infant perceives existence as a series of contained movements, a world felt from the inside out.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Knowing comes from the subtle feedback of tendons and joints, a proprioceptive cartography of self.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The world is understood through the body's boundaries, where contact defines form and pressure defines substance.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Perception is anchored in the deep sense of being a physical entity occupying a precise volume of space.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Experience is filtered through the constant, quiet hum of muscular effort and skeletal alignment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The infant navigates reality by feeling the pull of gravity and the body's own counter-tension against it.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Awareness is a proprioceptive stream, where every external event is first registered as an internal shift.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The world is a tactile-kinesthetic sculpture, perceived through the body's own movement and stillness.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Knowing begins with the body schema, a felt sense of limbs and trunk that defines all external interaction.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Perception is the continuous, unconscious monitoring of joint angles and muscle spindle feedback.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Reality is a dynamic equilibrium, felt as a constant, subtle adjustment of posture to maintain balance.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The infant experiences the environment as an extension of bodily sensation, where space is felt, not seen.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Awareness is rooted in the deep pressure of containment and the freedom of limb extension.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The world is perceived as gradients of resistance and support, mapped proprioceptively before all else.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Existence is a felt sense of embodiment, where every stimulus is translated into a postural response.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Perception is a closed-loop system of movement and feedback, with the body itself as the primary reference.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The infant interprets stimuli through the lens of bodily integrity and the need for postural security.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Knowing is kinesthetic; objects and people are understood by how they alter the body's own position and tone.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The world is a symphony of tensions, with proprioception conducting the sense of self within it.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Awareness dwells in the space between movement and restraint, feeling the potential for action in every moment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Reality is constructed from the internal coordinates of the body, a proprioceptive grid upon which all else is plotted.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Perception begins with the midline, a felt axis from which all spatial relationships are proprioceptively gauged.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The infant's world is one of embodied physics, felt through weight, balance, and the mechanics of leverage.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Experience is fundamentally interoceptive-proprioceptive, a blend of internal state and bodily position in space.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Knowing comes from the {delay} millisecond lag between intended movement and felt execution, a constant calibration.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 50,
+          "max": 200
+        }
+      },
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "The world is perceived as a field of forces acting upon the body, answered always with a postural adjustment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "proprioceptive"
+      }
+    }
+  ]
+}

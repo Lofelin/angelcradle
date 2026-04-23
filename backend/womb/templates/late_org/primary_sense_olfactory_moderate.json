@@ -1,0 +1,256 @@
+{
+  "key": "late_org/primary_sense_olfactory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "strength": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The newborn's olfactory pathways are notably dense, processing maternal scent with moderate acuity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory neural circuits show moderate specialization, forming early recognition of familiar odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderately developed olfactory sense guides the infant's initial rooting and feeding behaviors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant's olfactory cortex demonstrates moderate connectivity, prioritizing scent over other nascent senses.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory processing is a primary sensory channel, with neural networks tuned for moderate discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Specialized olfactory bulbs show moderate density, filtering the chemical world with nascent precision.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's world is defined by a moderate olfactory landscape, its neural architecture primed for scent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory receptors exhibit moderate sensitivity, creating a distinct sensory map of the immediate environment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A web of olfactory neurons fires with moderate intensity, forming the cornerstone of early environmental awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant's primary sensory input is olfactory, with moderately dense circuitry dedicated to chemosensory data.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate olfactory specialization is evident in the rapid, scent-triggered calming response within {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural pathways for olfaction are moderately reinforced, making scent a dominant navigational cue.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The olfactory system is a primary conduit, its moderate development shaping early bonding and recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderately acute olfactory sense filters the amniotic and postnatal worlds through a dense neural lattice.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory processing centers show moderate hypertrophy, prioritizing chemical signals over visual blur.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's behavior is subtly steered by a moderate yet distinct olfactory guidance system.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Specialized olfactory glomeruli form a moderately complex network for initial odorant decoding.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory acuity is moderate but primary, with neural circuits densely wired for this chemosensory channel.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant's moderate olfactory specialization is clear in the focused sniffing and stilling to familiar scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate density of olfactory neurons creates a sensory gateway more reliable than sight or sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory neural tracts are moderately myelinated, allowing scent signals to travel with primary authority.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The world is interpreted first through a moderate olfactory lens, its related cortical areas notably active.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory specialization is evident at a moderate level, with scent triggering distinct autonomic responses.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderately developed olfactory apparatus serves as the primary sensory anchor in the new extrauterine environment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant's olfactory cortex demonstrates moderate synaptic density, hardwiring early odor preferences.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory input takes moderate precedence, its neural circuitry forming a foundational sensory scaffold.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate olfactory dominance is seen in the infant's clear orientation toward the scent of breastmilk.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The primary sensory pathway is olfactory, with a moderately intricate network dedicated to pheromone detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory neurons show moderate convergence, creating a distinct sensory channel for environmental sampling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate but definitive olfactory bias shapes the newborn's initial interactions, guided by dense neural loops.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "moderate"
+      }
+    }
+  ]
+}

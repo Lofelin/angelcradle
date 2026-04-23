@@ -1,0 +1,476 @@
+{
+  "key": "birth/first_cry_onset_moderate",
+  "count": 65,
+  "applies_when_default": {
+    "arousal": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A brief gasp, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Two seconds of startled silence, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Eyes squeezed shut, mouth opened, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A shudder ran through the tiny body, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Fists clenched, face reddening, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A sharp intake, a held breath, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A silent, wide-mouthed gasp, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A tremble in the chin, a gathering of force, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A reflexive arch, lungs filling, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A moment of stunned quiet, chest rising, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Lips parted, a preparatory shudder, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A visible heave of the thorax, a pause, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A short, soundless cry, then breath drawn, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Limbs briefly stilled, diaphragm contracting, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A deep, preparatory gasp, face scrunching, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A {seconds}-second silent gap, then a forceful exhale —",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Mouth forming an 'O', a hitch in the breath, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A jolt, a reflexive swallow, air found, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Eyes fluttering open, a silent vocalization, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quick series of panting breaths, coalescing into —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "Torso tensing, a held pause, release imminent, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A sudden stillness, followed by a gathering wail —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A sharp exhalation, a gasp for more air, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The chest fell, rose with greater effort, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A brief, wet cough cleared the airway, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A shuddering inspiration, a moment's suspension, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's frame stiffened, breath caught, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A hiccup of air, a deeper breath drawn, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A silent cry, mouth working, sound gathering, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A tremulous inhale, held for a beat, then released —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The initial gasp subsided, a second stronger one, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quick blink, a deeper respiratory effort, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A slight startle, a focused intake of air, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "The first breath taken, a second deeper one, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A reflexive gape, a build of thoracic pressure, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A soft whimper, a deeper breath drawn, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quiet gasp, a gathering of tension, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A slight startle, a held moment of air, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A muted grunt, chest expanding with effort, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A brief, wide-eyed pause, lungs preparing, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A gentle shudder, followed by a sharp inhale, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A moment of quiet, a visible breath intake, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A soft exhalation, then a deeper, forceful breath, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A reflexive stretch, a silent opening of the mouth, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A {count}-second quiet assessment, then a vocal burst —",
+      "vars": {
+        "count": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A tremulous lip, a gathering of air, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quiet huff, a building pressure in the chest, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A subtle arch of the back, breath catching, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A slow blink, a preparatory gasp, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A faint mewl, swallowed, then a stronger breath, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A still moment, a sudden diaphragmatic drop, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quiet coo turning to a strained gasp, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A brief facial grimace, air rushing in, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A slight turn of the head, a focused inhale, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A muted sigh, then a more vigorous chest rise, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A hesitant breath, a second more confident one, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A soft cough, clearing the airway, then a full breath, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quiet gurgle, a shift in posture, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A deep nasal flaring, a silent vocal cord adduction, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A gentle limb flexion, a coordinated breath hold, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A look of brief surprise, a lungful of air taken, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A short, soundless yawn, transitioning to a cry, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A quiet snuffle, a gathering of thoracic force, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A momentary stillness, a sharp inspiratory effort, then —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    },
+    {
+      "text": "A soft pant, a deeper breath drawn for power, and —",
+      "vars": {},
+      "applies_when": {
+        "arousal": "moderate"
+      }
+    }
+  ]
+}

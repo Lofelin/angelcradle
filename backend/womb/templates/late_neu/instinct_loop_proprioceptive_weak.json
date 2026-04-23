@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_proprioceptive_weak",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "Sudden head turn to the side → delayed, partial attempt to right the head, then a weak, low-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Arm extended by examiner → slow, fluttering finger flexion, followed by a faint, breathy vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Foot stroked along outer edge → toes curl weakly after a {second} second pause, leg does not fully withdraw.",
+      "vars": {
+        "second": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Hand brought to midline → fingers brush mouth briefly, rooting attempt is incomplete and fades.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Gentle pressure on sole → a sluggish, partial plantar grasp, releasing before full tension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden loss of trunk support → a slow, tremulous Moro fragment, arms fall back limply.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cheek stroked near mouth → head turns fractionally, mouth opens slightly, then movement stalls.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Leg lifted and released → limb descends slowly with minimal corrective extension, a soft whimper follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Palmar grasp elicited → weak, inconsistent finger pressure that ebbs within {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Nose lightly obstructed → delayed, shallow head turn to clear airway, accompanied by a thin, strained cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Torso tilted sideways → incomplete righting response, a faint grunt of effort, then stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Heel pressed against surface → feeble, abbreviated stepping motion that lacks coordination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Mouth touched with fingertip → weak, uncoordinated suckling motion that ceases abruptly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden loud noise nearby → a slow blink, a faint startle quiver in the limbs, no full cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Arm restrained gently → a lethargic attempt to pull free, resulting in a muffled, discontented sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Placed in prone position → a delayed, partial effort to lift the head, lasting only a moment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sole scratched lightly → toes splay weakly, foot twitches, then falls back to neutral.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Chin supported then released → head nods forward with a slow, dampened bobbling motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Hand brushed against crib sheet → fingers make a slow, raking motion that lacks purposeful grip.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Light jostle of the bassinet → eyes open slowly, a quiet, wavering vocalization emerges.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Knee tapped for reflex → leg extends with reduced force and speed, reflex arc seems sluggish.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Nape of neck touched → a faint, delayed shoulder shrug, followed by a sigh-like exhalation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Attempt to elicit crawling reflex → one leg makes a feeble push, the other remains motionless.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden bright light → eyelids squeeze shut slowly, face grimaces with a delayed, soft whine.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Gentle traction on arms → head lags considerably, only partial flexion against the pull.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Foot dorsiflexed quickly → a slow, incomplete withdrawal, the cry is a faint, breathy protest.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Cheek stimulus repeated → rooting attempt grows weaker each time, culminating in a quiet fuss.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Held upright with feet touching surface → legs bear minimal weight, buckling after a brief moment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Fingers uncurled from grasp → they close again weakly, then relax fully as if fatigued.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Mild vestibular input from rocking → a disorganized limb movement, then a low, arrhythmic vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "weak"
+      }
+    }
+  ]
+}

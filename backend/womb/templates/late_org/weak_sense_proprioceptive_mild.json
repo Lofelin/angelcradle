@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_proprioceptive_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "severity": "mild"
+  },
+  "templates": [
+    {
+      "text": "The newborn exhibits a mild proprioceptive delay, with limb movements appearing slightly unanchored in space.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle proprioceptive underdevelopment leads to occasional overshooting during the Moro reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is mildly dampened, resulting in a faintly uncoordinated rooting search.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's proprioceptive map is slightly faint, causing a gentle, searching quality to hand-to-mouth movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive immaturity contributes to a slight lag in postural adjustment when held.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a soft proprioceptive imprecision, seen in the baby's occasionally misdirected grasp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's proprioceptive sense is gently under-refined, leading to a subtle head wobble during alert states.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive deficit manifests as a faintly clumsy quality in spontaneous limb cycling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive signaling is slightly muted, giving limb movements a softly exploratory character.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant demonstrates a mild proprioceptive immaturity, with a {second} second delay in limb repositioning after a startle.",
+      "vars": {
+        "second": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle underdevelopment of proprioceptive pathways leads to a gentle, floating quality in the baby's kicks.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is mildly immature, resulting in a slight overshoot when the arm extends during a cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's proprioceptive awareness is softly blunted, seen in a faintly uncertain hand clench.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive imprecision is evident in the occasional gentle collision of the infant's own hands.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a slight proprioceptive lag, causing the baby's limbs to settle into position with a minor, final adjustment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant exhibits a mild proprioceptive softness, with a subtly decreased tone in antigravity limb holding.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive mapping is gently underdeveloped, leading to a faint searching motion before the hand finds the mouth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive delay contributes to a softly uncoordinated quality in alternating leg movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's proprioceptive sense is slightly unfocused, manifesting as a gentle, whole-body startle instead of a localized limb jerk.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive integration is mildly immature, resulting in a subtle asymmetry in spontaneous arm movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a soft proprioceptive under-refinement, seen in the infant's occasional gentle bumping of its own cheek during rooting.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby demonstrates a mild proprioceptive imprecision, with a slight waver in limb position during the tonic neck reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback loops are gently dampened, leading to a faintly exaggerated limb flail when transitioning from sleep.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle proprioceptive underdevelopment causes a mild, searching imprecision in the plantar grasp response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn exhibits a mild proprioceptive softness, with a gently reduced awareness of limb boundary in the crib.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive signaling is slightly delayed, contributing to a soft, whole-body response to vestibular input.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a mild proprioceptive immaturity, evident in the infant's occasional gentle overshoot when bringing hands to midline.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's proprioceptive map is faintly underdeveloped, leading to a subtle, constant micro-adjustment of limb posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive deficit manifests as a softly unanchored quality in the infant's spontaneous stretching motions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive awareness is gently blunted, resulting in a slight, persistent fidgeting as the baby seeks limb position feedback.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "mild"
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_olfactory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "severity": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The olfactory system is notably underdeveloped, resulting in a delayed and muted response to strong scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory processing is moderately impaired, causing a weak orienting response to familiar maternal odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate olfactory deficit blunts the newborn's typical rooting reflex triggered by the smell of milk.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's olfactory channels are underdeveloped, showing only a faint reaction after a {delay} second exposure to odorants.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory perception is significantly lagging, with minimal behavioral change even to pungent stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "An underdeveloped olfactory sense provides a dulled sensory map of the immediate environment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate olfactory insufficiency leads to a poor discrimination between comforting and novel smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's weak olfactory function fails to elicit the expected calming response to a familiar caregiver's scent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory cues are processed with notable delay and reduced intensity, hindering early bonding signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate deficit in the olfactory pathway mutes the infant's innate attraction to the smell of colostrum.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The olfactory system's development lags, resulting in a blunted startle response to sudden, strong odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory recognition is impaired, slowing the infant's ability to locate a food source by scent alone.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Underdeveloped olfactory neurons transmit sensory information with reduced fidelity and speed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate olfactory channel deficiency dampens the typical arousal response to new environmental smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's olfactory acuity is clearly subpar, requiring prolonged exposure to register even potent odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory integration is weak, leading to inconsistent facial expressions in reaction to scent presentation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn demonstrates a markedly reduced olfactory search behavior when presented with a milk-scented cloth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory processing shows moderate developmental delay, filtering out subtle scent nuances in the environment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "An underdeveloped sense of smell provides a muted and incomplete picture of the infant's immediate world.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The olfactory deficit results in a faint, delayed head turn toward odor stimuli, taking over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory pathways are functionally immature, blunting the protective grimace reflex to noxious smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate olfactory impairment diminishes one channel of non-verbal communication and environmental awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's underdeveloped olfactory bulbs yield a slow, dampened response curve to scent-based cues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory sensitivity is notably poor, requiring a higher concentration of odorant to trigger a noticeable reaction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A clear lag in olfactory development mutes the infant's typical preference for the scent of their own mother.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The olfactory sense is functionally blunted, offering little guidance for early feeding and comfort-seeking behaviors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate underdevelopment of olfactory receptors leads to inconsistent and weak orienting to pleasant aromas.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory information is processed with significant attenuation, slowing adaptation to the nursery's scent profile.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's weak olfactory channels provide a faint and unreliable signal for scent-based memory formation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Olfactory function is moderately deficient, resulting in a subdued sniffing response and limited scent exploration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "moderate"
+      }
+    }
+  ]
+}

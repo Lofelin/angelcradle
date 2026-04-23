@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_tactile_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Sudden cold touch on sole → sharp leg retraction, full-body startle with a loud, high-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Firm pressure on palm → immediate grasp, followed by a vigorous arm pull and a guttural vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt cheek stroke → head turns, mouth roots, and a coordinated suck-swallow-breathe sequence initiates.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Pinprick to heel → explosive cry, contralateral limb flexion, and a rapid withdrawal of the affected leg.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden loss of support → arms fling wide, fingers splay, and a sharp, rhythmic cry begins.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Deep pressure on abdomen → forceful extension of spine, arms thrust forward, and a brief, powerful cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Rapid head tilt → eyes widen, arms extend asymmetrically, and a short, staccato cry erupts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Strong stroking along spine → trunk arches, pelvis lifts, and a sustained, loud wail follows.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected tap on sternum → gasp, brief apnea, then a cascading cry with full-body tremor.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Restraint of both arms → intense struggling, face reddens, and a rising, crescendo cry is produced.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Vibration on chest wall → cry halts for {seconds} second(s), then resumes with increased pitch and vigor.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Finger pulled from grasp → fingers tighten reflexively, arm flexes, and a short, protesting vocal burst.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Cold stethoscope on back → immediate wriggling escape attempt, followed by a sharp, indignant cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sustained foot squeeze → toes fan, leg extends and kicks, triggering a synchronized cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden jostle of bassinet → Moro reflex fully engages, cry onset is instantaneous and loud.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Tug on a single hair → localized flinch, head turn toward stimulus, and a brief, high-frequency cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Palmar stroke with texture → grasp, bring-to-mouth movement, and a soft pre-cry vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Firm rub on the sole → Babinski sign present, leg withdraws, and a short cry is elicited.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abdominal palpation → grimace, legs draw up, and a strained, grunting cry is released.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Light restraint at shoulders → forceful pushing motion with arms, neck hyperextension, and a loud cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Rapid temperature change on skin → gasp, full-body shudder, and a delayed but intense cry response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Pinch on thigh → targeted limb flexion, contralateral extension, and a sharp, well-defined cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden air current on face → breath catch, blink reflex, then a vigorous cry with arm movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Deep pressure to plantar surface → toes curl, leg stiffens in extension, and a strong cry is triggered.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected tap on glabella → blink, brief quieting, followed by a sudden, loud cry outburst.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Restraint during rooting → head turns forcefully, mouth opens wide, and a frustrated cry escalates.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Simultaneous touch to both cheeks → disorganized head movement, arm flailing, and a confused, wavering cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sustained pressure on fontanelle → stilling, then a deep cry with notable respiratory effort.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Vigorous stroking of the eyebrow → eye closure, head turn away, and a soft, whimpering vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt change from firm to light touch → startle, limb jerks, and a cry that peaks rapidly in under {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "tier": "strong"
+      }
+    }
+  ]
+}

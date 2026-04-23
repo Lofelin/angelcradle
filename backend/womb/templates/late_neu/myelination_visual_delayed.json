@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_visual_delayed",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "visual",
+    "rate": "delayed"
+  },
+  "templates": [
+    {
+      "text": "Myelination is markedly delayed along the visual pathway, resulting in a sluggish pupillary response to light.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The visual processing pathway shows a clear myelination lag, delaying the infant's ability to track a moving face.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced delay in visual pathway myelination is evident, with gaze fixation remaining brief and inconsistent.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the optic radiations is significantly behind schedule, dampening the startle response to a sudden bright light.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The geniculostriate visual pathway demonstrates a notable myelination deficit, impairing early pattern recognition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Visual cortical myelination is conspicuously delayed, correlating with poor orienting to high-contrast edges.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a marked lag in the myelination of the primary visual pathway, slowing the transmission of retinal signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination priority is skewed away from the visual system, leading to a delayed blink-to-threat reflex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant's visual neural tracts show a significant myelination delay, manifesting as a preference for auditory over visual stimuli.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A deficit in visual pathway myelination is apparent, causing a {millisecond} millisecond delay in cortical visual evoked potentials.",
+      "vars": {
+        "millisecond": {
+          "type": "int_range",
+          "min": 50,
+          "max": 150
+        }
+      },
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the occipital lobe's afferent fibers is visibly lagging, resulting in a muted response to complex visual patterns.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed myelination of the visual radiations underpins the infant's fleeting and unfocused periods of alertness.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear myelination delay in the retinogeniculate pathway attenuates the pupillary light reflex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Visual pathway development is hindered by slow myelination, reducing the acuity of the infant's scanning movements.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The posterior visual tracts exhibit a myelination priority deficit, delaying the establishment of stable ocular alignment.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is notably delayed along the dorsal visual stream, affecting early visuospatial processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A lag in optic nerve myelination contributes to a dampened visual component of the Moro reflex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant's visual system myelination is significantly behind, evident in the weak orienting response to a red ring.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Delayed myelination of the lateral geniculate nucleus pathways slows visual information processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a pronounced myelination delay affecting the visual cortex's input fibers, blunting contrast sensitivity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The priority for myelination is low in the visual domain, leading to inconsistent visual pursuit of a caregiver's face.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the striate cortex's projection fibers is markedly delayed, impairing the integration of basic visual features.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A significant visual pathway myelination lag is observed, correlating with prolonged latency in saccade initiation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant demonstrates delayed visual tract myelination, resulting in a preference for auditory cues during the Brazelton orientation items.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the optic tracts is proceeding at a visibly slower rate than other sensory pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A deficit in visual system myelination underlies the infant's brief and poorly sustained periods of visual alertness.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The geniculocalcarine pathway shows a clear myelination delay, affecting the speed of visual recognition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is lagging critically in the visual associative areas, delaying the emergence of face-preference behaviors.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A delayed myelination schedule for the visual pathway results in a muted behavioral response to novel visual stimuli.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The visual processing stream exhibits a myelination priority deficit, taking {seconds} full seconds longer to orient to a novel light source.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "delayed"
+      }
+    }
+  ]
+}

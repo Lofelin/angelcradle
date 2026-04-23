@@ -40,6 +40,7 @@ class Baby:
     alive: bool = True
     parent_genomes: dict = field(default_factory=dict)        # 父母基因快照
     birthplace: dict = field(default_factory=dict)            # {name, code, coordinates}
+    lang: str = "en"                                          # 运行时语言 "zh" | "en"，conceive 时决定，admit 时拷贝到 BabyState
 
     @property
     def complication_names(self) -> list[str]:
@@ -62,6 +63,7 @@ class Baby:
             "environment": self.environment,
             "parent_genomes": self.parent_genomes,
             "birthplace": self.birthplace,
+            "lang": self.lang,
         }
         if include_log:
             result["gestation_log"] = self.gestation_log
@@ -92,10 +94,15 @@ class ConceptionResult:
 
 
 def generate_id(now: datetime, index: int = 0) -> str:
-    """Generate baby ID: AC-YYYYMMDD-XXXX."""
+    """Generate baby ID: AC-YYYYMMDD-{uuid4_12}.
+
+    使用 UUID4 前 12 位 hex（48 bit 熵），碰撞概率 ~3×10^-8 per 1e5 babies，
+    批量并发完全安全。index 参数保留仅为向后兼容，不参与 ID 构造
+    （多胎 offspring 也独立抽 UUID，避免秒级时钟驱动的历史碰撞问题）。
+    """
+    import uuid as _uuid
     date_part = now.strftime("%Y%m%d")
-    seq = int(now.strftime("%H")) * 3600 + int(now.strftime("%M")) * 60 + int(now.strftime("%S"))
-    return f"AC-{date_part}-{seq + index:04d}"
+    return f"AC-{date_part}-{_uuid.uuid4().hex[:12]}"
 
 
 def _load_birth_attributes(species: str) -> dict:

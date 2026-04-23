@@ -1,0 +1,295 @@
+{
+  "key": "trait/sense_auditory",
+  "count": 40,
+  "applies_when_default": {
+    "dominant_sense": "auditory"
+  },
+  "templates": [
+    {
+      "text": "Startles at sudden sounds",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Calms to white noise",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Turns toward gentle voice",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Ears track rattle sounds",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Lulls to rhythmic humming",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Blinks at sharp claps",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Quiets to lullaby tune",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Searches for soft cooing",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Freezes at door creak",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Moves to steady beat",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Startles then settles again",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Attends to high pitches",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Stills at mother's whisper",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Snaps head to rattle",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Calms with shushing sounds",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Listens intently then sighs",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Jerk at unexpected bang",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Relaxes to soft music",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Tracks voice across room",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Awakens at alarm tone",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Pauses at wind chime",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Turns toward clicking noise",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Quiets to heartbeat rhythm",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Starts at phone ring",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Ears twitch to distant hum",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Soothed by vowel sounds",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Responds to tap patterns",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Looks toward rustling fabric",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Listens for {seconds} second pause",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Hushes at soft whisper",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Cries then listens",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Moves lips to sounds",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Eyes widen at loud noise",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Attunes to melodic voice",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Flinches at metallic clatter",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Calms with ticking clock",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Searches for sound source",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Stills as footsteps approach",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Reacts to squeaky toy",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    },
+    {
+      "text": "Soothed by lullaby loop",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "auditory"
+      }
+    }
+  ]
+}

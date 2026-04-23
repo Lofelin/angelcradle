@@ -1,0 +1,231 @@
+{
+  "key": "late_org/organ_maturation_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "budget_tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The lungs show robust surfactant production, though the gut's peristaltic waves are still somewhat immature and disorganized.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiac septation is complete with strong valve formation, yet the renal tubules lag slightly in concentrating ability.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Neurologically, primitive reflexes are present and brisk, but the suck-swallow-breathe coordination requires a brief {delay} second pause to synchronize.",
+      "vars": {
+        "delay": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Hepatic enzyme systems are coming online, while the pancreatic islet cells are still finalizing their insulin secretory rhythm.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The cry is strong and lusty, yet the thermoregulatory response to cooling is a fraction slower than expected.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Muscle tone is generally good, though extensor patterns momentarily dominate before yielding to flexion.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Auditory startle is robust and consistent, contrasting with visual tracking that is present but jerky and unsustained.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The skin barrier is functionally intact, but eccrine sweat gland activity remains patchy and inconsistent.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Bone ossification centers are developing on schedule, while the cartilage of the external ear remains unusually pliable.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Gastrointestinal motility is present, yet the migrating motor complex cycles are shorter and less regular.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The adrenal cortex produces adequate cortisol, but its diurnal rhythm is not yet firmly established.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Respiratory drive is strong, though the intercostal muscles show slight fatigue during prolonged crying jags.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The Babinski reflex is clearly present, while the palmar grasp lacks the full, sustained strength of a term infant.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Renal blood flow and filtration are adequate, but tubular reabsorption of sodium is marginally less efficient.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The initial cry is vigorous, but its acoustic modulation shows less variation in pitch and harmonic structure.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Hematopoiesis is active in the bone marrow, though reticulocyte counts sit at the lower end of the normal range.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The pupillary light reflex is prompt and equal, but accommodation to near objects is sluggish and incomplete.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Liver conjugation pathways are operational, leading to a mild, transient elevation in unconjugated bilirubin.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The Moro reflex is complete but asymmetrical, with one arm often adducting more forcefully than the other.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiac output is sufficient, yet the ductus arteriosus demonstrates a pronounced murmur before full closure.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Swallowing is effective, but the gag reflex is almost hyper-reactive, triggering easily with minimal stimulation.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The rooting reflex is easily elicited, though the subsequent latch is sometimes shallow and requires repositioning.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Thermoregulation is functional in a neutral environment, but brown adipose tissue metabolism is slower to activate.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The acoustic cry analysis shows good intensity, but the phonation is breathier with less clear harmonic bands.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Peripheral perfusion is good, though capillary refill time is consistently at the upper limit of normal.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The plantar grasp is firm, in contrast to the stepping reflex which is present but poorly coordinated and staggering.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Gastric emptying proceeds, yet pyloric sphincter tone is variable, leading to occasional non-bilious spit-ups.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "The auditory system localizes sound, but the orienting response is delayed by roughly {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Myelination of major motor tracts is progressing, while fine distal nerve conduction velocities are slightly delayed.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    },
+    {
+      "text": "Overall tone favors flexion, yet the infant periodically arches into brief, unsustained opisthotonic postures.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "moderate"
+      }
+    }
+  ]
+}

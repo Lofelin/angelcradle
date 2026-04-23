@@ -1,0 +1,231 @@
+{
+  "key": "late_neu/arousal_baseline_high",
+  "count": 30,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "High baseline arousal with a pronounced excitatory bias in neural circuits, leading to rapid, full-body startles at minor stimuli.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A high-arousal profile where the excitatory-inhibitory balance favors excitation, resulting in low sensory thresholds and frequent, vigorous crying.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Cortisol reactivity appears elevated, contributing to a high state of readiness and exaggerated motor responses to routine handling.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Neural excitability is high; the infant transitions from sleep to a full cry with a latency of under {seconds} seconds following a disturbance.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Manifests a high arousal baseline, with limb movements becoming large-amplitude and disorganized even during quiet alert states.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The cry has a high-pitched, urgent onset, reflecting an underlying neural state where inhibitory modulation is insufficient.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "High cortical excitability is evident; visual or auditory stimuli easily breach a low threshold, triggering pronounced arousal and fussing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Arousal regulation is challenged by a high baseline, with stress-signaling systems primed for rapid, intense reaction to novelty.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Displays a high propensity for startle, with Moro reflexes often elicited by sounds below {db} dB, indicating low inhibitory tone.",
+      "vars": {
+        "db": {
+          "type": "int_range",
+          "min": 50,
+          "max": 65
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The infant's high arousal state is characterized by frequent awake periods marked by active, diffuse movement and minimal self-quieting.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Excitatory neurotransmission dominates, creating a high-tension baseline where the infant rarely achieves deep, unbroken sleep cycles.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A high-strung neurological profile; the baby's cry acoustics show a rapid rise time and sustained high frequency, signaling poor dampening.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Cortisol levels likely contribute to a high-alert phenotype, with the infant showing heightened sensitivity to tactile and proprioceptive input.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "High arousal undermines state stability; the infant oscillates rapidly between states, struggling to maintain organized alertness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The balance of excitation and inhibition is skewed, resulting in a high reactivity index and pronounced distress to diaper changes.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Manifests a high degree of sympathetic nervous system tone, with easily triggered cries and color changes during examinations.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A high-arousal neonate whose startle response is not only easily elicited but also exhibits a prolonged, jittery resolution phase.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Low sensory thresholds and high neural excitability lead to frequent, intense crying bouts that are difficult to console.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The infant's high baseline is evident in a low threshold for the orienting response, which quickly escalates to distress.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Excitatory circuits fire readily, establishing a high-tension baseline where even gentle rocking can provoke limb extension and cry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Arousal peaks rapidly and remains high, as seen in the infant's wide-eyed, vigilant alertness and minimal habituation to repeated sounds.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The cry has a high-intensity, grating quality, acoustically mirroring the underlying over-activation of stress-response networks.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "High cortical arousal diminishes the infant's capacity for self-regulation, requiring frequent external containment to modulate state.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Neurological tuning is high-strung; the infant reacts to the subtlest environmental shift with full-body movement and vocal protest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "This high-arousal profile suggests a limbic system primed for high alert, with cortisol facilitating a rapid fight-or-flight response.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Inhibitory GABAergic signaling is insufficient to counter a high excitatory drive, leading to motor overflow and sensory overwhelm.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The infant's high reactivity is evident in a low threshold for the rooting reflex, which often triggers a frantic, disorganized search.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A state of high sympathetic arousal predominates, marked by easily triggered crying, tremors, and difficulty settling into sleep.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "High neural excitability results in a low threshold for the acoustic cry reflex; minimal discomfort prompts a loud, sustained vocalization.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The balance tips toward high excitation, making the infant exquisitely sensitive to internal cues like gas, which provoke intense fussing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 ## 成员清单
 
 __init__.py: 入口，导出 conceive()，编排遗传→表观遗传→环境→命运→发育全流程
-baby.py: Baby/ConceptionResult 数据模型，ID 生成，性别/表型决定
+baby.py: Baby/ConceptionResult 数据模型，ID 生成，性别/表型决定。**lang 字段（fix-lifeline-i18n）**：`Baby.lang: "zh" | "en"` 默认 `"en"`，conceive API 写入后由 registry 持久化到 archive/{id}/birth.json，admit 时拷贝到 BabyState.lang 供下游生成链路分支
 environment.py: 母体环境生成 + 量化修正系数（budget/defect_risk/miscarriage_risk）
 fate.py: 命运引擎——流产/多胎/死产/缺陷掷骰，基于 WHO/CDC 真实概率
 stages.py: 7 阶段发育编排——prompt 构建 + 预算执法 + 确定性母体反馈 + 分层约束注入 + 跨阶段校验 + SSE 流
@@ -16,7 +16,8 @@ llm.py: 向后兼容层，re-export 根级 llm.py 的 LLM 客户端接口
 
 ### 地理维度
 
-birthplace.py: 出生地系统——地区数据加载/人口加权掷骰/环境修正提取（仅 human）
+birthplace.py: 出生地系统——地区数据加载/人口加权掷骰/环境修正提取（仅 human）。coordinates + city 由 geo_sampler 产出，regions.yaml 中心作为兜底
+geo_sampler.py: 出生地坐标三级降级采样（add-birthplace-geo-sampling）——L1 `sample_city_and_point` 城市人口加权 + 高斯抖动 σ=clamp(sqrt(pop)·1e-4, 0.01°, 0.3°) + polygon.contains 校验（返回 {city, lat, lng}）；L2 `sample_point_in_country` polygon bbox 均匀拒绝采样（city=None）；L3 返回 None → 上游回退 regions.yaml 国家中心（city=None）。辅助函数 `nearest_city(alpha2, lat, lng)` 用于历史数据反查最近城市名
 
 ### 生物子系统
 
@@ -32,7 +33,12 @@ vitals.py: 胎儿生命体征（心率/体重/身长/羊水/胎动/血压/血氧
 
 ### 数据
 
-data/: 地区数据（regions.yaml — 出生地系统依赖）
+data/: 地区数据
+  - regions.yaml: 国家/地区元数据 + race_distribution + 环境修正系数 + 国家中心 coordinates（fallback 用）
+  - countries.geojson: Natural Earth 国境多边形（241 feature，3.8MB）——geo_sampler 合法性判定
+  - cities.csv: GeoNames cities15000 裁剪后 5 列（city, lat, lng, iso2, population，33k 行 1.3MB）——geo_sampler L1 人口加权源
+  - iso_alpha2_to_numeric.json: ISO 3166-1 alpha-2 ↔ 数字码静态映射（249 条）——geojson feature.id 对齐
+  - CITIES_LICENSE.txt: GeoNames CC BY 4.0 归属声明
 species/: 物种蓝图 YAML（human.yaml, dog.yaml, cat.yaml）
 
 ## 对外暴露

@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_visual_early",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "visual",
+    "rate": "early"
+  },
+  "templates": [
+    {
+      "text": "The visual pathway demonstrates early myelination, leading to a more robust pupillary light reflex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination of the optic radiations is advancing ahead of schedule, sharpening visual tracking.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The geniculostriate pathway shows a clear myelination priority, enhancing contrast sensitivity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Preferential myelination of the visual cortex pathways supports early pattern recognition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The optic nerve's sheathing is notably advanced, correlating with a brisk blink-to-threat response.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination of the dorsal visual stream is evident in the infant's orienting to peripheral motion.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The occipital lobe's white matter is maturing rapidly, a hallmark of this infant's visual development.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "A leading edge of myelination is insulating the primary visual pathway, V1 to V2.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The lateral geniculate nucleus projections are being myelinated with notable priority.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin is sheathing the visual association fibers, priming the infant for complex visual processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's visual fixation is steadier, a sign of the early myelination in the foveal pathway.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Precocious myelination of the magnocellular visual stream supports motion detection.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The optic tract shows advanced myelination, reducing visual signal latency by {milliseconds} milliseconds.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin is wrapping the visual cortical columns, enhancing edge detection capabilities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The retino-geniculo-cortical pathway is the clear frontrunner in the myelination sequence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early visual pathway insulation is evident in the quick saccades toward high-contrast targets.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is prioritizing the binocular vision circuits within the visual cortex.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The parvocellular visual pathway's early myelination refines color and detail perception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "A head start in optic chiasm myelination supports efficient crossing of visual information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's visual evoked potentials show shorter latency, indicating advanced pathway myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin is rapidly coating the projections from V1 to the parietal lobe for spatial vision.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The superior colliculus's visual layer is benefiting from this early myelination phase.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Preferential sheathing of the visual pathway axons accelerates signal transmission.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The calcarine fissure's striate cortex is a focal point for this infant's precocious myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early visual system myelination underpins the robust orienting response to novel faces.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing swiftly along the visual radiations toward the occipital pole.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's visual attention span, lasting up to {seconds} seconds, reflects this pathway's advanced myelination.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 10,
+          "max": 30
+        }
+      },
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "A leading wave of myelination is insulating the ventral visual stream for object recognition.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The pre-chiasmatic optic nerve segments show pronounced myelination ahead of other sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This early visual pathway myelination provides a foundation for future visuomotor integration.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "visual",
+        "rate": "early"
+      }
+    }
+  ]
+}

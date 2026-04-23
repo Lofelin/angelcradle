@@ -1,0 +1,256 @@
+{
+  "key": "late_org/primary_sense_olfactory_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "strength": "strong"
+  },
+  "templates": [
+    {
+      "text": "The newborn's olfactory system is exceptionally acute, with densely packed glomeruli in the olfactory bulb processing a vast array of scent molecules.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory dominance is evident, the infant's neural pathways for scent are a dense, hyper-specialized network from the first breath.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A highly refined olfactory sense defines this neonate, with an intricate, rapid-fire neural circuitry dedicated solely to chemical detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The infant's world is navigated primarily through an extraordinarily sharp olfactory channel, its related cortical connections forming a dense web.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory processing is paramount, featuring an exceptionally dense concentration of mitral and tufted cells for immediate scent discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This baby's primary sensory landscape is olfactory, characterized by a superabundance of olfactory receptor neurons and their swift synaptic relays.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An intensely specialized olfactory apparatus governs perception, with neural circuits for odorant mapping showing remarkable density and complexity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The neonate exhibits a powerful olfactory focus, the cribriform plate teeming with nerve fibers that feed a hyper-developed olfactory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory acuity is extreme, the infant's brain dedicating a disproportionate volume to the dense, lightning-fast processing of pheromones and odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Scent is the primary compass, driven by a low-threshold olfactory epithelium and a correspondingly dense thicket of bulbar interneurons.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The newborn's behavior is steered by a preternaturally sharp olfactory sense, its underlying neural architecture notably dense and exquisitely tuned.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory specialization is profound, with a high density of synaptic connections in the piriform cortex facilitating instantaneous odor recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This infant's dominant olfactory channel processes ambient chemicals with startling precision, supported by a densely woven lattice of associative neurons.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A strong olfactory imperative shapes early experience, the neural substrates for smell demonstrating exceptional cellular density and rapid conduction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The baby's keen olfactory sense arises from a hyper-dense array of receptor sites and a correspondingly rich innervation of the limbic system.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory perception is intensely sharp, the infant's brain featuring a densely packed and highly organized map for even trace volatile compounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Governed by a supremely acute olfactory system, the neonate's neural circuits for scent memory and valence are exceptionally intricate and concentrated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary sensory modality is unambiguously olfactory, evidenced by a dense proliferation of glomerular modules within the infant's olfactory bulb.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An olfactory-dominated neurology is present, with a notably high density of projections from the olfactory epithelium to central integrative centers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This newborn's reality is filtered through a razor-sharp olfactory lens, its supporting neural network remarkably dense and primed for chemical analysis.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The infant's strong olfactory bias is underpinned by a dense concentration of mitral cell dendrites, enabling nuanced discrimination within {seconds} milliseconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 50,
+          "max": 200
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory hyperspecialization is key, with a dense mat of neural connections allowing the infant to parse complex scent profiles from birth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A powerfully acute olfactory sense defines this baby, the relevant cortical and subcortical pathways forming an exceptionally dense and reactive matrix.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The neonate's olfactory channel is supremely dominant, its physiological basis a dense and highly efficient circuitry for detecting and classifying odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory processing takes precedence, facilitated by a dense aggregation of granule cells that sharpen contrast and refine scent perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This infant's perceptual world is anchored by smell, supported by a densely innervated olfactory bulb that operates with exceptional speed and fidelity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A markedly dense olfactory neuropil facilitates the infant's primary reliance on scent, enabling precise tracking and identification of chemical signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The newborn's behavior is acutely guided by olfaction, the neural infrastructure for this sense demonstrating striking density and topographic organization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Olfactory supremacy is evident in the neonate's densely packed receptor fields and the rapid, multi-synaptic relays they trigger within the brain.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Governed by an intensely sharp olfactory sense, the infant's related neural circuits form a dense, highly specialized network for environmental chemosensing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "strong"
+      }
+    }
+  ]
+}

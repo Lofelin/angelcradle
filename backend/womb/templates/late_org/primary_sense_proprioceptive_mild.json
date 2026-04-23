@@ -1,0 +1,250 @@
+{
+  "key": "late_org/primary_sense_proprioceptive_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "strength": "mild"
+  },
+  "templates": [
+    {
+      "text": "A mild proprioceptive bias is evident, with neural circuits for body position showing early, subtle density.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive pathways are slightly favored, leading to a nascent awareness of limb placement and movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is mildly specialized, with dense neural mapping for joint angle and muscle tension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive dominance refines the feedback loops governing posture and spontaneous limb motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive channels show mild preferential wiring, creating a foundational sense of bodily self in space.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural circuits for proprioception are densely packed, granting a slight but distinct advantage in sensing posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle proprioceptive specialization is present, with enhanced neural connectivity for sensing limb position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback loops are mildly intensified, supporting the earliest coordination of movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive system is slightly privileged, with dense interneuronal connections for kinesthetic awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive bias manifests as a precocious density in neural pathways that map the body's configuration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive input is processed with mild priority, supported by a dense network of sensory-motor integration.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A nascent proprioceptive focus is seen in the slightly denser innervation of muscle spindles and joint capsules.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive specialization is mild but clear, with neural tracts for body schema showing early consolidation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is mildly accentuated, leading to a slightly heightened baseline of postural awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural substrates for proprioception show mild overdevelopment, creating a foundational map of bodily position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive advantage is rooted in the dense synaptic connections of the dorsal column-medial lemniscus pathway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive channels are mildly dominant, with a corresponding density in cerebellar and cortical feedback loops.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive network is slightly amplified, providing a robust, if subtle, sense of limb movement and tension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive tuning results from the early, dense arborization of neurons dedicated to sensing joint position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive processing is mildly enhanced, with a corresponding density in the spinal and brainstem reflex arcs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle proprioceptive leaning is evident in the slightly denser cortical representation of somatic sensation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive pathways are mildly privileged, supported by a dense matrix of sensory ganglia and central connections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive system shows mild specialization, with a corresponding increase in synaptic density for kinesthetic data.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive bias fosters a dense neural architecture for integrating touch with limb position and movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive input receives mild preferential processing via a densely interconnected sensorimotor cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild proprioceptive focus is supported by the dense clustering of neurons responsive to muscle stretch and force.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive channels are slightly favored, leading to a dense, early-developed circuitry for postural control.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The proprioceptive sense is mildly accentuated, with corresponding dense projections to the thalamus and sensory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild proprioceptive specialization yields a dense web of neural connections for monitoring body position and movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is processed with mild priority, a function of the dense, low-latency neural loops involved.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "strength": "mild"
+      }
+    }
+  ]
+}

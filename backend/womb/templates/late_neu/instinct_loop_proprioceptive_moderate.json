@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/instinct_loop_proprioceptive_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Sudden limb extension → immediate flexion at the joint, followed by a brief, rhythmic tremor.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Passive rotation of the head to one side → the ipsilateral arm extends, the contralateral leg flexes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Gentle pressure on the sole of the foot → toes fan outward, then curl inward in a slow, deliberate grasp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A light, sustained touch to the palm → fingers close in a palmar grasp, held for {seconds} seconds before release.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden loss of head support → the arms jerk outward in a symmetrical embrace, then slowly recoil.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A firm stroke along the lateral foot → the big toe dorsiflexes while the other toes splay and abduct.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Brief, moderate pressure on the abdomen → the pelvis tilts upward, followed by a lateral trunk curl.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light touch to the cheek → the head turns toward the stimulus, mouth opens in a rooting motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden, gentle jostle of the bassinet → both legs draw up toward the torso in a protective tuck.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Passive flexion of the knee → the hip automatically flexes, creating a coordinated fetal posture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sustained, moderate pull on the hands → the infant resists, engaging shoulder and neck muscles to pull back.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Cool air currents across the face → a brief breath-hold, then a sharp, gasping inhalation through the nose.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Tactile stimulus to the corner of the mouth → the tongue protrudes and laterally sweeps the area.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden elevation of the feet above the head → the arms extend forward in a protective reaching motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A rolling motion onto the side → the uppermost arm extends, the lower arm flexes across the chest.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Deep, steady pressure on the ball of the foot → the leg stiffens and pushes against the pressure source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A light tap below the kneecap → a brisk, localized kick of the lower leg, then rapid relaxation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden tilting of the body forward → the arms extend and hands splay in a parachute-like response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Gentle, rhythmic stroking of the spine → the back arches slightly, then settles into a relaxed curve.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A firm touch to the sole during stepping reflex → the leg lifts and executes a deliberate, high-step motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden release of supported sitting → the head rights itself with a jerky, corrective neck extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Moderate pressure on both shoulders → the head tucks downward, chin meeting the sternum.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A slow, passive stretch of the arm overhead → the body follows with a gradual, whole-trunk side bend.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Brief constriction around the chest → the abdomen expands with a deep diaphragmatic breath.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Light stroking from heel to toe → the foot plantarflexes, pushing against the direction of the stroke.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sudden noise coinciding with a sway → the Moro reflex initiates but is dampened to a brief startle shudder.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Sustained touch to the lateral thigh → the leg adducts, drawing inward toward the body's midline.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A gentle upward lift under the arms → the legs perform a slow, alternating stepping motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "Passive extension of the wrist → the fingers reflexively extend and then slowly curl back to a neutral position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sudden, localized chill on the skin → a quick, shivering tremor isolated to the affected limb segment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "moderate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_tactile_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "severity": "mild"
+  },
+  "templates": [
+    {
+      "text": "The newborn's tactile processing shows a mild delay in registering gentle touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A slight under-responsiveness to tactile stimuli is noted during the Brazelton exam.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile sensation is mildly diminished, requiring firmer contact for a clear response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's tactile awareness is subtly muted, with a delayed rooting reflex of {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild tactile hyposensitivity is observed, blunting the Moro reflex to light touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile input is processed with a faint dullness, softening the startle to sudden contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby exhibits a mild deficit in tactile discrimination between textures.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Gentle stroking elicits a weaker-than-expected tactile orienting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile perception is slightly underdeveloped, muting the palmar grasp to light pressure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild tactile processing lag causes a brief pause before the infant reacts to being held.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's tactile map is faint, leading to inconsistent localization of touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile feedback loops are mildly inefficient, dampening postural adjustments to handling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A soft tactile blunting is noted, attenuating the withdrawal from a cool stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's tactile system shows mild under-connectivity, slowing habituation to repeated touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile sensitivity is mildly reduced, requiring a distinct threshold for a clear motor response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle tactile integration issue softens the typical rooting search for the nipple.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile cues are registered with mild imprecision, affecting self-soothing behaviors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's tactile channel is mildly under-responsive, noted in a dampened reaction to diaper changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild tactile hypo-reactivity is present, blunting the expected startle to a light tap.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile awareness is faint, leading to a delayed limb movement in response to stroking.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild under-development of tactile pathways results in a softened grasp reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile perception is slightly muted, diminishing the infant's alertness to gentle handling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn shows a mild tactile processing deficit, evident in a subdued response to swaddling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile feedback is mildly attenuated, slowing the adaptation to being cradled.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A soft dulling of tactile sensation is observed during the NBAS habituation items.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's tactile system has a mild latency, delaying reaction to a light brush on the cheek.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile input registers with mild faintness, reducing the vigor of the stepping reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild under-responsiveness in the tactile domain softens the reaction to a warm cloth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Tactile discrimination is slightly impaired, blurring the difference between soft and rough fabrics.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby exhibits a mild tactile hyposensitivity, requiring sustained contact for a clear orienting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "mild"
+      }
+    }
+  ]
+}

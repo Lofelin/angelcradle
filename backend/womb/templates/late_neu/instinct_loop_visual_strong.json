@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_visual_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Sudden bright light → sharp gasp, arms fling out in full Moro reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Large looming shape enters periphery → head jerks away, body stiffens, cry erupts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "High-contrast edge detected → eyes lock, breath hitches, hands splay toward stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Rapid shadow movement → startled blink, followed by a vigorous, full-body startle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Flash of red object → gaze fixes, sucking motion initiates, legs cycle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected visual pattern shift → apnea for {seconds} second(s), then a loud, rhythmic cry.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp geometric form presented → visual tracking begins, fingers curl into tight fists.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Light source oscillates → head turns to follow, mouth forms an 'O', cooing vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Face-like pattern appears → quiet alert state, rooting reflex triggered, arms reach upward.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Object moves into central vision → eyes converge, trunk arches slightly, a short 'eh' sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Intense glare → eyelids slam shut, face scrunches, a high-pitched wail is released.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Flickering light stimulus → gaze aversion, increased respiratory rate, hands shield face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Vertical stripe motion → head rotates to track, tongue protrudes, toes fan out.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden loss of visual target → brief searching saccades, then a fussy, discontented cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Complex black-and-white image → prolonged visual fixation, decreased motor activity, soft grunts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Fast-approaching visual stimulus → defensive arm extension, head retraction, sharp inspiratory gasp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Circular spinning object → nystagmus-like eye movement, mouth opens wide, fingers extend and tremor.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Contrast change at crib edge → body orients toward change, alert stillness, then a questioning whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Bright mobile above → eyes widen, arms make slow bicycling motions, contented gurgle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Shadow passes overhead → Moro reflex incomplete, replaced by a tense, watchful freeze.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Repetitive visual pulse → synchronized limb jerks, rhythmic breathing, soft vowel sounds 'ah-ah'.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Human eye contact established → gaze holds, breathing steadies, hands unclench and relax.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Erratic, jittering light → distress cry immediately, face reddens, body draws into flexion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Slowly expanding circle → pupils dilate, sucking intensifies, feet press against surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sharp diagonal line appears → head tilts, one arm extends toward it, a short, sharp vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Light-to-dark gradient sweep → eyes scan rapidly, brief apnea, followed by a sigh and limb extension.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden full-room illumination → full startle reflex, cry latency of {seconds} second(s), then sustained fussing.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Predictable horizontal sweep → anticipatory head turn, mouth softens, pre-cry facial expression dissolves.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Checkerboard pattern reversal → blink reflex, head shakes side-to-side, a frustrated grunt.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Warm, diffuse glow → body tension eases, eyes soften, a single, relaxed coo emerges.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "tier": "strong"
+      }
+    }
+  ]
+}

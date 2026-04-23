@@ -1,0 +1,225 @@
+{
+  "key": "late_org/perception_style_tactile",
+  "count": 30,
+  "applies_when_default": {
+    "primary_sense": "tactile"
+  },
+  "templates": [
+    {
+      "text": "The world is first known through the press of a blanket, the firmness of a hand, and the startling chill of air on wet skin.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Reality is a map of textures: the smooth warmth of a caregiver's cheek, the rough weave of a swaddle, the yielding softness of a mattress.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Every experience is filtered through the skin—comfort is a deep, steady pressure, distress is a prickling, un-buffered sensitivity.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The infant orients not to sound or sight, but to the gravitational pull of a secure hold and the contour of surfaces against its body.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "A universe defined by contact: the world begins at the boundary where its own skin meets something else, solid or soft, still or moving.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Perception is a tactile ledger, logging the reassuring weight of a hand, the abrasive tag on a gown, the fluid difference between cotton and silk.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "This newborn navigates existence by calibrating to subtle gradients of temperature, pressure, and the micro-textures of every encountered material.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Safety is not a face but a felt rhythm—the synchronous rise and fall of a chest it's held against, a visceral, tactile metronome.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The primary dialogue with the environment is conducted through the epidermis, reading vibrations, contours, and thermal shifts as fundamental data.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "A world perceived as a continuous stream of somatic feedback: the cling of damp fabric, the release into free space, the containment of a snug wrap.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Meaning is derived from haptic input; a gentle stroke organizes neural chaos, while a sudden jostle sends disruptive waves through the entire system.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The infant's consciousness is anchored in proprioceptive and tactile sensation, building a self-model from the pressure of limbs against surfaces.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Each moment is assessed by its cutaneous signature—the soothing, broad-contact embrace versus the fragmented, unpredictable touch of handling.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "This being interprets reality through a somatosensory lens, where the quality of a touch carries more information than a voice or a shape.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Existence is a study in contrasts: the hard, cool plane of a scale versus the enveloping, warm hollow of a parent's arm.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The newborn's attention follows tactile novelty, lingering on the strange nap of a new blanket long after a sound has faded.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Cognition is grounded in the felt sense of containment or exposure, of being bounded by softness or adrift in a vast, unsupported space.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "A quiet, deep-pressure squeeze can silence other sensory alarms, making touch the primary channel for modulating arousal and distress.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The world is parsed into zones of tactile coherence: the consistent, molded surface of a bassinet and the unpredictable, moving landscape of being carried.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "This infant's state regulation hinges on cutaneous input, seeking rhythmic patting or firm swaddling to dampen internal disorganization.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Reality is not colored or pitched, but textured—from the irritating scratch of a seam to the blissful uniformity of warm, still water.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The sense of being begins at the skin's interface, with every caress, wipe, and repositioning writing the first chapters of a somatic narrative.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Orienting responses are tactile-first; a light brush on the cheek triggers a root more reliably than a voice from across the room.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The infant builds its world-model from haptic constants: the persistent support from below, the intermittent contact from hands, the rush of air currents.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "Comfort is a specific topography of touch—broad, warm, and steady—while threat is signaled by abrupt changes in pressure or temperature.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "After {seconds} seconds of unbroken stillness, the slightest shift in fabric tension or a new point of contact becomes a major event.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The newborn's awareness flows along pathways of touch, tracing the edges of its own body against the world to define where 'self' ends.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "All experience is tempered by epidermal sensitivity; a too-cold stethoscope or a too-abrupt lift can fragment an otherwise calm moment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "This is a being for whom the primary reality is kinetic and cutaneous—the journey from arms to table is a profound shift in existential state.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    },
+    {
+      "text": "The infant perceives the caregiver not as a face, but as a unique constellation of pressures, rhythms, and temperatures that mean 'safe harbor'.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "tactile"
+      }
+    }
+  ]
+}

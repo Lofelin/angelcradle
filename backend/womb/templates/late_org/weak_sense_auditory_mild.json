@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_auditory_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "severity": "mild"
+  },
+  "templates": [
+    {
+      "text": "The auditory pathways show mild immaturity, resulting in a slightly dampened response to moderate environmental sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory processing exhibits a subtle delay, with the newborn taking a moment longer to orient towards a soft rattle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild underdevelopment in the auditory channel softens the infant's startle reflex to sudden, non-threatening noises.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's auditory system is mildly under-refined, causing a faintly diminished reaction to the mother's voice at a distance.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a slight auditory dampening, where gentle speech must be closer than typical to elicit a clear orienting response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory thresholds are mildly elevated, requiring sounds to be slightly louder to trigger a consistent behavioral state change.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A nascent auditory pathway leads to a faintly inconsistent head-turning towards soft, sustained sounds from the side.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant demonstrates a mild auditory latency, pausing for {seconds} seconds before reacting to a familiar lullaby.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory filtering is subtly inefficient, making it harder for the baby to distinguish a single voice in a quiet room.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild immaturity in the cochlear mechanism slightly mutes the perceived intensity of mid-frequency sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's auditory orienting is gently sluggish, with eye movements towards sound sources being slightly delayed and brief.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A soft auditory blunting is noted, where the infant's cry does not modulate as readily in response to calming vocal tones.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory integration is faintly underdeveloped, leading to a less pronounced quieting response when spoken to directly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby shows a mild reduction in auditory alertness, requiring more persistent sound stimuli to maintain a quiet, alert state.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a subtle under-responsiveness in the auditory domain, with soft clicks failing to consistently interrupt ongoing activity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory localization is mildly imprecise, with the infant often turning only partially towards the source of a gentle whisper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A faint auditory dampening effect is observed, slightly blunting the Moro reflex triggered by a moderate acoustic stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The auditory system's mild immaturity results in a softer, less vigorous cry in response to typical aversive noises.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Sound perception is gently attenuated, making the infant seem slightly less engaged by routine auditory cues during care.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory habituation occurs a bit more quickly than expected, with repeated gentle tones losing their novelty effect sooner.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild deficiency in auditory processing smooths out the dynamic range of the newborn's vocal reactions to environmental sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's auditory tracking is subtly incomplete, often losing the path of a slowly moving sound source after a few seconds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a soft auditory gap, where the transition from a startle to a soothing response to voice is less fluid than typical.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory sensitivity is mildly reduced, allowing the baby to sleep through background murmurs that might rouse other newborns.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A nascent auditory cortex contributes to a faintly desynchronized response between hearing a sound and exhibiting facial brightening.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn exhibits mild auditory perseveration, continuing an activity slightly longer after a distracting sound has ceased.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Auditory discrimination shows gentle limitation, with similar-pitched sounds like 'sh' and 's' being less distinct to the infant.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A soft auditory muffling effect is present, requiring speech to be within {distance} centimeters for clear recognition and calming.",
+      "vars": {
+        "distance": {
+          "type": "int_range",
+          "min": 20,
+          "max": 40
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The baby's auditory arousal is mildly subdued, showing less vigorous limb movement in response to a sudden, moderate-volume bell.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild underdevelopment of the auditory nerve pathway slightly delays the conduction of sound information for behavioral processing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "severity": "mild"
+      }
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "key": "late_neu/myelination_auditory_early",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "auditory",
+    "rate": "early"
+  },
+  "templates": [
+    {
+      "text": "The auditory pathway is among the first to myelinate, allowing the newborn to begin processing the complex acoustic world.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination of the auditory nerve provides a foundation for orienting to the mother's voice within the first days.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Priority myelination of the auditory tract sharpens the infant's startle response to sudden, loud sounds.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The cochlear nerve and its central auditory projections show leading myelination, priming the system for sound localization.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination advances rapidly along the auditory brainstem pathways, reducing neural transmission delay to just {milliseconds} ms.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This infant's early auditory myelination supports a clear, vigorous cry with well-modulated acoustic features.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The superior olivary complex and lateral lemniscus show preferential myelination, enhancing binaural auditory processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Leading auditory pathway myelination underpins the infant's ability to quiet to a soft, rhythmic voice.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early wrapping of the auditory nerve fibers facilitates a more consistent head turn toward a sound source.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's auditory cortex receives myelinated input earlier than some visual areas, prioritizing sound over sight.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination of the auditory radiations is ahead of schedule, supporting rapid habituation to repeated noises.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This advanced auditory tract myelination may correlate with a lower auditory threshold, noticing sounds as quiet as {decibels} dB.",
+      "vars": {
+        "decibels": {
+          "type": "int_range",
+          "min": 30,
+          "max": 50
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The brainstem's auditory reflex arcs are myelinating early, enabling swift, protective responses to acoustic stimuli.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Priority given to the auditory pathway myelination helps the newborn distinguish prosodic contours in human speech.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early insulation of the cochlear nucleus axons accelerates the relay of sound information to higher centers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's auditory system benefits from leading myelination, which refines the Moro reflex trigger to specific sound qualities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is actively sheathing the inferior colliculus pathways, crucial for orienting to novel auditory events.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This preferential auditory myelination lays the groundwork for early vocal turn-taking and communication.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The medial geniculate body shows early myelination, acting as a thalamic relay primed for auditory signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Leading auditory nerve myelination contributes to a more organized sleep-wake cycle in response to sound cues.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination along the auditory pathway supports the infant's ability to synchronize movement to rhythmic sounds.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The acoustic striae are among the first white matter tracts to myelinate, enhancing sound processing speed.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Priority auditory myelination may manifest as a shorter latency, under {seconds} second, in the auditory blink reflex.",
+      "vars": {
+        "seconds": {
+          "type": "float_range",
+          "min": 0.1,
+          "max": 0.5
+        }
+      },
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing briskly in the auditory cortex's subplate, preparing for complex sound discrimination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's early auditory pathway development is marked by robust myelination of the trapezoid body fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This leading auditory myelination facilitates a clearer differentiation between the infant's own cry and other sounds.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination prioritizes the auditory system, allowing the newborn to use sound as a primary organizer of state and attention.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The eighth cranial nerve's central processes are sheathing early, providing a high-fidelity conduit for auditory information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early auditory tract myelination underpins the infant's capacity for consoling by voice within the first week.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is selectively advancing in auditory projection fibers, fine-tuning the brain's response to frequency and intensity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "auditory",
+        "rate": "early"
+      }
+    }
+  ]
+}

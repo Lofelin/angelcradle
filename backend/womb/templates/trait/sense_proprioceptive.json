@@ -1,0 +1,289 @@
+{
+  "key": "trait/sense_proprioceptive",
+  "count": 40,
+  "applies_when_default": {
+    "dominant_sense": "proprioceptive"
+  },
+  "templates": [
+    {
+      "text": "Presses feet against resistance",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Curls body into firm hold",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Extends limbs against touch",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Bracing torso against surface",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Stiffens when lifted slowly",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Pushes back against palm",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Grips with deliberate tension",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Shifts weight when positioned",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Pulls arms to chest tightly",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Resists gentle head turn",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Tenses legs against squeeze",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Arches away from pressure",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Splays fingers on contact",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Flexes neck against gravity",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Straightens spine when held",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Clutching with whole hand grasp",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Bends knees into belly curl",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Depresses shoulders on surface",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Rotates pelvis on mattress",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Probes floor with toe points",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Rocking motion when supported",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Unrolls spine from fetal curl",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Holds posture after placement",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Pushes off with both soles",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Suspends limbs during lift-off",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Curls fingers around thumb",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Trembles with sustained effort",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Withdraws from firm hold",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Stretches legs against resistance",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Braces neck with contraction",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Coils trunk into tight sphere",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Pivots head against support",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Grips fabric with rhythmic squeeze",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Reads surface with fingertip press",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Places sole flat on mattress",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Thrusts hips forward in air",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Searches body with hand paths",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Holds stillness in full contact",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Resettles into cradled alignment",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    },
+    {
+      "text": "Spreads toes against swaddle pull",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "proprioceptive"
+      }
+    }
+  ]
+}

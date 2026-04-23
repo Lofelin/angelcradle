@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_auditory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A sudden, sharp clap → a full-body startle, followed by a brief, high-pitched cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sustained, moderate-volume hum → head turns slowly toward the source, limbs become still.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A rhythmic tapping sound → eyes blink in synchrony, hands make small grasping motions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A nearby, abrupt cough → arms fling outward in the Moro reflex, then slowly retract.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A low-frequency rumble → the baby's breathing pattern briefly hitches, brows furrow.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A repetitive, mid-pitch beep → quiet vocal cooing begins, matching the beep's tempo.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sudden hiss of air → the infant startles, then orients mouth toward the sound source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A gentle, shushing sound → crying ceases, the baby's eyes open wide and search.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A crisp paper crinkle → legs draw up in a brief fencing posture, then relax.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A distant, moderate siren → the newborn becomes alert and still, with increased heart rate.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A metallic clang → a sharp inhalation, followed by a delayed, short cry after {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A steady dripping noise → sucking motions begin without an object, hands move to mouth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "An unexpected door click → the rooting reflex is triggered, head turns side to side.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A human voice speaking softly → the baby's gaze fixes, and minor limb jerks subside.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A moderate-volume bell ring → eyes widen, then squint, arms exhibit a brief tremor.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A burst of white noise → the infant arches its back slightly, then settles into stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sequence of three soft knocks → breathing pauses, then resumes at a faster rate.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A mid-range musical note → facial muscles relax, a subtle smile reflex appears briefly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A plastic bottle being squeezed → the head turns away, and one arm extends in a protective gesture.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A steady, moderate fan motor → the baby's eyes close, but limbs remain toned and ready.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A quick, sharp whistle → the Moro reflex initiates partially, followed by a sigh.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A recording of a heartbeat → fussing movements cease, the infant's posture becomes more flexed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A sudden book page turn → a blink, followed by a slow, searching head rotation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A moderate dog bark → a full startle, then crying builds over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A consistent metronome tick → foot and hand movements become rhythmically aligned.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A vacuum cleaner starts → the baby gasps, limbs stiffen, and the cry is momentarily suppressed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A light switch flicking on → the infant blinks rapidly, then stares toward the ceiling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A moderate rain patter → sucking intensity on a pacifier increases, eyes remain closed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A chair scraping the floor → a brief, whole-body jerk, followed by a quiet whimper.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    },
+    {
+      "text": "A human sneeze → the startle reflex is elicited, followed by a brief period of wide-eyed alertness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "tier": "moderate"
+      }
+    }
+  ]
+}

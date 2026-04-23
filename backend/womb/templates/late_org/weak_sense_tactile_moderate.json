@@ -1,0 +1,262 @@
+{
+  "key": "late_org/weak_sense_tactile_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "tactile",
+    "severity": "moderate"
+  },
+  "templates": [
+    {
+      "text": "The infant's tactile processing is markedly underdeveloped, with a delayed and muted response to gentle touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile sensation is significantly blunted, requiring firmer pressure to elicit a basic orienting reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate tactile hyposensitivity results in a sluggish, incomplete withdrawal from a light stroking stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's tactile awareness lags, showing only a faint, disorganized rooting response after {seconds} seconds of cheek stimulation.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A clear deficit in tactile integration is observed, as the baby fails to consistently localize a touch on the palm.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile pathways are under-responsive, dampening the expected startle reaction to a sudden, light touch on the abdomen.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant demonstrates moderate tactile impairment, with a weak and poorly sustained grasp reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile perception is notably dulled, blunting the typical calming effect of swaddling or containment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a marked delay in tactile processing, evident in the slow, fragmented movement away from a persistent light touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby's tactile system is underdeveloped, yielding only a faint tremulous response to stroking the sole of the foot.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate tactile hyposensitivity mutes the infant's reaction to texture changes against the skin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile input registers with diminished intensity, requiring sustained contact to trigger a noticeable orienting behavior.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn exhibits a clear tactile deficit, showing minimal seeking or nuzzling against comforting touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile responsiveness is significantly reduced, attenuating the Moro reflex elicited by a sensation of falling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate impairment in tactile sensation results in an inconsistent and weak Babinski reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's tactile map is poorly defined, leading to clumsy, ineffective attempts to bring a touched hand to the mouth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile feedback loops are underdeveloped, contributing to jerky, unmodulated limb movements during handling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a notable lag in tactile awareness, with the baby often seeming unaware of light contact on the extremities.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The tactile system's moderate underdevelopment blunts the defensive response to a noxious stimulus on the skin.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile perception is faint and disorganized, failing to support a coordinated suck-swallow-breathe sequence during feeding.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A clear tactile processing delay means comforting skin-to-skin contact provides less regulatory input than expected.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's tactile sensitivity is markedly low, resulting in a placid, under-reactive state even during diaper changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Moderate tactile hyposensitivity diminishes the infant's ability to differentiate between soothing and startling touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile pathways fire with reduced fidelity, muting the perception of gentle stroking as a calming signal.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby demonstrates underdeveloped tactile integration, showing poor habituation to repeated light touch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile input registers with a delay of {seconds} seconds, disrupting the timing of associated motor responses.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "A moderate deficit in tactile processing weakens the infant's rooting reflex, making feeding initiation difficult.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Tactile sensation is significantly blunted, leading to a minimal response to the light brush of clothing or bedding.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's tactile system is under-responsive, contributing to a lack of self-soothing behaviors like hand-to-mouth movement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Markedly underdeveloped tactile channels result in a generalized dampening of cutaneous reflexes and orienting responses.",
+      "vars": {},
+      "applies_when": {
+        "sense": "tactile",
+        "severity": "moderate"
+      }
+    }
+  ]
+}

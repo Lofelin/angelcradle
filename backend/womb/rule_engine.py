@@ -788,32 +788,126 @@ def _extract_arousal_from_prev(prev_responses: list[dict]) -> str:
     return "moderate"
 
 
+# 模板库懒加载单例（首次 rule_birth 调用时初始化）
+_TEMPLATE_LIB = None
+
+
+def _get_template_lib():
+    global _TEMPLATE_LIB
+    if _TEMPLATE_LIB is None:
+        try:
+            from .templates import TemplateLibrary
+            _TEMPLATE_LIB = TemplateLibrary.load()
+        except Exception:
+            _TEMPLATE_LIB = False  # 标记加载失败，后续不再尝试
+    return _TEMPLATE_LIB or None
+
+
+def _sample_cry_fragment(slot: str, arousal: str, fallback: list[str]) -> str:
+    """优先走预生成模板库，缺失时回退到硬编码列表。
+
+    slot: "onset" | "quality" | "body"
+    """
+    lib = _get_template_lib()
+    if lib is not None:
+        key = f"birth/first_cry_{slot}_{arousal}"
+        if lib.pool_size(key) > 0:
+            text = lib.sample(key, filters={"arousal": arousal})
+            if text:
+                return text
+    return random.choice(fallback)
+
+
+def _extract_vitality_from_prev(prev_responses: list[dict]) -> str:
+    """从前阶段结果中启发式推断生命力（驱动 color 档位：strong/moderate/weak）。
+
+    信号：
+      - 'vigorous', 'robust', 'strong perfusion' → strong
+      - 'pale', 'cyanosis', 'weak', 'depressed', 'preterm' → weak
+      - 其他 → moderate
+    """
+    import json as _json
+    strong_kw = ("vigorous", "robust", "strong", "healthy")
+    weak_kw = ("pale", "cyanos", "weak", "depressed", "preterm", "hypoxia", "poor perfusion")
+    for raw in reversed(prev_responses):
+        try:
+            parsed = _json.loads(raw) if isinstance(raw, str) else raw
+            if isinstance(parsed, dict):
+                blob = _json.dumps(parsed, ensure_ascii=False).lower()
+                if any(kw in blob for kw in weak_kw):
+                    return "weak"
+                if any(kw in blob for kw in strong_kw):
+                    return "strong"
+        except Exception:
+            pass
+    return "moderate"
+
+
+def _sample_immediate_fragment(slot: str, filter_key: str, filter_value: str, fallback: list[str]) -> str:
+    """采样 immediate_state 的四个组件之一（eyes/posture/tone/color）。
+
+    slot: "eyes" | "posture" | "tone" | "color"
+    filter_key: "arousal" 或 "vitality"
+    """
+    lib = _get_template_lib()
+    if lib is not None:
+        key = f"birth/immediate_{slot}_{filter_value}"
+        if lib.pool_size(key) > 0:
+            text = lib.sample(key, filters={filter_key: filter_value})
+            if text:
+                return text
+    return random.choice(fallback)
+
+
+def _extract_dominant_sense_from_prev(prev_responses: list[dict]) -> str:
+    """从 late_organogenesis 的 primary_sense 文本中匹配主导感官（5 类）。"""
+    import json as _json
+    for raw in reversed(prev_responses):
+        try:
+            parsed = _json.loads(raw) if isinstance(raw, str) else raw
+            if isinstance(parsed, dict):
+                blob = (parsed.get("primary_sense") or "").lower()
+                for s in _SENSE_CHANNELS:
+                    if s in blob:
+                        return s
+        except Exception:
+            pass
+    return random.choice(_SENSE_CHANNELS)
+
+
 def rule_birth(prev_responses: list[dict], genes: dict) -> dict:
     """Stage 5 组合式出生生成器。
 
-    根据唤醒基线动态拼接第一声哭和出生状态。
-    组合数：onset(4-5) × quality(4) × body(4) × eyes(6) × posture(8) × tone(6) × color(6)
-         = ~92,000+ 种不同的出生描述。
+    根据唤醒基线 + 生命力 + 主导感官分档，动态拼接第一声哭、出生状态、tendencies。
+    - first_cry 三段（onset × quality × body）按 arousal 分档
+    - immediate_state 四段：eyes/posture/tone 按 arousal 分档，color 按 vitality 分档
+    - tendencies: 4-5 条，从 arousal + dominant_sense 两个维度的模板库采样
+    模板库缺失时回退到硬编码。
     """
-    tendencies = genes.get("expression", [])
-    if not tendencies:
-        tendencies = ["curious", "alert"]
-
     arousal = _extract_arousal_from_prev(prev_responses)
+    vitality = _extract_vitality_from_prev(prev_responses)
+    dominant_sense = _extract_dominant_sense_from_prev(prev_responses)
 
-    # 拼接第一声哭：onset + quality + body
-    onset = random.choice(_CRY_ONSET[arousal])
-    quality = random.choice(_CRY_QUALITY[arousal])
-    body = random.choice(_CRY_BODY[arousal])
+    # tendencies 优先从模板库采样；若传入的 genes 已有覆盖则尊重之（向后兼容）
+    preset = genes.get("expression") if isinstance(genes, dict) else None
+    if preset and isinstance(preset, list) and len(preset) >= 3:
+        tendencies = preset
+    else:
+        tendencies = rule_tendencies(arousal, dominant_sense, n=5)
+
+    # 拼接第一声哭：onset + quality + body（优先模板库）
+    onset = _sample_cry_fragment("onset", arousal, _CRY_ONSET[arousal])
+    quality = _sample_cry_fragment("quality", arousal, _CRY_QUALITY[arousal])
+    body = _sample_cry_fragment("body", arousal, _CRY_BODY[arousal])
     first_cry = f"{onset} {quality}. {body}"
 
-    # 拼接出生即时状态
-    state_parts = [
-        random.choice(_BIRTH_EYES),
-        random.choice(_BIRTH_POSTURE),
-        random.choice(_BIRTH_TONE),
-        random.choice(_BIRTH_COLOR),
-    ]
+    # 拼接出生即时状态：eyes / posture / tone 按 arousal；color 按 vitality
+    eyes = _sample_immediate_fragment("eyes", "arousal", arousal, _BIRTH_EYES)
+    posture = _sample_immediate_fragment("posture", "arousal", arousal, _BIRTH_POSTURE)
+    tone = _sample_immediate_fragment("tone", "arousal", arousal, _BIRTH_TONE)
+    color = _sample_immediate_fragment("color", "vitality", vitality, _BIRTH_COLOR)
+
+    state_parts = [eyes, posture, tone, color]
     random.shuffle(state_parts)
     immediate_state = "; ".join(state_parts[:3]).capitalize() + "."
 
@@ -848,3 +942,304 @@ def _distribute_budget(budget: int, channels: list[str]) -> dict:
             allocation[ch] += share
             remaining -= share
     return allocation
+
+
+def _parse_json_safe(raw) -> dict:
+    """容错 JSON 解析，非法返回空 dict。"""
+    if isinstance(raw, dict):
+        return raw
+    if not isinstance(raw, str):
+        return {}
+    try:
+        import json as _json
+        return _json.loads(raw)
+    except Exception:
+        return {}
+
+
+# ============================================================
+# Stage 2B: Late Organogenesis — 主导/薄弱感官 + 成熟叙事
+# ============================================================
+
+_SENSE_CHANNELS = ("visual", "auditory", "tactile", "olfactory", "proprioceptive")
+
+# early_organogenesis 的 resource_allocation 键 → 感官域映射
+_CHANNEL_TO_SENSE = {
+    "hearing": "auditory", "hearing_growth": "auditory", "hearing_development": "auditory",
+    "vision": "visual", "vision_growth": "visual", "vision_development": "visual",
+    "touch": "tactile", "touch_growth": "tactile", "touch_development": "tactile",
+    "smell": "olfactory", "smell_growth": "olfactory", "smell_development": "olfactory",
+    "proprioception": "proprioceptive", "proprioception_growth": "proprioceptive",
+    "proprioception_development": "proprioceptive",
+}
+
+
+def _sample_template(key: str, fallback: str, filters: dict | None = None) -> str:
+    """通用模板采样：查池 → 过滤 → 降级 fallback。"""
+    lib = _get_template_lib()
+    if lib is not None:
+        if lib.pool_size(key) > 0:
+            s = lib.sample(key, filters=filters or {})
+            if s:
+                return s
+    return fallback
+
+
+def rule_late_organogenesis(
+    budget: int, stage_results: list, env: dict, defects: list,
+) -> dict:
+    """Stage 2B 规则引擎。
+
+    根据前阶段 resource_allocation 推断主导/薄弱感官；
+    模板库采样 organ_maturation / primary_sense / weak_sense / perception_style 叙事。
+    """
+    # 从 early_organogenesis 结果提取感官得分
+    early_org = _parse_json_safe(stage_results[1]) if len(stage_results) > 1 else {}
+    alloc = early_org.get("resource_allocation", {})
+
+    sense_scores: dict[str, float] = {s: 0.0 for s in _SENSE_CHANNELS}
+    for ch, v in (alloc or {}).items():
+        if isinstance(v, (int, float)):
+            sense = _CHANNEL_TO_SENSE.get(ch)
+            if sense:
+                sense_scores[sense] += float(v)
+
+    if sum(sense_scores.values()) > 0:
+        primary = max(sense_scores, key=sense_scores.get)
+        # weak 从非 primary 中选最低
+        non_primary = {s: v for s, v in sense_scores.items() if s != primary}
+        weak = min(non_primary, key=non_primary.get)
+        total = sum(sense_scores.values())
+        primary_ratio = sense_scores[primary] / total
+        weak_ratio = sense_scores[weak] / total
+    else:
+        primary = random.choice(_SENSE_CHANNELS)
+        weak = random.choice([s for s in _SENSE_CHANNELS if s != primary])
+        primary_ratio, weak_ratio = 0.3, 0.1
+
+    # 档位映射
+    if primary_ratio > 0.30:
+        primary_tier = "strong"
+    elif primary_ratio > 0.22:
+        primary_tier = "moderate"
+    else:
+        primary_tier = "mild"
+
+    if weak_ratio < 0.10:
+        weak_severity = "severe"
+    elif weak_ratio < 0.16:
+        weak_severity = "moderate"
+    else:
+        weak_severity = "mild"
+
+    if budget >= 35:
+        budget_tier = "strong"
+    elif budget >= 20:
+        budget_tier = "moderate"
+    else:
+        budget_tier = "weak"
+
+    # 采样叙事
+    organ_maturation = _sample_template(
+        f"late_org/organ_maturation_{budget_tier}",
+        f"Organ systems mature at {budget_tier} pace; cardiac, renal, hepatic progressing.",
+        filters={"budget_tier": budget_tier},
+    )
+    primary_text = _sample_template(
+        f"late_org/primary_sense_{primary}_{primary_tier}",
+        f"{primary.capitalize()} channel dominates, neural circuits densely myelinating.",
+        filters={"sense": primary, "strength": primary_tier},
+    )
+    weak_text = _sample_template(
+        f"late_org/weak_sense_{weak}_{weak_severity}",
+        f"{weak.capitalize()} channel underdeveloped, reduced sensory integration expected.",
+        filters={"sense": weak, "severity": weak_severity},
+    )
+    perception_style = _sample_template(
+        f"late_org/perception_style_{primary}",
+        f"This individual perceives the world primarily through {primary} channels.",
+        filters={"primary_sense": primary},
+    )
+
+    # 重新分配 budget：primary 权重 3×，weak 0.3×，其他 1×
+    weights = {s: 1.0 for s in _SENSE_CHANNELS}
+    weights[primary] = 3.0
+    weights[weak] = 0.3
+    total_w = sum(weights.values())
+    allocation: dict[str, int] = {}
+    remaining = budget
+    n = len(_SENSE_CHANNELS)
+    for i, s in enumerate(_SENSE_CHANNELS):
+        if i == n - 1:
+            allocation[s] = max(1, remaining)
+        else:
+            pts = max(1, round(budget * weights[s] / total_w))
+            pts = min(pts, remaining - (n - i - 1))
+            allocation[s] = pts
+            remaining -= pts
+
+    return {
+        "organ_maturation": organ_maturation,
+        "primary_sense": primary_text,
+        "weak_sense": weak_text,
+        "perception_style": perception_style,
+        "resource_allocation": allocation,
+    }
+
+
+# ============================================================
+# Stage 3B: Late Neural — 本能回路 + 唤醒基线 + 髓鞘化
+# ============================================================
+
+# 感官域 → 髓鞘化通路映射（视听在对应皮层；触觉 → 体感；前体觉 → 运动；嗅觉未覆盖时走 auditory）
+_MYELINATION_PATHWAY = {
+    "visual": "visual",
+    "auditory": "auditory",
+    "tactile": "somatosensory",
+    "olfactory": "auditory",
+    "proprioceptive": "motor",
+}
+
+
+def rule_tendencies(
+    arousal: str, dominant_sense: str, n: int = 5,
+) -> list[str]:
+    """生成新生儿 tendencies（性格倾向词数组）。
+
+    从 arousal 池采 2 条 + 从 dominant_sense 池采 2-3 条 → 去重 → 返回 4-5 条。
+    模板库缺失时降级到固定词对。
+
+    - arousal: "high" | "moderate" | "low"
+    - dominant_sense: "visual" | "auditory" | "tactile" | "olfactory" | "proprioceptive"
+    - n: 目标条数（默认 5）
+    """
+    DEFAULT_AROUSAL = {
+        "high": ["alert", "reactive", "intense"],
+        "moderate": ["curious", "attentive", "steady"],
+        "low": ["placid", "observant", "slow to warm"],
+    }
+    DEFAULT_SENSE = {
+        "visual": ["keen-eyed", "pattern-sensitive"],
+        "auditory": ["sound-tracking", "rhythm-sensitive"],
+        "tactile": ["touch-seeking", "contact-calmed"],
+        "olfactory": ["scent-aware", "odor-responsive"],
+        "proprioceptive": ["body-aware", "movement-oriented"],
+    }
+
+    lib = _get_template_lib()
+    tendencies: list[str] = []
+
+    def _sample(key: str, filters: dict, fallback_list: list[str], want: int):
+        out = []
+        # 先尝试模板库
+        if lib is not None and lib.pool_size(key) > 0:
+            seen = set()
+            for _ in range(want * 3):  # 多试几次避免重复
+                t = lib.sample(key, filters=filters)
+                if t and t not in seen and t not in tendencies:
+                    seen.add(t)
+                    out.append(t)
+                if len(out) >= want:
+                    return out
+        # 降级：从 fallback 随机选
+        if len(out) < want:
+            remaining = [f for f in fallback_list if f not in tendencies and f not in out]
+            random.shuffle(remaining)
+            out.extend(remaining[:want - len(out)])
+        return out
+
+    # 2 条 arousal + 2-3 条 sense
+    arousal_traits = _sample(
+        f"trait/arousal_{arousal}", {"arousal": arousal},
+        DEFAULT_AROUSAL.get(arousal, ["curious"]), want=2,
+    )
+    tendencies.extend(arousal_traits)
+
+    sense_want = n - len(tendencies)
+    sense_traits = _sample(
+        f"trait/sense_{dominant_sense}", {"dominant_sense": dominant_sense},
+        DEFAULT_SENSE.get(dominant_sense, ["alert"]), want=sense_want,
+    )
+    tendencies.extend(sense_traits)
+
+    return tendencies[:n]
+
+
+def rule_late_neural(
+    budget: int, stage_results: list, env: dict, defects: list,
+) -> dict:
+    """Stage 3B 规则引擎。
+
+    从 late_organogenesis 提取主导感官；从环境压力推断 arousal；
+    模板库采样 arousal_baseline / myelination / instinct_loops (2-3 条) / neural_anomalies。
+    """
+    # 主导感官（从 late_organogenesis 关键词匹配）
+    late_org = _parse_json_safe(stage_results[2]) if len(stage_results) > 2 else {}
+    primary_blob = (late_org.get("primary_sense") or "").lower()
+    dominant = next((s for s in _SENSE_CHANNELS if s in primary_blob), random.choice(_SENSE_CHANNELS))
+
+    # arousal 档位（由环境压力驱动）
+    stress = env.get("stress_level", 0.3)
+    if stress > 0.6:
+        arousal_tier = "high"
+    elif stress < 0.3:
+        arousal_tier = "low"
+    else:
+        arousal_tier = "moderate"
+
+    # 髓鞘化速率（由 budget + defects 共同决定）
+    if budget < 15 or defects:
+        mye_rate = "delayed"
+    elif budget > 28:
+        mye_rate = "early"
+    else:
+        mye_rate = "normal"
+    mye_pathway = _MYELINATION_PATHWAY.get(dominant, "motor")
+
+    # 采样叙事
+    arousal_baseline = _sample_template(
+        f"late_neu/arousal_baseline_{arousal_tier}",
+        f"{arousal_tier.capitalize()} arousal baseline set by excitatory/inhibitory balance.",
+        filters={"arousal": arousal_tier},
+    )
+    myelination = _sample_template(
+        f"late_neu/myelination_{mye_pathway}_{mye_rate}",
+        f"{mye_pathway.capitalize()} pathway myelinating at {mye_rate} rate.",
+        filters={"pathway": mye_pathway, "rate": mye_rate},
+    )
+    neural_anomalies = _sample_template(
+        f"late_neu/neural_anomalies_{'present' if defects else 'clean'}",
+        "Minor deviations consistent with noted defects." if defects else "None detected.",
+        filters={"has_anomaly": bool(defects)},
+    )
+
+    # 本能回路：从 (dominant, arousal→tier) 池子采样 2-3 条（去重）
+    loop_tier_map = {"high": "strong", "moderate": "moderate", "low": "weak"}
+    loop_tier = loop_tier_map[arousal_tier]
+    loops: list[str] = []
+    for _ in range(random.randint(2, 3) + 2):  # 多试几次以保证去重后够数
+        loop = _sample_template(
+            f"late_neu/instinct_loop_{dominant}_{loop_tier}",
+            f"{dominant.capitalize()} stimulus → orientation response",
+            filters={"sense": dominant, "tier": loop_tier},
+        )
+        if loop and loop not in loops:
+            loops.append(loop)
+        if len(loops) >= 3:
+            break
+    if not loops:
+        loops = [f"{dominant.capitalize()} stimulus → orientation response"]
+    loops = loops[:3] if len(loops) > 3 else loops
+
+    # resource_allocation: 4 个神经通道
+    allocation = _distribute_budget(
+        budget, ["excitatory", "inhibitory", "integration", "motor_planning"],
+    )
+
+    return {
+        "instinct_loops": loops,
+        "arousal_baseline": arousal_baseline,
+        "myelination_priority": myelination,
+        "neural_anomalies": neural_anomalies,
+        "resource_allocation": allocation,
+    }

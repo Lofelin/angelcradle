@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_somatosensory_delayed",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "somatosensory",
+    "rate": "delayed"
+  },
+  "templates": [
+    {
+      "text": "Myelination of the somatosensory pathway is markedly delayed, with tactile processing lagging behind other sensory systems.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The somatosensory tract shows a clear myelination delay, prioritizing other neural pathways for early function.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A significant lag is noted in the myelination of the somatosensory pathway, slowing tactile and proprioceptive signal transmission.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination proceeds slowly along the somatosensory pathway, resulting in delayed integration of touch and body position.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The somatosensory system's myelination is conspicuously behind schedule, with other sensory tracts developing more rapidly.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a pronounced delay in the myelination of the somatosensory nerve fibers, hindering early tactile responsiveness.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the somatosensory cortex's afferent pathways is lagging, creating a temporal gap in sensory processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The somatosensory pathway myelination is notably sluggish, prioritizing auditory and visual neural development instead.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A myelination deficit is most apparent in the somatosensory tracts, delaying the infant's tactile mapping of the environment.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the dorsal column-medial lemniscal pathway, critical for somatosensory detail, is significantly delayed.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The somatosensory afferent pathway demonstrates delayed myelination, with a lag of approximately {weeks} weeks behind typical development.",
+      "vars": {
+        "weeks": {
+          "type": "int_range",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is prioritized away from the somatosensory system, leading to a marked delay in fine touch and vibration perception.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The spinothalamic and dorsal column pathways, key for somatosensory input, show a concurrent and significant myelination delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear myelination lag is observed in the peripheral and central projections of the somatosensory system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant's somatosensory pathway myelination is delayed, resulting in muted and slower processing of tactile stimuli.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination proceeds at a reduced rate along the somatosensory axis, with other sensory modalities taking developmental precedence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The development of myelin sheaths on somatosensory neurons is noticeably behind, impairing rapid signal conduction.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A temporal dissociation exists, with somatosensory pathway myelination lagging significantly behind motor pathway development.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The myelination sequence shows a distinct postponement for the somatosensory tracts, affecting discriminative touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Somatosensory nerve fiber myelination is delayed, introducing a measurable latency in tactile reflex arcs.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The cortical somatosensory receiving areas exhibit delayed myelination of their thalamocortical projections.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the pathways carrying light touch and proprioception is markedly delayed within the somatosensory system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced developmental lag is seen in the myelination of the somatosensory pathways compared to brainstem auditory nuclei.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The infant's somatosensory myelination delay manifests as a reduced sensitivity to non-noxious tactile input.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is conspicuously slow along the ascending somatosensory tracts, prioritizing core autonomic pathways instead.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delay in somatosensory pathway myelination creates an asynchronous development between touch perception and motor output.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Somatosensory afferents demonstrate a significant myelination deficit, with conduction velocities lagging by {percent} percent of the norm.",
+      "vars": {
+        "percent": {
+          "type": "int_range",
+          "min": 20,
+          "max": 50
+        }
+      },
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The process of myelinating the somatosensory system is markedly protracted, falling behind the typical neurodevelopmental timeline.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A clear hierarchy exists, with myelination of the somatosensory pathways receiving lower developmental priority at this stage.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The myelination delay within the somatosensory system is most evident in the slower maturation of discriminative touch capabilities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "somatosensory",
+        "rate": "delayed"
+      }
+    }
+  ]
+}

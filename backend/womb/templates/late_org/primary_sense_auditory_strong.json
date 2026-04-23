@@ -1,0 +1,262 @@
+{
+  "key": "late_org/primary_sense_auditory_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "strength": "strong"
+  },
+  "templates": [
+    {
+      "text": "The auditory cortex is hyper-specialized, with dense neural circuits that map even subtle acoustic variations with startling precision.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "An exceptionally dense auditory neural network processes sound with such acuity that the newborn can isolate a single voice in a cacophony.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neural pathways for auditory processing are densely myelinated, allowing near-instantaneous localization of sound sources with remarkable accuracy.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The auditory system is acutely tuned, its specialized neural circuits forming a dense map of the acoustic environment from the first moments.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A hyper-developed auditory cortex features densely packed columns that discriminate pitch and timbre with adult-like sophistication.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory neural circuits are exceptionally dense, granting the newborn an almost preternatural sensitivity to rhythmic patterns and prosody.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary auditory pathway is a dense thicket of specialized neurons, fine-tuned to decode the complex acoustics of human speech.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory specialization is profound, with a dense, low-latency neural network that processes temporal sound sequences with flawless fidelity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Neonatal auditory acuity is extreme, supported by a dense web of corticofugal circuits that sharpen frequency discrimination from birth.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The auditory system is pre-wired with dense, tonotopic maps, making the newborn exquisitely sensitive to harmonic structures and voice onset.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense array of auditory brainstem nuclei provides ultra-fast processing, localizing sounds within {milliseconds} of arrival.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 30,
+          "max": 100
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory neural specialization is intense, featuring densely interconnected cortical and subcortical regions for holistic sound parsing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The newborn's auditory world is rendered in high definition by a densely packed, highly specialized primary auditory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Dense, reciprocal connections between auditory and limbic centers create immediate, potent emotional responses to sound qualities.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory processing is dominated by a dense concentration of fast-spiking neurons, enabling precise temporal resolution of acoustic events.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The auditory pathway is a model of dense efficiency, with minimal synaptic delay granting near-instantaneous orienting to novel sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense scaffold of auditory association fibers allows for the immediate integration of sound with memory and spatial awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory specialization manifests as a dense neural lattice fine-tuned to the fundamental frequencies of the human vocal range.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The cochlear nucleus projects via dense, specialized tracts, creating an auditory system of remarkable bandwidth and discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory cortex columns are densely packed and highly selective, parsing complex sounds into distinct streams from the very first cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense retinotopic-auditory crossover network allows sounds to trigger precise, reflexive head-turns toward their source.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The auditory system's dense intrinsic connectivity supports an acute sensitivity to consonance, dissonance, and melodic contour.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory neural circuits are densely arborized, providing an expansive cortical surface area dedicated to acoustic feature extraction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Hyper-dense connections in the auditory brainstem underpin a startle reflex that is both immediate and exquisitely calibrated to intensity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The primary auditory cortex exhibits dense gyration and advanced sulcation, a structural correlate of its extreme functional specialization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory processing is characterized by dense thalamocortical loops that amplify relevant signals and suppress background noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "A dense plexus of auditory nerve fibers ensures high-fidelity transmission, capturing nuances down to a whisper at {distance} meters.",
+      "vars": {
+        "distance": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "The newborn's dominant auditory sense is served by densely clustered neurons that show rapid habituation to repetitive, non-salient sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "Auditory neural networks are pre-adapted with dense connections for parsing the rapid formant transitions characteristic of phonemes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    },
+    {
+      "text": "This intense auditory specialization features a dense inferior colliculus, acting as a critical hub for integrating binaural cues with speed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "strong"
+      }
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "key": "maternal/physical_adaptation_stress_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Uterine tone remains firm with mild basal tension.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Vascular resistance shows a slight upward drift but overall flow is stable.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiopulmonary effort adapts with a measured, rhythmic cadence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Localized uterine contraction holds steady under moderate load.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal heart rate elevates by {bpm} without loss of variability.",
+      "vars": {
+        "bpm": {
+          "type": "int_range",
+          "min": 5,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Peripheral vasoconstriction is mild; central perfusion remains adequate.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine wall tension is increased at the fundus, no generalized distress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Pulmonary breath sounds are clear, with a compensatory slight tachypnea.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Vascular tone is modulated, preserving placental exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "A regular uterine contraction pattern emerges, without tetany.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiac output holds steady; diastolic filling is unimpaired.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine activity is coordinated, allowing intermittent relaxation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal blood pressure rises {mmHg} points but remains within adaptive range.",
+      "vars": {
+        "mmHg": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Local myometrial tension is elevated; global contractility is normal.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Respiratory rate increases slightly, matching metabolic demand.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Vascular resistance is regionally adjusted, sparing vital organs.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine perfusion is preserved despite moderate wall stress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiopulmonary coupling remains efficient with a minor rate shift.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine segments show focal tension, no dystocia pattern.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Central venous pressure stays stable, supporting cardiac return.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal oxygen saturation remains above 95% with regular depth.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine resting tone is slightly elevated between contractions.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Vascular redistribution occurs without compromising core circulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Cardiac rhythm is regular; contractility adapts to moderate strain.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine activity shows mild hypertonus but normal baseline.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Pulmonary ventilation increases modestly to offset stress load.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Peripheral pulse amplitude is reduced; central pulses are full.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Uterine force peaks briefly, then returns to baseline easily.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Maternal heart rate variability is preserved within normal bounds.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    },
+    {
+      "text": "Localized vascular tone adjustment maintains placental flow.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "moderate"
+      }
+    }
+  ]
+}

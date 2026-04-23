@@ -1,0 +1,295 @@
+{
+  "key": "trait/sense_tactile",
+  "count": 40,
+  "applies_when_default": {
+    "dominant_sense": "tactile"
+  },
+  "templates": [
+    {
+      "text": "Tactile seeking",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Grasping at air",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Grip reflex strong",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Rooting for contact",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Skin-to-skin craving",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Handling stilling",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Fingers curling tight",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Pressing into surface",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Squeezing blanket edge",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Clutching examiner finger",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Soft stroking calms",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Tactile defensiveness low",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Fisting on sternum",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Reaching toward warmth",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Palm press reflex",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Sustained palmar grasp",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Burying in cloth",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Startle with tactile dampening",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Clinging to swaddle",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Finger splay response",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Chest pat quieting",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Moro followed by embrace",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Gummy surface exploring",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Scratching at linen",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Placing foot on mat",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Tongue to lip contact",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Nuzzling caregiver chest",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Hand-to-face self-soothe",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Tactile novelty interest",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Stroking own arm",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Grasp strength {seconds} seconds",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Friction rubbing head",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Diaper texture agitation",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Swaddle release struggle",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Toe curling on contact",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Tactile overstimulation cry",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Palmar sweep response",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Nipple latch with cheek",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Body curl into wrap",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    },
+    {
+      "text": "Finger clasp release delay",
+      "vars": {},
+      "applies_when": {
+        "dominant_sense": "tactile"
+      }
+    }
+  ]
+}

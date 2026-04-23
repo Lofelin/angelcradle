@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_visual_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "severity": "moderate"
+  },
+  "templates": [
+    {
+      "text": "Visual processing is markedly delayed, with a sluggish pupillary response to light.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's visual tracking is weak and inconsistent, failing to follow a moving object.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual fixation is poor, with the gaze appearing unfocused and drifting aimlessly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a notable lack of visual alertness, with minimal response to nearby faces.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant demonstrates a significant visual deficit, showing no blink reflex to a looming stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual orientation is impaired, with a failure to turn toward diffuse light sources.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby's visual system is underdeveloped, resulting in a profound lack of eye contact.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual attention is severely limited, with eyes remaining closed or averted for prolonged periods.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The pupillary light reflex is present but abnormally slow, indicating compromised visual pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual recognition of patterns is absent; the infant shows no preference for high-contrast targets.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn exhibits a marked visual immaturity, with nystagmus-like movements when attempting to focus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual-motor coordination is deficient, as seen in the inability to direct gaze toward a sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant's visual field appears constricted, with responses only to stimuli presented directly in front.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a clear visual processing lag, with reactions to changes in illumination delayed by {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual acuity is poor, with the baby seeming to look through or past objects rather than at them.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The visual startle response to a sudden bright light is markedly diminished or absent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Ocular movements are uncoordinated and jerky, reflecting underdeveloped visual control.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant fails to demonstrate visual habituation, staring blankly without becoming bored by a repeated image.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual pursuit is fragmented and loses the target quickly, indicating weak extraocular muscle control.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The newborn's visual system shows moderate dysfunction, with eyelids often partially covering the pupils.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a deficit in visual convergence, with eyes struggling to align on a near object.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual responsiveness is low; the baby does not quiet or still when a interesting sight is presented.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The corneal reflex is intact, but higher visual cortical function appears significantly delayed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual scanning of the environment is minimal and lacks the purposeful exploration of a typical newborn.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The infant displays a pronounced visual impairment, with roving eye movements and no sustained fixation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Light perception is present, but the ability to form a coherent visual image is notably underdeveloped.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual following is absent beyond a very short arc, demonstrating poor oculomotor stamina.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "The baby's visual engagement is fleeting, lasting only a moment before disengaging completely.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "There is a clear asymmetry in visual function, with one eye demonstrating poorer tracking than the other.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    },
+    {
+      "text": "Visual processing is inefficient, requiring significantly brighter stimuli to elicit a noticeable reaction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "severity": "moderate"
+      }
+    }
+  ]
+}

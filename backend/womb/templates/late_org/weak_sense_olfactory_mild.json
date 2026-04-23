@@ -1,0 +1,248 @@
+{
+  "key": "late_org/weak_sense_olfactory_mild",
+  "count": 29,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "severity": "mild"
+  },
+  "templates": [
+    {
+      "text": "The olfactory system is mildly underdeveloped, resulting in a delayed response to strong scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle underdevelopment in the olfactory pathways slightly mutes the detection of ambient odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory processing is slightly immature, causing a faint, less distinct perception of smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's olfactory sense is mildly deficient, showing a blunted reaction to familiar maternal scent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "There is a mild under-responsiveness in the olfactory channel, attenuating odor-based cues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory acuity is slightly diminished, requiring a stronger stimulus to trigger a noticeable reaction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A nascent olfactory system demonstrates a faint, sometimes inconsistent recognition of odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The olfactory response is subtly underdeveloped, with a muted orienting reflex to novel smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild olfactory immaturity leads to a less pronounced rooting response triggered by smell alone.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory perception is mildly underdeveloped, slightly delaying the infant's recognition of the feeding cue.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild deficiency in the olfactory pathways results in a faint, less discriminative sense of smell.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn exhibits a mild olfactory under-responsiveness, with reactions to odors being subdued.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory processing shows a slight immaturity, blunting the distinction between familiar and unfamiliar scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle underdevelopment of olfactory receptors leads to a faint perception of even potent odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant's olfactory sense is mildly underdeveloped, resulting in a delayed head-turning toward scent sources by {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild olfactory channel underdevelopment slightly mutes the aversive reaction to noxious smells.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory function is mildly limited, with a faint and fleeting awareness of environmental odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A nascent olfactory system demonstrates a mild under-responsiveness, requiring closer proximity for scent detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The olfactory response is subtly deficient, showing a less vigorous reaction to the smell of milk.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Mild underdevelopment of olfactory pathways attenuates the calming effect typically induced by familiar scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory acuity is mildly underdeveloped, resulting in a faint and sometimes ambiguous response to odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A subtle immaturity in the olfactory channel leads to a less reliable tracking of scent gradients.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The newborn's olfactory sense is mildly under-responsive, with reactions to pleasant smells being subdued.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory perception is slightly muted due to mild underdevelopment, softening the intensity of all odors.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A mild deficiency in olfactory processing results in a delayed and faint orienting to novel scents.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The infant exhibits a mild olfactory underdevelopment, with scent-based soothing being less effective.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "Olfactory function shows a subtle limitation, slightly impairing the detection of subtle odor changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "A nascent olfactory system is mildly underdeveloped, leading to inconsistent responses to strong olfactory stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    },
+    {
+      "text": "The olfactory response is mildly blunted, requiring a higher concentration of odorant to elicit a clear reaction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "severity": "mild"
+      }
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "key": "late_neu/myelination_motor_early",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "motor",
+    "rate": "early"
+  },
+  "templates": [
+    {
+      "text": "The motor pathways are already showing early signs of myelination, leading to smoother limb movements.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has begun to insulate the primary motor tracts, facilitating more coordinated activity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "An early start to myelination in the corticospinal motor tract supports nascent postural control.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading edge of myelination is advancing along the pyramidal motor pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Initial myelination of the descending motor pathways precedes that of sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination is evident in the motor cortex's output pathways, reducing signal latency.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The process of myelination is prioritizing the infant's crucial motor command pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Sheathing of the major motor nerve fibers is underway, preceding other neural developments.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has taken an early lead in coating the axons of the primary motor circuit.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's motor pathways are being selectively insulated to optimize movement signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Advance myelination of the motor tracts supports the emergence of purposeful limb motion.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The corticospinal tract, a key motor pathway, is receiving its first myelin sheaths.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early-stage myelination is focusing on the neural highways responsible for motor output.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin is beginning to wrap the long axons of the primary motor neurons.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading process of neural insulation is targeting the infant's developing motor system.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Priority myelination of the pyramidal tracts enhances the speed of motor commands.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination commenced early along the descending pathways for voluntary motor control.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The infant's motor nerve fibers are among the first to undergo this critical insulation process.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early myelination in the motor domain facilitates quicker transmission of movement signals.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The initial wave of myelination is concentrating on the brain's output motor pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelin sheaths are forming on key motor neurons, speeding signal conduction by {percentage}%.",
+      "vars": {
+        "percentage": {
+          "type": "int_range",
+          "min": 15,
+          "max": 40
+        }
+      },
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "A head start in myelinating the motor tracts underpins early reflex integration.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The process of myelination is leading with the insulation of crucial motor axons.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Early coating of the motor pathway axons reduces the jitter in limb movements.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination has prioritized the infant's central motor pathways for efficient signaling.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The first myelin is appearing on the neural fibers dedicated to motor function.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "This early phase of myelination is dominated by work on the primary motor circuitry.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Insulation of the corticospinal motor tract leads other neural developments by several weeks.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "The leading edge of myelin growth is clearly along the infant's developing motor tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    },
+    {
+      "text": "Myelination is advancing first along the pathways that will govern coordinated motor activity.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "early"
+      }
+    }
+  ]
+}

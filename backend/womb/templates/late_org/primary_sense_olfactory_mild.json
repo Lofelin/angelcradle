@@ -1,0 +1,250 @@
+{
+  "key": "late_org/primary_sense_olfactory_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "strength": "mild"
+  },
+  "templates": [
+    {
+      "text": "The newborn's olfactory pathways show mild specialization, with slightly denser neural connections in the primary olfactory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild olfactory dominance is noted, with enhanced synaptic density in the piriform cortex and its associated limbic circuits.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural mapping reveals a subtle olfactory bias, characterized by a more intricate web of connections in the primary sensory region.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The infant's olfactory processing exhibits mild specialization, with a denser-than-average network of mitral and tufted cell projections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint olfactory preference is neurologically grounded in a slightly more consolidated circuitry linking the bulb to the orbitofrontal cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory sensitivity is mildly heightened, supported by a marginally increased density of glomerular synapses in the developing bulb.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The neonate's olfactory system shows subtle tuning, with a denser neural matrix facilitating rapid odorant discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild olfactory focus is evident in the slightly accelerated myelination of tracts leading from the nasal epithelium to the thalamus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory circuits demonstrate mild specialization, featuring a richer interneuron network within the anterior olfactory nucleus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The primary olfactory cortex displays a modest increase in synaptic density, underpinning the infant's mild sensory bias.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural development favors olfactory input, with a subtly denser arborization of neurons in the entorhinal cortical pathway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild olfactory predominance is supported by enhanced connectivity between the amygdala and the primary olfactory regions.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The newborn exhibits a slight olfactory inclination, correlated with a more intricate lattice of granule cell connections in the bulb.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory processing is mildly prioritized, evident in the denser-than-baseline clustering of receptor neuron projections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A nuanced olfactory specialization is present, marked by a marginally thickened layer of synaptic contacts in the olfactory tubercle.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The infant's mild olfactory bias is reflected in a slightly more elaborate neural scaffolding within the septal nuclei.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory pathways show mild densification, particularly in the lateral olfactory tract's terminal fields in the paleocortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle olfactory emphasis is neurologically defined by a richer microcircuitry in the prepiriform and periamygdaloid cortices.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The neonate's olfactory acuity is mildly pronounced, supported by a denser network of associational fibers in the primary cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Mild olfactory dominance manifests as a slightly increased synaptic potency in the connections from the bulb to the hippocampus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory neural architecture is subtly specialized, with a denser aggregation of mitral cell dendrites in the glomerular layer.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint olfactory lead is evident in the marginally heightened arborization of centrifugal modulatory inputs to the olfactory bulb.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The newborn's olfactory system is mildly tuned, featuring a more consolidated pattern of intrinsic bulbar connections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory processing circuits show mild intensification, with a denser-than-typical innervation of the anterior commissure.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild olfactory predisposition is anchored in a slightly more robust network of feedback loops within the olfactory cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The infant displays a nuanced olfactory focus, correlated with a denser matrix of projections to the hypothalamus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory pathways exhibit mild enrichment, particularly in the synaptic density of the lateral entorhinal cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A subtle olfactory specialization is noted, with a marginally increased number of synaptic vesicles in olfactory nerve terminals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The neonate's mild olfactory bias is supported by a denser web of associational connections within the piriform cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Olfactory neural integration is mildly enhanced, evident in the slightly accelerated maturation of cortico-bulbar feedback pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "strength": "mild"
+      }
+    }
+  ]
+}

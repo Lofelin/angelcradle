@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import json
 import os
+import time as _time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import logging
@@ -37,6 +39,7 @@ from .heredity import format_genetics_for_prompt
 from .hormones import compute_hormones, get_hormone_effects, format_hormones_for_prompt
 from .vitals import compute_vitals, format_vitals_for_display
 from .epigenetics import format_epigenetics_for_prompt
+from . import graph_story
 
 
 SPECIES_DIR = Path(__file__).parent / "species"
@@ -322,37 +325,73 @@ def _build_reference_status(
 def _rule_maternal_response(stage_name: str, env: dict) -> dict:
     """规则引擎替代 LLM 母体反馈（fast/turbo 模式）。
 
-    不产出叙事文本，只产出结构化数据。budget 调整仍由 compute_budget_delta 独立计算。
+    优先从 templates/maternal/*.json 采样 4 个字段；模板库缺失时降级到硬编码档位句。
+    budget 调整仍由 compute_budget_delta 独立计算。
     """
     stress = env.get("stress_level", 0.3)
     nutrition = env.get("nutrition_access", 0.7)
-    placenta = env.get("placenta", {}).get("efficiency", 0.9)
 
+    # 分档
     if stress > 0.6:
-        hormonal = "elevated cortisol, reduced progesterone"
-        physical = "increased uterine tension, reduced blood flow"
-        stress_resp = "fight-or-flight activated, fetal exposure elevated"
+        stress_tier = "high"
     elif stress > 0.3:
-        hormonal = "mildly elevated cortisol"
-        physical = "normal progression with occasional tension"
-        stress_resp = "managed but present"
+        stress_tier = "moderate"
     else:
-        hormonal = "stable hormonal balance"
-        physical = "normal uterine environment"
-        stress_resp = "well-managed, minimal fetal exposure"
+        stress_tier = "low"
 
     if nutrition < 0.4:
-        nutrient = "compromised — deficiencies affecting fetal supply"
+        nutrition_tier = "poor"
     elif nutrition < 0.7:
-        nutrient = "adequate with minor gaps"
+        nutrition_tier = "moderate"
     else:
-        nutrient = "well-supplied, optimal distribution"
+        nutrition_tier = "good"
+
+    # 降级句（模板库缺失时用）
+    FALLBACK = {
+        "hormonal_shift": {
+            "high": "elevated cortisol, reduced progesterone",
+            "moderate": "mildly elevated cortisol",
+            "low": "stable hormonal balance",
+        },
+        "physical_adaptation": {
+            "high": "increased uterine tension, reduced blood flow",
+            "moderate": "normal progression with occasional tension",
+            "low": "normal uterine environment",
+        },
+        "stress_response": {
+            "high": "fight-or-flight activated, fetal exposure elevated",
+            "moderate": "managed but present",
+            "low": "well-managed, minimal fetal exposure",
+        },
+        "nutrient_redistribution": {
+            "poor": "compromised — deficiencies affecting fetal supply",
+            "moderate": "adequate with minor gaps",
+            "good": "well-supplied, optimal distribution",
+        },
+    }
+
+    # 模板库采样（通过 rule_engine._sample_template 复用）
+    try:
+        from .rule_engine import _sample_template as _st
+    except Exception:
+        _st = None
+
+    def _sample(field: str, tier: str, filter_key: str) -> str:
+        if field == "nutrient_redistribution":
+            key = f"maternal/nutrient_redistribution_nutrition_{tier}"
+            filters = {"nutrition_tier": tier}
+        else:
+            key = f"maternal/{field}_stress_{tier}"
+            filters = {"stress_tier": tier}
+        if _st is not None:
+            return _st(key, FALLBACK[field][tier], filters=filters)
+        return FALLBACK[field][tier]
 
     return {
-        "hormonal_shift": hormonal,
-        "physical_adaptation": physical,
-        "nutrient_redistribution": nutrient,
-        "stress_response": stress_resp,
+        "hormonal_shift": _sample("hormonal_shift", stress_tier, "stress_tier"),
+        "physical_adaptation": _sample("physical_adaptation", stress_tier, "stress_tier"),
+        "nutrient_redistribution": _sample("nutrient_redistribution", nutrition_tier, "nutrition_tier"),
+        "stress_response": _sample("stress_response", stress_tier, "stress_tier"),
     }
 
 
@@ -750,19 +789,21 @@ def express(
             prompt += json.dumps(maternal_states[-1], ensure_ascii=False, indent=2) + "\n"
 
         # 规则引擎：按速率决定是否跳过 LLM
+        # turbo: 7 阶段全规则（template-based, 零 LLM）
         from config import get_time_scale as _gts_sync
         _RULE_STAGES_SYNC: dict[str, set[str]] = {
             "slow":   set(),
             "normal": set(),
             "fast":   {"zygote", "early_organogenesis", "birth"},
-            "turbo":  {"zygote", "early_organogenesis", "early_neural", "fetal_movement", "birth"},
+            "turbo":  {"zygote", "early_organogenesis", "late_organogenesis",
+                       "early_neural", "late_neural", "fetal_movement", "birth"},
         }
         _use_rule = stage_name in _RULE_STAGES_SYNC.get(_gts_sync(), set())
 
         if _use_rule:
             from .rule_engine import (
-                rule_zygote, rule_early_organogenesis,
-                rule_early_neural, rule_fetal_movement, rule_birth,
+                rule_zygote, rule_early_organogenesis, rule_late_organogenesis,
+                rule_early_neural, rule_late_neural, rule_fetal_movement, rule_birth,
             )
             if stage_name == "zygote":
                 parsed = rule_zygote(budget, env, genotype or {})
@@ -771,8 +812,12 @@ def express(
                 if not isinstance(prev_resp, dict):
                     prev_resp = {}
                 parsed = rule_early_organogenesis(budget, prev_resp, env)
+            elif stage_name == "late_organogenesis":
+                parsed = rule_late_organogenesis(budget, stage_results, env, defects or [])
             elif stage_name == "early_neural":
                 parsed = rule_early_neural(budget, stage_results, env, defects or [])
+            elif stage_name == "late_neural":
+                parsed = rule_late_neural(budget, stage_results, env, defects or [])
             elif stage_name == "fetal_movement":
                 _arousal = "moderate"
                 for sr in stage_results:
@@ -940,6 +985,15 @@ def express_stream(
                     "adjusted_rate": miscarriage_result.get("adjusted_rate"),
                     "gestation_day": gestation_day,
                 }
+                # 图谱流产 delta：终止边 + baby status 更新
+                yield {
+                    "stage": stage_name, "status": "graph_delta", "stage_num": i + 1,
+                    "phase": "miscarriage",
+                    "graph_delta": graph_story.build_miscarriage_delta(
+                        stage_num=i + 1,
+                        cause=miscarriage_result.get("cause", "unknown"),
+                    ),
+                }
                 return
 
         # 逐个推送阶段计算数据（LLM 调用前，让前端有内容展示）
@@ -977,6 +1031,29 @@ def express_stream(
             "stage": stage_name, "status": "developing", "stage_num": i + 1,
             "message": f"Developing ({STAGE_DISPLAY.get(stage_name, stage_name)})...",
         }
+
+        # 图谱阶段 delta：激素/营养/毒素/体征/器官发育/反射/气质
+        # 兜底 try/except：图谱 emit 失败不能拖死整个 SSE 流
+        try:
+            stage_delta = graph_story.build_stage_delta(
+                stage_name=stage_name, stage_num=i + 1,
+                hormones=hormones, hormone_effects=hormone_effects,
+                nutrient_effects=nutrient_effects,
+                env_nutrients=env.get("nutrients") or {},
+                teratogen_risk=teratogen_risk,
+                toxin_types=env.get("toxin_types") or [],
+                vitals=vitals,
+            )
+            yield {
+                "stage": stage_name, "status": "graph_delta", "stage_num": i + 1,
+                "phase": "stage", "graph_delta": stage_delta,
+            }
+        except Exception as gerr:
+            logger.error(f"graph_delta build failed for stage {stage_name}: {gerr}", exc_info=True)
+            yield {
+                "stage": stage_name, "status": "graph_delta", "stage_num": i + 1,
+                "phase": "stage", "graph_delta": {}, "error": str(gerr),
+            }
 
         prompts = build_stage_prompts(
             species, sex, phenotype, stage_results,
@@ -1027,23 +1104,24 @@ def express_stream(
             prompt += "\n\n## Latest Maternal Feedback\n"
             prompt += json.dumps(maternal_states[-1], ensure_ascii=False, indent=2) + "\n"
 
-        # ── 子宫规则引擎：按��率决定哪些阶段用规则替代 LLM ──
+        # ── 子宫规则引擎：按速率决定哪些阶段用规则替代 LLM ──
         #   slow/normal：全部 LLM（完整体验）
         #   fast：跳过 3 个纯资源分配/叙事阶段（Stage 1, 2A, 5）
-        #   turbo：跳过 5 个非关键阶段，仅保留 2B + 3B 的 LLM
+        #   turbo：7 阶段全规则（template-based，零 LLM）
         from config import get_time_scale as _gts_stage
         _RULE_STAGES_BY_SPEED: dict[str, set[str]] = {
             "slow":   set(),
             "normal": set(),
             "fast":   {"zygote", "early_organogenesis", "birth"},
-            "turbo":  {"zygote", "early_organogenesis", "early_neural", "fetal_movement", "birth"},
+            "turbo":  {"zygote", "early_organogenesis", "late_organogenesis",
+                       "early_neural", "late_neural", "fetal_movement", "birth"},
         }
         _use_rule_engine = stage_name in _RULE_STAGES_BY_SPEED.get(_gts_stage(), set())
 
         if _use_rule_engine:
             from .rule_engine import (
-                rule_zygote, rule_early_organogenesis,
-                rule_early_neural, rule_fetal_movement, rule_birth,
+                rule_zygote, rule_early_organogenesis, rule_late_organogenesis,
+                rule_early_neural, rule_late_neural, rule_fetal_movement, rule_birth,
             )
             if stage_name == "zygote":
                 parsed = rule_zygote(budget, env, genotype or {})
@@ -1052,8 +1130,12 @@ def express_stream(
                 if not isinstance(prev_resp, dict):
                     prev_resp = {}
                 parsed = rule_early_organogenesis(budget, prev_resp, env)
+            elif stage_name == "late_organogenesis":
+                parsed = rule_late_organogenesis(budget, stage_results, env, defects or [])
             elif stage_name == "early_neural":
                 parsed = rule_early_neural(budget, stage_results, env, defects or [])
+            elif stage_name == "late_neural":
+                parsed = rule_late_neural(budget, stage_results, env, defects or [])
             elif stage_name == "fetal_movement":
                 # 从 late_neural 结果提取 arousal_baseline
                 _arousal = "moderate"
@@ -1078,9 +1160,6 @@ def express_stream(
         else:
             # LLM 调用放到线程，主线程每秒 yield 进度心跳；失败时指数退避重试，
             # 仅在全部重试都失败后才终止 gestation。
-            from concurrent.futures import ThreadPoolExecutor
-            import time as _time
-
             raw = None
             _last_error: Exception | None = None
             _max_attempts = 3
@@ -1161,6 +1240,33 @@ def express_stream(
             "response": parsed,
             "budget_enforced": budget_enforced,
         }
+
+        # 补一条 narrative graph_delta: LLM 产出的叙事摘要作为 fate_birth 组节点
+        try:
+            narrative_text = None
+            if isinstance(parsed, dict):
+                # 候选字段：按优先级尝试
+                for key in ("prose", "narrative", "maternal_prose", "description",
+                            "first_cry", "summary"):
+                    v = parsed.get(key)
+                    if isinstance(v, str) and len(v.strip()) >= 15:
+                        narrative_text = v.strip()
+                        break
+                # 回退：取第一个长字符串值
+                if not narrative_text:
+                    for v in parsed.values():
+                        if isinstance(v, str) and len(v.strip()) >= 30:
+                            narrative_text = v.strip()
+                            break
+            if narrative_text:
+                narr_delta = graph_story.build_narrative_delta(i + 1, narrative_text)
+                if narr_delta:
+                    yield {
+                        "stage": stage_name, "status": "graph_delta", "stage_num": i + 1,
+                        "phase": "narrative", "graph_delta": narr_delta,
+                    }
+        except Exception as gerr:
+            logger.error(f"narrative graph_delta failed for stage {stage_name}: {gerr}")
 
         # 母体反馈——fast/turbo 用规则引擎替代 LLM（省 6 次 LLM 调用）
         if i < 6:

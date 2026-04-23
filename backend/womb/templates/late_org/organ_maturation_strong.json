@@ -1,0 +1,225 @@
+{
+  "key": "late_org/organ_maturation_strong",
+  "count": 30,
+  "applies_when_default": {
+    "budget_tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Cardiac septation completes, while renal tubules differentiate and hepatic hematopoiesis shifts to the bone marrow.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The GI tract undergoes rotational fixation, and the hepatic architecture organizes into distinct lobules.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal glomeruli mature to filter primitive urine, synchronized with the refinement of cardiac valve leaflets.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Hepatocytes begin glycogen storage as the stomach and intestines establish their definitive mucosal layers.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac conduction pathways mature, concurrent with the development of functional renal collecting ducts.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The liver's role in bile production initiates alongside the final maturation of the intestinal villi.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal cortex and medulla differentiate clearly, while the GI tract completes its mesenteric attachments.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac myofibrils increase in density, and hepatic sinusoids form a mature vascular network.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "GI smooth muscle layers organize into coherent patterns, and renal calyces begin to take shape.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Hepatic ductal plates remodel, as the cardiac chambers achieve their final proportional sizes.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The renal system now produces dilute urine, timed with the stomach's development of glandular pits.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac neural crest cells complete their migration, ensuring proper outflow tract alignment.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Hepatic lobulation proceeds rapidly, and the intestines commence meconium accumulation.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal vascular resistance drops, allowing for increased blood flow to the developing nephrons.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The GI tract exhibits coordinated peristaltic waves, supported by mature enteric nervous plexuses.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac valve cushions fuse definitively, and hepatocytes initiate plasma protein synthesis.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal papillary ducts elongate, while the gastric mucosa develops its characteristic rugal folds.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Hepatic architecture finalizes its portal triads, concurrent with intestinal crypt formation.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The cardiac foramen ovale flap forms, and renal tubular function begins to regulate electrolytes.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "GI epithelial barrier integrity strengthens, synchronized with the liver's expanding metabolic capacity.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal corpuscles achieve mature filtration capacity within {days} days of structural completion.",
+      "vars": {
+        "days": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac trabeculae compact to form the ventricular walls, as the liver assumes fetal glucose homeostasis.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The hepatic biliary tree canalizes, and the stomach musculature develops its three distinct layers.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal ureteric bud branching concludes, establishing the final count of collecting ducts.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "GI mucosal goblet cells appear, secreting mucus to protect the newly lined intestinal lumen.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac coronary arteries complete their intramyocardial course, ensuring robust myocardial perfusion.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Hepatic stellate cells populate the space of Disse, and renal juxtaglomerular apparatuses form.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "The intestinal lengthening and coiling process finishes, creating the definitive loops within the abdomen.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Renal calyces and pelvis expand, preparing for the continuous flow of fetal urine production.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    },
+    {
+      "text": "Cardiac autonomic innervation matures, regulating a steady fetal heart rate amidst systemic growth.",
+      "vars": {},
+      "applies_when": {
+        "budget_tier": "strong"
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "key": "late_org/primary_sense_auditory_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "auditory",
+    "strength": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A moderate auditory specialization is evident, with neural circuits densely tuned to the rhythmic contours of the maternal voice.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The auditory channel is moderately dominant, featuring a dense neural network that prioritizes processing mid-frequency sounds like human speech.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural pathways for auditory processing show moderate density, specializing in the acoustic features of consoling, repetitive sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "This neonate exhibits a clear auditory focus, with moderately dense cortical wiring that filters for prosody and melodic contours.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate auditory bias is present, with specialized, dense neural loops attuned to the timbre and cadence of familiar voices.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Auditory circuits are moderately dense, showing a specialization for parsing complex soundscapes and isolating salient vocal cues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The primary sense is auditory, with a network of moderate density that rapidly maps sound sources to spatial and emotional context.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate auditory dominance is seen in the densely woven subcortical pathways that gate responses to sudden acoustic changes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural specialization for auditory processing is moderate but distinct, with dense connectivity in regions decoding phonetic boundaries.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "An auditory-oriented profile features moderately dense thalamocortical projections fine-tuned for the frequency range of infant-directed speech.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The auditory channel leads, supported by a moderately dense neural architecture that enhances tracking of rhythmic auditory patterns.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate auditory preference is underpinned by dense synaptic connections specializing in the acoustic signature of comfort and distress.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Auditory processing networks are of moderate density, showing clear specialization for discriminating between steady-state and transient sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "This infant's moderate auditory focus is reflected in densely interconnected circuits that prioritize vocal affect over background noise.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The primary sensory modality is auditory, with a moderately dense neural scaffold that sharpens responses to sounds within {decibels} dB of conversational speech.",
+      "vars": {
+        "decibels": {
+          "type": "int_range",
+          "min": 50,
+          "max": 70
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Auditory specialization is moderate, evident in the dense midbrain circuitry that orients the head toward novel acoustic stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A clear auditory inclination is supported by moderately dense cortical columns that analyze the harmonic structure of incoming sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural circuits show moderate auditory density, specializing in the integration of binaural cues for sound localization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The auditory sense is primary, with a network of moderate density that filters and amplifies biologically salient acoustic signals.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate auditory dominance manifests as densely packed neurons in the temporal lobe, primed for processing complex auditory streams.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "An auditory-centric profile features moderately dense efferent pathways that modulate the cochlea's response to predictable sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The auditory channel is moderately specialized, with dense interneuronal connections facilitating rapid discrimination of phonemic contrasts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "This neonate's auditory bias is of moderate strength, reflected in the dense synaptic architecture dedicated to encoding sound duration and interval.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Auditory neural networks are moderately dense, showing clear specialization for tracking the amplitude modulation of human vocalizations.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate auditory focus is evident in the densely woven brainstem circuits that coordinate startle and orienting responses to sound.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The primary sense is auditory, characterized by a moderately dense cortical map that represents acoustic frequency with high fidelity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Auditory processing exhibits moderate density, with specialized, tightly packed neurons that enhance sensitivity to voiced speech sounds.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural specialization leans auditory, with moderately dense connectivity streamlining the processing chain from cochlea to association cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "An auditory-dominant profile of moderate strength features dense subcortical relays that prioritize acoustic stimuli over a delay of {milliseconds} ms.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 100,
+          "max": 300
+        }
+      },
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The auditory channel is the primary sense, supported by a network of moderate density that specializes in extracting meaning from prosodic contours.",
+      "vars": {},
+      "applies_when": {
+        "sense": "auditory",
+        "strength": "moderate"
+      }
+    }
+  ]
+}

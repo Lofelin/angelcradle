@@ -1,0 +1,461 @@
+{
+  "key": "birth/first_cry_body_low",
+  "count": 62,
+  "applies_when_default": {
+    "arousal": "low"
+  },
+  "templates": [
+    {
+      "text": "Barely moving — still folded, still quiet, breathing shallow but steady.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyes half-open, body limp and warm, only the faintest chest rise visible.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Motionless except for the tiniest lip tremble and a slow blink.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "So still that only the pulse at the fontanelle proved anything at all.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Limbs remained softly curled, no startle, only a faint nasal flaring with each breath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The newborn lay in a quiet repose, a single slow hand movement the only sign of life.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A profound stillness, broken only by the gentle, rhythmic parting of the lips.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyes closed, body yielding to the mattress, breath a whisper against the cheek.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Muscle tone was minimal, the infant's form a soft weight, respiration barely stirring the air.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The chest rose and fell in shallow, almost imperceptible waves beneath still hands.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A delayed, weak rooting reflex after {seconds} seconds of complete motionlessness.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Pale eyelids fluttered once, then settled, the body a landscape of profound calm.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Only the subtle tremor of an outstretched finger betrayed the quiet internal shift.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Respiration was silent and slow, the abdomen doing the faintest work of breathing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The baby lay supine, arms adducted, in a state of drowsy, postural inertia.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A sigh, more felt than heard, preceded a long pause before the next breath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Skin-to-skin warmth was met with a slow, melting relaxation into the caregiver's chest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The Moro reflex was absent; the limbs simply remained where they were placed.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyes opened to a slit, gazed vaguely, then closed again with a long exhalation.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The fontanelle pulsed softly under a tranquil brow, all other movement suspended.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A faint, damp curl of hair was the only thing that moved in the still air.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Breathing was so shallow the stethoscope bell had to be held with utmost stillness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The grasp reflex was a ghost of pressure, released almost as soon as it was felt.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Lips pursed in a silent, sleepy suckle, then fell slack against the gums.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant's stillness was so complete it seemed a continuation of the womb.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A single tear welled in the corner of a closed eye, tracing a slow path downward.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The torso was warm and soft, rising in a slow cadence of {seconds}-second intervals.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 8,
+          "max": 15
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "No cry, just the wet sound of a tongue separating from the palate once, softly.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The baby's hand lay open, palm up, fingers slightly curled in passive flexion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A minimal response to light: pupils constricted slightly, then dilation returned.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The head lolled to the side, supported only by the yielding surface beneath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Breath formed a tiny, transient fog on the cool surface of the warming bed.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "All energy seemed conserved, focused inward on the task of circulation and breath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A subtle startle at a sudden sound resolved into a deeper, more settled stillness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A faint, rhythmic pursing of the lips accompanied each shallow, silent breath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant's head lolled to the side, the neck muscles offering no resistance to gravity.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyes remained shut, the lashes still, as if the effort to open them was too great.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A single, slow extension of the toes was the sole motor activity for over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The body was a study in hypotonia, limbs falling open in a complete lack of postural tone.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Respiration was so minimal it failed to mist a cold stethoscope diaphragm.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Only the delicate flutter of the alae nasi indicated the work of breathing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A profound stillness, the skin pale and cool, with capillary refill just at the threshold of normal.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The newborn lay in a state of quiet alertness, observing nothing, moving even less.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A weak suckling motion began and ended at the corner of the mouth, uncoordinated and brief.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The chest wall retracted slightly with each inspiration, a silent, shallow effort.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Limbs were pliant and heavy, draping over the supporting hand without a hint of recoil.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyelids opened to reveal a dull, unfocused gaze that drifted shut after a few blinks.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant's form seemed to sink into the bedding, a portrait of depleted energy.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A tremor passed through the lower lip, but no sound emerged, and the motion stilled.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The rooting response was a delayed, languid turn of the head after sustained stimulation.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Breath sounds were vesicular but distant, as if originating from a deep, quiet place.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A subtle cyanotic hue lingered around the mouth, fading with the first few weak cries.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Muscle tone was so reduced the infant resembled a softly filled sack of grain.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The only movement was the slow, passive rise of the abdomen with diaphragmatic breathing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The startle reflex produced a slight jerk of one arm, then immediate, total relaxation.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Eyes rolled slowly beneath closed lids, but the body remained utterly motionless.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A sigh escaped, a small puff of air that seemed to expend the last of the baby's vigor.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The fontanelle was flat and soft, pulsing with a slow, metronomic rhythm.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The infant accepted tactile stimulation with a blink and a slight, yielding push into the touch.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "Respiration was agonal in pattern, with long pauses punctuated by a single shallow breath.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "The Moro response was a feeble, half-complete abduction of the arms that lacked any cry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    },
+    {
+      "text": "A veneer of stillness lay over the baby, broken only by the occasional, slow blink of a heavy lid.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "low"
+      }
+    }
+  ]
+}

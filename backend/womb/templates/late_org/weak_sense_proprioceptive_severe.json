@@ -1,0 +1,256 @@
+{
+  "key": "late_org/weak_sense_proprioceptive_severe",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "severity": "severe"
+  },
+  "templates": [
+    {
+      "text": "Severe proprioceptive deficit renders the newborn's limbs as if disconnected, with flailing, uncoordinated movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound lack of proprioceptive feedback leaves the infant unable to sense the position of its own head and limbs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn exhibits severe proprioceptive impairment, with limbs often held in awkward, gravity-defying postures.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive channels are severely underdeveloped, causing the baby to startle violently at its own unperceived movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Due to severe proprioceptive deficit, the infant's rooting reflex is misdirected, its head turning randomly rather than toward stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The baby's severe proprioceptive impairment manifests as a complete inability to bring its hands to midline for self-soothing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound proprioceptive deficit results in a rag-doll-like hypotonia, with limbs collapsing under their own weight.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe underdevelopment of proprioceptive pathways leads to a delayed, {seconds}-second lag in limb repositioning after displacement.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn's cry is punctuated by sudden, severe jerks as its proprioceptive system fails to register self-motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is so severely impaired that the infant does not react when its arm is gently held in an unusual position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe deficit in proprioception causes the baby to overshoot dramatically when attempting to bring a hand to its face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant displays a severe proprioceptive disorder, its limbs often entangled as it lacks spatial awareness of its own body.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive channels are critically underdeveloped, resulting in an absence of the normal fencing reflex during supine positioning.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe proprioceptive impairment is evident in the infant's failure to adjust posture when tilted, remaining limp and unresponsive.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn exhibits a profound proprioceptive deficit, its movements appearing random and purposeless without spatial feedback.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe lack of proprioceptive input causes the baby to startle excessively, even from the subtle motion of its own breathing.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive function is severely compromised, leaving the infant unable to maintain any antigravity posture in prone position.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The baby's severe proprioceptive impairment results in a constant, low-level tremor as muscles fire without positional guidance.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Due to severe proprioceptive underdevelopment, the infant's Moro reflex is asymmetrical and poorly coordinated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A profound proprioceptive deficit renders the newborn incapable of the normal tucking response when handled.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe impairment of proprioceptive pathways means the baby does not resist when its limbs are passively manipulated.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The infant's severe proprioceptive disorder manifests as an inability to sustain a suck-swallow-breathe sequence due to poor oral awareness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive feedback is so severely deficient that the newborn's limbs may lie completely still for extended periods, as if forgotten.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe proprioceptive deficit causes the baby to frequently hit its own face with uncontrolled, flailing hand movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The newborn's severe proprioceptive impairment is apparent in its failure to make stepping movements when held upright with feet touching a surface.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Proprioceptive channels are critically underdeveloped, resulting in a complete lack of protective extension responses when falling forward.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Severe proprioceptive dysfunction leaves the infant appearing disoriented within its own body, with gaze avoiding its own limbs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "The baby exhibits a profound proprioceptive deficit, its cries often triggered by the sudden, unexpected collision of its own limbs.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "Due to severe proprioceptive underdevelopment, the infant cannot coordinate the bilateral arm movements typical of the embrace reflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    },
+    {
+      "text": "A severe lack of proprioceptive awareness means the newborn does not habituate to repeated limb displacement, startling anew each time.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "severity": "severe"
+      }
+    }
+  ]
+}

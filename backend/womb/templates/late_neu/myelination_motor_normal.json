@@ -1,0 +1,250 @@
+{
+  "key": "late_neu/myelination_motor_normal",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "motor",
+    "rate": "normal"
+  },
+  "templates": [
+    {
+      "text": "The corticospinal motor pathways are myelinating on a standard timeline.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination proceeds normally along the primary motor cortex to spinal cord tracts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The pyramidal motor tracts show typical, progressive myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Descending motor pathways are acquiring myelin sheaths at the expected rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural insulation is advancing along the corticospinal motor pathway as anticipated.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The process of myelination is prioritizing the primary efferent motor circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin is being laid down along the motor neuron axons according to schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The motor system's long-tract pathways are myelinating on a normal trajectory.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Insulation of the central motor command pathways is proceeding routinely.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The corticospinal tract, a key motor pathway, is myelinating at a standard pace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the pyramidal tracts for motor control is following the typical sequence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The efferent motor pathways show appropriate, timely myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Neural sheathing is actively progressing within the primary motor conduction pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's motor nerve pathways are being myelinated as expected.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin deposition along the descending motor tracts is occurring on schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The process of insulating the brain's motor output cables is advancing normally.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Motor pathway myelination is evident and aligns with standard developmental charts.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The corticospinal motor fibers are gaining myelin sheaths at a predictable rate.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of the central nervous system's motor conduits is proceeding apace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Key pathways for voluntary motor function are undergoing standard myelination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's motor tracts demonstrate myelination consistent with a normal timeline.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Insulation of the neural highways for motor output is developing routinely.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelin is wrapping the axons of primary motor neurons on a standard schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The development of myelin along the pyramidal motor tracts is progressing typically.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Motor pathway insulation is occurring, facilitating more coordinated movement.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The corticospinal tract's myelination, critical for motor control, is on track.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Myelination of efferent pathways for motor commands is following the norm.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The neural insulation process is actively supporting the maturation of motor circuits.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "Standard myelination is evident in the pathways governing motor execution.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    },
+    {
+      "text": "The infant's primary motor conduction pathways are myelinating without delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "motor",
+        "rate": "normal"
+      }
+    }
+  ]
+}

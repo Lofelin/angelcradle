@@ -1,0 +1,225 @@
+{
+  "key": "late_org/perception_style_auditory",
+  "count": 30,
+  "applies_when_default": {
+    "primary_sense": "auditory"
+  },
+  "templates": [
+    {
+      "text": "The world is a tapestry of rhythmic vibrations, where the steady thrum of a heartbeat is the first and most trusted anchor.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Reality is parsed through a filter of pitch and timbre, with high-frequency sounds triggering immediate alertness and low tones inducing calm.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Every experience is first catalogued by its acoustic signature, from the sharp crack of a door to the fluid whisper of a blanket.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Spatial awareness is mapped by sound, gauging distance and direction through the subtle delay of an echo or a voice.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The infant orients toward complex, harmonic sounds like a lullaby, finding them more compelling than simple, monotonous tones.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Emotional states are intrinsically linked to auditory input, where a soothing hum can quiet distress as effectively as a physical touch.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "This is a mind that deciphers meaning in cadence and prosody long before comprehending the words themselves.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The environment is perceived as a layered soundscape, constantly separating foreground voices from the background hum of machinery.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "A sudden silence is as jarring and noteworthy as a loud noise, creating a palpable sense of anticipation or unease.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Motor responses, like the startle reflex, are precisely tuned to the abruptness of a sound's onset rather than its absolute volume.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Familiar auditory patterns, like a parent's recurring phrase, become islands of predictability in a sea of sensory novelty.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The infant demonstrates a distinct preference for human speech over other sounds, actively seeking its rhythmic and melodic contours.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Perception is deeply temporal, sensitive to the rhythm of a rocking chair or the interval between a cry and a responding voice.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "This neurology is wired to find dissonance or auditory clutter inherently stressful, seeking cleaner, more resonant frequencies.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The world is understood through sonic cause and effect, learning that a specific rattle produces a predictable cascade of clicks.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Attention is captured and held not by bright colors, but by the dynamic range and modulation of a sound over {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Comfort is acoustically defined, found in the consistent, mid-range white noise that mimics the womb's muffled symphony.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Even in stillness, the infant is actively listening, micro-adjusting posture to better localize a sound of interest.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Memory formation is strongly cued by sound, where a melody can later evoke the complete sensory state of when it was first heard.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The infant exhibits a clear auditory hierarchy, prioritizing the mother's voice above all other environmental inputs.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Perception is gradient-based, distinguishing not just loud/soft, but the rich textures between a murmur, a sigh, and a whisper.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "This being navigates existence by following sonic trails, turning a head to trace the path of a moving sound source.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "A sudden change in ambient acoustics, like moving from a noisy room to a quiet one, prompts immediate behavioral reassessment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The infant's own cries are part of a feedback loop, modulating their vocalizations based on the auditory echo of the environment.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Facial expressions and body tension directly mirror the emotional valence perceived in the tones and rhythms of surrounding speech.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The continuity of a sound is paramount; interrupted or staccato noises are less soothing than a sustained, even drone.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "This perception style treats silence as an active canvas, upon which each new sound paints a distinct and meaningful event.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Alert phases are characterized by intense auditory scanning, with eyes often closing to reduce visual competition for processing power.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "The infant can become habituated to a persistent, non-threatening sound, allowing it to fade into the perceptual background.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    },
+    {
+      "text": "Early social bonding is acoustically mediated, built on the recognition and preferential response to a handful of familiar voices.",
+      "vars": {},
+      "applies_when": {
+        "primary_sense": "auditory"
+      }
+    }
+  ]
+}

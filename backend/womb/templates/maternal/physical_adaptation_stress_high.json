@@ -1,0 +1,219 @@
+{
+  "key": "maternal/physical_adaptation_stress_high",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "high"
+  },
+  "templates": [
+    {
+      "text": "Uterine hypertonus reduces placental perfusion, straining the maternal cardiopulmonary reserve.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Vascular resistance climbs as contractions intensify, limiting oxygen transfer to the fetus.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Sustained uterine tension impairs venous return, elevating maternal heart rate and afterload.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Blood flow through the intervillous space drops, triggering a compensatory rise in maternal blood pressure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "The uterus remains rigid between contractions, causing progressive decline in uteroplacental circulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal cardiac output redistributes away from the uterus under high-stress sympathetic drive.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Elevated intrauterine pressure compresses spiral arteries, reducing oxygen delivery to the placenta.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Cardiopulmonary strain increases as the uterus tetanically contracts, limiting maternal diastolic filling.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Vascular tone in the uterine arteries rises sharply with each contraction, diminishing fetal gas exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "High-stress uterine activity restricts placental blood flow, challenging maternal hemodynamic stability.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "The maternal aorta experiences partial compression from the contracting uterus, lowering distal perfusion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Intermittent uterine hypertonia reduces the diastolic interval, elevating mean arterial pressure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Uteroplacental resistance escalates under persistent high-stress contractions, straining left ventricular output.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal heart rate accelerates to compensate for reduced stroke volume from impaired venous return.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "The uterine wall remains partially contracted between episodes, maintaining elevated intravascular pressure.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Blood pooling in the lower extremities worsens as the gravid uterus impedes iliac vein drainage.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Pulmonary capillary wedge pressure rises alongside uterine tone, indicating cardiopulmonary overload.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Sustained contraction forces reduce the oxygen saturation gradient across the placental interface.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Peripheral vasoconstriction diverts flow away from the uterus, prioritizing maternal core organs.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "The combination of uterine rigidity and tachycardia elevates myocardial oxygen demand significantly.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Uterine artery velocity declines with each high-tension contraction, causing brief fetal hypoxia.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal systolic pressure peaks during contraction acme, reflecting maximal vascular resistance.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Venous capacitance vessels constrict under high stress, raising central venous pressure and preload.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "The contracting uterus compresses the vena cava, reducing cardiac return and lowering systemic perfusion.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "High-stress uterine activity triggers a catecholamine surge, increasing heart rate and contractility.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Intermittent uterine ischemia follows each contraction, prompting maternal lactate accumulation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Placental vascular bed resistance quadruples during peak uterine tension, limiting nutrient exchange.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Maternal respiration deepens to compensate for metabolic acidosis from sustained muscle work.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Uterine tonicity prevents full relaxation, placing continuous pressure on the placental cotyledons.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    },
+    {
+      "text": "Blood viscosity rises due to hemoconcentration from fluid shifts into the contracting myometrium.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "high"
+      }
+    }
+  ]
+}

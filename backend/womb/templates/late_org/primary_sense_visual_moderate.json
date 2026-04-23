@@ -1,0 +1,262 @@
+{
+  "key": "late_org/primary_sense_visual_moderate",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "strength": "moderate"
+  },
+  "templates": [
+    {
+      "text": "A moderate visual orientation is evident, with dense neural circuits already favoring tracking of high-contrast edges.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual channel is moderately specialized, showing a preference for faces and patterns within a {distance} cm focal range.",
+      "vars": {
+        "distance": {
+          "type": "int_range",
+          "min": 20,
+          "max": 30
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Neural pathways for visual processing are densely wired, manifesting as a moderate fixation on moving, contrasting shapes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A clear visual bias is present, with moderate-strength cortical connections dedicated to processing light and shadow.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual system shows moderate specialization, its neural networks primed for the detection of looming objects.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate visual acuity is supported by a dense retinogeniculate pathway, facilitating early pattern discrimination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Visual orientation circuits are moderately active, creating a distinct preference for bold, black-and-white stimuli.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate visual dominance is seen in the infant's alert periods, driven by concentrated neural firing in the occipital lobe.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The primary sense is visual, with moderately dense cortical columns already tuned to horizontal and vertical lines.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Visual processing networks are moderately consolidated, showing a clear bias for tracking slow, rhythmic movements.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate visual preference is neurologically grounded in the infant's robust saccadic initiation system.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual channel is moderately refined, its associated neural circuitry densely packed for edge detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate visual specialization is evident from the dense interconnectivity between the retina and the visual cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A clear visual orientation exists, with moderately strong neural pathways supporting sustained gaze for up to {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 5,
+          "max": 12
+        }
+      },
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant's moderate visual focus is underpinned by a high density of synapses in the primary visual areas.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Visual processing is a moderate strength, with densely woven neural circuits prioritizing contrast over color.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate visual bias is discernible, facilitated by the rapid myelination of the optic radiations.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual system demonstrates moderate organization, its neural architecture densely clustered for motion perception.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate visual acuity is supported by a concentrated neural investment in the parvocellular pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A distinct visual channeling is present at moderate strength, reflected in the dense cortical mapping of the visual field.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant shows moderate visual engagement, a trait rooted in the high synaptic density of striate cortex layers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Visual orientation is moderately pronounced, with dense thalamocortical projections sharpening this sensory modality.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A moderate visual preference is clear, its neural substrate a densely interconnected network for form recognition.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual sense is moderately dominant, evidenced by robust neural firing in response to patterned light.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate visual specialization is observable, driven by the concentrated neural circuitry of the dorsal stream.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A clear visual focus exists at moderate intensity, supported by a high density of orientation-selective neurons.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The visual channel is moderately tuned, with densely packed ganglion cell axons facilitating this sensory priority.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "Moderate visual processing strength is anchored in the infant's densely laminated lateral geniculate nucleus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "A visual orientation of moderate intensity is present, its neural correlates densely woven for spatial analysis.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    },
+    {
+      "text": "The infant exhibits a moderate visual bias, a function of the densely arborized dendritic trees in visual cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "moderate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_proprioceptive_strong",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "proprioceptive",
+    "tier": "strong"
+  },
+  "templates": [
+    {
+      "text": "Sudden head tilt → immediate asymmetric tonic neck reflex, contralateral arm extends.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Passive leg extension → rapid recoil to flexion, followed by a vigorous Moro fragment.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Deep pressure on sole → powerful plantar grasp, hip and knee flexion pulling against stimulus.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abrupt trunk rotation → strong body-righting response, limbs reorganizing to face new orientation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sustained palmar touch → firm grasp, whole-arm flexion, and a sharp inspiratory gasp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden loss of support → full Moro reflex: arm abduction, cry onset in under {seconds} second.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 2
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Nose/mouth obstruction → forceful head turn, arm swipe, and a loud, expulsive cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Restraint of limbs → strong, rhythmic struggling motions against the hold, face reddens.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Tactile stimulus to cheek → immediate rooting, head turn, and mouth opening in one fluid motion.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden loud noise → startle, eye blink, and a brief, high-pitched cry before self-quieting.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Gentle sway interrupted → limbs stiffen, then a burst of stepping movements to regain equilibrium.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Pressure on foot during flexion → strong Babinski sign, toes fan and dorsiflex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Lateral tilt of bassinet → body arches toward the higher side, arms reach for stability.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Light touch to corner of mouth → head rotates, lips purse, and tongue extends in search.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden bright light → eyes squeeze shut, head jerks back, hands fly up toward face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Firm stroking along spine → Galant reflex: trunk curves concavely toward the stimulus side.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Brief restraint of breathing → powerful extension of trunk and neck, followed by a deep, recovery gasp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sustained prone position → attempts at head lift, alternating leg movements as if crawling.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden temperature change → whole-body shudder, cry, then frantic limb movement to generate heat.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Palmar grasp pulled gently → grip tightens reflexively, shoulder muscles engage to resist release.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Nostril lightly touched → head turns away sharply, hand makes a swatting motion near the face.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Heel pressed firmly → leg withdraws in flexion, then extends forcefully in a kick.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Abdominal pressure in prone → pelvis lifts, crawling movements initiate with coordinated limb alternation.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Sudden downward motion → arms splay wide, fingers spread, a sharp cry is elicited.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Continuous touch on lower back → hip elevates on the stimulated side in a clear pelvic tilt.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Mouth stimulus during cry → immediate suckling motion interrupts cry for {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Constraint around chest → arching back, pushing with feet, and crying with increased pitch.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Unexpected tilt to left → right arm and leg extend in a protective parachute-like response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Simulated fall sensation → gasp, eyes widen, full body startle with vocalization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    },
+    {
+      "text": "Rhythmic pat on back → crying ceases, body relaxes into the rhythm, limbs go limp.",
+      "vars": {},
+      "applies_when": {
+        "sense": "proprioceptive",
+        "tier": "strong"
+      }
+    }
+  ]
+}

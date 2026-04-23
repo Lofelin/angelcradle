@@ -1,0 +1,250 @@
+{
+  "key": "late_org/primary_sense_visual_mild",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "visual",
+    "strength": "mild"
+  },
+  "templates": [
+    {
+      "text": "A mild visual bias is present, with slightly denser neural connections in the occipital pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual channel is subtly dominant, evidenced by a marginally more intricate retinogeniculate wiring.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural circuits for visual processing show a mild, preferential density over other sensory tracts.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint visual primacy is noted, with occipital cortical areas demonstrating slightly enhanced synaptic arborization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual system exhibits a gentle advantage, its associated thalamic radiations fractionally more developed.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild specialization for visual stimuli is suggested by the marginally denser optic nerve fiber organization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Visual pathways show a slight preferential myelination, hinting at a nascent sensory bias.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a subtle visual leaning, with the lateral geniculate nuclei displaying a touch more cellular complexity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The primary sense shows a mild visual tilt, reflected in the slightly richer connectivity of the striate cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A nascent visual dominance is apparent in the marginally more elaborate organization of photoreceptor ganglion circuits.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural architecture favors visual input by a slight degree, with enhanced synaptic density in early visual areas.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual modality is gently prioritized, its cortical projection zones showing a faint increase in neural branching.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild visual predisposition is seen in the slightly more intricate laminar patterning of the primary visual cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Visual processing networks are subtly denser, indicating a faint but measurable sensory channel advantage.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a slight visual emphasis, with optic tract projections demonstrating marginally greater axonal complexity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A gentle visual bias emerges from the fractionally more developed microcircuitry of the visual association cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual channel holds a mild lead, its subcortical relay stations showing a touch more synaptic refinement.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural specialization shows a faint visual preference, with occipital lobe connectivity being marginally more robust.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A nascent visual primacy is detectable in the slightly heightened organization of retinal mapping pathways.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Visual afferent pathways exhibit a mild developmental advantage, with denser initial synaptic layers.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a subtle tilt toward visual processing, evidenced by a marginally richer innervation of the calcarine cortex.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual system demonstrates a gentle primacy, its cortical columns showing a faint increase in dendritic spines.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A mild visual orientation is present, with neural projections from the eyes being slightly more elaborate in their termination.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Visual cortical areas show a slight density increase, suggesting a nascent but mild channel specialization.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The primary sensory bias is mildly visual, reflected in the marginally more complex circuitry for pattern detection.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A faint visual advantage is noted in the slightly denser network of orientation-selective cortical neurons.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "Neural development shows a gentle visual leaning, with the magnocellular pathway being fractionally more pronounced.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "There is a mild visual predisposition, with synaptic pruning in occipital regions preserving a few percent more connections.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "The visual channel is subtly favored, its associated feedback loops showing a touch more intricate early wiring.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    },
+    {
+      "text": "A nascent visual specialization is evident in the slightly denser clustering of neurons within the visual cortical map.",
+      "vars": {},
+      "applies_when": {
+        "sense": "visual",
+        "strength": "mild"
+      }
+    }
+  ]
+}

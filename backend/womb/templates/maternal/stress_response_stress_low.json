@@ -1,0 +1,219 @@
+{
+  "key": "maternal/stress_response_stress_low",
+  "count": 30,
+  "applies_when_default": {
+    "stress_tier": "low"
+  },
+  "templates": [
+    {
+      "text": "Maternal cortisol remains low, shielding fetal HPA axis from activation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Autonomic balance prevails, with fetal heart rate variability stable within optimal range.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Placental barrier effectively buffers minor maternal fluctuations, preserving fetal calm.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Sympathetic tone is muted, allowing parasympathetic dominance and fetal rest.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Low maternal stress hormone levels cross the placenta minimally, leaving fetal neurodevelopment undisturbed.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal movement patterns remain smooth and unperturbed, reflecting absent HPA arousal.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Corticotropin-releasing hormone remains at baseline, with no downstream effect on fetal behavior.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal autonomic regulation is steady, transmitting only subtle, non-stressful cues to the fetus.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Hypothalamic-pituitary-adrenal axis activity is quiescent, promoting uterine quiescence.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal heart rate accelerations are periodic and gentle, indicative of relaxed autonomic tone.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "No surge in maternal catecholamines occurs, so fetal oxygenation remains uncompromised.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The stress response is contained within maternal periphery, leaving the fetus in a state of safety.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Parasympathetic outflow is unimpeded, fostering fetal sleep-wake cycles without disruption.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal glucocorticoid levels are barely elevated, failing to trigger fetal stress signaling.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal breathing movements are regular and deep, unmarked by any stress-induced irregularity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Autonomic nervous system balance is maintained, preventing any fetal tachycardia or bradycardia.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Low maternal stress permits steady blood flow to the placenta, ensuring consistent nutrient delivery.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal startle responses are absent, as sympathetic activation thresholds remain high.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal cortisol binding protein levels are favorable, limiting free hormone passage to the fetus.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Heart rate decelerations are absent, reflecting a lack of vagal stress reflex.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "The intrauterine acoustic environment is calm, with no maternal stress-related vocal tension transmitted.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal limb movements are fluid and infrequent, consistent with a non-alert, settled state.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal adrenal output is minimal, so fetal cortisol exposure remains below any threshold for effect.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Umbilical artery resistance is low, indicating unimpeded flow and fetal well-being.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal arousal is low, with no evidence of autonomic overdrive or fretful activity.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal vagal tone is elevated, promoting a soothing neuroendocrine milieu for the fetus.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "No stress-induced uterine contractions occur, preserving a stable placental interface.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal heart rate pattern is sinusoidal in its regularity, free of stress-provoked variability spikes.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Maternal inflammatory markers are quiescent, preventing any cytokine-mediated fetal distress.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    },
+    {
+      "text": "Fetal behavioral state is predominantly quiet sleep, owing to the absence of HPA activation.",
+      "vars": {},
+      "applies_when": {
+        "stress_tier": "low"
+      }
+    }
+  ]
+}

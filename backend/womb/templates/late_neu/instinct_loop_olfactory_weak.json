@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/instinct_loop_olfactory_weak",
+  "count": 30,
+  "applies_when_default": {
+    "sense": "olfactory",
+    "tier": "weak"
+  },
+  "templates": [
+    {
+      "text": "A whiff of milk formula → a faint, slow head turn, then stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sudden scent of antiseptic → a weak grimace, a shallow breath, no cry.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Mother's distant perfume → a brief, drowsy sniffing motion that trails off.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Odor of a soiled diaper → a slight squirm, then a return to limp sleep.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Faint smell of alcohol swab → delayed eyelid flutter, mouth opens slightly.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Scent of warm blanket → a slow, partial rooting motion that lacks direction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Pungent adult body odor → a muted startle, followed by apathetic stillness.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Aroma of breast milk → a sluggish attempt to suck, mouth falls slack.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sharp smell of vinegar → a wrinkled nose, a weak turn away, then no further reaction.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Fragrance of baby lotion → a slow hand brings to face, drops after {seconds} seconds.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Musty scent of old cloth → a shallow sigh, limbs remain flaccid.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sweet scent of fruit → eyes open briefly, close before a orienting response completes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Acrid smell of smoke → a feeble cough, then respiratory effort diminishes.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Odor of sweaty hand → a weak head aversion, movement ceases midway.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Clean scent of soap → a slow blink, a faint sigh, no alerting.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Sour milk smell → a grimace forms slowly, dissolves into neutral expression.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Earthy smell of soil → a brief increase in respiratory rate, then returns to baseline.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Metallic hospital scent → a delayed, minimal limb retraction, then flaccidity.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Scent of vanilla → a subtle stirring, a half-formed suck, then lapse.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Strong floral perfume → a weak sneeze, followed by unresponsive lethargy.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Odor of cooked food → a slow mouthing motion, no salivation or search.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Rancid butter smell → a faint gag reflex triggered, but swallowing is absent.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Fresh linen scent → a slow arm extension, drops limply after {seconds} second.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Pungent cheese odor → a slight arching of the back, immediately subsides.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Mild scent of honey → a drowsy smacking of lips once, then silence.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Chemical cleaner smell → eyes squeeze shut slowly, reopen with glassy stare.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Odor of damp wool → a shallow, rapid breath cycle that quickly fatigues.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Scent of paternal cologne → a slow head turn toward source, loses track.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Bitter almond aroma → a weak tongue protrusion, no full aversive response.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    },
+    {
+      "text": "Warm bread smell → a partial rooting reflex initiated but not sustained.",
+      "vars": {},
+      "applies_when": {
+        "sense": "olfactory",
+        "tier": "weak"
+      }
+    }
+  ]
+}

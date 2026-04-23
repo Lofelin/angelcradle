@@ -1,0 +1,253 @@
+{
+  "key": "birth/first_cry_body_high",
+  "count": 34,
+  "applies_when_default": {
+    "arousal": "high"
+  },
+  "templates": [
+    {
+      "text": "Limbs flailing, back arching, every muscle engaged in protest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Fists pounding air, legs kicking, face contorted in outrage.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Whole body trembling with the effort, skin flushing crimson.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Chest heaving in rapid bursts, fingers splayed wide.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Tiny fists clenched, face a deep rose, back rigid with the force of the cry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A full-body shudder, then limbs stiffen and flail against the cool air.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Feet pedal furiously, arms jerk, and a deep flush spreads from chest to brow.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The infant's entire frame tenses, a taut bowstring releasing its first vocal vibration.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Eyes squeezed shut, mouth a wide oval, shoulders hunched in vigorous protest.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A violent startle reflex courses through the body, turning skin a mottled red.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Chest expands dramatically, then collapses as the cry erupts, coloring the skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Every extremity is in motion, a chaotic dance of high arousal and reddening skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The newborn's body arches off the surface, muscles corded, face suffused with color.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Legs draw up, then kick out forcefully, accompanied by a full facial blush.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A tremor runs through the trunk before the limbs extend and face blooms crimson.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Fingers and toes splay wide, the body rigid with the strain of the powerful cry.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The cry is preceded by a sharp back-arching movement and rapid reddening of the skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Torso twists, arms flail in a Moro-like response, complexion deepening to scarlet.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Breath held for {seconds} seconds, then released in a cry that tenses every muscle.",
+      "vars": {
+        "seconds": {
+          "type": "int_range",
+          "min": 3,
+          "max": 7
+        }
+      },
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A visible wave of muscle tension travels from head to toe, flushing the skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The infant's cry is a whole-body event, marked by jerking limbs and florid cheeks.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Sudden extension of all four limbs, followed by a vigorous, red-faced trembling.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Neck tendons stand out, the small chin quivers, and a hot flush paints the face.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The initial gasp pulls the body taut, setting the stage for the crimson-faced wail.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Shoulders hike up to the ears, fists pump, and a deep rose hue floods the skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A strong cry coupled with a startle that sends arms flying and colors the complexion.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The newborn's body becomes a single tense arc, vibrating with sound and reddening.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Feet drum a rapid rhythm on the blanket as the cry reddens the face and neck.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "A pronounced jolt runs through the body, eliciting a cry and immediate flushing.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Muscles lock in a brief tetany before the cry, leaving the infant flushed and rigid.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "The vigorous cry is mirrored in the body's stiff posture and rapidly coloring skin.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Eruption of sound coincides with a full-body extension and vivid facial redness.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Chest heaves with the effort, tiny abdomen tightens, and a blush rises swiftly.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    },
+    {
+      "text": "Limbs move in abrupt, uncoordinated bursts, the face a mask of strained crimson.",
+      "vars": {},
+      "applies_when": {
+        "arousal": "high"
+      }
+    }
+  ]
+}

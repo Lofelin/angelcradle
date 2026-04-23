@@ -1,0 +1,262 @@
+{
+  "key": "late_neu/myelination_tactile_delayed",
+  "count": 30,
+  "applies_when_default": {
+    "pathway": "tactile",
+    "rate": "delayed"
+  },
+  "templates": [
+    {
+      "text": "Tactile pathway myelination is markedly delayed, with proprioceptive and auditory pathways taking clear precedence.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the tactile sensory pathway lags significantly behind that of the vestibular and nociceptive systems.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced delay is noted in the myelination of the tactile afferent pathway compared to other sensory modalities.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The tactile processing stream shows a conspicuous myelination lag, prioritizing more primitive brainstem pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Tactile pathway myelination is demonstrably sluggish, with visual and auditory tracts developing more rapidly.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "There is a clear myelination deficit in the dorsal column-medial lemniscal pathway for fine touch.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of cortical tactile projection areas is significantly delayed relative to primary motor areas.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The spinothalamic tract for crude touch is myelinating well ahead of the discriminative tactile pathway.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Tactile sensory axon myelination is proceeding at a markedly reduced rate compared to cranial nerve pathways.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A delayed tactile response latency of {milliseconds} ms suggests slowed myelination in the somatosensory cortex.",
+      "vars": {
+        "milliseconds": {
+          "type": "int_range",
+          "min": 50,
+          "max": 120
+        }
+      },
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination priority favors auditory-motor integration, leaving the tactile feedback loop underdeveloped.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The pathway for light touch perception shows a significant myelination delay, impacting early sensory mapping.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Central processing of tactile stimuli is hindered by delayed myelination of thalamocortical radiations.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the tactile discrimination pathway lags conspicuously behind that for temperature and pain.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A pronounced tactile processing delay is evident due to sluggish myelination of sensory association fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The posterior columns, critical for tactile localization, show a marked myelination deficit.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination is prioritizing subcortical reflex arcs over the cortical integration of tactile information.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Tactile afferent signaling is impaired by a clear delay in the myelination of large-diameter sensory fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The somatosensory cortex receives poorly myelinated tactile inputs, resulting in delayed perceptual processing.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the tactile pathway from skin to cortex is progressing at a notably slower pace.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A deficit in tactile gating is observed, correlating with delayed myelination of inhibitory interneurons.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed myelination of tactile projection fibers contributes to a muted cutaneous sensory experience.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination favors autonomic and vital sign pathways, leaving the discriminative tactile system under-insulated.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Tactile pathway development is lagging, with auditory and proprioceptive systems achieving myelination milestones first.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A significant myelination delay is present in the pathways mediating light touch and texture discrimination.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The delayed insulation of tactile nerve fibers results in slower conduction velocities and blurred sensation.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Myelination of the cortical representation for the hand (tactile homunculus) is notably behind schedule.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "Tactile sensory integration is compromised by a pronounced lag in the myelination of corpus callosum fibers.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "The spinocerebellar tracts are myelinating robustly while the primary tactile pathway shows clear delay.",
+      "vars": {},
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    },
+    {
+      "text": "A {week} week lag in tactile pathway myelination is evident compared to gestational age norms.",
+      "vars": {
+        "week": {
+          "type": "int_range",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "applies_when": {
+        "pathway": "tactile",
+        "rate": "delayed"
+      }
+    }
+  ]
+}
